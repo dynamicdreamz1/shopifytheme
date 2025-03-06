@@ -1,0 +1,28 @@
+{
+  "name": "shopify-ai-recommendations",
+  "version": "1.0.0",
+  "main": "web/index.js",
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "debug": "node --inspect-brk web/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon web/index.js --ignore ./frontend",
+    "serve": "cross-env NODE_ENV=production node web/index.js"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "@shopify/shopify-api": "^7.5.0",
+    "@shopify/shopify-app-express": "^2.1.3",
+    "compression": "^1.7.4",
+    "cross-env": "^7.0.3",
+    "express": "^4.18.2",
+    "openai": "^4.0.0",
+    "serve-static": "^1.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
+  }
+} 

@@ -1,0 +1,86 @@
+{{ 'section-ai-recommendations.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ai-recommendations.js' | asset_url }}" defer></script>
+
+<div class="page-width">
+  <div class="ai-recommendations" data-product-id="{{ product.id }}" data-shop-id="{{ shop.id }}">
+    <h2 class="ai-recommendations__title">{{ section.settings.title | escape }}</h2>
+    
+    <div class="ai-recommendations__loading" style="display: none;">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <div class="ai-recommendations__grid">
+      <div class="ai-recommendations__products"></div>
+    </div>
+
+    {% if section.settings.show_view_all %}
+      <div class="ai-recommendations__view-all center">
+        <a href="{{ routes.all_products_collection_url }}" class="button">
+          {{ section.settings.view_all_text | escape }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "AI Recommendations",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "AI-Powered Recommendations"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show view all button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "View all products"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 2,
+      "default": 4,
+      "label": "Number of products to show"
+    },
+    {
+      "type": "select",
+      "id": "recommendation_type",
+      "options": [
+        {
+          "value": "similar",
+          "label": "Similar products"
+        },
+        {
+          "value": "complementary",
+          "label": "Complementary products"
+        },
+        {
+          "value": "personalized",
+          "label": "Personalized recommendations"
+        }
+      ],
+      "default": "similar",
+      "label": "Recommendation type"
+    }
+  ],
+  "presets": [
+    {
+      "name": "AI Recommendations"
+    }
+  ]
+}
+{% endschema %} 

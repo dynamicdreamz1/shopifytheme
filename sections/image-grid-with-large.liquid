@@ -1,0 +1,164 @@
+{{ 'section-image-grid-with-large.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width">
+  <div class="image-grid-with-large">
+    <div class="image-grid-with-large__grid">
+      <div class="image-grid-with-large__small-images">
+        {% for i in (0..7) %}
+          {% assign image_key = 'image_' | append: i %}
+          {% assign image = section.settings[image_key] %}
+          <div class="image-grid-with-large__small-image">
+            {% if image != blank %}
+              {{ image | image_url: width: 300 | image_tag:
+                loading: 'lazy',
+                width: image.width,
+                height: image.height,
+                alt: image.alt | escape,
+                class: 'image-grid-with-large__image'
+              }}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="image-grid-with-large__large-image">
+        {% if section.settings.large_image != blank %}
+          {{ section.settings.large_image | image_url: width: 800 | image_tag:
+            loading: 'lazy',
+            width: section.settings.large_image.width,
+            height: section.settings.large_image.height,
+            alt: section.settings.large_image.alt | escape,
+            class: 'image-grid-with-large__image'
+          }}
+        {% else %}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+    </div>
+
+    {% if section.settings.show_content %}
+      <div class="image-grid-with-large__content">
+        {% if section.settings.title != blank %}
+          <h2 class="image-grid-with-large__title">{{ section.settings.title | escape }}</h2>
+        {% endif %}
+        
+        {% if section.settings.text != blank %}
+          <div class="image-grid-with-large__text rte">{{ section.settings.text }}</div>
+        {% endif %}
+
+        {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+          <a href="{{ section.settings.button_link }}" class="button">
+            {{ section.settings.button_label | escape }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image grid with large image",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_0",
+      "label": "Small image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Small image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Small image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Small image 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Small image 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_5",
+      "label": "Small image 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_6",
+      "label": "Small image 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_7",
+      "label": "Small image 8"
+    },
+    {
+      "type": "image_picker",
+      "id": "large_image",
+      "label": "Large image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content",
+      "label": "Show content",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Image grid with large image"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Pair text with images to tell a story</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color scheme"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image grid with large image"
+    }
+  ]
+}
+{% endschema %} 

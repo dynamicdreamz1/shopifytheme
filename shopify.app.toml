@@ -1,0 +1,19 @@
+name = "AI Product Recommendations"
+client_id = "YOUR_CLIENT_ID"
+application_url = "https://your-app-url.com"
+embedded = true
+
+[access_scopes]
+# Read products, product listings, and collections
+read_products = true
+
+# Read and modify customer details
+read_customers = true
+
+[auth]
+redirect_urls = [
+    "https://your-app-url.com/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-01" 
