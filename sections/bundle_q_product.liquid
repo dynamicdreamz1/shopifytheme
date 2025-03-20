@@ -1,6 +1,29 @@
+{% assign product = section.settings.product %}
+<div class="bundle_q_product">
+  <div class="bundle_q_product_item">
+    {{ product.title }}
+  </div>
+  <div class="bundle_q_product_item">
+    {{ product.title }}
+  </div>
+  <div class="bundle_q_product_item">
+    {{ product.title }}
+  </div>
+</div>
 {% schema %}
   {
-    "name": "Section name",
-    "settings": []
+    "name": "Bundle Product",
+    "settings": [
+      {
+        "type": "product",
+        "id": "product",
+        "label": "Product"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Bundle Product"
+      }
+    ]
   }
 {% endschema %}
