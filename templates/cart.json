@@ -37,6 +37,15 @@
     },
     "17261156011b634cc7": {
       "type": "apps",
+      "blocks": {
+        "selleasy_lb_upsell_widget_cpag_xCGic4": {
+          "type": "shopify://apps/selleasy/blocks/lb-upsell-widget-cpag/790c1a03-a71f-4bc1-9869-00dad526d3c2",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "selleasy_lb_upsell_widget_cpag_xCGic4"
+      ],
       "settings": {
         "include_margins": true
       }
