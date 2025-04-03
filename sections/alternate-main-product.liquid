@@ -1,0 +1,584 @@
+
+
+{{ "custom-main-product.css" | asset_url | stylesheet_tag }}
+{{ "blouse-style-popup.css" |  asset_url |  stylesheet_tag }}
+{{ "khadi-product.css" |  asset_url |  stylesheet_tag }}
+ 
+{{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+{{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+ 
+{% assign custom_measurement = product.metafields.custom.custom_measurement %}
+{% if custom_measurement %}
+{{ "choose-measurement.css" | asset_url | stylesheet_tag }}
+{{ "complete-measurement.css" | asset_url | stylesheet_tag }}
+{{ "whatsapp-measurement.css" | asset_url | stylesheet_tag }}
+{% endif %}
+  
+{%- for option in product.options_with_values -%}
+  {% if option.name == 'Size Options' %}
+    {% assign confSizeOption_attribute = 'js-stitched-group' %}
+    {% assign confSizeOption_selected_option = option.selected_value %}
+  {% endif %}
+  {% if option.name == 'Stitched' or option.name == 'Confi Stitched' %}
+    {% assign stitche_attribute = 'js-stitched-group' %}
+    {% assign stitche_selected_option = option.selected_value %}
+  {% endif %}
+{% endfor %} 
+
+<div class="product-custom product--left product--thumbnail_slider product--mobile-show product-images-new-layout" js-alternate-custom-pdp>
+  <div class="popup-overlay hide"></div>
+  <div class="page-width">
+    <div class="wrapper">
+      <div class="main-grid">
+        {% comment %}magictoolbox code begins{% endcomment %}
+        {% capture mzp %}{% render 'magiczoomplus', product:product %}{% endcapture %}
+        {% if mzp contains 'Liquid error' %}
+            {% comment %}magictoolbox replace code begins{% endcomment %}
+              {% comment %}{% render 'product-media-gallery', variant_images: variant_images %}{% endcomment %}
+            {% comment %}magictoolbox replace code ends{% endcomment %}
+        {% else %}
+          <div  style="display:none">{% render 'product-media-gallery', variant_images: variant_images %}</div>
+          {{ mzp }}
+        {% endif %}
+        {% comment %}magictoolbox code ends{% endcomment %}
+        {% assign returnable = '' %}
+        {% assign isOnlyWishlist = '' %}
+        {% assign isSalwarKameezCollection = '' %}
+        {% for collection in product.collections %}
+          {% if collection.metafields.custom.is_returnable.value == false %}
+            {% assign returnable = 'non-returnable' %}
+          {% endif %}
+          {% if collection.metafields.custom.only_wishlist.value == true %}
+            {% assign isOnlyWishlistCon = true %}
+            {% assign isOnlyWishlist = 'is-only-wishlist' %}
+          {% endif %}
+          {% if collection.handle contains 'salwar-kameez' %}
+              {% assign isSalwarKameezCollection = true %}
+          {% endif %}
+       {% endfor %}
+        
+        <div class="product_details {{ returnable }} {{ isOnlyWishlist }}" js-product-details>
+          <!-- <div class="product_review_new"> -->
+            <!-- {% if product.metafields.stamped.reviews_average %} -->
+              <!-- {% assign rev_count = product.metafields.stamped.reviews_count | plus: 0 %} -->
+              <!-- <span
+              class="stamped-product-reviews-badge stamped-main-badge"
+              data-id="{{ product.id }}"
+              data-product-sku="{{ product.handle }}"
+              data-product-title="{{product.title}}"
+              data-product-type="{{product.type}}"
+              style="display: block;">
+              {{product.metafields.stamped.badge.value}}
+              </span> -->
+            <!-- {% else %} -->
+              <!-- <a href="#stamped-main-widget"><img src="{{ 'blank_star.svg' | asset_url }}" alt="" width="" height="" /><span class="review_first_new">Be the first to leave a review</span></a> -->
+            <!-- {% endif %} -->
+          <!-- </div> -->
+
+          <div class="title_with_heart-icon">
+            <h1 class="title">{{ product.title }}</h1>
+            <div class="product_whishlist_new">
+              <div class="btn" >
+                {%- for block in section.blocks -%}
+                  {%- case block.type -%}
+                    {%- when '@app' -%}
+                      {% render block %}
+                  {% endcase %}
+                {% endfor %}
+              </div>
+              <product-share-button>
+                {%  render 'share-kalkifashion', product: product %}
+                <div class="shear_icon" js-modal-open-btn>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
+                      <path d="M12.6053 12.3608C6.28947 11.9245 2.90351 16.5426 1.5 18.9062C2.34211 8.87003 8.74561 5.9063 12.6053 5.17896V1.9945C12.6053 1.56713 13.1067 1.33675 13.431 1.61513L20.6463 7.80961C21.1006 8.19968 21.1117 8.89973 20.671 9.30514L13.4446 15.9523C13.1241 16.2471 12.6053 16.0205 12.6053 15.5851V12.3608Z" stroke="#3F3D4D" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </product-share-button>
+            </div>
+          </div>
+          {% if product.metafields.custom.style_no.value !=blank %}
+            <div class="product-style-no">
+             Style No {{ product.metafields.custom.style_no.value }}
+            </div>
+          {% endif %}
+          <div class="product-stamps-wrap">
+            {% if product.metafields.magento.online_stamps != blank %}
+              <div class="product_online_stamps">
+                  {{ product.metafields.magento.online_stamps }}
+              </div>
+            {% endif %}
+            {% if product.metafields.magento.festival_stamp != blank %}
+              <div class="product_festival_stamp">
+                  {{ product.metafields.magento.festival_stamp }}
+              </div>
+            {% endif %}
+          </div>
+          
+          <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+            {%- render 'price',
+                product: product,
+                use_variant: true,
+                show_badges: true,
+                price_class: 'price--large'
+             -%}
+          </div>
+          {% comment %} 
+            {{ product.metafields.custom.customise_options_.customisable_options.test }} 
+          {% endcomment %}
+
+          <h3 class="Inclusive">Inclusive of all taxes</h3>
+
+          {% comment %}
+          <div class="installment_message_new" {{ block.shopify_attributes }}>
+            {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
+            {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              {{ form | payment_terms }}
+            {%- endform -%}
+          </div>
+          {% endcomment %}
+
+          {% render 'offer-banner-with-timer-product' product: product %}          
+
+          {% assign max_rts_days = 0 %}              
+          {% for collection in product.collections %}
+            {% if collection.metafields.custom.banner_last_chance.value != blank %}
+              <div class="banner_last_chance">
+                {{ collection.metafields.custom.banner_last_chance.value }}
+              </div>
+            {% endif %}
+          {% endfor %}
+
+                        
+          <product-form
+            class="product-form khadi-product-form"
+            data-hide-errors="{{ gift_card_recipient_feature_active }}"
+            data-section-id="{{ section.id }}"
+            js-template-one-product-form
+            js-khadi-product-form
+          >
+            <button id="closeSizePopup">×</button>
+            {%- assign product_form_id = 'product-form-' | append: section.id -%}
+            {%- form 'product',
+              product,
+              id: product_form_id,
+              class: 'form',
+              data-type: 'add-to-cart-form',
+              data-delivery-current-delivery-day-value: ''
+            -%}
+              <!-- <input type="hidden" value="{{ product.selected_or_first_available_variant.id }}" name="id"> -->
+              <input type="hidden" value="1" name="quantity">
+              <input type="hidden" value="main product" name="items[0][properties][_type]" />
+              
+              {% if product.metafields.custom.filter_product_category.value != blank %}
+                <input type="hidden" name="items[0][properties[_Product category]]" value="{{ product.metafields.custom.filter_product_category.value }}">
+              {% endif %}
+              
+              {% if product.compare_at_price != blank %}
+                <input type="hidden" id="discount-on-product" name="items[0][properties[_Discount on product]]" value="{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}% OFF">
+                <input type="hidden" id="compare-at-price" name="items[0][properties[_Compare at price for the product]]" value="{{ product.compare_at_price | money }}">
+              {% endif %}
+              {% render "discount-code" section: section %}
+
+              {% if custom_measurement %}
+                {% render 'choose-measurement' %}
+                {% render 'complete-measurement' %}
+                {% render 'whatsapp-measurement' %}
+                {% render 'whatsapp-success-modal' %}
+              {% endif %}
+
+              {% render 'alternate-variants', 
+                product: product, 
+                product_form_id: product_form_id, 
+                section: section, 
+                stitche_attribute: stitche_attribute 
+                stitche_selected_option: stitche_selected_option 
+                confSizeOption_attribute: confSizeOption_attribute 
+                confSizeOption_selected_option: confSizeOption_selected_option,
+                tooltip_text: section.settings.stitched_tooltip
+               %}
+
+              {% if isOnlyWishlistCon != true %}   
+                <div class="additional_delivery_massage_text hidden"></div>
+              {% endif %}
+
+              <div class="upsell-product-variant-size">
+
+                {% render 'saree_stitch' product: product, tooltip_text: section.settings.extra_cost_tooltip, learn_more_media: section.settings.learn_more_video %} 
+                {% render 'saree_fall' product: product, tooltip_text: section.settings.extra_cost_tooltip, learn_more_text: section.settings.learn_more_text %} 
+
+                {% render 'product-custom-attributes', 
+                product: product, 
+                templateName: 'js-custom-property-list', 
+                stitche_attribute: stitche_attribute 
+                stitche_selected_option: stitche_selected_option 
+                confSizeOption_attribute: confSizeOption_attribute 
+                confSizeOption_selected_option: confSizeOption_selected_option 
+                %}
+
+                {% render 'petticoat' product: product %}
+
+                {% render 'custom-measurement', customMeasurements: custom_measurement.value  %}
+                {% render 'blouse-style', blouse_style_: product.metafields.custom.blouse_styles.value %}
+                {% if isSalwarKameezCollection != true %}
+                  {% render 'size-chart', full_width: true, product: product %}
+                {% endif %}
+                
+                <div class="form-error-wrapper" js-pdp-form-error>
+                  <ul></ul>
+                </div>
+                
+                {% if product.metafields.custom.whatsapp_number_for_order_and_call == blank %}       
+                    {%- render 'buy-buttons-new', 
+                        block: block, product: product, 
+                        product_form_id: product_form_id, 
+                        section_id: section.id, 
+                        show_pickup_availability: true -%} 
+                {% endif %}
+              </div>
+              
+              
+
+              {% if product.metafields.custom.whatsapp_number_for_order_and_call != blank %}
+                {%- render 'custom-bridal-card'-%}
+              {% endif %}
+               
+              {%- endform -%}
+            
+              {% render 'buy-now-new', product:product %}
+              <div class="visitors_counter visitors_counter_desktop"></div>
+            </product-form>
+
+          {% if isOnlyWishlistCon != true %}   
+            {% render "product-delivery-days" current_product: product,  additional_delivery_days: section.settings.additional_delivery_days  %}
+            {% render 'delivery-message' message: section.settings.delivery_message %}
+            {% render 'metafield-color-options' product: product %}
+            {% render "cross-sell" product: product %}
+            {% render 'extra-product-info' section: section %}
+            {% render 'pdp-accordion' product: product, section: section %}            
+          {% endif %}
+          
+        </div>
+      </div>
+    </div>
+    {% render 'pdp-custom-buttons' product: product %}
+  </div>
+</div>
+
+<div class="page-width tagalys-similar-products">  
+   <div class="Common_title_new Product_related_title_new">
+   </div>
+  <div data-widget="recommendations"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      Tagalys.UIWidgets.Recommendations.init('[data-widget="recommendations"]', {
+        recommendationId: "35c6bbd7d1051829dc82",
+        productId: "{{ product.id }}"
+      });
+    });
+  </script>
+</div>
+<div id="tagalys-similar-products-pupup" class="page-width tagalys-similar-products tagalys-similar-products-popup">
+  <div class="tagalys-similar-products-wrap">
+    <span class="similar-popup-close" id="close-popup-similar-pdp">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_4_2)">
+                <path d="M13 26C20.1797 26 26 20.1797 26 13C26 5.8203 20.1797 0 13 0C5.8203 0 0 5.8203 0 13C0 20.1797 5.8203 26 13 26Z" fill="#0A0909" />
+                <path d="M8.49335 17.3334L17.16 8.66669M8.49335 8.66669L17.16 17.3334" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <defs>
+                <clipPath id="clip0_4_2">
+                    <rect width="26" height="26" fill="white" />
+                </clipPath>
+            </defs>
+        </svg>
+    </span>
+    <div data-widget="recommendations-mobile"></div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var similerButton = document.querySelector('.similer-product-button');
+      var similerPopup = document.getElementById('tagalys-similar-products-pupup');
+      var similerCloseBtn = document.getElementById('close-popup-similar-pdp');
+      function disableScroll() {
+        document.body.classList.add('overflow-hidden');
+      }
+      function enableScroll() {
+        document.body.classList.remove('overflow-hidden');
+      }
+      if (similerButton) {
+        similerButton.addEventListener('click', function() {
+          similerPopup.style.display = 'flex';
+          disableScroll();
+          Tagalys && Tagalys.UIWidgets.Recommendations.init('[data-widget="recommendations-mobile"]', {
+            recommendationId: "35c6bbd7d1051829dc82",
+            productId: "{{ product.id }}"
+          });
+        });
+      }
+    
+      if (similerCloseBtn) {
+        similerCloseBtn.addEventListener('click', function() {
+          similerPopup.style.display = 'none';
+          enableScroll();
+        });
+      }
+    
+      window.addEventListener('click', function(event) {
+        if (event.target == similerPopup) {
+          similerPopup.style.display = 'none';
+          enableScroll();
+        }
+      });
+    });
+  </script>
+</div>
+                  
+<script src="{{ 'custom-function.js' | asset_url }}" defer="defer"></script>
+{% if custom_measurement %}
+  <script src="{{ 'custom-measurement.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+<script src="{{ 'alternate-product.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'upsell-product.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'pdp-accordion.js' | asset_url }}" defer="defer"></script>
+
+
+<script src="{{ 'media-popup.js' | asset_url }}" defer="defer"></script>
+{% if custom_measurement %}
+  <script src="{{ 'select-measurement-popup.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'custom-measurement-popup.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      function isIE() {
+        const ua = window.navigator.userAgent;
+        const msie = ua.indexOf('MSIE ');
+        const trident = ua.indexOf('Trident/');
+
+        return msie > 0 || trident > 0;
+      }
+
+      if (!isIE()) return;
+      const hiddenInput = document.querySelector('#{{ product_form_id }} input[name="id"]');
+      const noScriptInputWrapper = document.createElement('div');
+      const variantPicker = document.querySelector('variant-selects[data-section="{{ section.id }}"]');
+      noScriptInputWrapper.innerHTML = document.querySelector(
+        '.product-form__noscript-wrapper-{{ section.id }}'
+      ).textContent;
+      variantPicker.outerHTML = noScriptInputWrapper.outerHTML;
+
+      document.querySelector('#Variants-{{ section.id }}').addEventListener('change', function (event) {
+        hiddenInput.value = event.currentTarget.value;
+      });
+    });
+
+     
+  </script>
+  {% schema %}
+  {
+    "name": "Alternate Template",
+    "class": "alternate_template_section",
+   "settings": [
+      {
+        "type": "richtext",
+        "id": "discount_text",
+        "label": "Discount Text"
+      },
+      {
+        "type": "text",
+        "id": "discount_code",
+        "label": "Discount Code"
+      },
+      {
+        "type": "text",
+        "id": "main_title",
+        "label": "Outfit Title"
+      },
+      {
+        "type": "text",
+        "id": "bottom_text",
+        "label": "Bottom Text"
+      },
+      {
+        "type": "text",
+        "id": "stitched_tooltip",
+        "label": "Stitched Tooltip"
+      },
+      {
+        "type": "text",
+        "id": "extra_cost_tooltip",
+        "label": "Extra Cost Tooltip"
+      },
+      {
+        "type": "text",
+        "id" :"additional_delivery_days",
+        "label" : "Additional Delivery Days (Enter Numbers Only)"
+      },
+      {
+        "type": "video",
+        "id": "learn_more_video",
+        "label": "Upsell Popup Media"
+      },
+     {
+        "type": "richtext",
+        "id": "learn_more_text",
+        "label": "Fall and Pico Popup Text"
+      },
+      {
+        "type": "richtext",
+        "id": "manufacturing_popup",
+        "label": "Manufacturing Details Popup"
+      },
+      {
+        "type": "text",
+        "id": "delivery_message",
+        "label": "Delivery Message"
+      },
+       {
+        "type": "checkbox",
+        "id": "show_gift_card_recipient",
+        "default": true,
+        "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
+        "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
+      }
+    ],
+    "blocks": [
+        {
+          "type": "@app"
+        },
+        {
+            "type": "delivery_time",
+            "name": "Delivery Time",
+            "settings":[
+                {
+                  "type": "richtext",
+                  "id": "delivey_text",
+                  "label": "Delivery Text"
+                },
+                {
+                  "type": "richtext",
+                  "id": "urgent_delivery",
+                  "label": "Urgent Delivery"
+                }
+            ]
+        },
+      {
+        "name": "Image Logo",
+        "type": "image_logo_text",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_logo",
+            "label": "Logo"
+          }, 
+          {
+            "type": "text",
+            "id": "text_bottom",
+            "label": "Text  "
+          }, 
+           {
+            "type": "text",
+            "id": "text_bottom_no_return",
+            "label": "Non Returnable Product Text"
+          }, 
+          {
+            "type": "url",
+            "id": "image_logo_url",
+            "label": "Image Logo Url"
+          },
+           {
+            "type": "text",
+            "id": "class",
+            "label": "Class"
+          }, 
+        ]
+      },
+      {
+        "name": "Faq Product",
+        "type": "faq_product",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "faq_text",
+            "label": "Faq Text"
+          }, 
+          {
+
+            "type": "richtext",
+            "id": "details",
+            "label": "Details"
+          },
+           {
+
+            "type": "richtext",
+            "id": "details_no_return",
+            "label": "Non Returnable Details"
+          },
+           {
+            "type": "text",
+            "id": "class",
+            "label": "Class"
+          }, 
+        ]
+      }, 
+      {
+        "name": "Faq Block",
+        "type": "block_faq",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "block_faq_text",
+            "label": "Faq Text"
+          }, 
+          {
+            "type": "richtext",
+            "id": "block_details",
+            "label": "Details"
+          }
+        ]
+      },
+        {
+            "name": "Customize Outfit",
+            "type": "customize_outfit",
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "select",
+                    "id": "icon",
+                    "label": "Icon",
+                    "options": [
+                        {
+                            "value": "customize",
+                            "label": "Customize"
+                        },
+                        {
+                            "value": "trial",
+                            "label": "Trial"
+                        },
+                        {
+                            "value": "wallet",
+                            "label": "Wallet"
+                        }
+                    ]
+                },
+                {
+                    "type": "checkbox",
+                    "id": "full_width",
+                    "label": "Width"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "product template one"
+      }
+    ]
+  }
+{% endschema %}

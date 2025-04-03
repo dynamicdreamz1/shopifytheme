@@ -1,0 +1,103 @@
+{%- if shop.metaobjects.lookbook_page_list != blank -%}
+  <div class="Page_lookbook_template_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_lookbook_template_inner_new">
+        <div class="Page_lookbook_template_breadcrumb_new">
+          {% render 'Breadcrumb-navigation-new' %}
+        </div>
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Page_lookbook_template_title_new">
+            <h1>{{ section.settings.main_heading_text }}</h1>
+          </div>
+        {%- endif -%}
+        {%- if shop.metaobjects.lookbook_page_list != blank -%}
+          <div class="Page_lookbook_template_mainloop_new">
+            <div class="Page_lookbook_template_innerloop_new">
+              
+              {%- for custom in shop.metaobjects.lookbook_page_list.values -%}
+                {% paginate custom.lookbook_page_list.value by 10000 %}
+                  {%- for custom in custom.lookbook_page_list.value -%}
+                    {%- if custom.grid_title.value != blank or custom.grid_year_text.value != blank  or custom.grid_video_or_image.value != blank  -%}
+                      <div class="Page_lookbook_template_innerloop_mainboxs_new">
+                        <a href="{{ custom.system.url }}" target="_blank">
+                          <div class="Page_lookbook_template_innerloop_innerboxs_new">
+                            {%- if custom.grid_video_or_image.value != blank -%}
+                              <div class="Page_lookbook_template_innerloop_innerboxs_1_new">
+                                <div class="Page_lookbook_template_innerloop_innerboxs_1_videoimageboth_new">
+                                  {%- if custom.grid_video_or_image.value.sources[1].url contains '.mp4' or custom.grid_video_or_image.value.sources[1].url contains '.MP4' -%}
+                                    <div class="Page_lookbook_template_innerloop_innerboxs_1_videoimage_new">
+                                      <video
+                                        id="Mp4Video-{{ section.id }}-{{ forloop.index0 }}-inner"
+                                        class="video-div"
+                                        data-type="mp4"
+                                        src="{{ custom.grid_video_or_image.value.sources[1].url }}"
+                                        loop muted playsinline autoplay>
+                                      </video>
+                                      
+                                    </div>                                                                  
+                                  {%- else -%}
+                                    <div class="Page_lookbook_template_innerloop_innerboxs_1_videoimage_new">
+                                      {{
+                                        custom.grid_video_or_image.value | 
+                                        image_url: width: img.width | 
+                                        image_tag: widths: '1296, 1512, 1728, 1944, 2048', 
+                                        fetchpriority: 'auto', 
+                                        class:'Full_image_new'
+                                      }}
+                                    </div>
+                                  {%- endif -%}  
+                                </div>
+                              </div>
+                            {%- endif -%}
+                            {%- if custom.grid_title.value != blank or custom.grid_year_text.value != blank -%}
+                              <div class="Page_lookbook_template_innerloop_innerboxs_2_new">
+                                <div class="Page_lookbook_template_innerloop_innerboxs_2_titleyearsboth_new">
+                                  {% if custom.grid_title.value != blank %}{{ custom.grid_title.value }}{% endif %}{% if custom.grid_year_text.value != blank %} | {{ custom.grid_year_text.value }}{% endif %}
+                                </div>
+                              </div>
+                            {%- endif -%}
+                            <div class="Page_lookbook_template_innerloop_innerboxs_2_readmore">READ MORE</div>
+                          </div>
+                        </a>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if paginate.pages > 1 -%}
+                    {% render 'pagination', paginate: paginate %}
+                  {%- endif -%}
+                 {% endpaginate %}
+              {%- endfor -%}
+            </div>
+
+             
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+
+ 
+
+
+{% schema %}
+  {
+    "name": "Page Lookbook Template",
+    "class": "Page_lookbook_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Lookbook"
+      }
+    ]
+  }
+{% endschema %}

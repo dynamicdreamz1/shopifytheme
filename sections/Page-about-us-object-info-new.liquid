@@ -1,0 +1,163 @@
+{%- if section.settings.main_heading_text != blank and section.settings.meta_object_handle_name_text != blank -%}
+  <div class="Index_object_visit_stores_main_new Page_about_us_object_info_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Index_object_visit_stores_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Index_object_visit_stores_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.meta_object_handle_name_text != blank -%}
+          <div class="Index_object_visit_stores_mainloop_new">
+            <div class="Index_object_visit_stores_innerloop_new">
+              <div class="swiper-container Index_visit_stores_slider">
+                <div class="swiper-wrapper">
+                  {% capture value %}{{ section.settings.meta_object_handle_name_text }}{% endcapture %}
+                  {% assign currentMetafield_text = shop.metaobjects[value] %}
+                  {%- for custom in currentMetafield_text.values -%}
+                    {%- for rows in custom.our_stores.value -%}
+                      {%- if rows.thumbnail_video_or_image.value != blank or rows.title.value != blank or rows.address.value != blank or rows.email.value != blank or rows.call.value != blank or rows.opening_hours.value != blank or rows.opening_hours_details.value != blank -%}
+                        <div class="swiper-slide Index_object_visit_stores_innerloop_mainboxs_new">
+                          <div class="Index_object_visit_stores_innerloop_innerboxs_new">
+                            {%- if rows.thumbnail_video_or_image.value != blank -%}
+                              <div class="Index_object_visit_stores_innerloop_innerboxs_mainvideoimage_new">
+                                <a href="{{ rows.system.url }}">
+                                  <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_new">
+                                    {%- if rows.thumbnail_video_or_image.value.sources[1].url contains '.mp4' or rows.thumbnail_video_or_image.value.sources[1].url contains '.MP4' -%}
+                                      <div class="Index_object_visit_stores_innerloop_innerboxs_video_OR_image_new">
+                                        <video
+                                          id="Mp4Video-{{ forloop.index0 }}-inner"
+                                          class="video-div"
+                                          data-type="mp4"
+                                          src="{{ rows.thumbnail_video_or_image.value.sources[1].url }}"
+                                          loop muted playsinline autoplay>
+                                        </video>
+                                      </div>
+                                    {%- else -%}
+                                      <div class="Index_object_visit_stores_innerloop_innerboxs_video_OR_image_new">
+                                        {{
+                                          rows.thumbnail_video_or_image.value | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'Hover_image_new'
+                                        }}
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </a>
+                              </div>
+                            {%- endif -%}
+                            {%- if rows.title.value != blank or rows.address.value != blank or rows.email.value != blank or rows.call.value != blank or rows.opening_hours.value != blank or rows.opening_hours_details.value != blank -%}
+                              <div class="Page_about_us_object_info_maindetails_new">
+                                <div class="Page_about_us_object_info_innerdetails_new">
+                                  {%- if rows.title.value != blank or rows.address.value != blank or rows.email.value != blank or rows.call.value != blank -%}
+                                    <div class="Page_about_us_object_info_innerdetails_1_new">
+                                      <div class="Page_about_us_object_info_innerdetails_1_details_new">
+                                        <div class="Page_about_us_object_info_innerdetails_1_details_iconsboths_new">
+                                          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" transform="translate(0 0.5)" fill="white"/><circle cx="11.5" cy="10" r="2.5" stroke="#262433" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 10C19 15 11.5 22.5 11.5 22.5C11.5 22.5 4 15.5 4 10C4 5.85786 7.35786 2.5 11.5 2.5C15.6421 2.5 19 5.85786 19 10Z" stroke="#262433" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        </div>
+                                        <div class="Page_about_us_object_info_innerdetails_1_details_textsboths_new">
+                                          {%- if rows.title.value != blank -%}
+                                            <div class="Page_about_us_object_info_innerdetails_1_details_title_new">
+                                              {{ rows.title.value }} Store
+                                            </div>
+                                          {%- endif -%}
+                                          {%- if rows.address.value != blank -%}
+                                            <div class="Page_about_us_object_info_innerdetails_1_details_texts_new">
+                                              {{ rows.address.value }}
+                                            </div>
+                                          {%- endif -%}
+                                          {%- if rows.email.value != blank or rows.call.value != blank -%}
+                                            <div class="Page_about_us_object_info_innerdetails_1_details_emailcalls_new">
+                                              {%- if rows.email.value != blank -%}
+                                                <div class="Page_about_us_object_info_innerdetails_1_details_email_new">
+                                                  Email : {{ rows.email.value }}
+                                                </div>
+                                              {%- endif -%}
+                                              {%- if rows.call.value != blank -%}
+                                                <div class="Page_about_us_object_info_innerdetails_1_details_calls_new">
+                                                  Call: {{ rows.call.value }}
+                                                </div>
+                                              {%- endif -%}
+                                            </div>
+                                          {%- endif -%}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  {%- endif -%}
+                                  {%- if rows.opening_hours.value != blank or rows.opening_hours_details.value != blank -%}
+                                    <div class="Page_about_us_object_info_innerdetails_1_new">
+                                      <div class="Page_about_us_object_info_innerdetails_1_details_new">
+                                        <div class="Page_about_us_object_info_innerdetails_1_details_iconsboths_new">
+                                          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" transform="translate(0 0.5)" fill="white"/><path d="M19.6828 17.1877C18.8489 18.5544 17.6654 19.674 16.2546 20.4309C14.8437 21.1877 13.2565 21.5545 11.6566 21.4934C10.0567 21.4323 8.50201 20.9456 7.15297 20.0833C5.80393 19.221 4.70933 18.0145 3.98207 16.5881C3.2548 15.1618 2.92121 13.5672 3.01568 11.9689C3.11016 10.3706 3.62929 8.82651 4.51952 7.49575C5.40976 6.165 6.63888 5.09582 8.08011 4.39849C9.52134 3.70115 11.1225 3.40091 12.7185 3.52872L12 12.5L19.6828 17.1877Z" fill="#F0F0F2"/><circle cx="12" cy="12.5" r="9" stroke="#262433" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 6L11.5 13L15.5 15.5" stroke="#262433" stroke-linecap="round"/></svg>
+                                        </div>
+                                        <div class="Page_about_us_object_info_innerdetails_1_details_textsboths_new">
+                                          <div class="Page_about_us_object_info_innerdetails_1_details_title_new">
+                                            Opening Hours
+                                          </div>
+                                          {%- if rows.opening_hours.value != blank -%}
+                                            <div class="Page_about_us_object_info_innerdetails_1_details_texts_new">
+                                              {{ rows.opening_hours.value }}
+                                            </div>
+                                          {%- endif -%}
+                                          {%- if rows.opening_hours_details.value != blank -%}
+                                            <div class="Page_about_us_object_info_innerdetails_1_details_infos_new">
+                                              ({{ rows.opening_hours_details.value }})
+                                            </div>
+                                          {%- endif -%}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                            {%- endif -%}  
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endfor -%} 
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Page About Us Object Info",
+    "class": "Page_about_us_object_info_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Our Stores"
+      },
+      {
+        "type": "textarea",
+        "id": "meta_object_handle_name_text",
+        "label": "Add Meta Object Handle Name Text",
+        "info": "For EX: index_visit_our_stores Etc..."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page About Us Object Info"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,44 @@
+<div class="Product_review_main_new">
+  {%- if section.settings.main_heading_text != blank -%}
+    <div class="Common_title_new Product_meta_product_list_title_new">
+      <h2>{{ section.settings.main_heading_text }}</h2>
+    </div>
+  {%- endif -%}
+  <!--Stamped - Begin Main Widget -->
+  <div 
+  id="stamped-main-widget"   
+  data-product-id="{{ product.id }}"   
+  data-name="{{ product.title | escape }}"   
+  data-url="{{ shop.url }}{{ product.url }}"   
+  data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+  data-description="{{ product.description | escape }}"   
+  data-product-sku="{{product.handle}}"
+  data-product-type="{{product.type}}">     
+  </div>
+  <!-- Stamped - End Main Widget -->
+</div>
+{% schema %}
+  {
+    "name": "Product Review",
+    "class": "Product_review_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_back_color",
+        "label": "Add Main Background Color",
+        "default": "#f7f7f7"
+      },
+      {
+        "type": "textarea",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Customer Reviews"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Review"
+      }
+    ]
+  }
+{% endschema %}

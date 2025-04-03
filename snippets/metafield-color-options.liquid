@@ -1,0 +1,21 @@
+{% if product.metafields.custom.similar_color_products != blank %}
+  <div class="similar_color_products">
+    <div class="text_media">
+      <span class="color_text">More Colors</span>
+    </div>
+    {% if product.metafields.custom.similar_color_products %}
+      <div class="text_with_image color-options">
+        {% for similar_product in product.metafields.custom.similar_color_products.value %}
+          {% if similar_product.metafields.custom.color_name != blank and similar_product.metafields.custom.color_image != blank %}
+          <a href="{{ similar_product.url }}" class="ancor {% if product.handle == similar_product.handle %}active{% endif %}">
+            <div class="image">
+              <img src="{{ similar_product.metafields.custom.color_image | img_url: '100x' }}" alt="{{ similar_product.title }}" >
+            </div>
+            <div class="text">{{ similar_product.metafields.custom.color_name }}</div>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

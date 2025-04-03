@@ -1,0 +1,106 @@
+{%- style -%}
+  .single-page-align {
+    display:flex;
+    justify-content:center
+  }
+  .desktop_image_new,.mobile_image_new{width:100%}
+{%- endstyle -%}
+
+<div class="multicolumn">
+  <div class="page-width">
+    <div class="image-wrap">
+               {%- for block in section.blocks -%}
+                              {%- if block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank -%}
+                              
+                                <div class="single-page">
+                                  <div class="single-page-align">
+                                     {%- if block.settings.main_desktop_image != blank -%}
+                                          {{
+                                            block.settings.main_desktop_image | 
+                                            image_url: width: img.width | 
+                                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                            fetchpriority: 'auto', 
+                                            class:'desktop_image_new'
+                                          }}
+                                      {%- endif -%}
+                                      {%- if block.settings.main_mobile_image != blank -%}
+                                        {{
+                                          block.settings.main_mobile_image | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'mobile_image_new'
+                                        }}
+                                    {%- endif -%}
+                                    </div>
+                                 </div>
+                                
+                              {%- endif -%}
+               {%- endfor -%}
+      </div>
+     </div>
+ </div>
+{% schema %}
+  {
+    "name": "Single-Image",
+    "class": "section",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_top_heading_text",
+        "label": "Add Main Top Heading Text",
+        "default": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "video_or_image_on_right",
+            "label": "Video OR Image On Right",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "main_mobile_heading_text",
+            "label": "Add Main Mobile Heading Text"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          }      
+          
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Single-Image",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,243 @@
+{%- if section.blocks.size > 0 or page.title != blank or section.settings.main_desktop_mp4_video != blank or section.settings.main_mobile_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+  <div class="Page_press_room_template_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_press_room_template_inner_new">
+        <div class="Page_press_room_template_breadcrumb_new">
+          {% render 'Breadcrumb-navigation-new' %}
+        </div>
+        {%- if page.title != blank or section.settings.main_desktop_mp4_video != blank or section.settings.main_mobile_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+          <div class="Page_press_room_template_mainboxs_new">
+            <div class="Page_press_room_template_innerboxs_new">
+              {%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_mobile_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+                <div class="Page_press_room_template_innerboxs_1_new">
+                  <div class="Page_press_room_template_innerboxs_1_videoimageboth_new">
+                    {%- if section.settings.main_desktop_mp4_video != blank and section.settings.main_mobile_mp4_video != blank -%}
+                      <div class="Page_press_room_template_innerboxs_1_videoimage_new">
+                        {%- if section.settings.main_desktop_mp4_video != blank -%}
+                          {{ section.settings.main_desktop_mp4_video | video_tag: controls: false, autoplay: true, loop: true, class: 'desktop_image_new' }}
+                        {%- endif -%}
+                        {%- if section.settings.main_mobile_mp4_video != blank -%}
+                          {{ section.settings.main_mobile_mp4_video | video_tag: controls: false, autoplay: true, loop: true, class: 'mobile_image_new' }}
+                        {%- endif -%}
+                      </div>
+                    {% else %}  
+                      {%- if section.settings.main_desktop_full_image != blank and section.settings.main_mobile_full_image != blank -%}
+                        <div class="Page_press_room_template_innerboxs_1_videoimage_new">
+                          {%- if section.settings.main_desktop_full_image != blank -%}
+                            {{
+                              section.settings.main_desktop_full_image | 
+                              image_url: width: img.width | 
+                              image_tag: widths: '900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                              fetchpriority: 'auto', 
+                              class:'desktop_image_new'
+                            }}
+                          {%- endif -%}
+                          {%- if section.settings.main_mobile_full_image != blank -%}
+                            {{
+                              section.settings.main_mobile_full_image | 
+                              image_url: width: img.width | 
+                              image_tag: widths: '900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                              fetchpriority: 'auto', 
+                              class:'mobile_image_new'
+                            }}
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
+              {%- if page.title != blank -%}
+                <div class="Page_press_room_template_innerboxs_2_new">
+                  <div class="Page_press_room_template_innerboxs_2_title_new">
+                    <h2>{{ page.title }}</h2>
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Page_press_room_template_mainloop_new">
+            <div class="Page_press_room_template_innerloop_new tabs_collection_main_new">
+              <div class="tab">
+                {%- for block in section.blocks -%}
+                  {%- if block.settings.meta_object_handle_text != blank -%}
+                    {%- assign Flag = 0 -%}
+                    {%- capture value -%}{{ block.settings.meta_object_handle_text }}{%- endcapture -%}
+                    {%- assign currentMetafield_text = shop.metaobjects[value] -%}
+                      {%- if block.settings.title != blank -%}
+                        <button class="tablinks tabs_collection_new{% if forloop.first %} active{% endif %}" tab_id="tab_{{ block.id | replace: '-', '_' }}_{{ forloop.index0 }}">
+                          {{ block.settings.title }}
+                        </button>
+                      {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+              {%- for block in section.blocks -%}
+                {%- if block.settings.meta_object_handle_text != blank -%}
+                  <div class="tabcontent tab_{{ block.id | replace: '-', '_' }}_{{ forloop.index0 }}_open "{% if forloop.first %} style="display:block;"{% endif %} >
+                    <div class="Page_press_room_template_innerloop_mainboxs_main_new"> 
+                      {%- capture value -%}{{ block.settings.meta_object_handle_text }}{%- endcapture -%}
+                      {%- assign currentMetafield_text = shop.metaobjects[value] -%}
+                      {%- for custom in currentMetafield_text.values -%}
+                       {% paginate custom.press.value by 10000 %}
+                          {%- for rows in custom.press.value -%}
+                                  {%- if block.settings.title != blank or rows.grid_video_or_image.value != blank or rows.grid_title_text.value != blank or rows.grid_you_tube_video.value != blank -%}                            
+                                   <div class="Page_press_room_template_innerloop_mainboxs_new Page_press_room_template_innerloop{% if rows.grid_you_tube_video.value %}_innerboxs_video_grid{% endif %}">                            
+                                      {%- if rows.grid_redirect_link.value != blank -%}
+                                        <a href="{{ rows.grid_redirect_link.value }}">
+                                      {%- endif -%}
+                                          <div class="Page_press_room_template_innerloop_innerboxs_new">
+                                            {%- if rows.grid_video_or_image.value != blank or rows.grid_logo_image.value != blank -%}
+                                              <div class="Page_press_room_template_innerloop_innerboxs_mainpart_new">
+                                                <div class="Page_press_room_template_innerloop_innerboxs_innerpart_new">
+                                                  {%- if rows.grid_video_or_image.value != blank -%}
+                                                    <div class="Page_press_room_template_innerloop_innerboxs_innerpart_1_new">
+                                                      <div class="Page_press_room_template_innerloop_innerboxs_innerpart_1_videoimageboth_new">
+                                                        {%- if rows.grid_video_or_image.value.sources[1].url contains '.mp4' or rows.grid_video_or_image.value.sources[1].url contains '.MP4' -%}
+                                                          <div class="Page_press_room_template_innerloop_innerboxs_innerpart_1_video_OR_image_new">
+                                                            <video
+                                                              id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                              class="video-div"
+                                                              data-type="mp4"
+                                                              src="{{ rows.grid_video_or_image.value.sources[1].url }}"
+                                                              loop muted playsinline autoplay>
+                                                            </video>
+                                                          </div>
+                                                        {%- else -%}
+                                                          <div class="Page_press_room_template_innerloop_innerboxs_innerpart_1_video_OR_image_new">
+                                                            {{
+                                                              rows.grid_video_or_image.value | 
+                                                              image_url: width: img.width | 
+                                                              image_tag: widths: '900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                              fetchpriority: 'auto', 
+                                                              class:'Full_image_new'
+                                                            }}
+                                                          </div>
+                                                        {%- endif -%}
+                                                      </div>
+                                                    </div>
+                                                  {%- endif -%}
+                                                  {%- if rows.grid_logo_image.value != blank -%}
+                                                    <div class="Page_press_room_template_innerloop_innerboxs_innerpart_2_new">
+                                                      <div class="Page_press_room_template_innerloop_innerboxs_innerpart_2_logosimageboth_new">
+                                                        {{
+                                                          rows.grid_logo_image.value | 
+                                                          image_url: width: img.width | 
+                                                          image_tag: widths: '900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                          fetchpriority: 'auto', 
+                                                          class:'Logo_image_new'
+                                                        }}
+                                                      </div>
+                                                    </div>
+                                                  {%- endif -%}  
+                                                </div>
+                                              </div>
+                                            {%- endif -%}
+                                            {%- if rows.grid_you_tube_video.value != blank or rows.grid_title_text.value != blank or rows.grid_date_format.value != blank -%}                                                
+                                                    {{ rows.grid_you_tube_video.value }}
+                                          {%- endif -%}
+                                            
+                                            {%- if rows.grid_title_text.value != blank or rows.grid_date_format.value != blank  -%} 
+                                              <div class="Page_press_room_template_innerloop_innerboxs_maindetail_new">
+                                                <div class="Page_press_room_template_innerloop_innerboxs_innerdetail_new">
+                                                  {%- if rows.grid_title_text.value != blank -%}
+                                                    <div class="Page_press_room_template_innerloop_innerboxs_innerdetail_title_new">
+                                                      <h3>{{ rows.grid_title_text.value }}</h3>
+                                                    </div>
+                                                  {%- endif -%}
+                                                  {%- if rows.grid_date_format.value != blank -%}
+                                                    <div class="Page_press_room_template_innerloop_innerboxs_innerdetail_dates_new">
+                                                      {{ rows.grid_date_format.value }}
+                                                    </div>
+                                                  {%- endif -%}  
+                                                </div>                                        
+                                              </div>
+                                            {%- endif -%}  
+                                          </div>
+  
+  
+                                          
+                                          
+                                            
+                                          
+                                      {%- if rows.grid_redirect_link.value != blank -%}
+                                        </a>
+                                      {%- endif -%}
+                                    </div>
+                                  {%- endif -%}
+                          {%- endfor -%}
+                           {%- if paginate.pages > 1 -%}
+                            {% render 'pagination', paginate: paginate %}
+                          {%- endif -%}
+                         {% endpaginate %}
+                        
+                      {%- endfor -%}
+                     
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}  
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Page Press Room Template",
+    "class": "Page_press_room_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "video",
+        "id": "main_desktop_mp4_video",
+        "label": "Add Main Desktop MP4 Video"
+      },
+      {
+        "type": "video",
+        "id": "main_mobile_mp4_video",
+        "label": "Add Main Mobile MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Tab Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "meta_object_handle_text",
+            "label": "Add Meta Object Handle Text",
+            "info": "For EX: press_room_online , press_room_print , press_room_video , press_room_celebrity Etc..."
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

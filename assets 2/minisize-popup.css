@@ -1,0 +1,108 @@
+.minisize-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+}
+.minisize-popup.popup-open {
+    display: flex;
+}
+.minisize-popup-wrap {
+    background-color: #fff;
+    width: 900px;
+    margin: auto;
+    max-width: 92%;
+    max-height: 95vh;
+    overflow: auto;
+    border-radius: 6px;
+    padding: 30px;
+    position: relative;
+}
+.minisize-popup .product-custom {
+    padding: 0;
+    display: flex;
+}
+#close-minisize {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+#close-minisize svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+.minisize-popup .mobile-view-thumbnails {
+    display: none;
+}
+.minisize-image img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+}
+.minisize-image {
+    margin-right: 30px;
+    width: 42%;
+}
+.minisize-popup .product_details {
+    max-width: 55%;
+    flex: 55%;
+    margin-left: 0 !important;
+}
+.minisize-image {
+    margin-right: 30px;
+}
+.minisize-popup .product-form__input_wrap,
+.minisize-popup pickup-availability,
+.minisize-popup .sizeguide,
+.sizeguide[data-modal="mini-size-chart"]{
+    display: none;
+}
+.minisize-popup .product-form__input_wrap.hidden,
+.minisize-popup .sizeguide[data-modal="mini-size-chart"]{
+    display: block !important;
+}
+.minisize-popup .product_whishlist_new {
+    align-self: flex-start;
+}
+.minisize-popup wishlist-button-block .wk-button {
+    width: 20px;
+}
+
+.minisize-popup .product-form__input_wrap input[type=radio].selected + label {
+    background-color: #3f3d4d;
+    color: rgb(var(--color-background));
+}
+
+@media only screen and (max-width: 767px) {
+  .minisize-popup .product-custom {
+    flex-wrap: wrap;
+  }
+  .minisize-image {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .minisize-popup .product_details {
+    max-width: 100%;
+    flex: 100%;
+  }
+  .minisize-popup .upsell-product-variant-size {
+    position: fixed;
+    bottom: 2.6vh;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background-color: #fff;
+    margin: 0 4%;
+    border-radius: 0 0 7px 7px;
+    z-index: 9;
+  }
+  .minisize-popup-wrap {
+    padding: 35px 15px 81px;
+  }
+}

@@ -1,0 +1,156 @@
+{%- if section.settings.main_heading_text != blank and section.settings.meta_object_handle_name_text != blank -%}
+  <div class="Page_Store_google_reviews_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_Store_google_reviews_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Page_Store_google_reviews_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.meta_object_handle_name_text != blank -%}
+          <div class="Page_Store_google_reviews_mainloop_new">
+            <div class="Page_Store_google_reviews_innerloop_new">
+              <div class="swiper-container page_store_google_slider">
+                <div class="swiper-wrapper">
+                  {% capture value %}{{ section.settings.meta_object_handle_name_text }}{% endcapture %}
+                  {% assign currentMetafield_text = shop.metaobjects[value] %}
+                  {%- for custom in currentMetafield_text.values -%}
+                    {%- for rows in custom.our_stores.value -%}
+                      {%- if rows.thumbnail_video_or_image.value != blank or rows.address.value != blank or rows.title.value != blank or rows.get_direction_map_url.value or rows.opening_hours.value != blank or rows.call.value != blank or rows.email.value != blank or rows.visit_our_store_detail.value != blank or rows.book_appointment_url.value != blank -%}
+                        <div class="swiper-slide Page_Store_Slider_innerloop_mainbox">
+                          <div class="Page_Store_slider_innerloop_innerboxs">
+                            {%- if rows.thumbnail_video_or_image.value != blank -%}
+                              <div class="Index_object_visit_stores_innerloop_innerboxs_mainvideoimage_new">
+                                <a href="{{ rows.system.url }}">
+                                  <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_new">
+                                    {%- if rows.thumbnail_video_or_image.value.sources[1].url contains '.mp4' or rows.thumbnail_video_or_image.value.sources[1].url contains '.MP4' -%}
+                                      <div class="Index_object_visit_stores_innerloop_innerboxs_video_OR_image_new">
+                                        <video
+                                          id="Mp4Video-{{ forloop.index0 }}-inner"
+                                          class="video-div"
+                                          data-type="mp4"
+                                          src="{{ rows.thumbnail_video_or_image.value.sources[1].url }}"
+                                          loop muted playsinline autoplay>
+                                        </video>
+                                      </div>
+                                    {%- else -%}
+                                      <div class="Index_object_visit_stores_innerloop_innerboxs_video_OR_image_new">
+                                        {{
+                                          rows.thumbnail_video_or_image.value | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'Hover_image_new'
+                                        }}
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </a>
+                              </div>
+                            {%- endif -%}
+                            
+                            {%- if rows.title.value != blank -%}
+                                <h3>KALKI {{ rows.title.value }} store</h3>
+                           {%- endif -%}
+                            {%- if rows.address.value != blank -%}
+                               <p>{{ rows.address.value }}</p>  
+                            {%- endif -%}
+                            {%- if rows.get_direction_map_url.url != blank -%}
+                              <a href="{{ rows.get_direction_map_url.url }}"  target="_blank">Get Direction</a>
+                            {%- endif -%}
+                             <h3>Opening hours</h3>
+                            {%- if rows.opening_hours.value != blank -%}
+                                <p>{{ rows.opening_hours.value }}</p>
+                            {%- endif -%}
+                              <h3>Contact</h3>
+                            {%- if rows.call.value != blank -%}
+                                <p>Tel :{{ rows.call.value }}</p>
+                            {%- endif -%}
+                            {%- if rows.email.value != blank -%}
+                                <p>Email :{{ rows.email.value }}</p>
+                            {%- endif -%}
+                            
+                            <div class="Page_Store_slider_innerloop_buttonbox">
+                                    {%- if rows.system.url != blank -%}
+                                      <a href="{{ rows.system.url }}" target="_blank"> VIEW DETAILS <span> <svg width="12" height="12" viewBox="0 0 22 22"
+                                                                      fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                                      class="cmsb666-hover:bg-223330 cmsb666-bg-transparent cmsb666-transition-all cmsb666-duration-500 cmsb666-ease-in-out group-hover:brightness-[100]">
+                                                                      <path d="M8 4L15 11L8 18" stroke="#0F0D1A" stroke-width="2" stroke-linecap="round"
+                                                                          stroke-linejoin="round"></path>
+                                                                  </svg> </span> 
+                                      </a>
+                                      {%- endif -%}
+                                     
+                                       {%- if rows.book_appointment_url.value != blank -%}
+                                          <a href="{{ rows.book_appointment_url.value }}" target="_blank">BOOK APPOINTMENT</a>
+                                      {%- endif -%}
+                             
+                            </div>
+                            {% comment %}
+                            {%- if rows.address.value != blank -%}
+                              <div class="Index_object_visit_stores_innerloop_innerboxs_mainvideoimage_details_new">
+                                <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_details_new">
+                                  {%- if rows.address.value != blank -%}
+                                    <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_titles_new">
+                                      {{ rows.address.value }}
+                                    </div>
+                                  {%- endif -%}
+                                  {%- if rows.system.url != blank -%}
+                                    <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_button_new">
+                                      <a href="{{ rows.system.url }}">
+                                        View Details <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.06074 3H13.5M13.5 3V10.3333M13.5 3L3.5 13" stroke="black" stroke-width="1.6" stroke-linecap="square"/></svg>
+                                      </a>
+                                    </div>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                            {%- endif -%}  
+                        {% endcomment %}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endfor -%} 
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Page Store Detail Slider",
+    "class": "page_store_detail_slider_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Visit our Store"
+      },
+      {
+        "type": "textarea",
+        "id": "meta_object_handle_name_text",
+        "label": "Add Meta Object Handle Name Text",
+        "info": "For EX: index_visit_our_stores Etc..."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Store Detail Slider"
+      }
+    ]
+  }
+{% endschema %}

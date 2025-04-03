@@ -1,0 +1,70 @@
+<div class="fireworks-section lazy-load-section">
+  <template>
+  <div class="Index_title_main_new" style="background: #ffffff;" bis_skin_checked="1">
+    <div class="page-width" bis_skin_checked="1">
+      {% if section.settings.title != blank %}
+        <div class="Index_title_inner_new" bis_skin_checked="1">
+            <div class="Common_title_new Index_title_title_new" bis_skin_checked="1">
+              <h2>{{ section.settings.title }}</h2>
+            </div>
+        </div>
+      {% endif %}
+      {% if section.settings.playlist_id != blank %}   
+        {% if section.settings.fireWorks_old == false %}
+          <!-- This belongs to <head/> -->
+          <script src='//asset.fwcdn3.com/js/storyblock.js' defer></script>
+          <!-- This belongs to <body/> -->
+          <fw-storyblock
+            channel="kalkifashion"
+            playlist="{{ section.settings.playlist_id }}"
+            autoplay="true"
+            branding="false"
+          ></fw-storyblock>
+        {% else %}
+          <fw-embed-feed
+            channel="kalkifashion"
+            playlist="{{ section.settings.playlist_id }}"
+            mode="row"
+            open_in="default"
+            max_videos="1"
+            placement="middle"
+            branding="false"
+            player_placement="bottom-right"                                         
+          ></fw-embed-feed>
+          <script async type="text/javascript" src="//asset.fwcdn3.com/js/embed-feed.js"></script>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  </template>
+</div>
+
+
+{% schema %}
+  {
+    "name": "FireWorks Embed Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "playlist_id",
+        "label": "Playlist Id"
+      },
+      {
+        "type": "checkbox",
+        "id": "fireWorks_old",
+        "default": false,
+        "label": "Use fireWorks old style"
+      },
+    ],
+    "presets": [
+      {
+        "name": "FireWorks Embed Section"
+      }
+    ]
+  }
+{% endschema %}

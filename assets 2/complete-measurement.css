@@ -1,0 +1,73 @@
+.complete_measurement {
+    max-width: 420px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 58px 20px;
+    background-color: #fff;
+    z-index: 999;
+  border-radius:10px;
+}
+.complete_measurement .inner_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.complete_measurement .icon {
+    margin-bottom: 16px;
+}
+.complete_measurement .icon svg{ width:64px; }
+.complete_measurement .content {
+    margin-bottom: 30px;
+    max-width: 260px;
+}
+.complete_measurement .content_title {
+    text-transform: capitalize;
+    margin-bottom: 16px;
+    font-family: var(--font-body-family);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 120%;
+    letter-spacing: 0;
+    text-align: center;
+}
+.complete_measurement .btn {
+    padding: 7px 10px;
+    cursor: pointer;
+    border: 2px solid #223330;
+    border-radius: 5px;
+    background-color: #fff;
+  min-width:134px;
+}
+.complete_measurement .btn_text {
+    text-transform: uppercase;
+     font-family: var(--font-body-family);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.52px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+}
+.complete_measurement .btn:hover{ background:#223330; }
+.complete_measurement .btn:hover .btn_text{ color:#fff; }
+.complete_measurement .content_description {
+    display: block;
+     font-family: var(--font-body-family);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 125%;
+    letter-spacing: 0.16px;
+    text-align: center;
+}
+@media screen and (max-width:749px) {
+    .complete_measurement {
+        max-width: 340px;
+        padding: 24px 14px;
+    }
+}

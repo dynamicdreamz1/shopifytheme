@@ -1,0 +1,129 @@
+{%- if page.metafields.custom.page_object_faqs_selection != blank -%}
+  <div class="Page_Store_detail_objects_faqs_main_new Page_bridal_detail_objects_faqs_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_Store_detail_objects_faqs_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Page_Store_detail_objects_faqs_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if page.metafields.custom.page_object_faqs_selection != blank -%}
+          {% assign totalCount = 0 %}
+          {%- assign features = page.metafields.custom.page_object_faqs_selection.value -%}
+          <div class="Page_Store_detail_objects_faqs_mainloop_new">
+            <div class="Page_Store_detail_objects_faqs_innerloop_new Common_faqs_accordion_new">
+              <div class="accordion">
+                <ul class="list-unstyled">
+                  {% assign counter = 0 %}
+                  {%- for i in (1..15) -%}
+                    {%- assign Question = 'question_' | append: forloop.index -%}
+                    {%- assign Answer = 'answer_' | append: forloop.index -%}
+                    {%- if features[Question].value != blank and features[Answer].value != blank -%}
+                      {% assign counter = counter | plus: 1 %}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {% assign half_counter = counter | divided_by: 2 | plus: 1 %}
+
+                  {% assign cti = 1 %}
+                  {%- for i in (1..15) -%}
+                    
+                    {% if cti == 1 %}
+                    <div class="Page_Store_detail_objects_faqs_innerloop_half_new">
+                    {% endif %}
+                      
+                      {%- assign Question = 'question_' | append: forloop.index -%}
+                      {%- assign Answer = 'answer_' | append: forloop.index -%}
+                      {%- if features[Question].value != blank and features[Answer].value != blank -%}
+                        {% assign totalCount = totalCount | plus: 1 %}
+                        <li>
+                          {%- if features[Question].value != blank -%}
+                            <div class="question">
+                              <h2>{{ features[Question].value }}</h2>
+                            </div>
+                          {%- endif -%}
+                          {%- if features[Answer].value != blank -%}
+                            <div class="answer">
+                              {{ features[Answer] | metafield_tag }}
+                            </div>
+                          {%- endif -%}
+                        </li>
+                      {%- endif -%}
+                      
+                      {% assign cti = cti | plus: 1 %}
+                      {% if cti == half_counter %}
+                        {% assign cti = 1 %}
+                      {% endif %}
+                      
+                    {% if cti == 1 %}
+                    </div>
+                    {% endif %}
+                    
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+
+
+
+
+{%- if page.metafields.custom.page_object_faqs_selection != blank -%}
+  {%- assign features = page.metafields.custom.page_object_faqs_selection.value -%}
+          <script type="application/ld+json">
+            {
+              "@context":"https:\/\/schema.org",
+              "@type":"FAQPage",
+              "mainEntity":[
+              {%- for i in (1..totalCount) -%}
+                {%- assign Question = 'question_' | append: forloop.index -%}
+                {%- assign Answer = 'answer_' | append: forloop.index -%}
+                {%- if features[Question].value != blank and features[Answer].value != blank -%}
+                  {
+                    "@type": "Question",
+                    "name": "{{ features[Question].value }}",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "{{ features[Answer] | metafield_tag | strip_html }}"
+                    }
+                  } {% unless forloop.index == totalCount %},{% endunless %}
+                {%- endif -%}
+              {%- endfor -%}
+              ]
+            }
+          </script>
+
+
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Page Bridal Objects FAQs",
+    "class": "Page_bridal_objects_faqs_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "FAQ's"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Bridal Objects FAQs"
+      }
+    ]
+  }
+{% endschema %}

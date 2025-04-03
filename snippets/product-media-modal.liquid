@@ -23,7 +23,7 @@
       class="product-media-modal__toggle"
       aria-label="{{ 'accessibility.close' | t }}"
     >
-      {{ 'icon-close.svg' | inline_asset_content }}
+      {% render 'icon-close' %}
     </button>
 
     <div
@@ -32,12 +32,38 @@
       aria-label="{{ 'products.modal.label' | t }}"
       tabindex="0"
     >
-      {%- liquid
-        if product.selected_or_first_available_variant.featured_media != null
-          assign media = product.selected_or_first_available_variant.featured_media
-          render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
-        endif
-      -%}
+
+
+<div class="swiper-container product-modal-main-slider">
+   <button
+        type="button"
+        class="swiper-button-prev"
+      >
+       
+      </button>
+      <button
+        type="button"
+        class="swiper-button-next"
+      >
+      
+      </button>
+    <div
+      class="swiper-wrapper"
+      role="list"
+    >
+      
+     
+      
+       
+        {%- if product.selected_or_first_available_variant.featured_media != null -%}
+          {%- assign media = product.selected_or_first_available_variant.featured_media -%}
+           <div
+            class="swiper-slide" data-index="0"
+            >
+          {%- render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants -%}
+           </div>
+        {%- endif -%}
+      
 
       {%- for media in product.media -%}
         {%- liquid
@@ -45,13 +71,23 @@
             assign variant_image = true
           else
             assign variant_image = false
-          endif
-
-          unless media.id == product.selected_or_first_available_variant.featured_media.id
-            render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
-          endunless
+          endif 
         -%}
+        
+          {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
+         <div
+            class="swiper-slide" data-index="{{ forloop.index0 }}"
+            >
+            {%- render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image -%}
+         </div>
+          {%- endunless -%}
+        
       {%- endfor -%}
+
+
+    </div>
+  </div>
+      
     </div>
   </div>
 </product-modal>

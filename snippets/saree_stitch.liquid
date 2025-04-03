@@ -1,0 +1,27 @@
+{%  assign learn_more_media_ = learn_more_media %}
+{{ 'upsell-media-popup.css' | asset_url | stylesheet_tag }}
+
+{% if product.metafields.custom.saree_stitching_option != blank %}
+  <div class="Option_drop" js-upsell-product js-khadi-saree-upsell>
+    <div class="Unstitched_with_text">
+      <h3 class="Unstitched_title">Convert into Ready to Wear Saree</h3>
+      {%  if tooltip_text != blank %}
+        <div class="tooltip">
+          {% render 'tooltip', tooltip_text: tooltip_text %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="option_text flex" js-stitch-upsell-wrap>
+      {% render 'upsell-product-input', 
+      product_: product.metafields.custom.saree_stitching_option.value, 
+      has_image: false, learn_more_media: learn_more_media, 
+      stitch_return_note: 'No returns/exchange on stitched products' ,
+        snippet_name: "saree"
+      %}
+    </div>
+  </div>
+{% endif %}
+
+{% if learn_more_media_ %}
+  <script src="{{ 'upsell-media-popup.js' | asset_url }}" defer="defer"></script>
+{% endif %}

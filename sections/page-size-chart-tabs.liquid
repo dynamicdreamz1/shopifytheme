@@ -1,0 +1,172 @@
+{%- style -%}
+  .desktop_image_new,.mobile_image_new{width:100%;}
+  .template--size-chart.size-chart_page_new .size-chart{padding-bottom:24px; padding-top: 0;}
+  .template--size-chart #MainContent {
+    padding-top: 11px;
+    padding-bottom: 80px;
+  }
+  .page_size_chart_tabs_inner_new.page_store_detail_tabs_inner_new .tab {
+      gap: 0;
+  }
+  .template--size-chart .Header_announcement_bar_new,
+  .template--size-chart .shopify-section-group-header-group,
+  .template--size-chart .Page_template_breadcrumb_new,
+  .template--size-chart .shopify-section-group-footer-group {
+    display: none;
+  }
+  .template--size-chart .Page_template_title_new h1 {
+      font-size: 40px;
+  }
+  @media screen and (min-width: 750px) {
+    .desktop_image_new,.mobile_image_new{width:70%;display: block;margin: 0 auto;}
+  }
+  @media screen and (max-width: 749px) {
+    .template--size-chart .Page_template_title_new h1 {
+      font-size: 30px;
+      text-align: center;
+    }
+  }
+  
+{%- endstyle -%} 
+{%- liquid
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+  if section.settings.color_scheme == section.settings.section_color_scheme and section.settings.content_layout == 'no-overlap'
+    assign remove_color_classes = true
+  endif
+-%}
+<div class="page-width">
+      <div class="page_size_chart_tabs_inner_new page_store_detail_tabs_inner_new tabs_collection_main_new">
+      
+              <div class="tab">
+               {% comment %}
+                <button class="tablinks tabs_collection_new active" tab_id="tab_women">
+                       Women
+                </button>
+                 {% endcomment %}
+                {%- for block in section.blocks -%}
+                  {%- if block.settings.heading != blank -%}
+                      <button class="tablinks tabs_collection_new" tab_id="tab_{{ block.settings.heading | handleize }}">
+                       {{ block.settings.heading }}
+                      </button>
+                   {%- endif -%}
+                {%- endfor -%} 
+              
+            </div>
+        {% comment %}
+          <div class="tabcontent tab_women_open" style="display:block;">
+                <div class="page_store_detail_tabs_maindetail_new">
+                   <div class="page_store_detail_tabs_innerdetail_new">
+                     
+                       <img src="https://newcdn.kalkifashion.com/media/wysiwyg/Women_sizechart.png" alt="" class="desktop_image_new"> 
+                       <img src="https://newcdn.kalkifashion.com/media/wysiwyg/Women_sizechart.png" alt="" class="mobile_image_new"> 
+                    </div>
+                </div>
+          </div> 
+        {% endcomment %}
+           {%- for block in section.blocks -%}
+               {%- if block.settings.heading != blank or block.settings.liquid != blank or block.settings.image != blank -%}
+                    <div class="tabcontent tab_{{ block.settings.heading | handleize }}_open" style="display:{%- if forloop.first %}block{% else %}none{% endif %};">
+                      <div class="page_store_detail_tabs_maindetail_new">
+                         {%- if block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank -%}
+                          <div class="page_store_detail_tabs_innerdetail_new">
+                             {%- if block.settings.main_desktop_image != blank -%}
+                                  {{
+                                    block.settings.main_desktop_image | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'desktop_image_new'
+                                  }}
+                              {%- endif -%}
+                              {%- if block.settings.main_mobile_image != blank -%}
+                                  {{
+                                    block.settings.main_mobile_image | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'mobile_image_new'
+                                  }}
+                              {%- endif -%}
+                          </div>
+                          {%- endif -%}
+                        {%- if block.settings.liquid != blank -%}
+                           <div class="page_store_detail_tabs_innerdetail_new">
+                            {{ block.settings.liquid }}
+                          </div>
+                          {%- endif -%}
+                      </div>
+                    </div>  
+                {%- endif -%}
+            {%- endfor -%} 
+           
+              
+           
+   
+      </div>
+    </div>
+
+
+
+
+{% schema %}
+  {
+    "name": "Page Size Chart Tabs",
+    "class": "page_store_detail_tabs",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_back_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "AddTab",
+        "name": "Add New Tab",
+        "settings": [
+         
+          {
+            "type": "inline_richtext",
+            "id": "heading",
+            "default": "Image with text",
+            "label": "Heading Text"                       
+          },
+          {
+            "type": "liquid",
+            "id": "liquid",
+            "label": "Add any HTML content into content area"
+          },
+          {
+            "type": "header",
+            "content": "Or"
+          },
+           {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          }
+        ]
+      }      
+    ],
+    "presets": [
+      {
+        "name": "Page Size Chart Tabs",
+        "blocks": [
+        {
+          "type": "AddTab"
+        }
+      ]
+      }
+      
+    ]
+  }
+{% endschema %}

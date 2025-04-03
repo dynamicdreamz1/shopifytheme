@@ -1,0 +1,172 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Index_round_column_list_main_new {{ section.settings.customClass }}" style="background: {{ section.settings.main_background_color }};">
+    <div class="Index_round_column_list_inner_new">
+      {%- if section.blocks.size > 0 -%}
+        <div class="page-width">
+          <div class="Index_round_column_list_1_new">
+            <div class="Index_round_column_list_1_allloop_new">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'texts_with_links' -%}
+                  {%- if block.settings.title != blank -%}
+                    <div class="Index_round_column_list_1_allloop_mainboxs_new{% if block.settings.activation %} active{% endif %}">
+                      <div class="Index_round_column_list_1_allloop_innerboxs_new">
+                        <a href="{{ block.settings.redirect }}" style="color:{{ block.settings.title_color }};">
+                          {{ block.settings.title }}
+                        </a>
+                      </div>
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="Index_round_column_list_2_new">
+          <div class="Index_round_column_list_2_allloop_new">
+            <div class="swiper-container Index_round_column_slider">
+              <div class="swiper-wrapper">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'image_with_text_column' -%}
+                    {%- if block.settings.image != blank and block.settings.title != blank -%}
+                      <div class="swiper-slide Index_round_column_list_2_allloop_mainboxs_new">
+                        <div class="Index_round_column_list_2_allloop_innerboxs_new">
+                          <a href="{{ block.settings.redirect }}">
+                            {%- if block.settings.image != blank -%}
+                              <div class="Index_round_column_list_2_allloop_innerboxs_image_new">
+                                {{
+                                  block.settings.image | 
+                                  image_url: width: img.width | 
+                                  image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                  fetchpriority: 'auto', 
+                                  class:'Full_image_new',
+                                  loading: 'lazy'
+                                }}
+                              </div>
+                            {%- endif -%}
+                            {%- if block.settings.title != blank -%}
+                              <div class="Index_round_column_list_2_allloop_innerboxs_title_new">
+                                <p>{{ block.settings.title }}</p>
+                              </div>
+                            {%- endif -%}
+                          </a>
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Index Round Column List",
+    "class": "Index_round_column_list_new",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "customClass",
+        "label": "Add Custom Class",
+        "info": "Bridal_coll_round_column_list_new"
+      },
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "texts_with_links",
+        "name": "Texts With Links",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "url",
+            "id": "redirect",
+            "label": "Add Main Redirect Link",
+            "default": "/"
+          },
+          {
+            "type": "checkbox",
+            "id": "activation",
+            "label": "Add Main Active Class",
+            "default": false
+          },
+          {
+            "type": "color",
+            "id": "title_color",
+            "label": "Add Heading Color"
+          }
+        ]
+      },
+      {
+        "type": "image_with_text_column",
+        "name": "Image With Text Column",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "url",
+            "id": "redirect",
+            "label": "Add Main Redirect Link",
+            "default": "/"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Round Column List",
+        "blocks": [
+          {
+            "type": "texts_with_links"
+          },
+          {
+            "type": "texts_with_links"
+          },
+          {
+            "type": "texts_with_links"
+          },
+          {
+            "type": "texts_with_links"
+          },
+          {
+            "type": "image_with_text_column"
+          },
+          {
+            "type": "image_with_text_column"
+          },
+          {
+            "type": "image_with_text_column"
+          },
+          {
+            "type": "image_with_text_column"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,91 @@
+
+  
+
+   <div class="page-width">
+    <ul class="buying-guide-inner-ul">
+      {%- for blocks in section.blocks -%}
+        {%- if blocks.settings.image != blank or blocks.settings.heading != blank or blocks.settings.text != blank-%}
+          <li>
+              {%- if blocks.settings.image != blank -%}
+                      {%- if blocks.settings.image.sources[1].url contains '.mp4' or blocks.settings.image.sources[1].url contains '.MP4' -%}
+                        
+                          <video
+                            id="Mp4Video-{{ forloop.index0 }}-inner"
+                            class="video-div"
+                            data-type="mp4"
+                            src="{{ blocks.settings.image.sources[1].url }}"
+                            loop muted playsinline autoplay>
+                          </video>
+                        
+                      {%- else -%}
+                        
+                          {{
+                            blocks.settings.image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'Hover_image_new'
+                          }}
+                        
+                      {%- endif -%}
+                {%- endif -%}
+              <h2>
+                {{ blocks.settings.heading }}
+              </h2>
+              
+             
+              
+               {{ blocks.settings.text }}
+              
+          </li>
+      {%- endif -%} 
+        {%- endfor -%}
+      </ul>
+  </div>
+ 
+
+
+{% schema %}
+  {
+    "name": "buying guide multi column",
+    "class": "page_store_detail_slider_new",
+    "settings": [
+      
+    ],
+    "blocks": [
+       {
+      "type": "column",
+      "name": "column",
+       "settings": [
+                      {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "t:sections.multirow.blocks.row.settings.image.label"
+                      },
+                      {
+                        "type": "inline_richtext",
+                        "id": "heading",
+                        "default": "Row",
+                        "label": "t:sections.multirow.blocks.row.settings.heading.label"
+                      },
+                      {
+                        "type": "richtext",
+                        "id": "text",
+                        "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                        "label": "t:sections.multirow.blocks.row.settings.text.label"
+                      }
+                    ]
+       }
+    ],
+    "presets": [
+      {
+        "name": "buying guide multi column",
+        "blocks": [
+        {
+          "type": "column"
+        }
+        ]
+      }
+    ]
+  }
+{% endschema %}

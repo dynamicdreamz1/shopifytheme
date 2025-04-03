@@ -1,0 +1,178 @@
+{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+{%- endstyle -%}
+{%- liquid
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+  if section.settings.color_scheme == section.settings.section_color_scheme and section.settings.content_layout == 'no-overlap'
+    assign remove_color_classes = true
+  endif
+-%}
+
+
+<div class="section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }} ">
+  <div class="page-width rumi-image-with-text-section">
+{%- for block in section.blocks -%}
+      {%- if block.settings.image != blank or block.settings.image_behavior != blank or block.settings.page_width != blank or block.settings.text != blank or block.settings.textsub != blank or block.settings.textsub2 != blank -%}
+              <div class="rumi-testimonial-box">
+                  <div class="rumi-testimonial-box-image">
+                           
+                          {%- if block.settings.image != blank -%}
+                            {%- if block.settings.image_behavior == 'ambient' or block.settings.image_behavior == 'zoom-in' -%}
+                              {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
+                              {%- capture sizes -%}
+                                (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
+                                (min-width: 750px) calc((100vw - 130px) / 1.667), calc((100vw - 50px) / 1.667)
+                              {%- endcapture -%}
+                            {%- else -%}
+                              {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
+                              {%- capture sizes -%}
+                                (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+                                (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+                              {%- endcapture -%}
+                            {%- endif -%}
+                            {{ block.settings.image | image_url: width: 1500 | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority }}
+                          {%- else -%}
+                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {%- endif -%}      
+                   
+                  </div>
+                  <div class="rumi-testimonial-box-text" >
+                    
+                         <div class="maintext">{{ block.settings.text }}</div>
+              
+                        <div class="maintext">{{ block.settings.textsub }}</div>
+              
+                        
+                        <div class="maintext subtext2">{{ block.settings.textsub2 }}</div>
+                      
+                    
+                  </div>
+              </div>
+    {%- endif -%}
+{%- endfor -%}  
+
+
+
+
+    
+    
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rumifooter image&text",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 36
+      }
+  ],
+  "blocks": [
+    {
+        "type": "RoundImage",
+        "name": "roundimage",
+        "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "t:sections.image-with-text.settings.image.label"
+            },
+            {
+              "type": "range",
+              "id": "padding_top",
+              "min": 0,
+              "max": 100,
+              "step": 4,
+              "unit": "px",
+              "label": "t:sections.all.padding.padding_top",
+              "default": 36
+            },
+            {
+              "type": "range",
+              "id": "padding_bottom",
+              "min": 0,
+              "max": 100,
+              "step": 4,
+              "unit": "px",
+              "label": "t:sections.all.padding.padding_bottom",
+              "default": 36
+            },
+             {
+                "type": "richtext",
+                "id": "text",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "speech"
+              },
+              {
+                "type": "richtext",
+                "id": "textsub",
+                "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                "label": "Name of celebrity"
+              },                
+              {
+                  "type": "richtext",
+                  "id": "textsub2",
+                  "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                  "label": "position"
+                },
+              {
+                "type": "select",
+                "id": "text_style",
+                "options": [
+                  {
+                    "value": "body",
+                    "label": "t:sections.image-with-text.blocks.text.settings.text_style.options__1.label"
+                  },
+                  {
+                    "value": "subtitle",
+                    "label": "t:sections.image-with-text.blocks.text.settings.text_style.options__2.label"
+                  }
+                ],
+                "default": "body",
+                "label": "t:sections.image-with-text.blocks.text.settings.text_style.label"
+              }
+              
+          ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rumifooter image&text",
+      "blocks": [
+        {
+          "type": "RoundImage"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,218 @@
+.sales_timer_wrapper {
+    position: relative;
+    background-image: url('https://cdn.shopify.com/s/files/1/0833/7149/1608/files/wishlist-bg-plp-12-june-23.jpg?v=1739443025');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 20px;
+    overflow: hidden;
+    margin: 0 auto
+}
+@media only screen and (max-width: 530px) {
+    .sales_timer_wrapper .relative-div {
+        padding:20px
+    }
+}
+.sales_timer_wrapper .sale-logo-absolut {
+    position: relative;
+    text-align: center
+}
+.sales_timer_wrapper .startin-text-big {
+    font-size: 26px;
+    color: #000;
+    text-align: center;
+    width: 100%
+}
+.sales_timer_wrapper .startin-text-big2 {
+    width: 20%;
+    text-align: left
+}
+.sales_timer_wrapper .timer-div1 {
+    width: 20%
+}
+.sales_timer_wrapper .startin-text-big1 {
+    position: relative;
+    width: 80%
+}
+.sales_timer_wrapper .center-line {
+    width: 90px;
+    height: 50px;
+    position: relative
+}
+.sales_timer_wrapper .center-line::after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 400%;
+    background-color: #fff;
+    right: 50%;
+    left: 50%;
+    top: -200%;
+    transform: rotate(18deg)
+}
+.sales_timer_wrapper .startin-text,.sales_timer_wrapper .wishlist-btn {
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    width: 30%;
+    flex-shrink: 1;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+.sales_timer_wrapper .wishlist-btn {
+    padding: 8px 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #fff!important;
+    text-transform: uppercase;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 5px auto 0;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: #000;
+    border-radius: 3px
+}
+.sales_timer_wrapper .wishlist-btn:hover {
+    font-size: 12px;
+    color: #fff;
+    text-decoration: none
+}
+.sales_timer_wrapper .flash-block {
+    width: 80%
+}
+.sales_timer_wrapper .flash-block-inner {
+    display: flex
+}
+.sales_timer_wrapper .wishlist-timer-icon {
+    padding: 5px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    margin-right: 10px
+}
+.sales_timer_wrapper .timer {
+    text-align: center;
+    font-size: 40px;
+    color: #000
+}
+.sales_timer_wrapper .timer-div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.sales_timer_wrapper .timer-wraper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 30px 0 0;
+    line-height: 1;
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+    position: relative
+}
+.sales_timer_wrapper .timer-wraper::after {
+    content: ":";
+    position: absolute;
+    top: 0;
+    right: -20px;
+    font-size: 33px;
+    color: #000;
+}
+.sales_timer_wrapper .timer-wraper:last-child:after {
+    display: none
+}
+.sales_timer_wrapper .timer-wraper-no-mar {
+    margin: 0 !important;
+}
+.offer-banner-with-timer #tagalys-namespace {
+    margin-top: 40px;
+}
+.offer-banner-after-sale, 
+.sales_timer_wrapper,
+.timer-finished #tagalys-namespace{
+    display: none;
+}
+.timer-started .sales_timer_wrapper,
+.timer-finished .offer-banner-after-sale {
+    display: block;
+}
+.sales_timer_wrapper .flash-block-inner img {
+    max-width: 100%;
+}
+/* Timer on product */
+.product-custom .offer-banner-with-timer {
+    margin-bottom: 20px;
+}
+.product-custom .sales_timer_wrapper .timer-div,
+.product-custom .sales_timer_wrapper .flash-block-inner {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.product-custom .sales_timer_wrapper .startin-text, .product-custom .sales_timer_wrapper .wishlist-btn {
+    width: 100%;
+    justify-content: center;
+}
+.product-custom .sales_timer_wrapper .startin-text-big1, .product-custom .sales_timer_wrapper .flash-block {
+    width: 100%;
+}
+.product-custom .sales_timer_wrapper .flash-block-inner img {
+    max-width: 200px;
+}
+.product-custom .sales_timer_wrapper .timer-div1 {
+    width: 100%;
+}
+.product-custom .sales_timer_wrapper .startin-text-big {
+    font-size: 20px;
+    line-height: normal;
+    margin: 15px 0;
+}
+.product-custom .sales_timer_wrapper .timer {
+    font-size: 30px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .sales_timer_wrapper .startin-text-big {
+    font-size: 20px;
+  }
+  .sales_timer_wrapper .timer {
+    font-size: 32px;
+  }
+  .sales_timer_wrapper .timer-wraper {
+    margin-right: 24px;
+  }
+  .sales_timer_wrapper .timer-wraper:after {
+    right: -16px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .sales_timer_wrapper .startin-text-big {
+    font-size: 20px;
+    line-height: normal;
+    width: 100%;
+    margin: 18px 0;
+  }
+  .sales_timer_wrapper .timer {
+    font-size: 32px;
+  }
+  .sales_timer_wrapper .timer-div {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }
+  .sales_timer_wrapper .flash-block,
+  .sales_timer_wrapper .startin-text, 
+  .sales_timer_wrapper .wishlist-btn {
+    width: 100%;
+  }
+  .sales_timer_wrapper .flash-block-inner {
+    display: block;
+  }
+  .sales_timer_wrapper .flash-block-inner img {
+    width: 200px;
+  }
+  
+}

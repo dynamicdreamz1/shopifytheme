@@ -1,0 +1,24 @@
+<div class="Page_template_main_new Page_weaves_template_main_new" style="background: {{ section.settings.main_background_color }};">
+  <div class="page-width">
+    <div class="Page_template_inner_new">
+      <div class="Page_template_breadcrumb_new">
+        {% render 'Breadcrumb-navigation-new' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Page Weaves Template",
+    "class": "Page_weaves_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ]
+  }
+{% endschema %}

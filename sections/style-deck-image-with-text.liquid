@@ -1,0 +1,111 @@
+{{ 'style-deck.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding">
+  <div class=" page-width">
+    <div class="style-deck-filter"> 
+      <select id="sel_occ">
+        <option>Select Occasion</option>
+        <option value="haldi">Haldi</option>
+      </select> 
+      <select id="sel_theme" onchange="javascript:handleSelect(this)">
+        <option>Select Theme</option>
+      </select>
+      <script>
+        window.addEventListener("load", function() {
+            document.getElementById("sel_occ").addEventListener("change", function() {
+                var selone = this.value;
+                if (selone == "haldi") {
+                    document.getElementById("sel_theme").innerHTML = "<option>Select Theme</option><option value='/pages/laal-ishq'>Laal Ishq</option><option value='/pages/shaam-gulabi'>Shaam Gulabi</option><option value='/pages/pastel-skies'>Pastel Skies</option><option value='/pages/sasural-genda-phool'>Sasural Genda Phool</option>";
+                }
+            });
+        });
+        function handleSelect(elm) {
+            window.location = elm.value;
+        }
+      </script>
+    </div>
+    <div class="style-deck-image-wrap">
+      <div class="style-deck-image">
+        {%- assign widths = '165, 360, 535, 750, 1080' -%}
+            {%- capture sizes -%}
+          (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+          (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+        {%- endcapture -%}
+        {{
+          section.settings.image
+          | image_url: width: section.settings.image.width
+          | image_tag: sizes: sizes, widths: widths
+        }}
+      </div>
+      <div class="style-deck-content">
+        {{ section.settings.text }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Style deck image text",
+  "tag": "section",
+  "class": "style-deck-image-with-text",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 52
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.image-with-text.settings.image.label"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Content"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Style deck image with text"
+    }
+  ]
+}
+{% endschema %}

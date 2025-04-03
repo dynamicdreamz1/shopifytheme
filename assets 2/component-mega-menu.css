@@ -1,0 +1,189 @@
+.mega-menu {
+  position: static;
+}
+
+.mega-menu__content {
+  background-color: rgb(var(--color-background));
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  left: 0;
+  overflow-y: auto;
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+  position: absolute;
+  right: 0;
+  top: 100%;
+}
+
+.shopify-section-header-sticky .mega-menu__content {
+  max-height: calc(100vh - var(--header-bottom-position-desktop, 20rem) - 4rem);
+}
+
+.header-wrapper--border-bottom .mega-menu__content {
+  border-top: 0;
+}
+
+/* .js .mega-menu__content {
+  opacity: 0;
+  transform: translateY(-1.5rem);
+  display:none;
+} */
+
+.mega-menu[open] .mega-menu__content {
+  opacity: 1;
+  transform: translateY(0);
+  display:block;
+}
+
+/* .mega-menu__list {
+  display: grid;
+  gap: 1.8rem 4rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  list-style: none;
+} */
+
+.mega-menu__link {
+  color: rgba(var(--color-foreground), 0.75);
+  display: block;
+  line-height: calc(1 + 0.3 / var(--font-body-scale));
+  padding-bottom: 0.6rem;
+  padding-top: 0.6rem;
+  text-decoration: none;
+  transition: text-decoration var(--duration-short) ease;
+  word-wrap: break-word;
+}
+
+.mega-menu__link--level-2 {
+  font-weight: bold;
+}
+
+.header--top-center .mega-menu__list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 0;
+}
+
+.header--top-center .mega-menu__list > li {
+  width: 16%;
+  padding-right: 2.4rem;
+}
+
+.mega-menu__link:hover,
+.mega-menu__link--active {
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+}
+
+.mega-menu__link--active:hover {
+  text-decoration-thickness: 0.2rem;
+}
+
+.mega-menu .mega-menu__list--condensed {
+  display: block;
+}
+
+.mega-menu__list--condensed .mega-menu__link {
+  font-weight: normal;
+}
+/* Megamenu */
+.mega-menu__content { max-height: 355px !important; min-height:355px; overflow:visible; max-width: 100%; margin: auto; }
+.mega-menu__content { padding:0 !important; box-shadow: 0px 0 0; border:0; background:transparent !important; }
+.megamenu_leftright_main_new{ max-width: 1344px; width:100%; margin:auto; }
+.megamenu_leftright_new{ display:flex; background:#fcf1f1; border:1px solid #f0f0f2; padding: 40px 40px 0 40px !important; width:100%; border-top:0; max-height: 370px !important; min-height: 370px; margin:0 auto; overflow-y: auto;}
+.megamenu_leftright_new::-webkit-scrollbar {
+  width: 3px;
+  height: 8px;
+  background-color: transparent;
+}
+
+/* New design start*/
+.mega-menu__list {
+  display: grid;
+  gap: 1.8rem 4rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  list-style: none;
+  flex-direction: column;
+  width:20%;
+  background-color:#FCF1F1;
+  padding: 20px 0 20px 20px;
+  height: fit-content;
+  margin:0 !important;
+  box-sizing: content-box;
+}
+.megamenu_left_new{
+  display: flex  
+}
+.mega-menu-box{
+ flex:1;
+      padding: 20px;
+  background-color:#fff;
+}
+.section-header .active{
+  background-color: #fff;
+}
+
+  .megamenu_leftright_new {
+      padding: 0px 0px 0 !important;
+  }
+.mega-menu-box .level2{
+  display:none;
+  flex-wrap: wrap;
+}
+
+.mega-menu__list>li{
+      margin-bottom: 0px !important;
+  padding:0 !important
+}
+.mega-menu__link{
+  text-align:left;
+  padding: 10px!important;
+}
+.megamenu_right_top_new{
+  margin: 0 !important;
+}
+.js .mega-menu__content { opacity: 0; display: none; }
+/* .js .mega-menu__content { opacity: 0; transform: translateY(-1.5rem); display: none; } */
+.megamenu_right_new{
+  background-color:#fff;
+  justify-content: flex-start;
+    align-items: flex-end;
+}
+.color_dot_new{ width:30px; height:30px; border-radius:100%; display:block; position:relative; top:0px; left:0; }
+.ul-menu-list{
+  margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex !important;
+  flex-wrap: wrap;
+  flex:1;
+  /* column-gap: 10px;
+    justify-content: space-between; */
+}
+.ul-menu-list li{
+  width: 20%;
+  padding: 5px;
+}
+.menu-list-leftside{width:100%; max-height: 329px; overflow-X: hidden; overflow-y: auto;}
+.menu-img-rightside{width:20%; display:flex}
+.color_menu_new{  display: flex;  align-items: center;  gap: 10px;}
+
+.custom_mega_menu_top_left_new:has(header-menu.display_bridal_menu_new) {
+    position: static;
+}
+header-menu.display_bridal_menu_new .megamenu_leftright_new .megamenu_right_new:empty {
+    display: none;
+}
+header-menu.display_bridal_menu_new .megamenu_leftright_new .mega-menu__list.page-width {
+    background-color: transparent;
+    width: 100%;
+    flex-direction: row;
+}
+header-menu.display_bridal_menu_new .megamenu_leftright_new .mega-menu__list.page-width > li {
+    width: 25%;
+}
+.template--bridal-wedding-dress-new .custom_mega_menu_top_left_new {
+    padding-top: 32px;
+    padding-bottom: 32px;
+}

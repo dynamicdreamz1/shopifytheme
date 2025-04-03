@@ -1,0 +1,89 @@
+{%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+  <div class="Page_offline_template_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_offline_template_inner_new">
+        <div class="Page_offline_template_parts_new">
+          {%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+            <div class="Page_offline_template_parts_1_new">
+              <div class="Page_offline_template_parts_1_detail_new">
+                {%- if section.settings.main_desktop_mp4_video != blank -%}
+                  <div class="Page_offline_template_parts_1_detail_videoimage_new">
+                    {%- if section.settings.main_desktop_mp4_video != blank -%}
+                      {{ section.settings.main_desktop_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                    {%- endif -%}
+                  </div>
+                {% else %}  
+                  {%- if section.settings.main_desktop_full_image != blank and section.settings.main_mobile_full_image != blank -%}
+                    <div class="Page_offline_template_parts_1_detail_videoimage_new">
+                      {%- if section.settings.main_desktop_full_image != blank -%}
+                        {{
+                          section.settings.main_desktop_full_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'desktop_image_new'
+                        }}
+                      {%- endif -%}
+                      {%- if section.settings.main_mobile_full_image != blank -%}
+                        {{
+                          section.settings.main_mobile_full_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'mobile_image_new'
+                        }}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.main_information_text != blank -%}
+            <div class="Page_offline_template_parts_2_new">
+              <div class="Page_offline_template_parts_2_detail_new">
+                {{ section.settings.main_information_text }}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Offline Template New",
+    "class": "Page_offline_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "video",
+        "id": "main_desktop_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      },
+      {
+        "type": "richtext",
+        "id": "main_information_text",
+        "label": "Add Main Information Text",
+        "default": "<p>Book Your Appointment at Santacruz Store.</p>"
+      }
+    ]
+  }
+{% endschema %}

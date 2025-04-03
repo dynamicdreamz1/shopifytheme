@@ -1,0 +1,187 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "Page-template-new",
+      "settings": {
+        "main_background_color": "#ffffff"
+      }
+    },
+    "multirow_2_9VWfgD": {
+      "type": "multirow-2",
+      "blocks": {
+        "row_Bfmwn7": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_1.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_1.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_1 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_Amh3ad": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_2.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_3.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_2 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_kHAEXQ": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_3.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_3.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_3 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_WXNCnD": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_4.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_4.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_4 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_VLdR3f": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_5.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_5.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_5 | metafield_tag }}</p>",
+            "button_label": "Button label",
+            "button_link": ""
+          }
+        },
+        "row_Kep8Kh": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_6.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_6.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_6 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_hnwEXc": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_7.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_7.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_7 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_w8yyBX": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_8.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_8.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_8 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_Eb47H9": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_9.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_9.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_9 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "row_4i734V": {
+          "type": "row",
+          "settings": {
+            "image": "{{ page.metafields.custom.buying_guide_sub_page.value.image_10.value }}",
+            "caption": "",
+            "heading": "{{ page.metafields.custom.buying_guide_sub_page.value.head_text_10.value }}",
+            "text": "<p>{{ page.metafields.custom.buying_guide_sub_page.value.sub_text_10 | metafield_tag }}</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "row_Bfmwn7",
+        "row_Amh3ad",
+        "row_kHAEXQ",
+        "row_WXNCnD",
+        "row_VLdR3f",
+        "row_Kep8Kh",
+        "row_hnwEXc",
+        "row_w8yyBX",
+        "row_Eb47H9",
+        "row_4i734V"
+      ],
+      "custom_css": [
+        ".image-with-text {max-width: 1200px; margin: auto;}"
+      ],
+      "settings": {
+        "image_height": "medium",
+        "desktop_image_width": "small",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "image_layout": "alternate-left",
+        "section_color_scheme": "",
+        "row_color_scheme": "",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "buying_guide_multicolumn_8LxAVK": {
+      "type": "buying-guide-multicolumn",
+      "blocks": {
+        "column_M7kaUa": {
+          "type": "column",
+          "repeater": "{{ page.metafields.custom.buying_guide_sub_page_2.value }}",
+          "settings": {
+            "image": "{{ block.repeater.image_1.value }}",
+            "heading": "{{ block.repeater.head_text_1.value }}",
+            "text": "{{ block.repeater.sub_text_1 | metafield_tag }}"
+          }
+        }
+      },
+      "block_order": [
+        "column_M7kaUa"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "multirow_2_9VWfgD",
+    "buying_guide_multicolumn_8LxAVK"
+  ]
+}

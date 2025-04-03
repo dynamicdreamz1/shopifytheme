@@ -1,0 +1,26 @@
+{% for value in options.value %}
+    {% if layout == 'swatch' %}
+        <input type="radio" class="{{ class_ }}" id="{{ value }}" value="{{ value }}" name="items[0][properties][{{ option_key }}]">
+        <label js-pdp-option-size-select-btn for="{{ value }}" class="{{ class_ }}" >
+        {{ value }}</label>
+    {% elsif layout == 'dropdown' %}
+        {% if forloop.index0 == 0 %}
+            <option value="">Please Select</option>
+        {%  endif %}
+        <option value="{{ value }}">{{ value }}</option>
+    {% elsif layout == "cross_sell_option"  %}
+        {% if forloop.index0 == 0 %}
+            <option value="">{{ label_ }}   {% if required %}*{%  endif %}</option>
+        {%  endif %}
+        <option value="{{ value }}">{{ value }}</option>
+    {% elsif layout == 'upsell_sell_option' %}
+        {% if forloop.index0 == 0 %}
+            <option value="">{{ label_ }}  {% if required %}*{%  endif %}</option>
+        {%  endif %}
+        <option value="{{ value }}">{{ value }}</option>
+    {% endif %}
+{% endfor %}
+{% if option_key == 'Size' %}
+    <input type="radio" class="{{ class_ }}" js-custom-measurement-option id="custom_size" value="" name="items[0][properties][{{ option_key }}]">
+    <label class="{{ class_ }} custom_size-option" for="custom_size" js-custom-size-popup-btn data-modal="choose-measurement">Custom Size</label>
+{% endif %}

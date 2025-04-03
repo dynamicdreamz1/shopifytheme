@@ -1,0 +1,139 @@
+{% if product.metafields.custom.filter_product_category.value contains 'Men' or product.metafields.custom.filter_product_category.value contains 'Saree' or product.metafields.custom.filter_product_category.value contains 'Kurti' or product.metafields.custom.filter_product_category.value contains 'Indo Western' or product.metafields.custom.filter_product_category.value contains 'Jewellery' or product.metafields.custom.filter_product_category.value contains 'Suits' or product.metafields.custom.filter_product_category.value contains "Men's Footwear" or product.metafields.custom.filter_product_category.value contains 'Kids' or product.metafields.custom.filter_product_category.value contains 'Bags' %}
+  {% assign colletion_rts_days = 3 %}
+{% endif %}
+{% if product.metafields.custom.filter_product_category.value contains 'Lehenga' or product.metafields.custom.filter_product_category.value contains 'Gown' or product.metafields.custom.filter_product_category.value contains "Women's Footwear" %}
+  {% assign colletion_rts_days = 4 %}
+{% endif %}
+{% if product.metafields.custom.filter_product_category.value contains 'Blouse' %}
+  {% assign colletion_rts_days = 7 %}
+{% endif %}
+{%- unless product.has_only_default_variant -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    class="no-js-hidden variant_main_new {{ custom_class }}" 
+    data-section="{{ section.id }}"
+    data-url="{{ product.url }}"
+    {% if update_url == false %}
+      data-update-url="false"
+    {% endif %}
+    js-custom-variant-selects
+    js-khadi-variant-selects
+    colletion_rts_days="{{ colletion_rts_days }}"
+  >
+    {%- for option in product.options_with_values -%}
+      
+        <div class="{% if option.name == "Size" and stitche_selected_option == 'Unstitched' or confSizeOption_selected_option == 'Made to Order' %}hide{% endif %} options-header form__label {{ option.name }}" {% if option.name == "Size"%} {{ confSizeOption_attribute }} {{ stitche_attribute }} js-option-size-title {% endif %} >
+          <div class="options-title {%  if tooltip_text != blank %} have_tooltip {% endif %}">
+            <div class="title_text">
+              {{ option.name }}:
+              <span data-selected-swatch-value="{{ option.name }}">
+                {% if option.name != "Size" %}
+                  {{- option.selected_value -}}
+                {% endif %}
+              </span>
+            </div>
+            {% unless option.name == "Size" %}
+              {% if custom_size != 'custom-size-chart'  %}
+                {%  if tooltip_text != blank %}
+                  <div class="tooltip">
+                      {% render 'tooltip', tooltip_text: tooltip_text %}
+                  </div>
+                {% endif %}
+              {% endif %}
+              {% comment %}{% if product.metafields.custom.size_guide_new != blank %}
+                <div class="sizeguide" data-modal="size-chart" js-pdp-open-modal>
+                  <span class="link link--text" >Size Guide</span>
+                </div>
+              {% endif %}{% endcomment %}
+            {% endunless %}
+          </div>
+          {%- for value in option.values -%}
+            {% if option.name == 'Size' or option.name == 'Confi size' or option.name == 'Confi Size' %}
+              {% assign varSize = true %}
+              {% for variant in product.variants %}
+                {% if value contains 'Months' or value contains 'Years' %}
+                  {% assign miniSizeContains = true %}
+                {% endif %}
+              {% endfor %}
+              {% if forloop.index == 1 %}
+                {% unless value contains 'Months' or value contains 'Years' %}
+                  {% assign miniSize = true %}
+                {% endunless  %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          {% if option.name == 'Size' or option.name == 'Confi size' or option.name == 'Confi Size' %}
+            {%  if product.metafields.custom.size_guide_new != blank or product.metafields.custom.size_chart_page != blank %} 
+              <div class="sizeguide" data-modal="size-chart" js-pdp-open-modal>
+                <span class="link link--text" >Size Guide</span>
+              </div>
+            {% else %}
+              {% for collection in product.collections %}
+                {% if collection.metafields.custom.size_guide %}
+                  {% assign size_chart = collection.metafields.custom.size_guide.value %}
+                  {% if size_chart %}
+                    <div class="sizeguide" data-modal="size-chart" js-pdp-open-modal>
+                      <span class="link link--text" >Size Guide</span>
+                    </div>
+                    {% break %}
+                  {% endif %}
+                {% elsif collection.metafields.custom.size_chart_page %}
+                  {% assign size_chart_page = collection.metafields.custom.size_chart_page.value %}
+                  {% if size_chart_page %}
+                    <div class="sizeguide" data-modal="size-chart" js-pdp-open-modal>
+                      <span class="link link--text" >Size Guide</span>
+                    </div>
+                    {% break %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}  
+            {% endif %}
+            {% if varSize == true and miniSizeContains == true and miniSize == true %}
+              {%  if product.metafields.custom.mini_size_chart_page != blank %} 
+                <div class="sizeguide" data-modal="mini-size-chart" js-pdp-open-modal>
+                  <span class="link link--text" >Size Guide</span>
+                </div>
+              {% else %}
+                {% for collection in product.collections %}
+                  {% if collection.metafields.custom.mini_size_chart_page %}
+                    {% assign size_chart_mini = collection.metafields.custom.mini_size_chart_page.value %}
+                    {% if size_chart_mini %}
+                      <div class="sizeguide" data-modal="mini-size-chart" js-pdp-open-modal>
+                        <span class="link link--text" >Size Guide</span>
+                      </div>
+                      {% break %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}  
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        </div>
+        <fieldset 
+        class="{% if option.name == "Size" and stitche_selected_option == 'Unstitched' or confSizeOption_selected_option == 'Made to Order' %}hide{% endif %} js product-form__input product-form__input--pill o-{{ option.name }}" 
+        {% if option.name == 'Stitched' or option.name == 'Made to Order' %} 
+          js-stiched-option-name 
+        {% elsif option.name == 'Size' %} 
+          {{ stitche_attribute }} 
+          {{ confSizeOption_attribute }} 
+          js-size-options 
+        {%  elsif option.name == 'Size Options' %} 
+          js-conf-size-option-name 
+        {%  endif %}
+        >
+          {% render 'alternate-product-options',
+            product: product,
+            option: option
+          %}
+
+          {% if option.name == 'Stitched' %}
+            {% render 'stitch-return-note' , stitch_return_note: 'No returns/exchange on stitched products' %}
+          {% endif %}
+      </fieldset>
+    
+    {%- endfor -%}
+    <script type="application/json">
+      {{ product.variants | json }}
+    </script>
+  </variant-selects>
+{%- endunless -%}

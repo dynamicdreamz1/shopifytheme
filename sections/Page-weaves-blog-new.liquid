@@ -1,0 +1,131 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="page-width">
+    <div class="weaves_blog_section">
+      {% if section.settings.title != blank %}
+        <div class="Index_title_inner_new" bis_skin_checked="1">
+            <div class="Common_title_new Index_title_title_new" bis_skin_checked="1">
+              <h2>{{ section.settings.title }}</h2>
+            </div>
+        </div>
+      {% endif %}
+        <div class="swiper-container weaves_blog_list">
+          <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+              <div class="swiper-slide weaves_blog_item">
+                {%- if block.settings.blog_image != blank -%}
+                  <div class="weaves_blog_image">
+                    {{
+                      block.settings.blog_image | 
+                      image_url: width: block.settings.blog_image.width | 
+                      image_tag: widths: '180, 360, 540, 750', 
+                      fetchpriority: 'auto'
+                    }}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.title != blank -%}
+                  <p class="weaves_blog_title">
+                    {{ block.settings.title }}
+                  </p>
+                  <p class="weaves_blog_read_more">Read More</p>
+                {%- endif -%}
+                {%- if block.settings.blog_url != blank -%}
+                  <a href="{{ block.settings.blog_url }}" aria-label="{{ block.settings.title }}"></a>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-pagination"></div>
+        </div> 
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      new Swiper('.weaves_blog_list', {
+        loop: false, 
+        autoplay: false,
+        navigation: {
+          nextEl: ".weaves_blog_list .swiper-button-next",
+          prevEl: ".weaves_blog_list .swiper-button-prev",
+        },
+        pagination: false,
+        breakpoints: { 
+          320: { 
+            slidesPerView: 1, 
+            spaceBetween: 30, 
+          }, 
+          768: { 
+            slidesPerView: 2, 
+            spaceBetween: 60, 
+          },
+          992: { 
+            slidesPerView: 2, 
+            spaceBetween: 60, 
+          }, 
+          1280: { 
+            slidesPerView:4, 
+            spaceBetween: 60, 
+          }
+        }
+      })
+    })
+  </script>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Page Weaves Blog",
+    "class": "Page_weaves_blog_new",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title"
+      },
+    ],
+    "blocks": [
+      {
+        "type": "blog",
+        "name": "Blog",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "blog_image",
+            "label": "Blog Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Blog Heading Text",
+            "default": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "type": "url",
+            "id": "blog_url",
+            "label": "Blog URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Weaves Blog",
+        "blocks": [
+          {
+            "type": "blog"
+          },
+          {
+            "type": "blog"
+          },
+          {
+            "type": "blog"
+          },
+          {
+            "type": "blog"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

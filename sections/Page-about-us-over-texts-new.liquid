@@ -1,0 +1,136 @@
+{%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank or section.settings.main_heading_text != blank or section.settings.main_information_text != blank or section.settings.main_button_link != blank -%}
+  <div class="Page_about_us_over_texts_main_new {{ section.settings.customClass }}" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_about_us_over_texts_inner_new">
+        <div class="Page_about_us_over_texts_detail_new">
+          {%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+            <div class="Page_about_us_over_texts_detail_1_new">
+              <div class="Page_about_us_over_texts_detail_1_detail_new">
+                <div class="Page_about_us_over_texts_detail_1_detail_videoimageboth_new">
+                  {%- if section.settings.main_desktop_mp4_video != blank -%}
+                    <div class="Page_about_us_over_texts_detail_1_detail_videoimage_new">
+                      {%- if section.settings.main_desktop_mp4_video != blank -%}
+                        {{ section.settings.main_desktop_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                      {%- endif -%}
+                    </div>
+                  {% else %}  
+                    {%- if section.settings.main_desktop_full_image != blank and section.settings.main_mobile_full_image != blank -%}
+                      <div class="Page_about_us_over_texts_detail_1_detail_videoimage_new">
+                        {%- if section.settings.main_desktop_full_image != blank -%}
+                          {{
+                            section.settings.main_desktop_full_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'desktop_image_new'
+                          }}
+                        {%- endif -%}
+                        {%- if section.settings.main_mobile_full_image != blank -%}
+                          {{
+                            section.settings.main_mobile_full_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'mobile_image_new'
+                          }}
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.main_heading_text != blank or section.settings.main_information_text != blank or section.settings.main_button_link != blank -%}
+            <div class="Page_about_us_over_texts_detail_2_new">
+              <div class="Page_about_us_over_texts_detail_2_detail_new">
+                {%- if section.settings.main_heading_text != blank -%}
+                  <div class="Page_about_us_over_texts_detail_2_detail_title_new">
+                    <h2>{{ section.settings.main_heading_text }}</h2>
+                  </div>  
+                {%- endif -%}
+                {%- if section.settings.main_information_text != blank -%}
+                  <div class="Page_about_us_over_texts_detail_2_detail_infos_new">
+                    {{ section.settings.main_information_text }}
+                  </div>  
+                {%- endif -%}
+                {%- if section.settings.main_button_text != blank and section.settings.main_button_link != blank -%}
+                  <div class="Page_about_us_over_texts_detail_2_detail_button_new">
+                    <a href="{{ section.settings.main_button_link }}" class="button button_white">
+                      {{ section.settings.main_button_text }}
+                    </a>
+                  </div>  
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>  
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Page About Us Over Texts",
+    "class": "Page_about_us_over_texts_new",
+    "settings": [
+      {
+        "type": "text",
+        "id": "customClass",
+        "label": "Add Custom Class",
+        "info": "Page_contact_us_over_texts_new"
+      },
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "video",
+        "id": "main_desktop_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Shop via video call"
+      },
+      {
+        "type": "richtext",
+        "id": "main_information_text",
+        "label": "Add Main Information Text",
+        "default": "<p>Interact with our fashion consultants, and enjoy personalised shopping experience</p>"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text",
+        "label": "Add Main Button Text",
+        "default": "Book Now"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link",
+        "label": "Add Main Button Link",
+        "default": "/"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page About Us Over Texts"
+      }
+    ]
+  }
+{% endschema %}

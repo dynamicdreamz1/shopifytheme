@@ -1,0 +1,309 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+{% if customer %}
+  <script>
+   if (window.location.pathname === '/account/login') {
+    window.location.href = '/account';
+   }
+  </script>
+{% endif %}
+<div class="Customer_register_template_main_new Customer_login_template_main_new" style="background: {{ section.settings.main_background_color }};">
+  <div class="Customer_register_template_inner_new">
+    {%- if section.settings.main_heading_text != blank or section.settings.main_information_text != blank or section.settings.main_use_code_text != blank -%}
+      <div class="Customer_register_template_mainleft_new Customer_register_template_mainleft_new_{{ section.id }}" style="{% if section.settings.main_desktop_full_image != blank %}background: url({{ section.settings.main_desktop_full_image | img_url: 'master' }}) no-repeat center center; background-size: cover;{% else %}background: #cccccc;{% endif %}">
+        {%- if section.settings.main_mobile_full_image != blank -%}
+          <style>
+            @media(min-width:0px) and (max-width:768px){
+              .Customer_register_template_mainleft_new_{{ section.id }}{
+                background: url({{ section.settings.main_mobile_full_image | img_url: 'master' }}) no-repeat center center !important;
+                background-size: cover !important;
+              }
+            }
+          </style>
+        {%- endif -%}
+        <div class="Customer_register_template_innerleft_new">
+          {%- if section.settings.main_heading_text != blank -%}
+            <div class="Customer_register_template_innerleft_title_new">
+              <h2>{{ section.settings.main_heading_text }}</h2>
+            </div>  
+          {%- endif -%}
+          {%- if section.settings.main_information_text != blank -%}
+            <div class="Customer_register_template_innerleft_texts_new">
+              <h3>{{ section.settings.main_information_text }}</h3>
+            </div>  
+          {%- endif -%}
+          {%- if section.settings.main_use_code_text != blank -%}
+            <div class="Customer_register_template_innerleft_infos_new">
+              <h4>{{ section.settings.main_use_code_text }}</h4>
+            </div>  
+          {%- endif -%}
+        </div>
+        <div class="Customer_register_template_innerleft_apply_new">
+          *T&C Apply
+        </div>
+      </div>
+    {%- endif -%}
+    <div class="Customer_register_template_mainright_new">
+      <div class="customer login Customer_register_template_innerright_new">
+        <div id="recover">
+          <div class="Customer_register_template_innerright_titleinfos_new">
+            <div class="Customer_register_template_innerright_titleinfos_title_new">
+              <span class="h2" tabindex="-1">
+                {{ 'customer.recover_password.title' | t }}
+              </span>
+            </div>
+            <div class="Customer_login_template_innerright_titleinfos_infos_new">
+              <p>{{ 'customer.recover_password.subtext' | t }}</p>
+            </div>
+          </div>
+          <div>
+            <div class="Customer_register_template_innerright_mainform_new">
+              <div class="Customer_register_template_innerright_innerform_new">
+            
+                {%- form 'recover_customer_password' -%}
+                  {% assign recover_success = form.posted_successfully? %}
+                  <div class="field">
+                    <input
+                      type="email"
+                      value=""
+                      name="email"
+                      id="RecoverEmail"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      autocomplete="email"
+                      {% if form.errors %}
+                        aria-invalid="true"
+                        aria-describedby="RecoverEmail-email-error"
+                        autofocus
+                      {% endif %}
+                      placeholder="{{ 'customer.login_page.email' | t }}"
+                      pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+                      required
+                    >
+                    <label for="RecoverEmail">
+                      {{ 'customer.login_page.email' | t }}
+                    </label>
+                  </div>
+                  {%- if form.errors -%}
+                    <small id="RecoverEmail-email-error" class="form__message">
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+                        <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+                        <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+                        <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+                        <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+                      </svg>
+                      {{ form.errors.messages.form }}
+                    </small>
+                  {%- endif -%}
+            
+                  <button class="button submit_btn_new">
+                    {{ 'customer.login_page.submit' | t }}
+                  </button>
+            
+                  <a href="javascript:void(0)" class="login_back">
+                    {{ 'customer.login_page.cancel' | t }}
+                  </a>
+                {%- endform -%}
+              </div>
+            </div>
+          </div>
+        </div>          
+        <div></div>
+        <div id="login">
+          <div class="Customer_register_template_innerright_titleinfos_new">
+            <div class="Customer_register_template_innerright_titleinfos_title_new">
+              <span class="h1" tabindex="-1">
+                {{ 'customer.login_page.title' | t }}
+              </span>
+            </div>
+            {%- if section.settings.main_right_information_text_1 != blank -%}
+              <div class="Customer_login_template_innerright_titleinfos_infos_new">
+                {{ section.settings.main_right_information_text_1 }}
+              </div>  
+            {%- endif -%}
+          </div>
+          <div>
+            <div class="Customer_register_template_innerright_mainform_new">
+              <div class="Customer_register_template_innerright_innerform_new">
+                {%- if recover_success == true -%}
+                  <h3 class="form__message" tabindex="-1" autofocus>
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+                      <path d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z" fill="#428445" stroke="white" stroke-width="0.7"/>
+                      <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white"/>
+                      <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white">
+                    </svg>
+                    {{ 'customer.recover_password.success' | t }}
+                  </h3>
+                {%- endif -%}
+                {%- form 'customer_login' -%}
+                  {%- if form.errors -%}
+                    {% comment %}
+                    <h2 class="form__message" tabindex="-1" autofocus>
+                      <span class="visually-hidden">{{ 'accessibility.error' | t }} </span>
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+                        <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+                        <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+                        <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+                        <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+                      </svg>
+                      {{ 'templates.contact.form.error_heading' | t }}
+                    </h2>
+                    {% endcomment %}
+                    {{ form.errors | default_errors }}
+                  {%- endif -%}
+            
+                  <div class="field">
+                    <input
+                      type="email"
+                      name="customer[email]"
+                      id="CustomerEmail"
+                      autocomplete="email"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      {% if form.errors contains 'form' %}
+                        aria-invalid="true"
+                      {% endif %}
+                      placeholder="{{ 'customer.login_page.email' | t }}"
+                      pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+                      required
+                    >
+                    <label for="CustomerEmail">
+                      {{ 'customer.login_page.email' | t }}
+                    </label>
+                  </div>
+            
+                  {%- if form.password_needed -%}
+                    <div class="field">
+                      <input
+                        type="password"
+                        value=""
+                        name="customer[password]"
+                        id="CustomerPassword"
+                        autocomplete="current-password"
+                        {% if form.errors contains 'form' %}
+                          aria-invalid="true"
+                        {% endif %}
+                        placeholder="{{ 'customer.login_page.password' | t }}"
+                        required
+                      >
+                      <label for="CustomerPassword">
+                        {{ 'customer.login_page.password' | t }}
+                      </label>
+                      <label for="register_show_password_log">
+                        <input type="checkbox" id="register_show_password_log" js-show-password>
+                        <div class="show_password_text_new"></div>
+                      </label>
+                    </div>
+            
+                    <a href="javascript:void(0)" class="forgot_password">
+                      {{ 'customer.login_page.forgot_password' | t }}
+                    </a>
+                  {%- endif -%}
+
+                  <p class="info-message">We have recently migrated to another platform, kindly reset your password now to continue enjoying KALKI perks!</p>
+            
+                  <button class="button submit_btn_new login_submit_btn_new">
+                    {{ 'customer.login_page.sign_in' | t }}
+                  </button>
+  
+                  {%- comment -%}
+                    <a href="{{ routes.account_register_url }}">
+                      {{ 'customer.login_page.create_account' | t }}
+                    </a>
+                  {%- endcomment -%}
+                {%- endform -%}
+              </div>
+            </div>
+            {%- if section.settings.main_right_information_text_2 != blank or section.settings.main_right_information_text_3 != blank -%}
+              <div class="Customer_register_template_innerright_bottominfos_new">
+                {%- if section.settings.main_right_information_text_2 != blank -%}
+                  <div class="Customer_register_template_innerright_bottominfos_infos_1_new">
+                    {{ section.settings.main_right_information_text_2 }}
+                  </div>  
+                {%- endif -%}
+                {%- if section.settings.main_right_information_text_3 != blank -%}
+                  <div class="Customer_register_template_innerright_bottominfos_infos_2_new">
+                    {{ section.settings.main_right_information_text_3 }}
+                  </div>  
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+      
+          {%- if shop.checkout.guest_login -%}
+            <div class="guest_login_new">
+              <div class="Customer_register_template_innerright_titleinfos_title_new">
+                <span class="h2">{{ 'customer.login_page.guest_title' | t }}</span>
+              </div>
+              {%- form 'guest_login' -%}
+                <button class="button submit_btn_new">
+                  {{ 'customer.login_page.guest_continue' | t }}
+                </button>
+              {%- endform -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+{% schema %}
+  {
+    "name": "Customer Login Template",
+    "class": "Customer_login_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "richtext",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "<p>Register &amp; Be A Part Of The <br>KALKI Circle!</p>"
+      },
+      {
+        "type": "textarea",
+        "id": "main_information_text",
+        "label": "Add Main Information Text",
+        "default": "Flat 15% Off on your first order*"
+      },
+      {
+        "type": "text",
+        "id": "main_use_code_text",
+        "label": "Add Main Use Code Text",
+        "default": "Use Code: GLAM15"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      },
+      {
+        "type": "richtext",
+        "id": "main_right_information_text_1",
+        "label": "Add Main Right Information Text-1",
+        "default": "<p>Sign in so you can save items to your wishlists, track your orders, and check out faster!</p>"
+      },
+      {
+        "type": "richtext",
+        "id": "main_right_information_text_2",
+        "label": "Add Main Right Information Text-2",
+        "default": "<p>By continuing, I agree to the Terms of Use and Privacy Policy</p>"
+      },
+      {
+        "type": "richtext",
+        "id": "main_right_information_text_3",
+        "label": "Add Main Right Information Text-3",
+        "default": "<p>Don’t have an account?  Sign Up</p>"
+      }
+    ]
+  }
+{% endschema %}

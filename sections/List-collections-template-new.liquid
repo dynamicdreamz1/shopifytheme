@@ -1,0 +1,233 @@
+{%- if section.blocks.size > 0 or section.settings.main_heading_text != blank -%}
+  <div class="List_collections_template_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="List_collections_template_inner_new">
+      {% comment %}
+        <div class="List_collections_template_breadcrumb_new">
+          {% render 'Breadcrumb-navigation-new' %}
+        </div>
+      {% endcomment %}
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new List_collections_template_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="List_collections_template_mainloop_new">
+            <div class="List_collections_template_innerloop_new">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.select_collection_display != blank or block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank or collection.title != blank or block.settings.main_sub_heading_text != blank or block.settings.main_button_text != blank -%}
+                  {%- assign collection = block.settings.select_collection_display -%}
+                  <div class="List_collections_template_innerloop_mainboxs_new" style="background: {{ block.settings.inner_background_color }};">
+                    <div class="List_collections_template_innerloop_innerboxs_new">
+                      <div class="List_collections_template_innerloop_innerboxs_1_new">
+                        <div class="List_collections_template_innerloop_innerboxs_1_detail_new">
+                          <div class="List_collections_template_innerloop_innerboxs_1_detail_title_new">
+                            <h4>{{ collection.title }}</h4>
+                          </div>
+                          <div class="List_collections_template_innerloop_innerboxs_1_detail_button_new">
+                            <a href="{{ collection.url }}">View all</a>
+                          </div>
+                        </div>
+                      </div>
+                      {%- if block.settings.select_collection_display != blank or block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank or collection.title != blank or block.settings.main_sub_heading_text != blank or block.settings.main_button_text != blank -%}
+                        <div class="List_collections_template_innerloop_innerboxs_2_new">
+                          <div class="List_collections_template_innerloop_innerboxs_2_detail_new">
+                            {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank or collection.title != blank or block.settings.main_sub_heading_text != blank or block.settings.main_button_text != blank -%}
+                              <div class="List_collections_template_innerloop_innerboxs_2_detail_mainleft_new">
+                                <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_new">
+                                  {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank -%}
+                                    <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_1_new">
+                                      <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_1_videoimageboth_new">
+                                        {%- if block.settings.main_mp4_video != blank -%}
+                                          <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_1_videoimage_new">
+                                            {{ block.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                                          </div>
+                                        {% else %}  
+                                          {%- if block.settings.main_desktop_image != blank and block.settings.main_mobile_image != blank -%}
+                                            <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_1_videoimage_new">
+                                              <a href="{{ collection.url }}">
+                                                {%- if block.settings.main_desktop_image != blank -%}
+                                                  {{
+                                                    block.settings.main_desktop_image | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'desktop_image_new'
+                                                  }}
+                                                {%- endif -%}
+                                                {%- if block.settings.main_mobile_image != blank -%}
+                                                  {{
+                                                    block.settings.main_mobile_image | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'mobile_image_new'
+                                                  }}
+                                                {%- endif -%}
+                                              </a>
+                                            </div>
+                                          {%- endif -%}
+                                        {%- endif -%}
+                                      </div>
+                                    </div>
+                                  {%- endif -%}
+                                  {%- if collection.title != blank or block.settings.main_sub_heading_text != blank or block.settings.main_button_text != blank -%}
+                                    <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_2_new">
+                                      <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_2_titletextboth_new">
+                                        {%- if collection.title != blank -%}
+                                          <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_2_title_new">
+                                            <h2>{{ collection.title }}</h2>
+                                          </div>  
+                                        {%- endif -%}
+                                        {%- if block.settings.main_sub_heading_text != blank -%}
+                                          <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_2_texts_new">
+                                            {{ block.settings.main_sub_heading_text }}
+                                          </div>  
+                                        {%- endif -%}
+                                        {%- if block.settings.main_button_text != blank -%}
+                                          <div class="List_collections_template_innerloop_innerboxs_2_detail_innerleft_2_button_new">
+                                            <a href="{{ collection.url }}" class="button button_white">
+                                              {{ block.settings.main_button_text }}
+                                            </a>
+                                          </div>  
+                                        {%- endif -%}
+                                      </div>
+                                    </div>  
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                            {%- endif -%}
+                            {%- if block.settings.select_collection_display != blank -%}
+                              <div class="List_collections_template_innerloop_innerboxs_2_detail_mainright_new">
+                                <div class="List_collections_template_innerloop_innerboxs_2_detail_innerright_new">
+                                  <div class="swiper-container list_collection_slider">
+                                    <div class="swiper-wrapper">
+                                      {%- for product in collections[block.settings.select_collection_display].products limit: block.settings.select_product_display -%}
+                                        {%- if product.images.size > 0 -%}
+                                          <div class="swiper-slide List_collections_template_innerloop_innerboxs_2_detail_innerright_image_new">
+                                            <a href="{{ product.url }}">
+                                              {{
+                                                product.featured_image | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '540, 750', 
+                                                fetchpriority: 'auto', 
+                                                class:'Product_full_image_new'
+                                              }}
+                                            </a>
+                                          </div>
+                                        {%- endif -%}
+                                      {%- endfor -%}
+                                    </div>
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "List Collections Template",
+    "class": "List_collections_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "See All Collections"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "color",
+            "id": "inner_background_color",
+            "label": "Add Inner Background Color",
+            "default": "#EFEFEF"
+          },
+          {
+            "type": "collection",
+            "id": "select_collection_display",
+            "label": "Select Collection Display"
+          },
+          {
+            "type": "range",
+            "id": "select_product_display",
+            "min": 1,
+            "max": 30,
+            "step": 1,
+            "default": 4,
+            "label": "Select Product Display"
+          },
+          {
+            "type": "video",
+            "id": "main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "richtext",
+            "id": "main_sub_heading_text",
+            "label": "Add Main Sub Heading Text",
+            "default": "<p>Fall in 2022</p>"
+          },
+          {
+            "type": "text",
+            "id": "main_button_text",
+            "label": "Add Main Button Text",
+            "default": "Explore Now"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "List Collections Template",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

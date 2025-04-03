@@ -1,0 +1,126 @@
+{{ "app-link-popup.css" | asset_url | stylesheet_tag }}
+<div id="deviceModal" class="app-link-modal" style="display: none;">
+    <div class="modal__dialog">
+        <div class="modal__header">
+            <h2 class="modal__title">{{ section.settings.title }}</h2>
+            <button type="button" class="modal__close" aria-label="Close modal" id="closeModal">{% render 'icon-close' %}</button>
+        </div>
+        <div class="app-modal__content">
+            <p>{{ section.settings.description }}</p>
+            {% if section.settings.app_image %}
+              <img class="app_image" src="{{ section.settings.app_image | image_url}}" width="{{ section.settings.app_image.width }}" height="{{ section.settings.app_image.height }}" alt="{{ section.settings.app_image.alt }}">
+            {% endif %}
+            <div id="appLinks"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let visitCount = localStorage.getItem('modalVisitCount') ? parseInt(localStorage.getItem('modalVisitCount')) : 0;
+
+    if (sessionStorage.getItem('siteSessionModalOpened')) {
+        return;
+    }
+
+    if (visitCount < 4) {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        const platform = navigator.platform || '';
+
+        // Check for iPad (modern iPads might report as Mac)
+        const isIpad = /iPad/.test(userAgent) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        // Check for Android tablets
+        const isAndroidTablet = /android/i.test(userAgent) && !/mobile/i.test(userAgent); // Android tablets
+        const isMobileAndroid = /android/i.test(userAgent) && /mobile/i.test(userAgent); // Android phones
+        const isIphoneOrIpod = /iPhone|iPod/.test(userAgent) && !window.MSStream; // iPhone or iPod
+
+        if (isMobileAndroid || isAndroidTablet || isIpad || isIphoneOrIpod) {
+            const modal = document.getElementById('deviceModal');
+            modal.style.display = 'block';
+
+            document.body.classList.add('overflow-hidden-mobile');
+          
+            let appLinks = '';
+
+            if (isMobileAndroid || isAndroidTablet) {
+                appLinks = '<a href="{{ section.settings.playstore_link }}" target="_blank">{{ section.settings.playstore_link_label }}{% if section.settings.playstore_image %}<img src="{{ section.settings.playstore_image | image_url}}" width="{{ section.settings.playstore_image.width }}" height="{{ section.settings.playstore_image.height }}" alt="{{ section.settings.playstore_image.alt }}">{% endif %}</a>';
+            } else if (isIpad || isIphoneOrIpod) {
+                appLinks = '<a href="{{ section.settings.appstore_link }}" target="_blank">{{ section.settings.appstore_link_label }}{% if section.settings.appstore_image %}<img src="{{ section.settings.appstore_image | image_url}}" width="{{ section.settings.appstore_image.width }}" height="{{ section.settings.appstore_image.height }}" alt="{{ section.settings.appstore_image.alt }}">{% endif %}</a>';
+            }
+
+            document.getElementById('appLinks').innerHTML = appLinks;
+
+            visitCount++;
+            localStorage.setItem('modalVisitCount', visitCount); 
+
+            sessionStorage.setItem('siteSessionModalOpened', 'true');
+          
+            document.getElementById('closeModal').onclick = function() {
+                modal.style.display = 'none';
+                document.body.classList.remove('overflow-hidden-mobile');
+            };
+        }
+    }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Application Link Popup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Popup Title"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Popup Description"
+    },
+    {
+      "type": "image_picker",
+      "id": "app_image",
+      "label": "App Image",
+    },
+    {
+      "type": "text",
+      "id": "playstore_link_label",
+      "label": "Play Store Link Label"
+    },
+    {
+      "type": "text",
+      "id": "playstore_link",
+      "label": "Play Store Link",
+    },
+    {
+      "type": "image_picker",
+      "id": "playstore_image",
+      "label": "Play Store Image",
+    },
+    {
+      "type": "text",
+      "id": "appstore_link_label",
+      "label": "App Store Link Label"
+    },
+    {
+      "type": "text",
+      "id": "appstore_link",
+      "label": "App Store Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "appstore_image",
+      "label": "App Store Image",
+    },
+  ],
+  "presets": [
+    {
+      "name": "Application Link Popup",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

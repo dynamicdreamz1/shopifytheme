@@ -1,0 +1,6 @@
+{% if section.settings.discount_code  != blank and section.settings.discount_text  != blank %}
+    <div class="discount-content flex">
+        <div class="disount-text">{{ section.settings.discount_text }}</div>
+        <span class="discount-code">{{ section.settings.discount_code }}</span>
+    </div>
+  {% endif %}

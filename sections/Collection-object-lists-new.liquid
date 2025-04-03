@@ -1,0 +1,270 @@
+{%- if collection.metafields.custom.popular_search_plp_kb != blank or collection.metafields.custom.collection_list_shop_by_color_new_kb != blank or collection.metafields.custom.collection_list_shop_by_occasion_new_kb != blank or collection.metafields.custom.collection_list_shop_by_price_new_kb != blank or collection.metafields.custom.collection_list_explore_new_kb != blank- %}
+  <div class="Collection_object_lists_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Collection_object_lists_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Collection_object_lists_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        <div class="swiper-container colletion-tab-slider">
+          <div class="swiper-wrapper">
+            {%- if section.settings.popular_search_heading_text != blank and collection.metafields.custom.popular_search_plp_kb != blank -%}
+              <div class="swiper-slide" data-tab="popular-search">
+                {{ section.settings.popular_search_heading_text }}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.shop_by_color_heading_text != blank and collection.metafields.custom.collection_list_shop_by_color_new_kb != blank -%}
+              <div class="swiper-slide" data-tab="shop-by-color">
+                {{ section.settings.shop_by_color_heading_text }}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.shop_by_occasion_heading_text != blank and collection.metafields.custom.collection_list_shop_by_occasion_new_kb != blank -%}
+              <div class="swiper-slide" data-tab="shop-by-occasion">
+                {{ section.settings.shop_by_occasion_heading_text }}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.shop_byprice_heading_text != blank and collection.metafields.custom.collection_list_shop_by_price_new_kb != blank -%}
+              <div class="swiper-slide" data-tab="shop-by-price">
+                {{ section.settings.shop_byprice_heading_text }}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.explore_our_collection_heading_text != blank and collection.metafields.custom.collection_list_explore_new_kb != blank -%}
+              <div class="swiper-slide" data-tab="explore">
+                {{ section.settings.explore_our_collection_heading_text }}
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="swiper-button-prev shopby-btn-prev"></div>
+          <div class="swiper-button-next shopby-btn-next"></div>
+        </div>
+        {%- if collection.metafields.custom.popular_search_plp_kb != blank -%}
+          <div class="Collection_object_lists_mainloop_new" data-tab-content="popular-search" style="display: none;">
+            <div class="Collection_object_lists_innerloop_new">
+              {%- for columns in collection.metafields.custom.popular_search_plp_kb.value -%}
+                {%- if columns != blank -%}
+                  <div class="Collection_object_lists_innerloop_mainboxs_new">
+                    <div class="Collection_object_lists_innerloop_innerboxs_new">
+                      <a href="{{ columns.collection.value.url }}">
+                        {% if columns.collection_name != blank %}
+                          {{ columns.collection_name }}
+                        {% else %}
+                          {{ columns.collection.value.title }}
+                        {% endif %}
+                      </a>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if collection.metafields.custom.collection_list_shop_by_color_new_kb != blank -%}
+          <div class="Collection_object_lists_mainloop_new" data-tab-content="shop-by-color" style="display: none;">
+            <div class="Collection_object_lists_innerloop_new">
+              {%- for columns in collection.metafields.custom.collection_list_shop_by_color_new_kb.value -%}
+                {%- if columns != blank -%}
+                  <div class="Collection_object_lists_innerloop_mainboxs_new">
+                    <div class="Collection_object_lists_innerloop_innerboxs_new">
+                      <a href="{{ columns.collection.value.url }}">
+                        {% if columns.collection_name != blank %}
+                          {{ columns.collection_name }}
+                        {% else %}
+                          {{ columns.collection.value.title }}
+                        {% endif %}
+                      </a>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if collection.metafields.custom.collection_list_shop_by_occasion_new_kb != blank -%}
+          <div class="Collection_object_lists_mainloop_new"  data-tab-content="shop-by-occasion" style="display: none;">
+            <div class="Collection_object_lists_innerloop_new">
+              {%- for columns in collection.metafields.custom.collection_list_shop_by_occasion_new_kb.value -%}
+                {%- if columns != blank -%}
+                  <div class="Collection_object_lists_innerloop_mainboxs_new">
+                    <div class="Collection_object_lists_innerloop_innerboxs_new">
+                      <a href="{{ columns.collection.value.url }}">
+                        {% if columns.collection_name != blank %}
+                          {{ columns.collection_name }}
+                        {% else %}
+                          {{ columns.collection.value.title }}
+                        {% endif %}
+                      </a>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if collection.metafields.custom.collection_list_shop_by_price_new_kb != blank -%}
+          <div class="Collection_object_lists_mainloop_new" data-tab-content="shop-by-price" style="display: none;">
+            <div class="Collection_object_lists_innerloop_new">
+              {%- for columns in collection.metafields.custom.collection_list_shop_by_price_new_kb.value -%}
+                {%- if columns != blank -%}
+                  <div class="Collection_object_lists_innerloop_mainboxs_new">
+                    <div class="Collection_object_lists_innerloop_innerboxs_new">
+                      <a href="{{ columns.collection.value.url }}">
+                        {% if columns.collection_name != blank %}
+                          {{ columns.collection_name }}
+                        {% else %}
+                          {{ columns.collection.value.title }}
+                        {% endif %}
+                      </a>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if collection.metafields.custom.collection_list_explore_new_kb != blank -%}
+          <div class="Collection_object_lists_mainloop_new" data-tab-content="explore" style="display: none;">
+            <div class="Collection_object_lists_innerloop_new">
+              {%- for columns in collection.metafields.custom.collection_list_explore_new_kb.value -%}
+                {%- if columns != blank -%}
+                  <div class="Collection_object_lists_innerloop_mainboxs_new">
+                    <div class="Collection_object_lists_innerloop_innerboxs_new">
+                      <a href="{{ columns.collection.value.url }}">
+                        {% if columns.collection_name != blank %}
+                          {{ columns.collection_name }}
+                        {% else %}
+                          {{ columns.collection.value.title }}
+                        {% endif %}
+                      </a>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      new Swiper('.colletion-tab-slider', {
+        loop: false, 
+        slidesPerView: 3, 
+        spaceBetween: 10, 
+        autoplay: false, 
+        breakpoints: { 
+          640: { 
+            slidesPerView: 3, 
+            spaceBetween: 10, 
+          }, 
+          767: { 
+            slidesPerView: 3, 
+            spaceBetween: 20, 
+          }, 
+          1025: { 
+            slidesPerView: 5, 
+            spaceBetween: 20, 
+          }, 
+          1280: { 
+            slidesPerView: 5, 
+            spaceBetween: 20, 
+          } 
+        }, 
+        navigation: { 
+          nextEl: '.shopby-btn-next', 
+          prevEl: '.shopby-btn-prev', 
+        }
+      });
+
+      // Get all Swiper slides and tab contents
+      const collectionTab = document.querySelectorAll('.colletion-tab-slider .swiper-slide');
+      const tabContents = document.querySelectorAll('.Collection_object_lists_mainloop_new');
+    
+      // Function to show the correct tab content and hide others
+      function showTabContent(tab, clickedSlide) {
+        // Hide all tab contents
+        tabContents.forEach(content => {
+          content.style.display = 'none';
+        });
+    
+        // Show the relevant tab content
+        const activeContent = document.querySelector(`[data-tab-content="${tab}"]`);
+        if (activeContent) {
+          activeContent.style.display = 'block';
+        }
+        
+        collectionTab.forEach(slide => {
+          slide.classList.remove('active-tab');
+        });
+        if (clickedSlide) {
+          clickedSlide.classList.add('active-tab');
+        };
+      }
+    
+      // Attach click event to all Swiper slides
+      collectionTab.forEach(slide => {
+        slide.addEventListener('click', function() {
+          const tab = this.getAttribute('data-tab');
+          showTabContent(tab, this);
+        });
+      });
+    
+       if (collectionTab.length > 0) {
+        const firstTab = collectionTab[0].getAttribute('data-tab');
+        collectionTab[0].classList.add('active-tab'); // Set the first swiper slide as active
+        showTabContent(firstTab, collectionTab[0]);
+      }
+    })
+  </script>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Collection Object Lists",
+    "class": "Collection_object_lists_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "popular_search_heading_text",
+        "label": "Popular Search Tab Heading Text",
+        "default": "Popular Search"
+      },
+      {
+        "type": "text",
+        "id": "shop_by_color_heading_text",
+        "label": "Shop By Color Tab Heading Text",
+        "default": "Shop By Color"
+      },
+      {
+        "type": "text",
+        "id": "shop_by_occasion_heading_text",
+        "label": "Shop By Occasion Tab Heading Text",
+        "default": "Shop By Occasion"
+      },
+      {
+        "type": "text",
+        "id": "shop_byprice_heading_text",
+        "label": "Shop By Price Tab Heading Text",
+        "default": "Shop By Price"
+      },
+      {
+        "type": "text",
+        "id": "explore_our_collection_heading_text",
+        "label": "Explore Our Collection Tab Heading Text",
+        "default": "Explore Our Collection"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Object Lists"
+      }
+    ]
+  }
+{% endschema %}

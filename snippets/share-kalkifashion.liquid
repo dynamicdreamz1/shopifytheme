@@ -1,0 +1,63 @@
+{{ "share-kalkifashion.css" |  asset_url |  stylesheet_tag }}
+<div class="share-button-container hide" js-product-share-popup>
+    <div class="overlay" js-product-share-overlay></div>
+    <div class="share-kalkifashion"  >
+        <div class="wrapper">
+            <div class="contet">
+            <h3 class="share-title">Share this</h3>
+                <p class="share_success__msg" js-link-copy-success>Link Copied!</p>
+                <span data-product-link="{{ shop.url }}{{ product.url }}" class="svg-with-link" js-copy-to-clipboard>
+                    <span class="social-links">{{ shop.url }}{{ product.url }}</span>
+                    <span class="copy-link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+                            <g clip-path="url(#clip0_489_123257)">
+                            <rect x="13.2266" y="0.707107" width="6" height="7" rx="2.5" transform="rotate(45 13.2266 0.707107)" stroke="black"/>
+                            <rect x="6.15625" y="7.7784" width="6" height="7" rx="2.5" transform="rotate(45 6.15625 7.7784)" stroke="black"/>
+                            <line x1="12.5234" y1="5.65633" x2="6.15948" y2="12.0203" stroke="black" stroke-linecap="round"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_489_123257">
+                            <rect width="18" height="18" fill="white" transform="translate(0.5)"/>
+                            </clipPath>
+                            </defs>
+                        </svg>
+                    </span>
+                </span>
+                <ul class="list-social list-unstyled">
+                    <li class="list-social__item">
+                        <a href="//www.facebook.com/sharer.php?u={{ shop.url | append: product.url }}" target="_blank" class="link list-social__link" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;">
+                            {%- render 'icon-facebook' -%}
+                            <span class="social-text">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="list-social__item">
+                        <a href="https://wa.me/?text=Hi,%20I%20found%20this%20style,%20what%20do%20you%20think?%20{{shop.url}}{{ product.url }}" class="link list-social__link" target="_blank" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;">
+                            {%- render 'icon-whatsapp' -%}
+                            <span class="social-text">WhatsApp</span>
+                        </a>
+                    </li>
+                    <li class="list-social__item">
+                        <a href="https://twitter.com/intent/tweet?url={{shop.url}}{{ product.url }}&text='Hi,%20I%20found%20this%20style,%20what%20do%20you%20think?%20'" class="link list-social__link" target="_blank" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;">
+                            {%- render 'icon-twitter' -%}
+                            <span class="social-text">Twitter</span>
+                        </a>
+                    </li>
+                    <li class="list-social__item">
+                        <a href="https://pinterest.com/pin/create/button/?url={{shop.url}}{{ product.url }}&media={{ product.featured_image | image_url }}&description={{ product.description | strip_html }}" class="link list-social__link" target="_blank" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600');return false;">
+                          {%- render 'icon-pinterest' -%}
+                          <span class="social-text">Pinterest</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="close-icon" js-close-btn>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 3L21 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M21 3L3 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<script src="{{ 'product-share-button.js' | asset_url }}" defer="defer"></script>

@@ -1,0 +1,45 @@
+{{ "customize-outfit.css" |  asset_url |  stylesheet_tag }}
+{% assign outfit_note_is_enable = false %}
+{% for block in section.blocks %}
+    {%- if block.type == 'customize_outfit' -%}
+        {% assign outfit_note_is_enable = true %}
+    {% endif %}
+{% endfor %}
+
+{% if outfit_note_is_enable %}
+<div class="customize-outfit hide" js-made-to-order-outfit-wrapper>
+    <div class="wrapper">
+        <div class="content">
+            <h3 class="main-title">Customise Your Perfect Outfit</h3>
+            <div class="grid-item">
+                {% for block in section.blocks %}
+                    {%- if block.type == 'customize_outfit' -%}
+                        <div class="inner-wrap {% if block.settings.full_width %} active {% endif %}">
+                            <div class="icon-with-text">
+                                {% if block.settings.icon != blank %}  
+                                  <div class="icon customize">
+                                    {{
+                                      block.settings.icon | 
+                                      image_url: width: "500x" | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'Icon_image_new',
+                                      alt: block.settings.icon.alt
+                                    }}
+                                  </div>   
+                                {% endif %}
+                                {% if block.settings.text != blank %}
+                                    <div class="text">{{ block.settings.text }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {%- endif -%}
+                {% endfor %}
+            </div>
+            {%- if section.settings.bottom_text != blank -%}
+                <span class="bottom-text">{{ section.settings.bottom_text }}</span>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{% endif %}

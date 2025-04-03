@@ -1,0 +1,121 @@
+{% liquid assign product_attributes_group = product.metafields.custom.select_attributes_group.value %}
+
+{% if product_attributes_group %}
+  {% for attriutes_ in product_attributes_group.select_attributes.value %}
+    {% assign attribute_handle =  attriutes_.title | handleize %}
+    {% if attribute_handle == 'blouse-design' %} 
+      <div class="blouse-style-popup hide" js-blouse-style-popup data-popup-modal="blouse-style" js-popup-modal >
+        <div class="blouse_style_inner_new">
+          <div class="wrapper">
+            <div class="main-wrap">
+                <div class="cross_icon modal-link" js-popup-close-btn data-modal="blouse-style">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 3L21 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+                  <path d="M21 3L3 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+        
+                <h2 class="main_title">Select Blouse Style</h2>
+                <div class="blouse-style-popup_items_wrapper_new optiscroll_common_new optiscroll">
+                  <div class="blouse-style-popup_items_wrapper">
+                    {%- for blouseStyleImg in attriutes_.optional_images.value -%}
+                          <div class="text_with_image_media">
+                            <div class="content-wrap">
+                              <input hidden type="radio" id="{{ attriutes_.values.value[forloop.index0] | replace: " ", "_" }}_{{ forloop.index }}" class="blouse-style-input" name="items[0][properties][Blouse Style]" value="{{ attriutes_.values.value[forloop.index0] }}">
+                              <label class="blouse-input-label" for="{{ attriutes_.values.value[forloop.index0] | replace: " ", "_" }}_{{ forloop.index }}">
+                                <div class="text_with_image">
+                                      <div class="images_wrap">
+                                        <div class="image">
+                                          <img alt="Blouse Style" src="{{ blouseStyleImg | image_url }}">
+                                        </div>
+                                      </div>
+                                      <div class="bottom-content">
+                                        <div class="check_circle">
+                                          <span class="active">
+                                            <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                              <path d="M1 5.84211L3.71809 8.29452C4.14323 8.6781 4.80302 8.62706 5.1641 8.18265L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                              </svg>                                      
+                                          </span>
+                                        </div>
+                                        <div class="main_title">
+                                          {{ attriutes_.values.value[forloop.index0] }}
+                                        </div>
+                                      </div>
+                                </div>
+                              </label>
+                            </div>
+                          </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+                <div class="button_blouse-style-popup" js-popup-save-btn data-modal="blouse-style" js-blouse-style-save-btn>
+                  <button type="button" class="button btn">Save</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+                                                {% liquid assign select_single_attributes = product.metafields.custom.select_single_attributes.value %}
+
+{% if select_single_attributes %}
+  {% for attriutes_ in select_single_attributes %}
+    {% assign attribute_handle =  attriutes_.title | handleize %}
+    {% if attribute_handle == 'blouse-design' %} 
+      <div class="blouse-style-popup hide" js-blouse-style-popup data-popup-modal="blouse-style" js-popup-modal >
+        <div class="blouse_style_inner_new">
+          <div class="wrapper">
+            <div class="main-wrap">
+                <div class="cross_icon modal-link" js-popup-close-btn data-modal="blouse-style">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 3L21 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+                  <path d="M21 3L3 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+        
+                <h2 class="main_title">Select Blouse Style</h2>
+                <div class="blouse-style-popup_items_wrapper_new optiscroll_common_new optiscroll">
+                  <div class="blouse-style-popup_items_wrapper">
+                    {%- for blouseStyleImg in attriutes_.optional_images.value -%}
+                          <div class="text_with_image_media">
+                            <div class="content-wrap">
+                              <input hidden type="radio" id="{{ attriutes_.values.value[forloop.index0] | replace: " ", "_" }}_{{ forloop.index }}" class="blouse-style-input" name="items[0][properties][Blouse Style]" value="{{ attriutes_.values.value[forloop.index0] }}">
+                              <label class="blouse-input-label" for="{{ attriutes_.values.value[forloop.index0] | replace: " ", "_" }}_{{ forloop.index }}">
+                                <div class="text_with_image">
+                                      <div class="images_wrap">
+                                        <div class="image">
+                                          <img alt="Blouse Style" src="{{ blouseStyleImg | image_url }}">
+                                        </div>
+                                      </div>
+                                      <div class="bottom-content">
+                                        <div class="check_circle">
+                                          <span class="active">
+                                            <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                              <path d="M1 5.84211L3.71809 8.29452C4.14323 8.6781 4.80302 8.62706 5.1641 8.18265L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                              </svg>                                      
+                                          </span>
+                                        </div>
+                                        <div class="main_title">
+                                          {{ attriutes_.values.value[forloop.index0] }}
+                                        </div>
+                                      </div>
+                                </div>
+                              </label>
+                            </div>
+                          </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+                <div class="button_blouse-style-popup" js-popup-save-btn data-modal="blouse-style" js-blouse-style-save-btn>
+                  <button type="button" class="button btn">Save</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}

@@ -1,0 +1,59 @@
+<div class="whatsapp_measurement hide" js-pdp-whatsapp-measurement-popup  js-popup-modal data-popup-modal="whatsapp-measurement">
+  <ul class="measurement-tab">
+    <li js-pdp-know-size>I KNOW MY SIZE</li>
+    <li js-pdp-dont-know-size>I DON'T KNOW MY SIZE</li>
+    <li class="active">HOW TO MEASURE</li>
+  </ul>
+  <div class="main_wrapper">
+    <div class="close_icon modal-link" js-popup-close-btn data-modal="whatsapp-measurement">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M3 3L21 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M21 3L3 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="wrapper">
+      <h2 class="title">enter whatsapp number</h2>
+      <div class="inner" js-pdp-select-measurement-popup>
+        <div class="inner_head">
+          <div class="content_wrapper">
+            <input js-custom-measurement-radio-field type="radio" value="Measurement Via Whatsapp" name="items[0][properties][Measurement Method]" id="whatsapp" class="radio_input">
+            <label for="whatsapp" class="radio_label">
+              <span class="text">Measurement Via whatsapp</span>
+            </label>
+          </div>
+          <div class="content_wrapper">
+            <input js-custom-measurement-radio-field type="radio" value="Request a callback" name="items[0][properties][Measurement Method]" id="callback" class="radio_input">
+            <label for="callback" class="radio_label">
+              <span class="text">Request a callback</span>
+            </label>
+          </div>
+        </div>
+        <div class="option">
+          <div class="option_inner-wrapper">
+            <div class="option_drop">
+              <select name="items[0][properties][Country Code]" id="country_code" onfocus="" disabled>
+                <option value="+91">in(+91)</option>
+                <option value="+44">uk(+44)</option>
+                <option value="+97">us(+97)</option>
+              </select>
+              <div class="down_arrow">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 4.5L6.5 8.5L10.5 4.5" stroke="#0F3D99" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="number_wrapper">
+              <span class="label_number">Phone Number*</span>
+              <input js-custom-measurement-input js-custom-measurement-text-field type="number" placeholder="Enter Your Number" name="items[0][properties][Whatsapp Number]" class="input_number" js-whatsapp-callback-phone-number>
+            </div>
+          </div>
+          <div class="error_list" js-error-list>
+          </div>
+        </div>
+        <button type="button" class="btn" js-whatsapp-callback-request-btn js-popup-save-btn data-modal="whatsapp-measurement" >
+          <span class="btn_text">save</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

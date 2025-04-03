@@ -1,0 +1,174 @@
+{% liquid
+  assign height_option  = product.metafields.custom.height_option
+  assign blouse_length  = product.metafields.custom.blouse_length
+  assign sleeves_length = product.metafields.custom.sleeves_length
+  assign neckline_length= product.metafields.custom.neckline_length
+  assign skirt_length   = product.metafields.custom.skirt_length
+  assign waist_option   = product.metafields.custom.waist_option
+  assign lehenga_length = product.metafields.custom.lehenga_length
+  assign shoulder_strap = product.metafields.custom.shoulder_strap
+  assign pant_length    = product.metafields.custom.pant_length
+  assign padding_options = product.metafields.custom.padding_options
+%}
+
+<div class="options-dropdown-list" {% if templateName == 'khadi-product-template' %} js-khadi-options-list-container {%  endif %}>
+  <div class="options-wrapper">
+    <div class="options">
+
+      {%  if height_option %}
+        {% assign required_ = true %}
+        <div class="option">
+          <div class="option-title">
+            <span>Select your height</span>
+            {% if required_ %}<span class="required-sterik">*</span>{% endif %}
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1 >
+            <select name="items[0][properties][Height]" js-custom-option-select id="height_option" {% if required_ %} {% unless templateName == 'bridal-template' %}required{% endunless %} js-pdp-bridal-size-option-required js-pdp-bridal-size-option-required {% endif %} data-option-name="height option">
+              {% render 'custom-product-options', options: height_option ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {%  if padding_options %}
+        {% assign required_ = true %}
+        <div class="option">
+          <div class="option-title">
+            <span>Select Padding </span>
+            {% if required_ %}<span class="required-sterik">*</span>{% endif %}
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1 >
+            <select name="items[0][properties][Height]" js-custom-option-select id="padding_option" {% if required_ %} {% unless templateName == 'bridal-template' %} required {% endunless %} js-pdp-bridal-size-option-required js-pdp-bridal-size-option-required{% endif %} data-option-name="height option">
+              {% render 'custom-product-options', options: padding_options ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+    
+      {% if blouse_length %}
+        {% assign required_ = true %}
+        <div class="option">
+          <div class="option-title">
+            <span>Blouse Length</span>
+            {% if required_ %}<span class="required-sterik">*</span>{% endif %}
+          </div>
+          <div class="option-drop cs-option-drop">
+            <select name="items[0][properties][Blouse Length]" js-custom-option-select data-option-name="blouse length" {% if required_ %}  {% unless templateName == 'bridal-template' %} required {% endunless %} js-pdp-bridal-size-option-required{% endif %}>
+              {% render 'custom-product-options', options: blouse_length ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if product.metafields.custom.blouse_styles %}
+        <div class="option">
+          <div class="option-title">
+            <span>Blouse Style</span> 
+          </div>
+          <div class="option-drop cs-option-drop modal-link option-drop-blouse"  js-khadi-open-popup-modal data-modal="blouse-style">
+            <div>
+              <span js-open-popup-modal data-modal="blouse-style" >Please Select</span>
+            </div>
+            <div class="svg-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none"><path d="M1 9L5 5L1 1" stroke="#172926" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </div>
+        
+      {% endif %}
+      {% if sleeves_length %}
+        <div class="option">
+          <div class="option-title">
+            <span>Sleeves Length</span>
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1>
+            <select name="items[0][properties][Sleeves Length]" js-custom-option-select data-option-name="sleeves length">
+              {% render 'custom-product-options', options: sleeves_length ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if neckline_length %}
+        <div class="option">
+          <div class="option-title">
+            <span>Neckline Length</span>
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1>
+            <select name="items[0][properties][Neckline Length]" js-custom-option-select data-option-name="neckline length">
+              {% render 'custom-product-options', options: neckline_length ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if skirt_length %}
+        {% assign required_ = true %}
+        <div class="option">
+          <div class="option-title">
+            <span>Skirt Length</span>
+            {% if required_ %}<span class="required-sterik">*</span>{% endif %}
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1>
+            <select name="items[0][properties][Skirt Length]" js-custom-option-select data-option-name="skirt length" {% if required_ %} {% unless templateName == 'bridal-template' %} required {% endunless %} js-pdp-bridal-size-option-required{% endif %}>
+              {% render 'custom-product-options', options: skirt_length ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if waist_option %}
+        <div class="option">
+          <div class="option-title">
+            <span>Waist Length</span>
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1>
+            <select name="items[0][properties][Waist Length]" js-custom-option-select data-option-name="waist length">
+              {% render 'custom-product-options', options: waist_option ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if lehenga_length %}
+        <div class="option">
+          <div class="option-title">
+            <span>Lehenga Length</span>
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1>
+            <select name="items[0][properties][Waist Length]" js-custom-option-select data-option-name="lehenga length">
+              {% render 'custom-product-options', options: lehenga_length ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if shoulder_strap %}
+        <div class="option">
+          <div class="option-title">
+            <span>Shoulder Strap</span>
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1>
+            <select name="items[0][properties][Shoulder Strap]" js-custom-option-select data-option-name="shoulder strap">
+              {% render 'custom-product-options', options: shoulder_strap ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if pant_length %}
+        <div class="option">
+          <div class="option-title">
+            <span>Pant Length</span>
+          </div>
+          <div class="option-drop cs-option-drop" js-option-drop-1>
+            <select name="items[0][properties][Pant Length]" js-custom-option-select data-option-name="pant length">
+              {% render 'custom-product-options', options: pant_length ,layout: "dropdown" %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>

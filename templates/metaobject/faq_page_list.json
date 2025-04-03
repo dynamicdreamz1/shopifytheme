@@ -1,0 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "fa_qs_detail_page_template_new_mcR4kh": {
+      "type": "FAQs-detail-page-template-new",
+      "settings": {
+        "main_background_color": "#ffffff",
+        "main_back_redirect_link": "shopify://pages/faqs",
+        "main_question_text": "<p>Add a video Question ?</p>",
+        "main_mp4_video": "shopify://files/videos/-5d9c-464b-a19b-ff196443193c (1).mp4"
+      }
+    }
+  },
+  "order": [
+    "fa_qs_detail_page_template_new_mcR4kh"
+  ]
+}

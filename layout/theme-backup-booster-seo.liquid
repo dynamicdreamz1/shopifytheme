@@ -1,0 +1,685 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <style>
+      .mega-menu[open] .mega-menu__content {
+          display: block !important;
+      }
+      
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <meta name="google-site-verification" content="iiCnhW50w4-9vksku5ZAmftB3IKSsqIUG2nTqeBuMAg">
+     {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+    {% render 'critical' %}
+
+    {% comment %}{% assign amp_base_url = shop.url | append: '/amp' %} {% endcomment %}
+
+    <!-- <link rel="amphtml" href="{{ amp_base_url }}{{ request.path }}"> -->
+
+    
+    {% if template.name == 'collection' %}
+      {% render 'collection-schema', collection: collection %}
+    {% endif %}
+    {% if template.name == 'product' %}
+      {% render 'pdp-schema', product: product %}
+    {% endif %}
+    {%- unless template == 'index' or template == 'cart' or template == '404' -%}
+      {%- assign t = template | split: '.' | first -%}
+
+      <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "{{ request.origin }}"
+              }
+              {%- case t -%}
+                {%- when 'page' -%}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "{{ page.title }}",
+                "item": "{{ request.origin }}{{ page.title }}"
+              }
+              {%- when 'product' -%}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "{{ product.title }}",
+                "item": "{{ request.origin }}{{ product.url }}"
+              }
+              {%- when 'collection' -%}
+              ,
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "{{ collection.title }}",
+                "item": "{{ request.origin }}{{ collection.url }}"
+              }
+              {% endcase %}
+            ]
+          }
+      </script>
+    {% endunless %}
+    {% if template.name == 'index' %}
+      <script type="application/ld+json">
+        {
+          "@context":"https://schema.org",
+          "@type":"Organization",
+          "url":{{ request.origin | append: page.url | json }},
+          "name": "KALKI Fashion",
+          {% if settings.logo %}
+            "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+          {% endif %}
+          "contactPoint":[
+            {
+              "@type":"ContactPoint",
+              "telephone":"+91 22-489-00416",
+              "contactType":"customer service",
+              "areaServed": "IN",
+              "availableLanguage": "en"
+            }
+          ],
+          "sameAs": [
+              {{ settings.social_twitter_link | json }},
+              {{ settings.social_facebook_link | json }},
+              {{ settings.social_pinterest_link | json }},
+              {{ settings.social_instagram_link | json }},
+              {{ settings.social_tiktok_link | json }},
+              {{ settings.social_tumblr_link | json }},
+              {{ settings.social_snapchat_link | json }},
+              {{ settings.social_youtube_link | json }},
+              {{ settings.social_vimeo_link | json }},
+              {{ request.origin | append: page.url | json }}
+            ]
+        }
+      </script>
+    {% endif %}
+    {%- if template.name == 'index' -%}
+      {% assign potential_action_target = request.origin
+        | append: routes.search_url
+        | append: '?q={search_term_string}'
+      %}
+      <script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "WebSite",
+          "name": "KAKLI Fashion",
+          "url":{{ request.origin | append: page.url | json }},
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {{ potential_action_target | json }},
+            "query-input": "required name=search_term_string"
+          }
+        }
+      </script>
+    {%- endif -%}
+
+    <!-- For URL redirects -->
+    <script>
+      if (window.location.pathname.endsWith(".html")) {
+          let newUrl = window.location.pathname.replace(".html", "");
+          window.location.replace(newUrl);
+      }
+    </script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    <link rel="alternate" hreflang="en-in" href="{{ request.origin }}{{ request.path }}">
+
+    {%- if template == 'index' -%}
+      <link rel="alternate" hreflang="en-us" href="https://www.kalkifashion.com/" />
+      <link rel="alternate" hreflang="en-gb" href="https://uk.kalkifashion.com/" />
+      <link rel="alternate" hreflang="en" href="https://www.kalkifashion.com/global/" />
+      <link rel="alternate" hreflang="x-default" href="https://www.kalkifashion.com/global/" />
+    {%- endif -%}
+
+    {%- if template.name == 'collection' -%}
+      {%- if collection.metafields.custom.collection_hreflang != blank -%}
+        {{ collection.metafields.custom.collection_hreflang }}
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if page.handle contains 'bridal-wedding-dresses' -%}
+      <link rel="alternate" hreflang="en-us" href="https://www.kalkifashion.com/bridal-wedding-dresses" />
+      <link rel="alternate" hreflang="en-gb" href="https://uk.kalkifashion.com/pages/bridal-wedding-dresses" />
+      <link rel="alternate" hreflang="en" href="https://www.kalkifashion.com/global/bridal-wedding-dresses" />
+      <link rel="alternate" hreflang="x-default" href="https://www.kalkifashion.com/global/bridal-wedding-dresses" />
+    {%- endif -%}
+
+    {% if template.name == 'cart' or template.name contains 'customers/' %}
+      <meta name="robots" content="noindex, nofollow">
+    {% else %}
+      <meta name="robots" content="noindex, nofollow">
+      <!-- <meta name="robots" class="meta-robots" content="index, follow"> -->
+    {% endif %}
+
+    {% if template.name == 'product' %}
+      <meta property="al:ios:app_store_id" content="950206786"
+      ><meta property="al:ios:app_name" content="Kalki Fashion: Online Shopping">
+      <meta property="al:android:package" content="com.shopgate.android.kalkifash">
+    {% endif %}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} | tagged "{{ current_tags | join: ', ' }}" {% endif -%}
+      {%- if current_page != 1 %} | Page {{ current_page }} {% endif -%}
+      {%- unless page_title contains shop.name %} | {{ shop.name }} {% endunless -%}
+    </title>
+
+   {% render 'meta-tags' %}
+
+    <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    {%- if settings.animations_reveal_on_scroll -%}
+      <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    >
+    {{ 'ajaxinate.min.js' | asset_url | script_tag }}
+
+    {{ content_for_header }}
+
+    {%- render 'css-variables' -%}
+
+    {%- liquid
+      assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
+      assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
+      assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+    %}
+
+    {% style %}
+      {{ settings.type_body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ body_font_italic | font_face: font_display: 'swap' }}
+      {{ body_font_bold_italic | font_face: font_display: 'swap' }}
+      {{ settings.type_header_font | font_face: font_display: 'swap' }}
+
+      {% for scheme in settings.color_schemes -%}
+        {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
+        {% if forloop.index == 1 -%}
+          :root,
+        {%- endif %}
+        .color-{{ scheme.id }} {
+          --color-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
+        {% if scheme.settings.background_gradient != empty %}
+          --gradient-background: {{ scheme.settings.background_gradient }};
+        {% else %}
+          --gradient-background: {{ scheme.settings.background }};
+        {% endif %}
+
+        {% liquid
+          assign background_color = scheme.settings.background
+          assign background_color_brightness = background_color | color_brightness
+          if background_color_brightness <= 26
+            assign background_color_contrast = background_color | color_lighten: 50
+          elsif background_color_brightness <= 65
+            assign background_color_contrast = background_color | color_lighten: 5
+          else
+            assign background_color_contrast = background_color | color_darken: 25
+          endif
+        %}
+
+        --color-foreground: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
+        --color-background-contrast: {{ background_color_contrast.red }},{{ background_color_contrast.green }},{{ background_color_contrast.blue }};
+        --color-shadow: {{ scheme.settings.shadow.red }},{{ scheme.settings.shadow.green }},{{ scheme.settings.shadow.blue }};
+        --color-button: {{ scheme.settings.button.red }},{{ scheme.settings.button.green }},{{ scheme.settings.button.blue }};
+        --color-button-text: {{ scheme.settings.button_label.red }},{{ scheme.settings.button_label.green }},{{ scheme.settings.button_label.blue }};
+        --color-secondary-button: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
+        --color-secondary-button-text: {{ scheme.settings.secondary_button_label.red }},{{ scheme.settings.secondary_button_label.green }},{{ scheme.settings.secondary_button_label.blue }};
+        --color-link: {{ scheme.settings.secondary_button_label.red }},{{ scheme.settings.secondary_button_label.green }},{{ scheme.settings.secondary_button_label.blue }};
+        --color-badge-foreground: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
+        --color-badge-background: {{ scheme.settings.background.red }},{{ scheme.settings.background.green }},{{ scheme.settings.background.blue }};
+        --color-badge-border: {{ scheme.settings.text.red }},{{ scheme.settings.text.green }},{{ scheme.settings.text.blue }};
+        --payment-terms-background-color: rgb({{ scheme.settings.background.rgb }});
+      }
+      {% endfor %}
+
+      {{ scheme_classes | prepend: 'body' }} {
+        color: rgba(var(--color-foreground));
+        background-color: rgb(var(--color-background));
+      }
+
+      :root {
+        
+        /*--font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};*/
+        --font-body-family: 'Futura', {{ settings.type_body_font.fallback_families }};
+        --font-body-style: {{ settings.type_body_font.style }};
+        --font-body-weight: {{ settings.type_body_font.weight }};
+        --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 1000 }};
+
+        /*--font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};*/
+        --font-heading-family: 'Futura Now Headline', {{ settings.type_header_font.fallback_families }};
+        --font-heading-style: {{ settings.type_header_font.style }};
+        --font-heading-weight: 500;
+
+        --font-noto-serif-display: 'Noto Serif Display', {{ settings.type_body_font.fallback_families }};
+        --font-northwell: 'Northwell', {{ settings.type_body_font.fallback_families }};
+        --font-Bespoke: 'Bespoke Serif', {{ settings.type_body_font.fallback_families }};
+
+        --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+        --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
+
+        --media-padding: {{ settings.media_padding }}px;
+        --media-border-opacity: {{ settings.media_border_opacity | divided_by: 100.0 }};
+        --media-border-width: {{ settings.media_border_thickness }}px;
+        --media-radius: {{ settings.media_radius }}px;
+        --media-shadow-opacity: {{ settings.media_shadow_opacity | divided_by: 100.0 }};
+        --media-shadow-horizontal-offset: {{ settings.media_shadow_horizontal_offset }}px;
+        --media-shadow-vertical-offset: {{ settings.media_shadow_vertical_offset }}px;
+        --media-shadow-blur-radius: {{ settings.media_shadow_blur }}px;
+        --media-shadow-visible: {% if settings.media_shadow_opacity > 0 %}1{% else %}0{% endif %};
+
+        --page-width: {{ settings.page_width | divided_by: 10 }}rem;
+        --page-width-margin: {% if settings.page_width == '1600' %}2{% else %}0{% endif %}rem;
+
+        --product-card-image-padding: {{ settings.card_image_padding | divided_by: 10.0 }}rem;
+        --product-card-corner-radius: {{ settings.card_corner_radius | divided_by: 10.0 }}rem;
+        --product-card-text-alignment: {{ settings.card_text_alignment }};
+        --product-card-border-width: {{ settings.card_border_thickness | divided_by: 10.0 }}rem;
+        --product-card-border-opacity: {{ settings.card_border_opacity | divided_by: 100.0 }};
+        --product-card-shadow-opacity: {{ settings.card_shadow_opacity | divided_by: 100.0 }};
+        --product-card-shadow-visible: {% if settings.card_shadow_opacity > 0 %}1{% else %}0{% endif %};
+        --product-card-shadow-horizontal-offset: {{ settings.card_shadow_horizontal_offset | divided_by: 10.0 }}rem;
+        --product-card-shadow-vertical-offset: {{ settings.card_shadow_vertical_offset | divided_by: 10.0 }}rem;
+        --product-card-shadow-blur-radius: {{ settings.card_shadow_blur | divided_by: 10.0 }}rem;
+
+        --collection-card-image-padding: {{ settings.collection_card_image_padding | divided_by: 10.0 }}rem;
+        --collection-card-corner-radius: {{ settings.collection_card_corner_radius | divided_by: 10.0 }}rem;
+        --collection-card-text-alignment: {{ settings.collection_card_text_alignment }};
+        --collection-card-border-width: {{ settings.collection_card_border_thickness | divided_by: 10.0 }}rem;
+        --collection-card-border-opacity: {{ settings.collection_card_border_opacity | divided_by: 100.0 }};
+        --collection-card-shadow-opacity: {{ settings.collection_card_shadow_opacity | divided_by: 100.0 }};
+        --collection-card-shadow-visible: {% if settings.collection_card_shadow_opacity > 0 %}1{% else %}0{% endif %};
+        --collection-card-shadow-horizontal-offset: {{ settings.collection_card_shadow_horizontal_offset | divided_by: 10.0 }}rem;
+        --collection-card-shadow-vertical-offset: {{ settings.collection_card_shadow_vertical_offset | divided_by: 10.0 }}rem;
+        --collection-card-shadow-blur-radius: {{ settings.collection_card_shadow_blur | divided_by: 10.0 }}rem;
+
+        --blog-card-image-padding: {{ settings.blog_card_image_padding | divided_by: 10.0 }}rem;
+        --blog-card-corner-radius: {{ settings.blog_card_corner_radius | divided_by: 10.0 }}rem;
+        --blog-card-text-alignment: {{ settings.blog_card_text_alignment }};
+        --blog-card-border-width: {{ settings.blog_card_border_thickness | divided_by: 10.0 }}rem;
+        --blog-card-border-opacity: {{ settings.blog_card_border_opacity | divided_by: 100.0 }};
+        --blog-card-shadow-opacity: {{ settings.blog_card_shadow_opacity | divided_by: 100.0 }};
+        --blog-card-shadow-visible: {% if settings.blog_card_shadow_opacity > 0 %}1{% else %}0{% endif %};
+        --blog-card-shadow-horizontal-offset: {{ settings.blog_card_shadow_horizontal_offset | divided_by: 10.0 }}rem;
+        --blog-card-shadow-vertical-offset: {{ settings.blog_card_shadow_vertical_offset | divided_by: 10.0 }}rem;
+        --blog-card-shadow-blur-radius: {{ settings.blog_card_shadow_blur | divided_by: 10.0 }}rem;
+
+        --badge-corner-radius: {{ settings.badge_corner_radius | divided_by: 10.0 }}rem;
+
+        --popup-border-width: {{ settings.popup_border_thickness }}px;
+        --popup-border-opacity: {{ settings.popup_border_opacity | divided_by: 100.0 }};
+        --popup-corner-radius: {{ settings.popup_corner_radius }}px;
+        --popup-shadow-opacity: {{ settings.popup_shadow_opacity | divided_by: 100.0 }};
+        --popup-shadow-horizontal-offset: {{ settings.popup_shadow_horizontal_offset }}px;
+        --popup-shadow-vertical-offset: {{ settings.popup_shadow_vertical_offset }}px;
+        --popup-shadow-blur-radius: {{ settings.popup_shadow_blur }}px;
+
+        --drawer-border-width: {{ settings.drawer_border_thickness }}px;
+        --drawer-border-opacity: {{ settings.drawer_border_opacity | divided_by: 100.0 }};
+        --drawer-shadow-opacity: {{ settings.drawer_shadow_opacity | divided_by: 100.0 }};
+        --drawer-shadow-horizontal-offset: {{ settings.drawer_shadow_horizontal_offset }}px;
+        --drawer-shadow-vertical-offset: {{ settings.drawer_shadow_vertical_offset }}px;
+        --drawer-shadow-blur-radius: {{ settings.drawer_shadow_blur }}px;
+
+        --spacing-sections-desktop: {{ settings.spacing_sections }}px;
+        --spacing-sections-mobile: {% if settings.spacing_sections < 24 %}{{ settings.spacing_sections }}{% else %}{{ settings.spacing_sections | times: 0.7 | round | at_least: 20 }}{% endif %}px;
+
+        --grid-desktop-vertical-spacing: {{ settings.spacing_grid_vertical }}px;
+        --grid-desktop-horizontal-spacing: {{ settings.spacing_grid_horizontal }}px;
+        --grid-mobile-vertical-spacing: {{ settings.spacing_grid_vertical }}px;
+        --grid-mobile-horizontal-spacing: {{ settings.spacing_grid_horizontal | divided_by: 2 }}px;
+
+        --text-boxes-border-opacity: {{ settings.text_boxes_border_opacity | divided_by: 100.0 }};
+        --text-boxes-border-width: {{ settings.text_boxes_border_thickness }}px;
+        --text-boxes-radius: {{ settings.text_boxes_radius }}px;
+        --text-boxes-shadow-opacity: {{ settings.text_boxes_shadow_opacity | divided_by: 100.0 }};
+        --text-boxes-shadow-visible: {% if settings.text_boxes_shadow_opacity > 0 %}1{% else %}0{% endif %};
+        --text-boxes-shadow-horizontal-offset: {{ settings.text_boxes_shadow_horizontal_offset }}px;
+        --text-boxes-shadow-vertical-offset: {{ settings.text_boxes_shadow_vertical_offset }}px;
+        --text-boxes-shadow-blur-radius: {{ settings.text_boxes_shadow_blur }}px;
+
+        --buttons-radius: {{ settings.buttons_radius }}px;
+        --buttons-radius-outset: {% if settings.buttons_radius > 0 %}{{ settings.buttons_radius | plus: settings.buttons_border_thickness }}{% else %}0{% endif %}px;
+        --buttons-border-width: {% if settings.buttons_border_opacity > 0 %}{{ settings.buttons_border_thickness }}{% else %}0{% endif %}px;
+        --buttons-border-opacity: {{ settings.buttons_border_opacity | divided_by: 100.0 }};
+        --buttons-shadow-opacity: {{ settings.buttons_shadow_opacity | divided_by: 100.0 }};
+        --buttons-shadow-visible: {% if settings.buttons_shadow_opacity > 0 %}1{% else %}0{% endif %};
+        --buttons-shadow-horizontal-offset: {{ settings.buttons_shadow_horizontal_offset }}px;
+        --buttons-shadow-vertical-offset: {{ settings.buttons_shadow_vertical_offset }}px;
+        --buttons-shadow-blur-radius: {{ settings.buttons_shadow_blur }}px;
+        --buttons-border-offset: {% if settings.buttons_radius > 0 or settings.buttons_shadow_opacity > 0 %}0.3{% else %}0{% endif %}px;
+
+        --inputs-radius: {{ settings.inputs_radius }}px;
+        --inputs-border-width: {{ settings.inputs_border_thickness }}px;
+        --inputs-border-opacity: {{ settings.inputs_border_opacity | divided_by: 100.0 }};
+        --inputs-shadow-opacity: {{ settings.inputs_shadow_opacity | divided_by: 100.0 }};
+        --inputs-shadow-horizontal-offset: {{ settings.inputs_shadow_horizontal_offset }}px;
+        --inputs-margin-offset: {% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_opacity > 0 %}{{ settings.inputs_shadow_vertical_offset | abs }}{% else %}0{% endif %}px;
+        --inputs-shadow-vertical-offset: {{ settings.inputs_shadow_vertical_offset }}px;
+        --inputs-shadow-blur-radius: {{ settings.inputs_shadow_blur }}px;
+        --inputs-radius-outset: {% if settings.inputs_radius > 0 %}{{ settings.inputs_radius | plus: settings.inputs_border_thickness }}{% else %}0{% endif %}px;
+
+        --variant-pills-radius: {{ settings.variant_pills_radius }}px;
+        --variant-pills-border-width: {{ settings.variant_pills_border_thickness }}px;
+        --variant-pills-border-opacity: {{ settings.variant_pills_border_opacity | divided_by: 100.0 }};
+        --variant-pills-shadow-opacity: {{ settings.variant_pills_shadow_opacity | divided_by: 100.0 }};
+        --variant-pills-shadow-horizontal-offset: {{ settings.variant_pills_shadow_horizontal_offset }}px;
+        --variant-pills-shadow-vertical-offset: {{ settings.variant_pills_shadow_vertical_offset }}px;
+        --variant-pills-shadow-blur-radius: {{ settings.variant_pills_shadow_blur }}px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: inherit;
+      }
+
+      html {
+        box-sizing: border-box;
+        font-size: calc(var(--font-body-scale) * 62.5%);
+        height: 100%;
+      }
+
+      body {
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-columns: 100%;
+        min-height: 100%;
+        margin: 0;
+        font-size: 1.5rem;
+        letter-spacing: 0;
+        line-height: calc(1 + 0.8 / var(--font-body-scale));
+        font-family: var(--font-body-family);
+        font-style: var(--font-body-style);
+        font-weight: var(--font-body-weight);
+      }
+
+      @media screen and (min-width: 750px) {
+        body {
+          font-size: 1.6rem;
+        }
+      }
+    {% endstyle %}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {%- unless settings.type_body_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+    {%- unless settings.type_header_font.system? -%}
+      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+    {%- endunless -%}
+
+    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+      {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
+      <script src="{{ 'localization-form.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- if settings.predictive_search_enabled -%}
+      <link
+        rel="stylesheet"
+        href="{{ 'component-predictive-search.css' | asset_url }}"
+        media="print"
+        onload="this.media='all'"
+      >
+    {%- endif -%}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- custom -->
+    {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'custom.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'rebuy-widget.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'custom-select-drop.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'wishlist-page.css' | asset_url | stylesheet_tag: preload: true }}
+    <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+
+    {% if template.name == 'product' %}
+      {% capture magic_headers %}{% include 'magiczoomplus.headers' %}{% endcapture %}
+      {% unless magic_headers contains 'Liquid error' %}{{ magic_headers }}{% endunless %}
+      <script src="{{ 'recentview.product.min.js' | asset_url }}" defer="defer"></script>
+    {% endif %}
+
+    <script src="{{ 'custom-templates.js' | asset_url }}" defer="defer"></script>
+
+    {{ 'product-delivery-days.css' | asset_url | stylesheet_tag }}
+    {% render 'collection-faq-schema' %}
+
+    <script type="text/lazyload">
+     (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "qjx3burd9q");
+    </script>
+
+    <script>
+(function(g,e,o,t,a,r,ge,tl,y){
+t=g.getElementsByTagName(e)[0];y=g.createElement(e);y.async=true;
+var a=window,b=g.documentElement,c=g.getElementsByTagName('body')[0],w=a.innerWidth||b.clientWidth||c.clientWidth,h=a.innerHeight||b.clientHeight||c.clientHeight;
+y.src='https://g10894638425.co/gp?id=-O-A44rkup3bozQTixww&refurl='+g.referrer+'&winurl='+encodeURIComponent(window.location)+'&cw='+w+'&ch='+h;
+t.parentNode.insertBefore(y,t);
+})(document,'script');
+</script>
+
+<!-- tagalys start -->
+   <script src="https://storage.googleapis.com/tagalys-front-end-components/tagalys-ui-widgets-2.1.3.min.js" defer></script>
+    <script src="{{ 'tagalys-customisations.js' | asset_url }}" defer></script>
+    <script>
+      var tagalysDisableLegacyScript = true; // This will disable the default script included via Shopify app Script Tags, thereby preventing conflicts with the new code.
+
+      function onTagalysReady(callback) {
+        if (window.Tagalys) {
+          TagalysCustomisations.setTagalysConfiguration();
+          TagalysCustomisations.setPlatformConfiguration();
+          callback();
+        }
+        else {
+          window.addEventListener("DOMContentLoaded", function () {
+            TagalysCustomisations.setTagalysConfiguration();
+            TagalysCustomisations.setPlatformConfiguration();
+            callback();
+          });
+        }
+      }
+        
+    </script>
+   <!-- tagalys close --> 
+  {% include 'kart_discount' %}</head>
+
+  <body
+    class="
+      gradient {{ page.title | handleize }}_page_new template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} template--{{ template.suffix }} {% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}
+      {% if collection.metafields.custom.hide_announcement_bar == true %} collection_hide_announcement_bar_new {% endif %} {% if collection.metafields.custom.header_transparent == true %}header-init-state-enable collection_header_transparent_new {% endif %} {% if collection.metafields.custom.collection_full_width == true %} collection_full_width_new {% endif %}
+      {% if page.metafields.custom.hide_announcement_bar == true %} collection_hide_announcement_bar_new {% endif %} {% if page.metafields.custom.header_transparent == true %}header-init-state-enable collection_header_transparent_new page_white_header_transparent_new {% endif %} {% if template.suffix == 'bridal' %} collection_header_transparent_new {% endif %} {% if template contains 'product' and template.suffix == 'bridal' %} header-init-state-enable {% endif %}
+      {% if template contains 'bridal-collection-new' %} header-init-state-enable {% endif %}{% if customer != null %} customer-loggedin {% endif %}
+    "
+    js-product-template
+  >
+    <a class="skip-to-content-link button visually-hidden" href="#MainContent">
+      {{ 'accessibility.skip_to_text' | t }}
+    </a>
+
+    {%- if settings.cart_type == 'drawer' -%}
+      {%- render 'cart-drawer' -%}
+    {%- endif -%}
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+    {% if template.name == 'product' %}
+      {% render 'sticky-addtocart-button' %}
+    {% endif %}
+    {% sections 'footer-group' %}
+
+    {% if template.name == 'collection' %}
+      {% render 'sticky-recently-viewed' %}
+    {% endif %}
+
+    <div class="back_to_top_new" id="gototop">
+      <span>
+        <svg
+          width="16"
+          height="30"
+          viewBox="0 0 16 30"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-2 md:w-3"
+        >
+          <path d="M15 29L1 15L15 1" stroke="#223330" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </span>
+    </div>
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
+      <li id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</li>
+    </ul>
+
+    <script>
+      window.shopUrl = '{{ request.origin }}';
+      window.routes = {
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        cart_update_url: '{{ routes.cart_update_url }}',
+        cart_url: '{{ routes.cart_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}',
+      };
+
+      window.cartStrings = {
+        error: `{{ 'sections.cart.cart_error' | t }}`,
+        quantityError: `{{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' }}`,
+      };
+
+      window.variantStrings = {
+        addToCart: `{{ 'products.product.add_to_cart' | t }}`,
+        soldOut: `{{ 'products.product.sold_out' | t }}`,
+        unavailable: `ADD TO CART (Select Size)`,
+        unavailable_with_option: `{{ 'products.product.value_unavailable' | t: option_value: '[value]' }}`,
+      };
+
+      window.quickOrderListStrings = {
+        itemsAdded: `{{ 'sections.quick_order_list.items_added.other' | t: quantity: '[quantity]' }}`,
+        itemAdded: `{{ 'sections.quick_order_list.items_added.one' | t: quantity: '[quantity]' }}`,
+        itemsRemoved: `{{ 'sections.quick_order_list.items_removed.other' | t: quantity: '[quantity]' }}`,
+        itemRemoved: `{{ 'sections.quick_order_list.items_removed.one' | t: quantity: '[quantity]' }}`,
+        viewCart: `{{- 'sections.quick_order_list.view_cart' | t -}}`,
+        each: `{{- 'sections.quick_order_list.each' | t: money: '[money]' }}`,
+      };
+
+      window.accessibilityStrings = {
+        imageAvailable: `{{ 'products.product.media.image_available' | t: index: '[index]' }}`,
+        shareSuccess: `{{ 'general.share.success_message' | t }}`,
+        pauseSlideshow: `{{ 'sections.slideshow.pause_slideshow' | t }}`,
+        playSlideshow: `{{ 'sections.slideshow.play_slideshow' | t }}`,
+        recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
+        recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`,
+        countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
+      };
+    </script>
+
+    {%- if settings.predictive_search_enabled -%}
+      <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {% if template.name == 'collection' or template.name == 'search' %}
+      <script>
+        document.addEventListener('click', (e) => {
+          const priceFilterLabels = document.querySelectorAll('[js-price-filter-label]');
+          priceFilterLabels?.forEach(priceBtn => {
+            if(priceBtn?.contains(e.target)) {
+              priceBtn?.querySelectorAll('input').forEach(input => {
+                input?.click()
+              });
+            }
+          })
+        })
+      </script>
+    {% endif %}
+    {% if template.name == 'product' %}
+      {{ 'stamped-reviews.css' | asset_url | stylesheet_tag: preload: true }}
+    {% endif %}
+    <a
+      href="https://api.whatsapp.com/send/?phone=919920012474&text=Hi+Kalki+Stylist+%21&type=phone_number&app_absent=0"
+      class="float1"
+      target="_blank"
+      aria-label="Whatsapp chat"
+    >
+      {% if page.handle contains 'bridal-wedding-dresses' or template.suffix == 'bridal' or template contains 'bridal-collection-new' or template contains 'luxe-collection-new' %}
+        <div>Bridal or bridesmaid shopping? Get personalized outfit recommendations!</div>
+      {% else %}
+        <div>Need help finding the perfect outfit? Our fashion experts are here to assist!</div>
+      {% endif %}
+      <i class="fa fa-whatsapp my-float"></i>
+    </a>
+    {{ 'footer.js' | asset_url | script_tag | replace: 'src', 'defer src' }}
+    <script>
+      var _0x1a3cca=_0x3741;(function(_0x29f92f,_0x321447){var _0x291221=_0x3741,_0x1b67d2=_0x29f92f();while(!![]){try{var _0x508c63=-parseInt(_0x291221(0x8d))/0x1+-parseInt(_0x291221(0x9e))/0x2*(-parseInt(_0x291221(0x8c))/0x3)+-parseInt(_0x291221(0xb5))/0x4+-parseInt(_0x291221(0xaf))/0x5*(-parseInt(_0x291221(0xd6))/0x6)+parseInt(_0x291221(0x89))/0x7+parseInt(_0x291221(0xb2))/0x8*(-parseInt(_0x291221(0xd1))/0x9)+-parseInt(_0x291221(0x9f))/0xa;if(_0x508c63===_0x321447)break;else _0x1b67d2['push'](_0x1b67d2['shift']());}catch(_0x15be56){_0x1b67d2['push'](_0x1b67d2['shift']());}}}(_0x1a0c,0xd1908));var src,srcset,wnw_windowWidth,wnw_windowHeight,critical2,cls_css,lazyBackground,lazyIframe,lazybg,s,i,flag=0x1,external_single_loaded=0x1;function wnw_init(){var _0x45530b=_0x3741;(cls_css=document[_0x45530b(0x7b)](_0x45530b(0x7f)))['forEach'](function(_0x254077){_0x254077['remove']();}),lazyLoadCss(),lazyLoadStyle(),lazyLoadImg(),lazyLoadBackground(),lazyLoadVideo(),lazyLoadIframe(),lazyLoadPoster(),flag&&(flag=0x0,load_all_js());}function wnwInsertAfter(_0x34697d,_0x5b29d5){var _0x416069=_0x3741;_0x5b29d5[_0x416069(0x9a)][_0x416069(0xad)](_0x34697d,_0x5b29d5[_0x416069(0xd3)]);}function lazyLoadImg(){var _0x23667d=_0x3741,_0x22d3e9=document[_0x23667d(0x7b)](_0x23667d(0xbd));for(i=0x0;i<_0x22d3e9['length'];i++)src=wnw_windowWidth<0x258?void 0x0===_0x22d3e9[i][_0x23667d(0xcb)][_0x23667d(0xc7)]?_0x22d3e9[i][_0x23667d(0xcb)][_0x23667d(0xc1)]:_0x22d3e9[i][_0x23667d(0xcb)][_0x23667d(0xc7)]:void 0x0===_0x22d3e9[i][_0x23667d(0xcb)][_0x23667d(0xc1)]?_0x22d3e9[i]['src']:_0x22d3e9[i]['dataset']['src'],srcset=_0x22d3e9[i][_0x23667d(0x86)](_0x23667d(0xd7))?_0x22d3e9[i][_0x23667d(0x86)](_0x23667d(0xd7)):'',null!=src&&''!=src&&(_0x22d3e9[i][_0x23667d(0xc1)]=src),null!=srcset&&''!=srcset&&(_0x22d3e9[i][_0x23667d(0x98)]=srcset),_0x22d3e9[i]['classList'][_0x23667d(0x92)]('lazy2');}function lazyLoadImg2(){var _0x54b8df=_0x3741,_0x55a90e=document[_0x54b8df(0x7b)]('img.lazy3');for(i=0x0;i<_0x55a90e[_0x54b8df(0x80)];i++){var _0x405885=_0x55a90e[i]['getBoundingClientRect']();0x0!=_0x405885[_0x54b8df(0xc3)]&&_0x405885[_0x54b8df(0xc3)]-wnw_windowHeight<0x1&&(src=wnw_windowWidth<0x258?void 0x0===_0x55a90e[i]['dataset'][_0x54b8df(0xc7)]?_0x55a90e[i][_0x54b8df(0xcb)][_0x54b8df(0xc1)]:_0x55a90e[i][_0x54b8df(0xcb)][_0x54b8df(0xc7)]:void 0x0===_0x55a90e[i]['dataset'][_0x54b8df(0xc1)]?_0x55a90e[i][_0x54b8df(0xc1)]:_0x55a90e[i][_0x54b8df(0xcb)][_0x54b8df(0xc1)],srcset=_0x55a90e[i][_0x54b8df(0x86)](_0x54b8df(0xd7))?_0x55a90e[i][_0x54b8df(0x86)](_0x54b8df(0xd7)):'',null!=src&&''!=src&&(_0x55a90e[i][_0x54b8df(0xc1)]=src),null!=srcset&&''!=srcset&&(_0x55a90e[i]['srcset']=srcset),_0x55a90e[i][_0x54b8df(0x96)]['remove'](_0x54b8df(0xa7)));}}function lazyLoadBackground(){var _0xe6fca2=_0x3741;(lazyBackground=document['querySelectorAll'](_0xe6fca2(0xb8)))[_0xe6fca2(0xbe)](function(_0x4c3331){var _0x436f65=_0xe6fca2;null!=(lazybg=wnw_windowWidth<0x258?void 0x0===_0x4c3331[_0x436f65(0xcb)][_0x436f65(0xa2)]?_0x4c3331['dataset']['style']:_0x4c3331[_0x436f65(0xcb)]['mobstyle']:void 0x0===_0x4c3331[_0x436f65(0xcb)]['style']?_0x4c3331['style']:_0x4c3331[_0x436f65(0xcb)][_0x436f65(0x83)])&&''!=lazybg&&(_0x4c3331['style']=lazybg),_0x4c3331[_0x436f65(0x96)][_0x436f65(0x92)](_0x436f65(0xc9));});}function lazyLoadBackground2(){var _0x231d46=_0x3741;(lazyBackground=document[_0x231d46(0x7b)](_0x231d46(0xc2)))[_0x231d46(0xbe)](function(_0xcc0b9b){var _0xa290ab=_0x231d46,_0x3fc7f5=_0xcc0b9b[_0xa290ab(0xb0)]();0x0!=_0x3fc7f5['top']&&_0x3fc7f5['top']-wnw_windowHeight<0x64&&(null!=(lazybg=wnw_windowWidth<0x258?void 0x0===_0xcc0b9b[_0xa290ab(0xcb)][_0xa290ab(0xa2)]?_0xcc0b9b[_0xa290ab(0xcb)]['style']:_0xcc0b9b['dataset'][_0xa290ab(0xa2)]:void 0x0===_0xcc0b9b[_0xa290ab(0xcb)][_0xa290ab(0x83)]?_0xcc0b9b[_0xa290ab(0x83)]:_0xcc0b9b['dataset'][_0xa290ab(0x83)])&&''!=lazybg&&(_0xcc0b9b['style']=lazybg),_0xcc0b9b[_0xa290ab(0x96)]['remove'](_0xa290ab(0x84)));});}function lazyLoadCss(){var _0x534cc2=_0x3741,_0x1b8299=document[_0x534cc2(0x7b)](_0x534cc2(0x85));for(i=0x0;i<_0x1b8299['length'];i++){var _0x514efb=document[_0x534cc2(0x90)](_0x534cc2(0xa4));_0x514efb[_0x534cc2(0xa8)]=_0x1b8299[i][_0x534cc2(0x86)]('data-href'),_0x514efb['rel']='preload',_0x514efb['as']=_0x534cc2(0x83),document[_0x534cc2(0x97)][_0x534cc2(0xb7)](_0x514efb);}var _0x1b8299=document['querySelectorAll']('link[data-href]');for(i=0x0;i<_0x1b8299[_0x534cc2(0x80)];i++){var _0x1e9a54=document[_0x534cc2(0x90)](_0x534cc2(0xa4));_0x1e9a54[_0x534cc2(0xa8)]=_0x1b8299[i][_0x534cc2(0x86)](_0x534cc2(0x9d)),_0x1e9a54[_0x534cc2(0xc6)]=_0x534cc2(0xac),_0x1b8299[i]['parentNode'][_0x534cc2(0xad)](_0x1e9a54,_0x1b8299[i]),delete _0x1b8299[i]['dataset'][_0x534cc2(0xa8)],_0x1b8299[i][_0x534cc2(0x9a)][_0x534cc2(0xca)](_0x1b8299[i]);}}function lazyLoadStyle(){var _0x292875=_0x3741,_0x148c78=document[_0x292875(0x7b)]('style[type=lazyload2]');for(i=0x0;i<_0x148c78['length'];i++){var _0x9bb148=document[_0x292875(0x90)](_0x292875(0x83));_0x9bb148[_0x292875(0xa9)]=_0x148c78[i]['innerHTML'],_0x148c78[i]['parentNode'][_0x292875(0xad)](_0x9bb148,_0x148c78[i]),_0x148c78[i][_0x292875(0x9a)][_0x292875(0xca)](_0x148c78[i]);}}function lazyLoadVideo(){var _0x1957fa=_0x3741;(lazyVideo=document['querySelectorAll'](_0x1957fa(0x87)))[_0x1957fa(0xbe)](function(_0x32b56f){var _0x396218=_0x1957fa;null!=_0x32b56f[_0x396218(0xcb)][_0x396218(0xc1)]&&''!=_0x32b56f[_0x396218(0xcb)][_0x396218(0xc1)]&&(_0x32b56f[_0x396218(0xc1)]=_0x32b56f[_0x396218(0xcb)][_0x396218(0xc1)],_0x32b56f[_0x396218(0xa5)](),_0x32b56f['muted']=!0x0,_0x32b56f[_0x396218(0xcf)](),delete _0x32b56f['dataset'][_0x396218(0xc1)]);});}function lazyLoadIframe(){var _0x17f0c8=_0x3741;(lazyIframe=document[_0x17f0c8(0x7b)](_0x17f0c8(0xa6)))[_0x17f0c8(0xbe)](function(_0x5430a4){var _0x2aa1d2=_0x17f0c8;null!=_0x5430a4[_0x2aa1d2(0xcb)][_0x2aa1d2(0xc1)]&&''!=_0x5430a4['dataset'][_0x2aa1d2(0xc1)]&&(_0x5430a4[_0x2aa1d2(0xc1)]=_0x5430a4['dataset'][_0x2aa1d2(0xc1)],delete _0x5430a4[_0x2aa1d2(0xcb)][_0x2aa1d2(0xc1)]);});}function _0x1a0c(){var _0x24c68c=['script','nextSibling','data-type','initEvent','15222IYqTEP','data-srcset','nodeValue','BOOMR','.analytics','add','querySelectorAll','name','width','click','.cls_css','length','No-optimization','Event','style','lazybg2','link[data-href]','getAttribute','video','DOMContentLoaded','9475081OvOXYw','createEvent','/checkout','15KhWwOv','1418552IDXKCg','setAttribute','height','createElement','value','remove','touchend','nodeName','touchmove','classList','head','srcset','type','parentNode','script[type=lazyload2]','Yes-optimization','data-href','321736gDjPCo','1327880iHNHHg','.boomerang','data-src','mobstyle','keydown','link','load','iframe','lazy3','href','innerHTML','video[data-poster]','poster','stylesheet','insertBefore','version','1495PaERwz','getBoundingClientRect','.site-header-menu-toggle--button','327984FnUsfb','body','onerror','1699096wkAcnm','/cart','appendChild','.lazybg','onload','indexOf','location','log','img.lazy2','forEach','document','touchstart','src','.lazybg2','top','DOMContentLoaded2','designMode','rel','mobsrc','wnw_load','lazybg','removeChild','dataset','dispatchEvent','mousemove','attributes','play','preload','18fwtAuW'];_0x1a0c=function(){return _0x24c68c;};return _0x1a0c();}function lazyLoadPoster(){var _0x1df35a=_0x3741;document['querySelectorAll'](_0x1df35a(0xaa))['forEach'](function(_0xff657b){var _0x47943a=_0x1df35a;null!=_0xff657b[_0x47943a(0xcb)][_0x47943a(0xab)]&&''!=_0xff657b[_0x47943a(0xcb)][_0x47943a(0xab)]&&(_0xff657b[_0x47943a(0xab)]=_0xff657b[_0x47943a(0xcb)][_0x47943a(0xab)],delete _0xff657b[_0x47943a(0xcb)]['poster']);});}function _0x3741(_0x349abc,_0x1ba1a7){var _0x1a0c37=_0x1a0c();return _0x3741=function(_0x374166,_0x319c3f){_0x374166=_0x374166-0x78;var _0x3278df=_0x1a0c37[_0x374166];return _0x3278df;},_0x3741(_0x349abc,_0x1ba1a7);}function w3_load_js_uri(_0x313c6f){var _0x5000b7=_0x3741,_0x51d787=document[_0x5000b7(0x90)](_0x5000b7(0xa4));_0x51d787[_0x5000b7(0xa8)]=_0x313c6f['getAttribute']('data-src'),_0x51d787[_0x5000b7(0xc6)]=_0x5000b7(0xd0),_0x51d787['as']=_0x5000b7(0xd2),document[_0x5000b7(0x97)]['appendChild'](_0x51d787);var _0x137e23=document['createElement']('script');if(void 0x0!==_0x313c6f['attributes']){for(var _0x37bbf9,_0x41cc99=0x0,_0x26f5ec=_0x313c6f[_0x5000b7(0xce)],_0x582045=_0x26f5ec[_0x5000b7(0x80)];_0x41cc99<_0x582045;_0x41cc99++)_0x5000b7(0xd4)==(_0x37bbf9=_0x26f5ec[_0x41cc99])['nodeName']&&_0x137e23['setAttribute'](_0x5000b7(0x99),_0x37bbf9[_0x5000b7(0xd8)]),_0x5000b7(0xa1)!=_0x37bbf9[_0x5000b7(0x94)]&&_0x5000b7(0x99)!=_0x37bbf9['nodeName']&&_0x137e23[_0x5000b7(0x8e)](_0x37bbf9[_0x5000b7(0x94)],_0x37bbf9[_0x5000b7(0xd8)]);}return _0x137e23[_0x5000b7(0xc1)]=_0x313c6f[_0x5000b7(0x86)](_0x5000b7(0xa1)),wnwInsertAfter(_0x137e23,_0x313c6f),delete _0x313c6f['dataset']['src'],delete _0x313c6f[_0x5000b7(0x99)],_0x313c6f[_0x5000b7(0x9a)][_0x5000b7(0xca)](_0x313c6f),_0x137e23;}function w3_load_inline_js_single(_0x2af813){var _0x312f15=_0x3741;if(!external_single_loaded)return setTimeout(function(){w3_load_inline_js_single(_0x2af813);},0x64),!0x1;s=document[_0x312f15(0x90)](_0x312f15(0xd2));for(var _0xbda4b9=0x0;_0xbda4b9<_0x2af813[_0x312f15(0xce)][_0x312f15(0x80)];_0xbda4b9++){var _0x27bff6=_0x2af813[_0x312f15(0xce)][_0xbda4b9];_0x312f15(0xd4)==_0x27bff6['name']&&s[_0x312f15(0x8e)](_0x312f15(0x99),_0x27bff6[_0x312f15(0x91)]),_0x312f15(0x99)!=_0x27bff6[_0x312f15(0x7c)]&&s['setAttribute'](_0x27bff6[_0x312f15(0x7c)],_0x27bff6[_0x312f15(0x91)]);}s['innerHTML']=_0x2af813['innerHTML'],wnwInsertAfter(s,_0x2af813),_0x2af813[_0x312f15(0x9a)][_0x312f15(0xca)](_0x2af813);}function lazyLoadScripts(){var _0x52e4a4=_0x3741,_0x350b5b=document['querySelectorAll'](_0x52e4a4(0x9b));if(_0x350b5b[_0x52e4a4(0x80)]<0x1){document[_0x52e4a4(0xb3)][_0x52e4a4(0x96)][_0x52e4a4(0x7a)]('wnw_loaded'),fullJSLoadedCB();return;}if(null!==_0x350b5b[0x0]['getAttribute'](_0x52e4a4(0xa1))){var _0x345de9=w3_load_js_uri(_0x350b5b[0x0]);_0x345de9[_0x52e4a4(0xb9)]=function(){lazyLoadScripts();},_0x345de9[_0x52e4a4(0xb4)]=function(){lazyLoadScripts();};}else w3_load_inline_js_single(_0x350b5b[0x0]),lazyLoadScripts();}function wnwAnalytics(){var _0x306226=_0x3741;document[_0x306226(0x7b)](_0x306226(0x79))['forEach'](function(_0x3eab5e){var _0x2ec489=_0x306226;trekkie['integrations']=!0x1,(s=document[_0x2ec489(0x90)](_0x2ec489(0xd2)))[_0x2ec489(0xa9)]=_0x3eab5e[_0x2ec489(0xa9)],wnwInsertAfter(s,_0x3eab5e),_0x3eab5e['parentNode']['removeChild'](_0x3eab5e);});}function wnwBoomerang(){var _0x1d0583=_0x3741;document['querySelectorAll'](_0x1d0583(0xa0))[_0x1d0583(0xbe)](function(_0x2ed916){var _0x45deb1=_0x1d0583;window[_0x45deb1(0x78)][_0x45deb1(0xae)]=!0x1,(s=document['createElement'](_0x45deb1(0xd2)))[_0x45deb1(0xa9)]=_0x2ed916[_0x45deb1(0xa9)],wnwInsertAfter(s,_0x2ed916),_0x2ed916[_0x45deb1(0x9a)][_0x45deb1(0xca)](_0x2ed916);});}function load_all_js(){var _0x22d8e2=_0x3741;Shopify[_0x22d8e2(0xc5)]||window[_0x22d8e2(0xbb)][_0x22d8e2(0xa8)][_0x22d8e2(0xba)](_0x22d8e2(0xb6))>-0x1||window[_0x22d8e2(0xbb)][_0x22d8e2(0xa8)][_0x22d8e2(0xba)](_0x22d8e2(0x8b))>-0x1?console[_0x22d8e2(0xbc)](_0x22d8e2(0x81)):(console[_0x22d8e2(0xbc)](_0x22d8e2(0x9c)),setTimeout(function(){wnwAnalytics(),wnwBoomerang();},0x64),setTimeout(function(){var _0x2c3ed7=_0x22d8e2,_0x46de88=document['createEvent'](_0x2c3ed7(0x82));_0x46de88[_0x2c3ed7(0xd5)](_0x2c3ed7(0xc8),!0x0,!0x0),window['document'][_0x2c3ed7(0xcc)](_0x46de88);},0x1f4),setTimeout(function(){var _0x230366=_0x22d8e2,_0xd4a0ac=document[_0x230366(0x8a)](_0x230366(0x82));_0xd4a0ac[_0x230366(0xd5)](_0x230366(0xc4),!0x0,!0x0),window[_0x230366(0xbf)][_0x230366(0xcc)](_0xd4a0ac);},0x1388)),lazyLoadScripts(),setTimeout(function(){var _0x4a4889=_0x22d8e2;(critical2=document[_0x4a4889(0x7b)]('.critical2'))[_0x4a4889(0xbe)](function(_0x1c882d){var _0x285295=_0x4a4889;_0x1c882d[_0x285295(0x92)]();});},0x1f40),setInterval(function(){lazyLoadImg(),lazyLoadIframe();});}function fullJSLoadedCB(){setTimeout(function(){var _0x11c4f5=_0x3741;!0x1==site_nav_link_burger&&(jQuery(_0x11c4f5(0xb1))[_0x11c4f5(0x7e)](),site_nav_link_burger=!0x1);});}document['addEventListener'](_0x1a3cca(0x88),function(){var _0x556056=_0x1a3cca;wnw_windowWidth=screen[_0x556056(0x7d)],wnw_windowHeight=screen[_0x556056(0x8f)],lazyLoadImg2(),lazyLoadBackground2(),[_0x556056(0xa3),_0x556056(0xcd),_0x556056(0x95),_0x556056(0xc0),_0x556056(0x93),'wheel'][_0x556056(0xbe)](function(_0x894c48){window['addEventListener'](_0x894c48,wnw_init,!0x1);});});
+    </script>
+
+     <script>
+      function addHours(date, hours) {
+        const hoursToAdd = hours * 60 * 60 * 1000;
+        date.setTime(date.getTime() + hoursToAdd);
+        return date.getTime();
+      }
+
+      function delete_cookie(name) {
+        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      }
+
+      const cartActiveTime = localStorage.getItem("cart_active_time");
+
+      if(cartActiveTime) {
+        console.log('exist', { cartActiveTime })
+        if(cartActiveTime < new Date().getTime()) {
+          delete_cookie('cart')
+          localStorage.setItem("cart_active_time", addHours(new Date(), 10));
+        }
+      } else {
+        console.log('not exist', { cartActiveTime })
+        localStorage.setItem("cart_active_time", addHours(new Date(), 10));
+      }
+    </script>
+  {%- sections 'smi-group' -%}
+  {% include 'revy-discounts-script' %}
+    {% comment %}
+  {% render 'kwikpass' %}
+  {% endcomment %}
+</body>
+</html>

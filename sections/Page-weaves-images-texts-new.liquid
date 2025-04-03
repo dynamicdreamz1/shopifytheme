@@ -1,0 +1,149 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Page_weaves_images_texts_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_weaves_images_texts_inner_new" style="background: {{ section.settings.inner_background_color }};">
+        <div class="Page_weaves_images_texts_allloop_new">
+          <div class="swiper-container Page_weaves_images_slider">
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.main_desktop_mp4_video != blank or block.settings.main_desktop_full_image != blank or block.settings.main_mobile_full_image != blank or block.settings.title != blank or block.settings.main_information_text != blank -%}
+                  <div class="swiper-slide Page_weaves_images_texts_allloop_mainboxs_new">
+                    <div class="Page_weaves_images_texts_allloop_innerboxs_new">
+                      {%- if block.settings.main_desktop_mp4_video != blank  or block.settings.main_desktop_full_image != blank or block.settings.main_mobile_full_image != blank -%}
+                        <div class="Page_weaves_images_texts_allloop_innerboxs_mainleft_new">
+                          <div class="Page_weaves_images_texts_allloop_innerboxs_innerleft_new">
+                            {%- if block.settings.main_desktop_mp4_video != blank -%}
+                              <div class="Page_weaves_images_texts_allloop_innerboxs_innerleft_videoimage_new">
+                                {%- if block.settings.main_desktop_mp4_video != blank -%}
+                                  {{ block.settings.main_desktop_mp4_video | video_tag: image_size: 'master', controls: false, autoplay: true, loop: true }}
+                                {%- endif -%}
+                              </div>
+                            {% else %}  
+                              {%- if block.settings.main_desktop_full_image != blank and block.settings.main_mobile_full_image != blank -%}
+                                <div class="Page_weaves_images_texts_allloop_innerboxs_innerleft_videoimage_new">
+                                  {%- if block.settings.main_desktop_full_image != blank -%}
+                                    {{
+                                      block.settings.main_desktop_full_image | 
+                                      image_url: width: img.width | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'desktop_image_new'
+                                    }}
+                                  {%- endif -%}
+                                  {%- if block.settings.main_mobile_full_image != blank -%}
+                                    {{
+                                      block.settings.main_mobile_full_image | 
+                                      image_url: width: img.width | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'mobile_image_new'
+                                    }}
+                                  {%- endif -%}
+                                </div>
+                              {%- endif -%}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.title != blank or block.settings.main_information_text != blank -%}
+                        <div class="Page_weaves_images_texts_allloop_innerboxs_mainright_new">
+                          <div class="Page_weaves_images_texts_allloop_innerboxs_innerright_new">
+                            {%- if block.settings.title != blank -%}
+                              <div class="Page_weaves_images_texts_allloop_innerboxs_innerright_title_new">
+                                <h4>{{ block.settings.title }}</h4>
+                              </div>
+                            {%- endif -%}
+                            {%- if block.settings.main_information_text != blank -%}
+                              <div class="Page_weaves_images_texts_allloop_innerboxs_innerright_infos_new">
+                                {{ block.settings.main_information_text }}
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Page Weaves Images Texts",
+    "class": "Page_weaves_images_texts_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "inner_background_color",
+        "label": "Add Inner Background Color",
+        "default": "#FDF8F8"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "video",
+            "id": "main_desktop_mp4_video",
+            "label": "Add Main Desktop MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_full_image",
+            "label": "Add Main Desktop Full Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_full_image",
+            "label": "Add Main Mobile Full Image"
+          },
+          {
+            "type": "textarea",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Lorem ipsum dolor sit amet."
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Weaves Images Texts",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

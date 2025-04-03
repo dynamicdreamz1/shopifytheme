@@ -1,0 +1,112 @@
+<style>
+	{% if shop.metafields.sml.settings.value.is_enabled %}
+	#customer_login {
+		visibility: hidden
+	}
+	#CustomerLoginForm {
+		visibility: hidden
+	}
+	header.section-header {
+		display: none
+	}
+	{% endif %}
+</style>
+<script>
+	{% if shop.metafields.sml.settings != null %}
+ 	var smlSettings = {{ shop.metafields.sml.settings }}
+ 	{% else %}
+ 	var smlSettings = null
+ 	{% endif %}
+</script>
+
+<script src="https://unpkg.com/@simplewebauthn/browser@6.2.2"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://recaptcha.net/recaptcha/api.js?render=6Lf5M7sjAAAAAN6cj5PtXrtkjvSd82YlvW0MEXVK"></script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+  import {getAuth, RecaptchaVerifier} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+  window.initializeApp = initializeApp;
+  window.getAuth = getAuth;
+  window.RecaptchaVerifier = RecaptchaVerifier
+</script>
+<div id='smlEmailOTPDiv' style="display:none">
+  <div id="smlEmailOTPDivError"></div>
+  <div id="smlEmailOTPDivSuccess"></div>
+  <div id='smlEmailOTPScreenGetOTPPage'>
+    <input type="text" id="smlEmailOTPDivUserEmailInput" placeholder="Enter your email here" />
+    <button type='button' id='smlEmailOTPDivGetOTPButton'>Get OTP</button>
+  </div>
+  <div id='smlEmailOTPScreenSubmitOTPPage'>
+    <input type="tel" id="smlEmailOTPDivOTPInput" placeholder="" maxlength="4" autocomplete="off"/>
+    <button type='button' id='smlEmailOTPDivSubmitOTPButton'>Submit OTP</button>
+    <button type='button' id='smlEmailOTPDivResendOTPButton'>Resend OTP</button>
+  </div>
+</div>
+<div id="loginErrorEmail"></div>
+<div id="mobileOTPLoginSection" style="display:none">
+    <h1 id="simplify-login-sign-up-text"></h1>
+    <div id="loginError"></div>
+    <div id="loginSuccess"></div>
+    <div class="selectbox-wrapper">
+        <select aria-hidden="true" id="mobileCountryCodeDropdown">
+        </select>
+        <input aria-label="Enter your phone number" type="number" id="smlPhoneNumberInput" autofocus="on" value="" placeholder="">
+    </div>
+    <button type='button' id='getOTPButton'></button>
+    <button type='button' id='smlGetOTPOnWhatsAppButton'>Get OTP on WhatsApp</button>
+
+    <div id="phoneNumberAndEditDiv">
+        <div id="phoneNumberDiv"></div>
+        <button type='button' id='backToLoginButton'>
+            <svg class="edit-phone bi bi-pencil-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div id="emailAndEditDiv">
+        <div id="emailDiv"></div>
+        <button type='button' id='backToLoginButtonEmailOtp'>
+            <svg class="edit-phone bi bi-pencil-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
+            </svg>
+        </button>
+    </div>
+    <input type="tel" id="otpInput" placeholder="" maxlength="4" autocomplete="off"/>
+    <input type="tel" id="otpInputSixDigit" placeholder="" maxlength="6" autocomplete="off"/>
+    <div id="termsAndConditionsDiv">
+        <input type="checkbox" id="termsAndConditionsCheckbox" />
+        <label for="termsAndConditionsCheckbox" id="termsAndConditionsText">
+            I agree to the <a href="https://therouc.com/pages/privacy-policy" target="_blank" style="display: inline;">Terms and Conditions</a>
+        </label>
+    </div>
+    <button type='button' id='submitOTPButton'></button>
+    <input type="tel" id="emailOtpInput" placeholder="" maxlength="4" autocomplete="off"/>
+    <button type='button' id='submitEmailOTPButton'></button>
+    <p id='smlCountdown'></p>
+    <button type='button' id='resendOTPButton'></button>
+    <button type='button' id='resendEmailOTPButton'></button>
+    <input type="text" id="userFirstNameInput" placeholder="" />
+    <input type="text" id="userLastNameInput" placeholder="" />
+    <input type="text" id="userEmailInput" placeholder="" />
+    <input type="password" id="userPasswordInput" placeholder="" />
+    <div id="userBirthdayInputDiv">
+        <label id="userBirthdayInputLabel" for="userBirthdayInput">Birthday</label>
+        <input type="date" id="userBirthdayInput" />
+    </div>
+    <div id="userGenderInputDiv">
+        <label id="userGenderInputLabel" for="userGenderInput">Gender</label>
+        <div id="userGenderRadioButtonsInputDiv">
+            <input type="radio" name="userGenderInput" value="male" placeholder="Male" /> Male
+            <input type="radio" name="userGenderInput" value="female" placeholder="Female" /> Female
+        </div>
+    </div>
+    <div id="smlAcceptMarketingDiv">
+        <input type="checkbox" id="smlAcceptMarketingCheckbox" checked/>
+        <label for="smlAcceptMarketingCheckbox" id="smlAcceptMarketingText">
+            I wish to receive updates on SMS and Email
+        </label>
+    </div>
+    <button type='button' id='registerUserButton'></button>
+</div>

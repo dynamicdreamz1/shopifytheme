@@ -1,0 +1,97 @@
+.product-custom {
+    position: relative;
+}
+.choose_measurement {
+    max-width: 640px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 24px 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    z-index: 999;
+}
+.choose_measurement .choose_measurement-title {
+    text-transform: capitalize;
+    font-family: var(--font-body-family);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-align: left;
+    color: #BF9373;
+    margin-bottom: 20px;
+}
+.choose_measurement .inner {
+    border: 1px solid #E1E1E5;
+    border-radius: 10px;
+    padding: 16px 20px;
+}
+.choose_measurement .inner:not(:last-child) {
+    margin-bottom: 10px;
+}
+.choose_measurement .inner_wrapper {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+}
+.choose_measurement .icon {
+    width:64px;
+}
+.choose_measurement .content {
+    flex: 1;
+  padding-right:10px;     align-self: center;
+}
+.choose_measurement .content_title {
+    text-transform: capitalize;
+    margin-bottom: 6px;
+    font-family: var(--font-body-family);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 133.333%;
+    letter-spacing: 0;
+}
+.choose_measurement .content_description {
+    display: block;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 142.857%;
+    letter-spacing: 0;
+}
+.choose_measurement .main_wrapper .wrapper .inner:hover {
+    cursor: pointer;
+    border: 1px solid #0F3D99;
+}
+@media screen and (max-width:749px) {
+    .choose_measurement {
+        max-width: 380px;
+        padding: 24px 14px;
+      width: calc(100% - 20px);
+    }
+    .choose_measurement .choose_measurement-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    .choose_measurement .content_title {
+        font-size: 18px;
+    }
+    .choose_measurement .content_description {
+        font-size: 14px;
+    }
+    .choose_measurement .inner {
+        padding: 16px 6px 16px 20px;
+    }  
+    .choose_measurement .inner:not(:last-child) {
+        margin-bottom: 10px;
+    }
+}
+
+.choose_measurement .cross-icon-button {
+    max-width: 18px;
+    right: 10px;
+    top: 10px;
+    position: absolute;
+}

@@ -1,0 +1,214 @@
+{%- assign upsellCollection = settings.upsell_collection -%}
+
+{% if upsellCollection != blank and upsellCollection.products.size > 0 %}
+  <script src="{{ "cart-upsell.js" | asset_url }}" defer></script>
+
+  <cart-upsell class="cart-upsell">
+    {% if settings.upsell_title != blank %}
+      <h2 class="upsell-title">{{ settings.upsell_title }}</h2>
+    {% endif %}
+    <div class="upsell-slider" js-upsell-slider>
+      <div class="swiper-wrapper">
+        {% for upsellProduct in upsellCollection.products %}
+          {% if upsellProduct.options.size == 1 %}
+            <product-form
+              class="product-form swiper-slide"
+              data-section-id="{{ section.id }}_{{ upsellProduct.id }}"
+              data-section="cart-upsell-product-form-{{ upsellProduct.id }}-{{ forloop.index }}"
+            >
+
+            
+              {%- render 'upsell-product-delivery-days', current_product: upsellProduct -%}
+              
+            
+              {% form 'product',
+                upsellProduct, 
+                js-atc-form: '',
+                id: 'product-form-cart-upsell-product-form-{{ upsellProduct.id }}-{{ forloop.index }}',
+                class:'form'
+                %}
+
+              <div class="upsell__item swiper-slide" js-cross-product data-select-option="">
+                <div class="upsell__grid flex">
+                  <a href="{{ upsellProduct.url }}" class="product__image">
+                    <img
+                      src="{{ upsellProduct.featured_image |  image_url: width: '200x' }}"
+                      alt="{{ upsellProduct.featured_image.alt | default: upsellProduct.title }}"
+                    >
+                  </a>
+                  <div class="product__rte">
+                    <div class="card_review_new cross_card_review_new">
+                      <!-- Stamped - Begin Star Rating Badge -->
+                      <span
+                        class="stamped-product-reviews-badge"
+                        data-id="{{ upsellProduct.id }}"
+                        data-product-sku="{{ upsellProduct.handle }}"
+                        data-product-type="{{upsellProduct.type}}"
+                        data-product-title="{{upsellProduct.title}}"
+                        style="display:block;"
+                      >
+                      </span>
+                      <!-- Stamped - End Star Rating Badge -->
+                    </div>
+                    <h2 class="product__title">{{ upsellProduct.title }}</h2>
+                    <span class="product__price" js-cart-uspell-product-price>{{ upsellProduct.price | money }}</span>
+                    <div class="option">
+                        <div class="selection__block option-drop cs-option-drop">
+                          <div class="selection__grid select">    
+                            {% for option in upsellProduct.options_with_values %}
+                              {% if option.name == 'Size' %}
+                                <select name="id" class="product-variant-id" required js-upsell-option>
+                                  <option data-option-available="false" value="" >Please Select {{ option.name }} *</option>
+                                  {% for variant in upsellProduct.variants %}
+                                  <option  data-variant-quantity={{ variant.inventory_quantity }} data-option-available="{{ variant.available }}" data-option-price="{{ variant.price | money }}" value="{{ variant.id }}">{{ variant.title }}</option>
+                                  {% endfor %}
+                                </select>
+                              {% endif %}
+                            {% endfor %}
+
+                            {% if upsellProduct.has_only_default_variant %}
+                            <input type="hidden" name="id" value="{{ upsellProduct.selected_or_first_available_variant.id }}">
+                            {% endif %}
+                            <input type="hidden" name="quantity" value="1">
+                          </div>
+                        </div>
+                        <script type="application/json">
+                          {{ upsellProduct.variants | json }}
+                        </script>
+                    </div>
+                    {% liquid assign product_attributes_group = upsellProduct.metafields.custom.select_attributes_group.value %} 
+                      {% if product_attributes_group %}
+                        <div class="option-group">
+                            {% for attriutes_ in product_attributes_group.select_attributes.value %}
+                                {% assign required = attriutes_.required %}
+                                <div class="option">
+                                    <div class="option-drop cs-option-drop" >
+                                      <div class="select">
+                                        <select name="items[0][properties][{{attriutes_.title}}]" {% if
+                                        required %} required {% endif %} >
+                                        {% render 'custom-product-options', options: attriutes_.values, layout: "upsell_sell_option", label_: attriutes_.title, required: required  %}
+                                      </select>
+                                      </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                      {% endif %}
+                  </div>
+                </div>
+                {% if upsellProduct.has_only_default_variant %}
+                  <input type="hidden" name="id" value="{{ upsellProduct.selected_or_first_available_variant.id }}">
+                  {% endif %}
+                    
+                  <button
+                    id="ProductSubmitButton-{{ section_id }}"
+                    type="submit"
+                    name="add"
+                    class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+                    {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+                      disabled
+                    {% endif %}
+                  >
+                    <span>
+                      {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                        {{ 'products.product.sold_out' | t }}
+                      {%- else -%}
+                        {{ 'products.product.add_to_cart' | t }}
+                      {%- endif -%}
+                    </span>
+                    {%- render 'loading-spinner' -%}
+                  </button>
+              </div>
+            {% endform %}
+            </product-form>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </cart-upsell>
+  <script src="{{ 'moment.min.js' | asset_url }}" defer></script>
+  <script>
+    function upsellDeliver() {
+      //console.log('upsellDeliver');
+   
+          const itemWrapper = document.querySelectorAll('[js-upsell-slider] product-form');
+  
+          function addBusinessDays(originalDate, numDaysToAdd) {
+            const Sunday = 0;
+            const Saturday = 6;
+            let daysRemaining = numDaysToAdd;
+  
+            const newDate = originalDate.clone();
+  
+            while (daysRemaining > 0) {
+              newDate.add(1, 'days');
+              if (newDate.day() !== Sunday) {
+                daysRemaining--;
+              }
+            }
+            return newDate;
+          }
+  
+          function setDeliveryTime(days, productForm) {
+          
+            const deliveryTimeWithoutFormat = addBusinessDays(moment(), parseInt(days));
+          
+            const day = moment(deliveryTimeWithoutFormat).format('dddd');
+            const date = moment(deliveryTimeWithoutFormat).format("DD MMM YYYY");
+            
+           // deliveryTimeWrapper.textContent = `${day}, ${date}`;
+           
+            if(productForm) {
+              // console.log('productForm', productForm.querySelector('[js-upsell-delivery-input]'));
+                if(productForm.querySelector('[js-upsell-delivery-input]')) {
+                  productForm.querySelector('[js-upsell-delivery-input]').value = `${day}, ${date}`;
+                }
+                else {
+                   productForm.insertAdjacentHTML("afterBegin", `<input type="hidden" js-upsell-delivery-input name="items[0][properties][Estimated delivery]" value="${day}, ${date}" />`);
+                }
+            }
+            
+          }
+  
+          itemWrapper.forEach((item) => {
+            if(item.querySelector('[js-upsell-delivery-day]')) {
+              const productForm = item.querySelector('form[js-atc-form]');
+              //console.log('productForm', productForm);
+              let deliveryObject = item.querySelector('[js-upsell-delivery-day]');
+              let delivery_days = deliveryObject.getAttribute('js-upsell-delivery-day');
+              let metafield_days = deliveryObject.getAttribute('js-upsell-metafield-days');
+              let  metaobject_days = deliveryObject.getAttribute('js-upsell-metaobject-days');
+              setDeliveryTime(delivery_days, productForm);
+               metafield_days = parseInt(metafield_days);
+               metaobject_days = parseInt(metaobject_days);
+               let selectBox = item.querySelector('[js-upsell-option]');
+             
+                selectBox.addEventListener('change', (event) => {
+                  let selectedValue = event.target.value;
+                  let selectedOption = '';
+                  for (var i = 0, count = selectBox.options.length; i < count; i++) {
+                    let option = selectBox.options[i];
+                    if (selectedValue == option.value) {
+                      selectedOption = option;
+                    }
+                  }
+                 
+                  const quantity = parseInt(selectedOption.dataset.variantQuantity);
+                 //console.log('quantity', quantity);
+                  if(!isNaN(quantity)) {
+                      if(quantity < 1) {
+                        setDeliveryTime(metafield_days);
+                      } else {
+                        setDeliveryTime(metaobject_days);
+                      }
+                   }
+                })
+           
+            }
+           });
+       
+    }
+    
+  </script>
+{% endif %}
+

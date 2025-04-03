@@ -1,0 +1,36 @@
+/* .media-popup-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    border: 1px solid black;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.media-popup-container .media__content {
+    height: 600px;
+    max-width: 430px;
+    position: relative;
+    z-index: 3;
+}
+.media-popup-container .media__content video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.media-popup-overlay{
+    position: absolute;
+    background-color: #0000005c;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+} */

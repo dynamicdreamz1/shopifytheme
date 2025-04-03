@@ -1,0 +1,273 @@
+{%- if section.settings.main_mp4_video_1 != blank or section.settings.main_desktop_image_1 != blank or section.settings.main_mobile_image_1 != blank or section.settings.main_heading_text_1 != blank or section.settings.main_sub_heading_text_1 != blank or section.settings.main_button_text_1 != blank or section.settings.main_mp4_video_2 != blank or section.settings.main_desktop_image_2 != blank or section.settings.main_mobile_image_2 != blank or section.settings.main_heading_text_2 != blank or section.settings.main_sub_heading_text_2 != blank or section.settings.main_button_text_2 != blank -%}
+  <div class="Collection_sides_by_sides_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Collection_sides_by_sides_inner_new">
+        <div class="Collection_sides_by_sides_leftrightboth_new">
+          {%- if section.settings.main_mp4_video_1 != blank or section.settings.main_desktop_image_1 != blank or section.settings.main_mobile_image_1 != blank or section.settings.main_heading_text_1 != blank or section.settings.main_sub_heading_text_1 != blank or section.settings.main_button_text_1 != blank -%}
+            <div class="Collection_sides_by_sides_mainleft_new">
+              {%- if section.settings.main_button_link_1 != blank -%}
+                <a href="{{ section.settings.main_button_link_1 }}">
+              {%- endif -%}
+                  <div class="Collection_sides_by_sides_innerleft_new">
+                    {%- if section.settings.main_mp4_video_1 != blank or section.settings.main_desktop_image_1 != blank or section.settings.main_mobile_image_1 != blank -%}
+                      <div class="Collection_sides_by_sides_innerleft_1_new">
+                        <div class="Collection_sides_by_sides_innerleft_1_videoimageboth_new">
+                          {%- if section.settings.main_mp4_video_1 != blank -%}
+                            <div class="Collection_sides_by_sides_innerleft_1_videoimage_new">
+                              {{ section.settings.main_mp4_video_1 | video_tag: controls: false, autoplay: true, loop: true }}
+                            </div>
+                          {% else %}  
+                            {%- if section.settings.main_desktop_image_1 != blank and section.settings.main_mobile_image_1 != blank -%}
+                              <div class="Collection_sides_by_sides_innerleft_1_videoimage_new">
+                                {%- if section.settings.main_desktop_image_1 != blank -%}
+                                  {{
+                                    section.settings.main_desktop_image_1 | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'desktop_image_new'
+                                  }}
+                                {%- endif -%}
+                                {%- if section.settings.main_mobile_image_1 != blank -%}
+                                  {{
+                                    section.settings.main_mobile_image_1 | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'mobile_image_new'
+                                  }}
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                    {%- if section.settings.main_heading_text_1 != blank or section.settings.main_sub_heading_text_1 != blank or section.settings.main_button_text_1 != blank -%}
+                      <div class="Collection_sides_by_sides_innerleft_2_new">
+                        <div class="Collection_sides_by_sides_innerleft_2_titleinfosboth_new">
+                          {%- if section.settings.main_heading_text_1 != blank -%}
+                            <div class="Collection_sides_by_sides_innerleft_2_title_new">
+                              <h2 style="color:{{ section.settings.main_text_color_1 }};">{{ section.settings.main_heading_text_1 }}</h2>
+                            </div>  
+                          {%- endif -%}
+                          {%- if section.settings.main_sub_heading_text_1 != blank -%}
+                            <div class="Collection_sides_by_sides_innerleft_2_infos_new">
+                              <h4 style="color:{{ section.settings.main_text_color_1 }};">{{ section.settings.main_sub_heading_text_1 }}</h4>
+                            </div>  
+                          {%- endif -%}
+                          {%- if section.settings.main_button_text_1 != blank -%}
+                            <div class="Collection_sides_by_sides_innerleft_2_button_new button button_square {{ section.settings.main_button_color }}">
+                              {{ section.settings.main_button_text_1 }}
+                            </div>  
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}  
+                  </div>
+              {%- if section.settings.main_button_link_1 != blank -%}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if section.settings.main_mp4_video_2 != blank or section.settings.main_desktop_image_2 != blank or section.settings.main_mobile_image_2 != blank or section.settings.main_heading_text_2 != blank or section.settings.main_sub_heading_text_2 != blank or section.settings.main_button_text_2 != blank -%}
+            <div class="Collection_sides_by_sides_mainright_new">
+              {%- if section.settings.main_button_link_2 != blank -%}
+                <a href="{{ section.settings.main_button_link_2 }}">
+              {%- endif -%}
+                  <div class="Collection_sides_by_sides_innerright_new">
+                    {%- if section.settings.main_mp4_video_2 != blank or section.settings.main_desktop_image_2 != blank or section.settings.main_mobile_image_2 != blank -%}
+                      <div class="Collection_sides_by_sides_innerright_1_new">
+                        <div class="Collection_sides_by_sides_innerright_1_videoimageboth_new">
+                          {%- if section.settings.main_mp4_video_2 != blank -%}
+                            <div class="Collection_sides_by_sides_innerright_1_videoimage_new">
+                              {{ section.settings.main_mp4_video_2 | video_tag: controls: false, autoplay: true, loop: true }}
+                            </div>
+                          {% else %}  
+                            {%- if section.settings.main_desktop_image_2 != blank and section.settings.main_mobile_image_2 != blank -%}
+                              <div class="Collection_sides_by_sides_innerright_1_videoimage_new">
+                                {%- if section.settings.main_desktop_image_2 != blank -%}
+                                  {{
+                                    section.settings.main_desktop_image_2 | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'desktop_image_new'
+                                  }}
+                                {%- endif -%}
+                                {%- if section.settings.main_mobile_image_2 != blank -%}
+                                  {{
+                                    section.settings.main_mobile_image_2 | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'mobile_image_new'
+                                  }}
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                    {%- if section.settings.main_heading_text_2 != blank or section.settings.main_sub_heading_text_2 != blank or section.settings.main_button_text_2 != blank -%}
+                      <div class="Collection_sides_by_sides_innerright_2_new">
+                        <div class="Collection_sides_by_sides_innerright_2_titleinfosboth_new">
+                          {%- if section.settings.main_heading_text_2 != blank -%}
+                            <div class="Collection_sides_by_sides_innerright_2_title_new">
+                              <h2 style="color:{{ section.settings.main_text_color_2 }};">{{ section.settings.main_heading_text_2 }}</h2>
+                            </div>  
+                          {%- endif -%}
+                          {%- if section.settings.main_sub_heading_text_2 != blank -%}
+                            <div class="Collection_sides_by_sides_innerright_2_infos_new">
+                              <h4 style="color:{{ section.settings.main_text_color_2 }};">{{ section.settings.main_sub_heading_text_2 }}</h4>
+                            </div>  
+                          {%- endif -%}
+                          {%- if section.settings.main_button_text_2 != blank -%}
+                            <div class="Collection_sides_by_sides_innerright_2_button_new button button_square {{ section.settings.main_button_color_2 }}">
+                              {{ section.settings.main_button_text_2 }}
+                            </div>  
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}  
+                  </div>
+              {%- if section.settings.main_button_link_2 != blank -%}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Collection Sides By Sides",
+    "class": "Collection_sides_by_sides_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "==== Left Side Detail ===="
+      },
+      {
+        "type": "video",
+        "id": "main_mp4_video_1",
+        "label": "Add Main MP4 Video-1"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_image_1",
+        "label": "Add Main Desktop Image-1"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_image_1",
+        "label": "Add Main Mobile Image-1"
+      },
+      {
+        "type": "color",
+        "id": "main_text_color_1",
+        "label": "Add Main Text Color-1",
+        "default": "#000"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text_1",
+        "label": "Add Main Heading Text-1",
+        "default": "Ready To Ship"
+      },
+      {
+        "type": "text",
+        "id": "main_sub_heading_text_1",
+        "label": "Add Main Sub Heading Text-1"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text_1",
+        "label": "Add Main Button Text-1",
+        "default": "Shop Now"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link_1",
+        "label": "Add Main Button Link-1",
+        "default": "/"
+      },
+      {
+        "type": "textarea",
+        "id": "main_button_color",
+        "label": "Add Main Button Color-1",
+        "info": "button_black, button_white"
+      },
+      {
+        "type": "header",
+        "content": "==== Right Side Detail ===="
+      },
+      {
+        "type": "video",
+        "id": "main_mp4_video_2",
+        "label": "Add Main MP4 Video-2"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_image_2",
+        "label": "Add Main Desktop Image-2"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_image_2",
+        "label": "Add Main Mobile Image-2"
+      },
+      {
+        "type": "color",
+        "id": "main_text_color_2",
+        "label": "Add Main Text Color-2",
+        "default": "#fff"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text_2",
+        "label": "Add Main Heading Text-2",
+        "default": "Flat 10% Off"
+      },
+      {
+        "type": "text",
+        "id": "main_sub_heading_text_2",
+        "label": "Add Main Sub Heading Text-2",
+        "default": "Men’s Essential"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text_2",
+        "label": "Add Main Button Text-2",
+        "default": "Shop Now"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link_2",
+        "label": "Add Main Button Link-2",
+        "default": "/"
+      },
+      {
+        "type": "textarea",
+        "id": "main_button_color_2",
+        "label": "Add Main Button Color-2",
+        "info": "button_black, button_white"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Sides By Sides"
+      }
+    ]
+  }
+{% endschema %}

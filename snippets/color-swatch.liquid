@@ -1,0 +1,20 @@
+<li class="list-menu__item facets__item{% if filterCounter > show_more_number and filter_type == 'vertical' %} show-more-item hidden{% endif %}">
+  <input
+      type="checkbox"
+      name="{{ value.param_name }}"
+      value="{{ value.value }}" 
+      class="color-list-input" 
+      id="Filter-{{ filter.param_name | escape }}-{{ forloop.index }}"
+      {% if value.active %}
+        checked
+      {% endif %}
+      {% if is_disabled %}
+        disabled
+      {% endif %}
+  >
+  <label
+    for="Filter-{{ filter.param_name | escape }}-{{ forloop.index }}"
+    class="color-list-item {{ value.value | handleize  }} visual-display-parent--{{ filter.presentation }} {% if value.active %} active{% endif %}"
+  >
+  </label>
+</li>

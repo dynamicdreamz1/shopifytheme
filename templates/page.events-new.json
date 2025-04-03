@@ -1,0 +1,315 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "Page-Events-template-new",
+      "custom_css": [
+
+      ],
+      "settings": {
+      }
+    },
+    "page_events_sliders_new_6jEke3": {
+      "type": "Page-Events-sliders-new",
+      "blocks": {
+        "left_text_image_L7wPz3": {
+          "type": "left_text_image",
+          "settings": {
+            "main_left_background_color": "#172926",
+            "main_left_information_color": "#ffffff",
+            "main_left_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "main_left_heading_text_1": "Presents",
+            "main_left_heading_text_2": "Noor",
+            "main_left_information_text_1": "<p>A royalty-inspired glamour</p>",
+            "main_left_information_text_2": "<p>Kalki's collection was titled Noor- A royalty inspired glamour. There are more ways than one in which composition can make you fall in love. Their autumn-winter’22 collection had a lot of hand work embroidery on the garments with a contemporary appeal.</p>",
+            "main_left_desktop_image": "shopify://shop_images/image_24-min.jpg",
+            "main_left_mobile_image": "shopify://shop_images/image_24-min.jpg"
+          }
+        },
+        "image_side_image_XtaKEz": {
+          "type": "image_side_image",
+          "settings": {
+            "middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min.jpg",
+            "middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min.jpg",
+            "middle_button_text_1": "Shop Now",
+            "middle_button_link_1": "/",
+            "middle_desktop_image_2": "shopify://shop_images/Rectangle_3457-min.jpg",
+            "middle_mobile_image_2": "shopify://shop_images/Rectangle_3457-min.jpg",
+            "middle_button_text_2": "Shop Now",
+            "middle_button_link_2": "/",
+            "middle_desktop_image_3": "shopify://shop_images/Rectangle_3466-min.jpg",
+            "middle_mobile_image_3": "shopify://shop_images/Rectangle_3466-min.jpg",
+            "middle_button_text_3": "Shop Now",
+            "middle_button_link_3": "/"
+          }
+        },
+        "image_side_image_gtd8JM": {
+          "type": "image_side_image",
+          "settings": {
+            "middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min_1.jpg",
+            "middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min_1.jpg",
+            "middle_button_text_1": "Shop Now",
+            "middle_button_link_1": "/",
+            "middle_desktop_image_2": "shopify://shop_images/Rectangle_3457-min_1.jpg",
+            "middle_mobile_image_2": "shopify://shop_images/Rectangle_3457-min_1.jpg",
+            "middle_button_text_2": "Shop Now",
+            "middle_button_link_2": "/",
+            "middle_desktop_image_3": "shopify://shop_images/Rectangle_3466-min_1.jpg",
+            "middle_mobile_image_3": "shopify://shop_images/Rectangle_3466-min_1.jpg",
+            "middle_button_text_3": "Shop Now",
+            "middle_button_link_3": "/"
+          }
+        },
+        "middle_text_image_E7gPdQ": {
+          "type": "middle_text_image",
+          "settings": {
+            "main_middle_background_color": "#9e694f",
+            "main_middle_information_color": "#ffffff",
+            "main_middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_heading_text_1": "Show-stopper",
+            "main_middle_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "main_middle_heading_text_2": "Tara Sutaria",
+            "main_middle_information_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo libero felis, ac lobortis mi rhoncus nec. Nam vehicula blandit erat, vel posuere odio lacinia vitae. Nulla pretium accumsan efficitur. Curabitur ipsum dui, auctor et metus nec, laoreet semper lorem.</p>",
+            "main_middle_desktop_image_2": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_mobile_image_2": "shopify://shop_images/Rectangle_339-min_2.jpg"
+          }
+        },
+        "left_author_text_image_L9TYp4": {
+          "type": "left_author_text_image",
+          "settings": {
+            "inner_background_color": "#172926",
+            "inner_information_color": "#ffffff",
+            "inner_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "inner_information_text": "<p>“Give the bride of today the most experimental Indian cuts & flare and she'll totally own it. KALKI Noor is a perfect blend of femininity and elegance.”</p>",
+            "inner_author_text": "Saurabh Gupta",
+            "inner_designation_text": "Founder & Director at KALKI",
+            "inner_desktop_image": "shopify://shop_images/image_24-min_1.jpg",
+            "inner_mobile_image": "shopify://shop_images/image_24-min_1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_image_L7wPz3",
+        "image_side_image_XtaKEz",
+        "image_side_image_gtd8JM",
+        "middle_text_image_E7gPdQ",
+        "left_author_text_image_L9TYp4"
+      ],
+      "settings": {
+        "main_background_color": "#cccccc",
+        "main_mp4_video": "shopify://files/videos/-ad50-48ae-a68e-1c7b33411423 (1).mp4",
+        "main_button_text": "Back",
+        "main_button_link": "/",
+        "main_heading_text": "KALKI x Tara Sutaria | Exclusive Bridal Couture '2022",
+        "main_bottom_button_text": "Explore"
+      }
+    },
+    "page_events_sliders_new_Hb6MMx": {
+      "type": "Page-Events-sliders-new",
+      "blocks": {
+        "left_text_image_L7wPz3": {
+          "type": "left_text_image",
+          "settings": {
+            "main_left_background_color": "#172926",
+            "main_left_information_color": "#ffffff",
+            "main_left_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "main_left_heading_text_1": "Presents",
+            "main_left_heading_text_2": "Noor",
+            "main_left_information_text_1": "<p>A royalty-inspired glamour</p>",
+            "main_left_information_text_2": "<p>Kalki's collection was titled Noor- A royalty inspired glamour. There are more ways than one in which composition can make you fall in love. Their autumn-winter’22 collection had a lot of hand work embroidery on the garments with a contemporary appeal.</p>",
+            "main_left_desktop_image": "shopify://shop_images/image_24-min.jpg",
+            "main_left_mobile_image": "shopify://shop_images/image_24-min.jpg"
+          }
+        },
+        "image_side_image_XtaKEz": {
+          "type": "image_side_image",
+          "settings": {
+            "middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min.jpg",
+            "middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min.jpg",
+            "middle_button_text_1": "Shop Now",
+            "middle_button_link_1": "/",
+            "middle_desktop_image_2": "shopify://shop_images/Rectangle_3457-min.jpg",
+            "middle_mobile_image_2": "shopify://shop_images/Rectangle_3457-min.jpg",
+            "middle_button_text_2": "Shop Now",
+            "middle_button_link_2": "/",
+            "middle_desktop_image_3": "shopify://shop_images/Rectangle_3466-min.jpg",
+            "middle_mobile_image_3": "shopify://shop_images/Rectangle_3466-min.jpg",
+            "middle_button_text_3": "Shop Now",
+            "middle_button_link_3": "/"
+          }
+        },
+        "image_side_image_gtd8JM": {
+          "type": "image_side_image",
+          "settings": {
+            "middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min_1.jpg",
+            "middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min_1.jpg",
+            "middle_button_text_1": "Shop Now",
+            "middle_button_link_1": "/",
+            "middle_desktop_image_2": "shopify://shop_images/Rectangle_3457-min_1.jpg",
+            "middle_mobile_image_2": "shopify://shop_images/Rectangle_3457-min_1.jpg",
+            "middle_button_text_2": "Shop Now",
+            "middle_button_link_2": "/",
+            "middle_desktop_image_3": "shopify://shop_images/Rectangle_3466-min_1.jpg",
+            "middle_mobile_image_3": "shopify://shop_images/Rectangle_3466-min_1.jpg",
+            "middle_button_text_3": "Shop Now",
+            "middle_button_link_3": "/"
+          }
+        },
+        "middle_text_image_E7gPdQ": {
+          "type": "middle_text_image",
+          "settings": {
+            "main_middle_background_color": "#9e694f",
+            "main_middle_information_color": "#ffffff",
+            "main_middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_heading_text_1": "Show-stopper",
+            "main_middle_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "main_middle_heading_text_2": "Tara Sutaria",
+            "main_middle_information_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo libero felis, ac lobortis mi rhoncus nec. Nam vehicula blandit erat, vel posuere odio lacinia vitae. Nulla pretium accumsan efficitur. Curabitur ipsum dui, auctor et metus nec, laoreet semper lorem.</p>",
+            "main_middle_desktop_image_2": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_mobile_image_2": "shopify://shop_images/Rectangle_339-min_2.jpg"
+          }
+        },
+        "left_author_text_image_L9TYp4": {
+          "type": "left_author_text_image",
+          "settings": {
+            "inner_background_color": "#172926",
+            "inner_information_color": "#ffffff",
+            "inner_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "inner_information_text": "<p>“Give the bride of today the most experimental Indian cuts & flare and she'll totally own it. KALKI Noor is a perfect blend of femininity and elegance.”</p>",
+            "inner_author_text": "Saurabh Gupta",
+            "inner_designation_text": "Founder & Director at KALKI",
+            "inner_desktop_image": "shopify://shop_images/image_24-min_1.jpg",
+            "inner_mobile_image": "shopify://shop_images/image_24-min_1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_image_L7wPz3",
+        "image_side_image_XtaKEz",
+        "image_side_image_gtd8JM",
+        "middle_text_image_E7gPdQ",
+        "left_author_text_image_L9TYp4"
+      ],
+      "settings": {
+        "main_background_color": "#cccccc",
+        "main_mp4_video": "shopify://files/videos/-0277-419e-a1c5-f4620799304e (1).mp4",
+        "main_button_text": "Back",
+        "main_button_link": "/",
+        "main_heading_text": "KALKI x Tara Sutaria | Exclusive Bridal Couture '2022",
+        "main_bottom_button_text": "Explore"
+      }
+    },
+    "page_events_sliders_new_REbayB": {
+      "type": "Page-Events-sliders-new",
+      "blocks": {
+        "left_text_image_L7wPz3": {
+          "type": "left_text_image",
+          "settings": {
+            "main_left_background_color": "#172926",
+            "main_left_information_color": "#ffffff",
+            "main_left_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "main_left_heading_text_1": "Presents",
+            "main_left_heading_text_2": "Noor",
+            "main_left_information_text_1": "<p>A royalty-inspired glamour</p>",
+            "main_left_information_text_2": "<p>Kalki's collection was titled Noor- A royalty inspired glamour. There are more ways than one in which composition can make you fall in love. Their autumn-winter’22 collection had a lot of hand work embroidery on the garments with a contemporary appeal.</p>",
+            "main_left_desktop_image": "shopify://shop_images/image_24-min.jpg",
+            "main_left_mobile_image": "shopify://shop_images/image_24-min.jpg"
+          }
+        },
+        "image_side_image_XtaKEz": {
+          "type": "image_side_image",
+          "settings": {
+            "middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min.jpg",
+            "middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min.jpg",
+            "middle_button_text_1": "Shop Now",
+            "middle_button_link_1": "/",
+            "middle_desktop_image_2": "shopify://shop_images/Rectangle_3457-min.jpg",
+            "middle_mobile_image_2": "shopify://shop_images/Rectangle_3457-min.jpg",
+            "middle_button_text_2": "Shop Now",
+            "middle_button_link_2": "/",
+            "middle_desktop_image_3": "shopify://shop_images/Rectangle_3466-min.jpg",
+            "middle_mobile_image_3": "shopify://shop_images/Rectangle_3466-min.jpg",
+            "middle_button_text_3": "Shop Now",
+            "middle_button_link_3": "/"
+          }
+        },
+        "image_side_image_gtd8JM": {
+          "type": "image_side_image",
+          "settings": {
+            "middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min_1.jpg",
+            "middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min_1.jpg",
+            "middle_button_text_1": "Shop Now",
+            "middle_button_link_1": "/",
+            "middle_desktop_image_2": "shopify://shop_images/Rectangle_3457-min_1.jpg",
+            "middle_mobile_image_2": "shopify://shop_images/Rectangle_3457-min_1.jpg",
+            "middle_button_text_2": "Shop Now",
+            "middle_button_link_2": "/",
+            "middle_desktop_image_3": "shopify://shop_images/Rectangle_3466-min_1.jpg",
+            "middle_mobile_image_3": "shopify://shop_images/Rectangle_3466-min_1.jpg",
+            "middle_button_text_3": "Shop Now",
+            "middle_button_link_3": "/"
+          }
+        },
+        "middle_text_image_E7gPdQ": {
+          "type": "middle_text_image",
+          "settings": {
+            "main_middle_background_color": "#9e694f",
+            "main_middle_information_color": "#ffffff",
+            "main_middle_desktop_image_1": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_mobile_image_1": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_heading_text_1": "Show-stopper",
+            "main_middle_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "main_middle_heading_text_2": "Tara Sutaria",
+            "main_middle_information_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo libero felis, ac lobortis mi rhoncus nec. Nam vehicula blandit erat, vel posuere odio lacinia vitae. Nulla pretium accumsan efficitur. Curabitur ipsum dui, auctor et metus nec, laoreet semper lorem.</p>",
+            "main_middle_desktop_image_2": "shopify://shop_images/Rectangle_339-min_2.jpg",
+            "main_middle_mobile_image_2": "shopify://shop_images/Rectangle_339-min_2.jpg"
+          }
+        },
+        "left_author_text_image_L9TYp4": {
+          "type": "left_author_text_image",
+          "settings": {
+            "inner_background_color": "#172926",
+            "inner_information_color": "#ffffff",
+            "inner_logo_image": "shopify://shop_images/PAGE-KALKI.svg",
+            "inner_information_text": "<p>“Give the bride of today the most experimental Indian cuts & flare and she'll totally own it. KALKI Noor is a perfect blend of femininity and elegance.”</p>",
+            "inner_author_text": "Saurabh Gupta",
+            "inner_designation_text": "Founder & Director at KALKI",
+            "inner_desktop_image": "shopify://shop_images/image_24-min_1.jpg",
+            "inner_mobile_image": "shopify://shop_images/image_24-min_1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "left_text_image_L7wPz3",
+        "image_side_image_XtaKEz",
+        "image_side_image_gtd8JM",
+        "middle_text_image_E7gPdQ",
+        "left_author_text_image_L9TYp4"
+      ],
+      "settings": {
+        "main_background_color": "#cccccc",
+        "main_mp4_video": "shopify://files/videos/-766e-440e-9e33-6029171a8933 (1).mp4",
+        "main_button_text": "Back",
+        "main_button_link": "/",
+        "main_heading_text": "KALKI x Tara Sutaria | Exclusive Bridal Couture '2022",
+        "main_bottom_button_text": "Explore"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "page_events_sliders_new_6jEke3",
+    "page_events_sliders_new_Hb6MMx",
+    "page_events_sliders_new_REbayB"
+  ]
+}

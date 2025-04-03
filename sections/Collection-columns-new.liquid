@@ -1,0 +1,103 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Collection_meta_columns_main_new Collection_columns_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Collection_meta_columns_inner_new">
+        <div class="Collection_meta_columns_loops_new">
+          <div class="swiper-container Collection_meta_columns_slider">
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                <div class="swiper-slide Collection_meta_columns_loops_mainbox_new">
+                  <a href="{{ block.settings.main_button_link }}">
+                    <div class="Collection_meta_columns_loops_innerbox_new">
+                      <div class="Collection_meta_columns_loops_innerbox_1_new">
+                        <div class="Collection_meta_columns_loops_innerbox_1_videoimageboth__new">
+                          {%- if block.settings.main_mp4_video != blank -%}
+                            <div class="Collection_meta_columns_loops_1_boxs_videoimage_new">
+                              {{ block.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                            </div>
+                          {% else %}  
+                            {%- if block.settings.main_desktop_image != blank and block.settings.main_mobile_image != blank -%}
+                              <div class="Collection_meta_columns_loops_1_boxs_videoimage_new">
+                                {%- if block.settings.main_desktop_image != blank -%}
+                                  {{
+                                    block.settings.main_desktop_image | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'desktop_image_new'
+                                  }}
+                                {%- endif -%}
+                                {%- if block.settings.main_mobile_image != blank -%}
+                                  {{
+                                    block.settings.main_mobile_image | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'mobile_image_new'
+                                  }}
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Collection Columns",
+    "class": "Collection_meta_columns_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "video",
+            "id": "main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "url",
+            "id": "main_button_link",
+            "label": "Add Link",
+            "default": "/"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Columns"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,344 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@20.3.0/build/css/intlTelInput.css">
+
+{%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.blocks.size > 0 or section.settings.main_left_heading_text != blank or section.settings.main_right_heading_text != blank -%}
+  {{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+  <div class="Page_contact_us_template_main_new" style="background: {{ section.settings.main_background_color }};">    
+    <div class="Page_contact_us_template_inner_new">
+      <div class="Page_contact_us_template_detail_new">
+        {%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank -%}
+          <div class="Page_contact_us_template_detail_1_new">
+            <div class="Page_contact_us_template_detail_1_videoimageboth_new">
+              {%- if section.settings.main_desktop_mp4_video != blank -%}
+                <div class="Page_contact_us_template_detail_1_videoimage_new">
+                  {%- if section.settings.main_desktop_mp4_video != blank -%}
+                    {{ section.settings.main_desktop_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                  {%- endif -%}
+                </div>
+              {% else %}  
+                {%- if section.settings.main_desktop_full_image != blank -%}
+                  <div class="Page_contact_us_template_detail_1_videoimage_new">
+                    {%- if section.settings.main_desktop_full_image != blank -%}
+                      {{
+                        section.settings.main_desktop_full_image | 
+                        image_url: width: img.width | 
+                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                        fetchpriority: 'auto'
+                      }}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 or section.settings.main_left_heading_text != blank or section.settings.main_right_heading_text != blank -%}
+          <div class="page-width">
+            <div class="Page_contact_us_template_detail_2_new">
+              <div class="Page_contact_us_template_detail_2_leftrightboth_new">
+                {%- if section.blocks.size > 0 or section.settings.main_left_heading_text != blank -%}
+                  <div class="Page_contact_us_template_detail_2_mainleft_new">
+                    <div class="Page_contact_us_template_detail_2_innerleft_new">
+                      {%- if section.settings.main_left_heading_text != blank or section.settings.main_left_mobile_heading_text != blank -%}
+                        <div class="Common_title_new Page_contact_us_template_detail_2_innerleft_title_new">
+                          <h2 class="desktop_image_new">{{ section.settings.main_left_heading_text }}</h2>
+                          <h2 class="mobile_image_new">{{ section.settings.main_left_mobile_heading_text }}</h2>
+                        </div>
+                      {%- endif -%}
+                      {%- if section.blocks.size > 0 -%}
+                        <div class="Page_contact_us_template_detail_2_innerleft_mainloop_new">
+                          <div class="Page_contact_us_template_detail_2_innerleft_innerloop_new">
+                            {%- for block in section.blocks -%}
+                              {%- if block.settings.main_icon_image != blank or block.settings.title != blank or block.settings.main_information_text != blank -%}
+                                <div class="Page_contact_us_template_detail_2_innerleft_innerloop_mainboxs_new">
+                                  <div class="Page_contact_us_template_detail_2_innerleft_innerloop_innerboxs_new">
+                                    {%- if block.settings.main_icon_image != blank -%}
+                                      <div class="Page_contact_us_template_detail_2_innerleft_innerloop_innerboxs_1_new">
+                                        <div class="Page_contact_us_template_detail_2_innerleft_innerloop_innerboxs_1_icons_new">
+                                          {{
+                                            block.settings.main_icon_image | 
+                                            image_url: width: img.width | 
+                                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                            fetchpriority: 'auto', 
+                                            class:'Icon_image_new'
+                                          }}
+                                        </div>
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.title != blank and block.settings.main_information_text != blank -%}
+                                      <div class="Page_contact_us_template_detail_2_innerleft_innerloop_innerboxs_2_new">
+                                        <div class="Page_contact_us_template_detail_2_innerleft_innerloop_innerboxs_2_texts_new">
+                                          {%- if block.settings.title != blank -%}
+                                            <div class="Page_contact_us_template_detail_2_innerleft_innerloop_innerboxs_2_texts_title_new">
+                                              <h4>{{ block.settings.title }}</h4>
+                                            </div>
+                                          {%- endif -%}
+                                          {%- if block.settings.main_information_text != blank -%}
+                                            <div class="Page_contact_us_template_detail_2_innerleft_innerloop_innerboxs_2_texts_infos_new">
+                                              {{ block.settings.main_information_text }}
+                                            </div>
+                                          {%- endif -%}
+                                        </div>  
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                            {%- endfor -%}  
+                          </div>
+                        </div>
+                      {%- endif -%}  
+                    </div>
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.main_right_heading_text != blank -%}
+                  <div class="Page_contact_us_template_detail_2_mainright_new">
+                    <div class="Page_contact_us_template_detail_2_innerright_new">
+                      {%- if section.settings.main_right_heading_text != blank -%}
+                        <div class="Common_title_new Page_contact_us_template_detail_2_innerright_title_new">
+                          <h2>{{ section.settings.main_right_heading_text }}</h2>
+                        </div>
+                      {%- endif -%}
+                      <div class="Page_contact_us_template_detail_2_innerright_mainform_new">
+                        <div class="Page_contact_us_template_detail_2_innerright_innerform_new">
+                          {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
+                            {%- if form.posted_successfully? -%}
+                              <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+                                {% render 'icon-success' %}
+                                {{ 'templates.contact.form.post_success' | t }}
+                              </h2>
+                            {%- elsif form.errors -%}
+                              <div class="form__message">
+                                <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+                                  {% render 'icon-error' %}
+                                  {{ 'templates.contact.form.error_heading' | t }}
+                                </h2>
+                              </div>
+                              <ul class="form-status-list caption-large" role="list">
+                                <li>
+                                  <a href="#ContactForm-email" class="link">
+                                    {{ form.errors.translated_fields.email | capitalize }}
+                                    {{ form.errors.messages.email }}
+                                  </a>
+                                </li>
+                              </ul>
+                            {%- endif -%}
+                            
+                            <div class="field">
+                              <input
+                                class="field__input"
+                                autocomplete="name"
+                                type="text"
+                                id="ContactForm-name"
+                                name="contact[{{ 'templates.contact.form.name' | t }}]"
+                                value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                                placeholder="{{ 'templates.contact.form.name' | t }}"
+                                required
+                              >
+                              <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
+                            </div>
+                            <div class="field field--with-error">
+                              <input
+                                autocomplete="email"
+                                type="email"
+                                id="ContactForm-email"
+                                class="field__input"
+                                name="contact[email]"
+                                spellcheck="false"
+                                autocapitalize="off"
+                                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                                aria-required="true"
+                                {% if form.errors contains 'email' %}
+                                  aria-invalid="true"
+                                  aria-describedby="ContactForm-email-error"
+                                {% endif %}
+                                placeholder="{{ 'templates.contact.form.email' | t }}"
+                                required
+                              >
+                              <label class="field__label" for="ContactForm-email">
+                                {{- 'templates.contact.form.email' | t }}
+                              </label>
+                              {%- if form.errors contains 'email' -%}
+                                <small class="contact__field-error" id="ContactForm-email-error">
+                                  <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                                  <span class="form__message">
+                                    {%- render 'icon-error' -%}
+                                    {{- form.errors.translated_fields.email | capitalize }}
+                                    {{ form.errors.messages.email -}}
+                                  </span>
+                                </small>
+                              {%- endif -%}
+                            </div>
+                            <input hidden  name="Country Code" id="countryCode">
+                            <div class="field phone-field" js-phone-field-wrapper>
+                              <input
+                                type="tel"
+                                id="ContactForm-phone"
+                                class="field__input"
+                                autocomplete="tel"
+                                name="contact[{{ 'templates.contact.form.phone' | t }}]"
+                                pattern="[6-9]{1}[0-9]{4} [0-9]{5}"
+                                value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                                placeholder="{{ 'templates.contact.form.phone' | t }}"
+                                required
+                                js-phone-field
+                              >
+                              <label class="field__label phone-label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+                            </div>
+                            <div class="field field_area_new">
+                              <textarea
+                                rows="10"
+                                id="ContactForm-body"
+                                class="text-area field__input"
+                                name="contact[{{ 'templates.contact.form.comment' | t }}]"
+                                placeholder="{{ 'templates.contact.form.comment' | t }}"
+                                required
+                              >
+                                {{- form.body -}}
+                              </textarea>
+                              <label class="form__label field__label" for="ContactForm-body">
+                                {{- 'templates.contact.form.comment' | t -}}
+                              </label>
+                            </div>
+                            <div class="contact__button">
+                              <button type="submit" class="button">
+                                {{ 'templates.contact.form.send' | t }}
+                              </button>
+                            </div>
+                          {%- endform -%}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@20.3.0/build/js/intlTelInput.min.js"></script>
+<script>
+  const contactPageinput = document.querySelector(".Page_contact_us_template_main_new #ContactForm-phone");
+  setTimeout(() => {
+    window.intlTelInput(contactPageinput, {
+      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@20.3.0/build/js/utils.js",
+      showFlags: false,
+      showSelectedDialCode: true,
+      initialCountry: 'in'
+    });
+  }, 2000)
+
+
+  phoneField.addEventListener('change', function() {
+    const dialCode = window.intlTelInputGlobals.getInstance(phoneField).getSelectedCountryData().dialCode
+    const countryCode = document.querySelector('#countryCode')
+    countryCode.value = dialCode
+  })
+  
+</script>
+
+<script>
+  (() => {
+    const container = document.querySelector('.Page_contact_us_template_detail_2_innerright_new');
+    const phoneField = container.querySelector('[js-phone-field]');
+    phoneField.addEventListener('focus', function(e) {
+      const field_ = e.target.closest('[js-phone-field-wrapper]')
+      field_.classList.add('active')
+    })
+    phoneField.addEventListener('blur', function(e) {
+      const field_ = e.target.closest('[js-phone-field-wrapper]')
+      const phoneField = field_.querySelector('#ContactForm-phone')
+      if(!phoneField.value) {
+        field_.classList.remove('active')
+      }
+    })
+
+    let observer = new MutationObserver(mutationRecords => {
+      console.log({mutationRecords}, mutationRecords[0].type)
+      const field_ = container.querySelector('[js-phone-field-wrapper]')
+      const phoneInput = field_.querySelector('#ContactForm-phone')
+      console.log(phoneInput.value, ' field value')
+      if(phoneInput.value) {
+        console.log("contains value nows", field_)
+        field_.classList.add('active')
+      }
+    });
+    const field_ = container.querySelector('[js-phone-field-wrapper]')
+
+    observer.observe(field_, {
+      childList: true, // observe direct children
+      subtree: true, // and lower descendants too
+      characterDataOldValue: true // pass old data to callback
+    });
+  })()
+</script>
+{% schema %}
+  {
+    "name": "Page Contact Us Template",
+    "class": "Page_contact_us_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "video",
+        "id": "main_desktop_mp4_video",
+        "label": "Add Main Desktop MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "text",
+        "id": "main_left_heading_text",
+        "label": "Add Main Left Heading Text",
+        "default": "Get in touch"
+      },
+      {
+        "type": "text",
+        "id": "main_left_mobile_heading_text",
+        "label": "Add Main Mobile Left Heading Text",
+        "default": "We'd love to hear from you! "
+      },
+      {
+        "type": "text",
+        "id": "main_right_heading_text",
+        "label": "Add Main Right Heading Text",
+        "default": "Contact us"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_icon_image",
+            "label": "Add Main Icon Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Lorem Ipsum is simply dummy"
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,30 @@
+<div class="Collection_main_template_main_new {{ section.settings.customClass }}" style="background: {{ section.settings.main_background_color }};">
+  <div class="page-width">
+    <div class="Collection_main_template_inner_new">
+      <div class="Collection_main_template_breadcrumb_new">
+        {% render 'Breadcrumb-navigation-new' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection Main Template",
+    "class": "Collection_main_template_new",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "customClass",
+        "label": "Add Custom Class",
+        "info": "Bridal_collection_main_template_new, Luxe_collection_main_template_new"
+      },
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ]
+  }
+{% endschema %}

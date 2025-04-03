@@ -1,0 +1,530 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+{{ 'customer-popup.css' | asset_url | stylesheet_tag }}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@20.3.0/build/css/intlTelInput.css">
+
+<div
+  id="customerPopup"
+  class="Customer_register_template_main_new Customer_login_template_main_new customer-popup"
+>
+  <div class="popup-overlay"></div>
+  <div class="Customer_register_template_inner_new">
+    <div class="popup-inner">
+      <div class="close-btn" js-close-btn>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <g clip-path="url(#clip0_82_474)">
+          <path d="M0.769291 14.6451C0.688332 14.7289 0.643534 14.8412 0.644547 14.9577C0.645559 15.0742 0.692301 15.1857 0.774705 15.2681C0.857108 15.3505 0.968581 15.3973 1.08511 15.3983C1.20164 15.3993 1.31391 15.3545 1.39774 15.2735L8.00485 8.66819L14.7417 15.1411C14.8053 15.2014 14.8852 15.2417 14.9715 15.2568C15.0578 15.272 15.1466 15.2613 15.2269 15.2262C15.3072 15.1911 15.3753 15.1331 15.4228 15.0595C15.4702 14.9858 15.4949 14.8998 15.4937 14.8122C15.4927 14.7538 15.4801 14.6962 15.4568 14.6427C15.4334 14.5891 15.3998 14.5407 15.3577 14.5002L8.63329 8.03886L15.2262 1.44686C15.2675 1.40559 15.3003 1.35659 15.3227 1.30266C15.3451 1.24872 15.3566 1.1909 15.3567 1.13251C15.3567 1.07411 15.3452 1.01627 15.3229 0.962306C15.3006 0.908338 15.2679 0.859292 15.2266 0.81797C15.1854 0.776647 15.1364 0.743856 15.0824 0.721471C15.0285 0.699085 14.9707 0.687541 14.9123 0.6875C14.8539 0.687459 14.796 0.69892 14.7421 0.72123C14.6881 0.74354 14.6391 0.776261 14.5977 0.817525L7.9924 7.42286L1.2564 0.951747C1.21491 0.908765 1.16518 0.874589 1.11018 0.85126C1.05519 0.827932 0.996051 0.815931 0.93631 0.815974C0.87657 0.816018 0.817451 0.828104 0.762488 0.851512C0.707524 0.87492 0.657844 0.909168 0.616416 0.952211C0.574987 0.995253 0.542662 1.04621 0.521371 1.10202C0.50008 1.15784 0.490261 1.21738 0.4925 1.27708C0.494739 1.33677 0.50899 1.39541 0.534402 1.44948C0.559815 1.50354 0.595866 1.55193 0.640402 1.59175L7.36307 8.05219L0.769291 14.6451Z" fill="#262626"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_82_474">
+          <rect width="16" height="16" fill="white"/>
+          </clipPath>
+          </defs>
+        </svg>
+      </div>
+      {%- if section.settings.main_heading_text != blank
+        or section.settings.main_information_text != blank
+        or section.settings.main_use_code_text != blank
+      -%}
+        <div
+          class="Customer_register_template_mainleft_new Customer_register_template_mainleft_new_{{ section.id }}"
+          style="{% if section.settings.main_desktop_full_image != blank %}background: url({{ section.settings.main_desktop_full_image | img_url: 'master' }}) no-repeat center center; background-size: cover;{% else %}background: #cccccc;{% endif %}"
+        >
+          {%- if section.settings.main_mobile_full_image != blank -%}
+            <style>
+              @media(min-width:0px) and (max-width:768px){
+                .Customer_register_template_mainleft_new_{{ section.id }}{
+                  background: url({{ section.settings.main_mobile_full_image | img_url: 'master' }}) no-repeat center center !important;
+                  background-size: cover !important;
+                }
+              }
+            </style>
+          {%- endif -%}
+          <div class="Customer_register_template_innerleft_new">
+            {%- if section.settings.main_heading_text != blank -%}
+              <div class="Customer_register_template_innerleft_title_new">
+                <h2>{{ section.settings.main_heading_text }}</h2>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.main_information_text != blank -%}
+              <div class="Customer_register_template_innerleft_texts_new">
+                <h3>{{ section.settings.main_information_text }}</h3>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.main_use_code_text != blank -%}
+              <div class="Customer_register_template_innerleft_infos_new">
+                <h4>{{ section.settings.main_use_code_text }}</h4>
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="Customer_register_template_innerleft_apply_new">*T&C Apply</div>
+        </div>
+      {%- endif -%}
+      <div class="Customer_register_template_mainright_new">
+        <div class="customer login Customer_register_template_innerright_new">
+          <div id="recover">
+            <div class="Customer_register_template_innerright_titleinfos_new">
+              <div class="Customer_register_template_innerright_titleinfos_title_new">
+                <span class="h2" tabindex="-1">
+                  {{ 'customer.recover_password.title' | t }}
+                </span>
+              </div>
+              <div class="Customer_login_template_innerright_titleinfos_infos_new">
+                <p>{{ 'customer.recover_password.subtext' | t }}</p>
+              </div>
+            </div>
+            <div>
+              <div class="Customer_register_template_innerright_mainform_new">
+                <div class="Customer_register_template_innerright_innerform_new">
+                  {%- form 'recover_customer_password' -%}
+                    {% assign recover_success = form.posted_successfully? %}
+                    <div class="field">
+                      <input
+                        type="email"
+                        value=""
+                        name="email"
+                        id="RecoverEmail"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        autocomplete="email"
+                        {% if form.errors %}
+                          aria-invalid="true"
+                          aria-describedby="RecoverEmail-email-error"
+                          autofocus
+                        {% endif %}
+                        placeholder="{{ 'customer.login_page.email' | t }}"
+                        pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+                        required
+                      >
+                      <label for="RecoverEmail">
+                        {{ 'customer.login_page.email' | t }}
+                      </label>
+                    </div>
+                    {%- if form.errors -%}
+                      <small id="RecoverEmail-email-error" class="form__message">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+                          <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+                          <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+                          <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+                          <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+                        </svg>
+                        {{ form.errors.messages.form }}
+                      </small>
+                    {%- endif -%}
+
+                    <button class="button submit_btn_new">
+                      {{ 'customer.login_page.submit' | t }}
+                    </button>
+
+                    <span class="login_back">
+                      sign in
+                    </span>
+                  {%- endform -%}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="login">
+            <div class="Customer_register_template_innerright_titleinfos_new">
+              <div class="Customer_register_template_innerright_titleinfos_title_new">
+                <span class="h1" tabindex="-1">
+                  {{ 'customer.login_page.title' | t }}
+                </span>
+              </div>
+              {%- if section.settings.main_right_information_text_1 != blank -%}
+                <div class="Customer_login_template_innerright_titleinfos_infos_new">
+                  {{ section.settings.main_right_information_text_1 }}
+                </div>
+              {%- endif -%}
+            </div>
+            <div>
+              <div class="Customer_register_template_innerright_mainform_new">
+                <div class="Customer_register_template_innerright_innerform_new">
+                  {%- if recover_success == true -%}
+                    <h3 class="form__message" tabindex="-1" autofocus>
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+                        <path d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z" fill="#428445" stroke="white" stroke-width="0.7"/>
+                        <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white"/>
+                        <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white">
+                      </svg>
+                      {{ 'customer.recover_password.success' | t }}
+                    </h3>
+                  {%- endif -%}
+                  {%- form 'customer_login' -%}
+                    {%- if form.errors -%}
+                      {% comment %}
+                        <h2 class="form__message" tabindex="-1" autofocus>
+                          <span class="visually-hidden">{{ 'accessibility.error' | t }} </span>
+                          <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+                            <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+                            <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+                            <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+                            <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+                          </svg>
+                          {{ 'templates.contact.form.error_heading' | t }}
+                        </h2>
+                      {% endcomment %}
+                      {{ form.errors | default_errors }}
+                    {%- endif -%}
+                      <input type="hidden" name="return_to" value="{{ request.path }}">
+
+                    <div class="field">
+                      <input
+                        type="email"
+                        name="customer[email]"
+                        id="CustomerEmail"
+                        autocomplete="email"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        {% if form.errors contains 'form' %}
+                          aria-invalid="true"
+                        {% endif %}
+                        placeholder="{{ 'customer.login_page.email' | t }}"
+                        pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+                        required
+                      >
+                      <label for="CustomerEmail">
+                        {{ 'customer.login_page.email' | t }}
+                      </label>
+                    </div>
+
+                    {%- if form.password_needed -%}
+                      <div class="field">
+                        <input
+                          type="password"
+                          value=""
+                          name="customer[password]"
+                          id="CustomerPassword"
+                          autocomplete="current-password"
+                          {% if form.errors contains 'form' %}
+                            aria-invalid="true"
+                          {% endif %}
+                          placeholder="{{ 'customer.login_page.password' | t }}"
+                          required
+                        >
+                        <label for="CustomerPassword">
+                          {{ 'customer.login_page.password' | t }}
+                        </label>
+                        <label for="register_show_password_pop">
+                          <input type="checkbox" id="register_show_password_pop" js-show-password>
+                          <div class="show_password_text_new"></div>
+                        </label>
+                      </div>
+
+                      <span class="forgot_password">
+                        {{ 'customer.login_page.forgot_password' | t }}
+                      </span>
+                    {%- endif -%}
+
+                    <p class="info-message info-message-login" style="display:none;">We have recently migrated to another platform, kindly reset your password now to continue enjoying KALKI perks!</p>
+
+                    <button type="submit" class="button submit_btn_new login_submit_btn_new">
+                      {{ 'customer.login_page.sign_in' | t }}
+                    </button>
+
+                    {%- comment -%}
+                      <a href="{{ routes.account_register_url }}">
+                        {{ 'customer.login_page.create_account' | t }}
+                      </a>
+                    {%- endcomment -%}
+                  {%- endform -%}
+                </div>
+              </div>
+              <div class="Customer_register_template_innerright_bottominfos_new">
+                <div class="Customer_register_template_innerright_bottominfos_infos_2_new">
+                  Don’t have an account? <span class="sign-up-btn">Sign Up</span>
+                </div>
+              </div>
+            </div>
+
+            {%- if shop.checkout.guest_login -%}
+              <div class="guest_login_new">
+                <div class="Customer_register_template_innerright_titleinfos_title_new">
+                  <span class="h2">{{ 'customer.login_page.guest_title' | t }}</span>
+                </div>
+                {%- form 'guest_login' -%}
+                  <button class="button submit_btn_new">
+                    {{ 'customer.login_page.guest_continue' | t }}
+                  </button>
+                {%- endform -%}
+              </div>
+            {%- endif -%}
+          </div>
+          <div id="sign-up">
+            <div class="Customer_register_template_innerright_titleinfos_new">
+              <div class="Customer_register_template_innerright_titleinfos_title_new">
+                <span class="h1" tabindex="-1">
+                  Sign up
+                </span>
+                <div class="Customer_login_template_innerright_titleinfos_infos_new">
+                  <p>{{ section.settings.main_top_information_text }}</p>
+                </div>
+              </div>
+              <div class="Customer_register_template_innerright_mainform_new">
+                <div class="Customer_register_template_innerright_innerform_new">
+                  {%- form 'create_customer' -%}
+                    {%- if form.errors -%}
+                      {% comment %}
+                        <h2 class="form__message" tabindex="-1" autofocus>
+                          <svg aria-hidden="true" focusable="false">
+                            <use href="#icon-error" />
+                          </svg>
+                          {{ 'templates.contact.form.error_heading' | t }}
+                        </h2>
+                      {% endcomment %}
+                      <div class="errors">
+                        <ul>
+                          {%- for field in form.errors -%}
+                            <li>
+                              {%- if field == 'form' -%}
+                                {{ form.errors.messages[field] }}
+                              {%- else -%}
+                                <a href="#RegisterForm-{{ field }}">
+                                  {{ form.errors.translated_fields[field] | capitalize }}
+                                  {{ form.errors.messages[field] }}
+                                </a>
+                              {%- endif -%}
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    {%- endif -%}
+                    <div class="field">
+                      <input
+                        type="text"
+                        name="customer[first_name]"
+                        id="RegisterForm-FirstName"
+                        {% if form.first_name %}
+                          value="{{ form.first_name }}"
+                        {% endif %}
+                        autocomplete="given-name"
+                        placeholder="{{ 'customer.register.first_name' | t }}"
+                        required
+                        onkeydown="return /[a-zA-Z]/i.test(event.key)"
+                      >
+                      <label for="RegisterForm-FirstName">
+                        {{ 'customer.register.first_name' | t }}
+                      </label>
+                    </div>
+                    <div class="field">
+                      <input
+                        type="text"
+                        name="customer[last_name]"
+                        id="RegisterForm-LastName"
+                        {% if form.last_name %}
+                          value="{{ form.last_name }}"
+                        {% endif %}
+                        autocomplete="family-name"
+                        placeholder="{{ 'customer.register.last_name' | t }}"
+                        required
+                        onkeydown="return /[a-zA-Z]/i.test(event.key)"
+                      >
+                      <label for="RegisterForm-LastName">
+                        {{ 'customer.register.last_name' | t }}
+                      </label>
+                    </div>
+                    <div class="field">
+                      <input
+                        type="email"
+                        name="customer[email]"
+                        id="RegisterForm-email"
+                        {% if form.email %}
+                          value="{{ form.email }}"
+                        {% endif %}
+                        spellcheck="false"
+                        autocapitalize="off"
+                        autocomplete="email"
+                        aria-required="true"
+                        {% if form.errors contains 'email' %}
+                          aria-invalid="true"
+                          aria-describedby="RegisterForm-email-error"
+                        {% endif %}
+                        placeholder="{{ 'customer.register.email' | t }}"
+                        pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+                        required
+                      >
+                      <label for="RegisterForm-email">
+                        {{ 'customer.register.email' | t }}
+                      </label>
+                    </div>
+                    
+                    <input hidden  name="customer[note][Country code]" id="countryCode">
+                    <div class="field" js-phone-field-wrapper>
+                      <input
+                        type="tel"
+                        name="customer[note][Phone Number]"
+                        id="RegisterForm-number"
+                        value=""
+                        aria-required="true"
+                        placeholder="Phone Number*"
+                        required
+                        pattern="[0-9]{10}"
+                        title="Please enter valid phone number" 
+                        js-phone-field
+                      >
+
+                      <label for="RegisterForm-number"> Phone Number* </label>
+                    </div>
+
+                    {%- if form.errors contains 'email' -%}
+                      <span id="RegisterForm-email-error" class="form__message">
+                        <svg aria-hidden="true" focusable="false">
+                          <use href="#icon-error" />
+                        </svg>
+                        {{ form.errors.translated_fields.email | capitalize }}
+                        {{ form.errors.messages.email }}.
+                      </span>
+                    {%- endif -%}
+                    <div class="field">
+                      <input
+                        type="password"
+                        name="customer[password]"
+                        id="RegisterForm-password"
+                        aria-required="true"
+                        {% if form.errors contains 'password' %}
+                          aria-invalid="true"
+                          aria-describedby="RegisterForm-password-error"
+                        {% endif %}
+                        placeholder="{{ 'customer.register.password' | t }}"
+                        required
+                      >
+                      <label for="RegisterForm-password">
+                        {{ 'customer.register.password' | t }}
+                      </label>
+                      <label for="register_show_password_reg">
+                        <input type="checkbox" id="register_show_password_reg" js-show-password>
+                        <div class="show_password_text_new"></div>
+                      </label>
+                    </div>
+                    {%- if form.errors contains 'password' -%}
+                      <span id="RegisterForm-password-error" class="form__message">
+                        <svg aria-hidden="true" focusable="false">
+                          <use href="#icon-error" />
+                        </svg>
+                        {{ form.errors.translated_fields.password | capitalize }}
+                        {{ form.errors.messages.password }}.
+                      </span>
+                    {%- endif -%}
+                    <button class="button submit_btn_new">
+                      {{ 'customer.register.submit' | t }}
+                    </button>
+                  {%- endform -%}
+                </div>
+                <span class="login_back">
+                  sign in
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@20.3.0/build/js/intlTelInput.min.js"></script>
+<script>
+  const customSignUpInput = document.querySelector("#RegisterForm-number");
+  setTimeout(() => {
+    window.intlTelInput(customSignUpInput, {
+      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@20.3.0/build/js/utils.js",
+      showFlags: true,
+      phone: "phone_full",
+      country: "country_code",
+      showSelectedDialCode: true,
+      initialCountry: 'in',
+      separateDialCode: true,
+    });
+  }, 2000)
+
+ 
+  customSignUpInput.addEventListener('change', function() {
+    const dialCode = window.intlTelInputGlobals.getInstance(customSignUpInput).getSelectedCountryData().dialCode
+    const countryCode = document.querySelector('#countryCode');
+    countryCode.value = dialCode
+  })
+</script>
+
+<script>
+  (() => {
+    const container = document.querySelector('.Customer_register_template_mainright_new');
+    const phoneField = container.querySelector('[js-phone-field]');
+    phoneField.addEventListener('focus', function(e) {
+      const field_ = e.target.closest('[js-phone-field-wrapper]')
+      field_.classList.add('active')
+    })
+    phoneField.addEventListener('blur', function(e) {
+      const field_ = e.target.closest('[js-phone-field-wrapper]')
+      const phoneField = field_.querySelector('#RegisterForm-number')
+      if(!phoneField.value) {
+        field_.classList.remove('active')
+      }else {
+        phoneField.value = phoneField.value.replace(/\s/g, '')
+      }
+    })
+
+    let observer = new MutationObserver(mutationRecords => {
+      const field_ = container.querySelector('[js-phone-field-wrapper]')
+      const phoneInput = field_.querySelector('#CRegisterForm-number')
+      if(phoneInput?.value) {
+        field_.classList.add('active')
+      }
+    });
+    const field_ = container.querySelector('[js-phone-field-wrapper]')
+
+    observer.observe(field_, {
+      childList: true, // observe direct children
+      subtree: true, // and lower descendants too
+      characterDataOldValue: true // pass old data to callback
+    });
+  })()
+</script>
+
+{% schema %}
+{
+  "name": "Customer popup",
+  "class": "Customer_login_template_new",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "main_heading_text",
+      "label": "Add Main Heading Text",
+      "default": "<p>Register &amp; Be A Part Of The <br>KALKI Circle!</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "main_information_text",
+      "label": "Add Main Information Text",
+      "default": "Flat 15% Off on your first order*"
+    },
+    {
+      "type": "text",
+      "id": "main_use_code_text",
+      "label": "Add Main Use Code Text",
+      "default": "Use Code: GLAM15"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_desktop_full_image",
+      "label": "Add Main Desktop Full Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_mobile_full_image",
+      "label": "Add Main Mobile Full Image"
+    },
+    {
+      "type": "richtext",
+      "id": "main_right_information_text_1",
+      "label": "Add Main Right Information Text-1",
+      "default": "<p>Sign in so you can save items to your wishlists, track your orders, and check out faster!</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "main_top_information_text",
+      "label": "Add Main Top Sign Up Information Text",
+      "default": "<p>Welcome to Kalki! It's quick and easy <br>to set up an account</p>"
+    }
+  ]
+}
+{% endschema %}

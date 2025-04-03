@@ -1,0 +1,104 @@
+{%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+{% comment %} Use string splitting to pull the value from content_for_header and apply some string clean up {% endcomment %}
+{%- assign pageUrl = contentForQuerystring
+  | split: '"pageurl":"'
+  | last
+  | split: '"'
+  | first
+  | split: '.myshopify.com'
+  | last
+  | replace: '\/', '/'
+  | replace: '%20', ' '
+  | replace: '\u0026', '&'
+-%}
+{%- assign pageQuerystring = pageUrl | split: '?' | last -%}
+
+<div class="customer_account_mainleftside_new">
+  <div class="customer_account_innerleftside_mainloops_new">
+    <div class="customer_account_user_new">
+      <div class="customer_account_username_new">{{ customer.first_name }} {{ customer.last_name }}</div>
+      <div class="customer_account_email_new">{{ customer.email }}</div>
+    </div>
+    <div class="customer_account_innerleftside_innerloops_new">
+      <div class="customer_account_innerleftside_innerloops_title_new">
+        <div class="customer_account_innerleftside_innerloops_titletext_new {% if request.path == "/account" %}{% unless pageQuerystring contains "view=orders" or pageQuerystring contains "view=subscriptions" %} active {% endunless %}{% endif %}">
+          <a href="/account">
+            <div class="customer_account_icon_new">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="10" r="5" stroke="#262433" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4.51562 19C6.13015 16.588 8.87966 15 12.0001 15C15.1539 15 17.9288 16.6222 19.5359 19.0777" stroke="#262433" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="10.4" stroke="#262433" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="customer_account_name_new">
+              Account Details
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="customer_account_innerleftside_innerloops_title_new">
+        <div class="customer_account_innerleftside_innerloops_titletext_new {% if pageQuerystring contains "view=orders" %} active {% endif %} {% if request.path contains "/account/orders/" %} active {% endif %}">
+          <a href="/account?view=orders">
+            <div class="customer_account_icon_new">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.6 20V7.6H21.4V20C21.4 20.7732 20.7732 21.4 20 21.4H4C3.2268 21.4 2.6 20.7732 2.6 20Z" stroke="#262433" stroke-width="1.2"/>
+                <path d="M1.6 2.6H22.4V7.4H1.6V2.6Z" stroke="#262433" stroke-width="1.2"/>
+                <path d="M15 18.5H19" stroke="#262433" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="customer_account_name_new">
+              My Order
+            </div>  
+          </a>
+        </div>
+      </div>
+
+      <div class="customer_account_innerleftside_innerloops_title_new">
+        <div class="customer_account_innerleftside_innerloops_titletext_new {% if request.path contains "/account/addresses" %} active {% endif %}">
+          <a href="{{ routes.account_addresses_url }}">
+            <div class="customer_account_icon_new">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="12" cy="22.5" rx="7" ry="1.5" fill="#C5C4CC"/>
+                <path d="M19 9.05882C19 12.6764 15.9861 17.178 12.7551 21.0982C12.363 21.574 11.637 21.574 11.2449 21.0982C8.01386 17.178 5 12.6764 5 9.05882C5 5.16034 8.13401 2 12 2C15.866 2 19 5.16034 19 9.05882Z" stroke="#262433" stroke-width="1.2" stroke-linejoin="round"/>
+                <circle cx="12" cy="9" r="3" stroke="#262433" stroke-width="1.2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="customer_account_name_new">
+              Addresses
+            </div>    
+          </a>
+        </div>
+      </div>
+
+      <div class="customer_account_innerleftside_innerloops_title_new">
+        <div class="customer_account_innerleftside_innerloops_titletext_new">
+          <a href="/pages/wishlist">
+            <div class="customer_account_icon_new">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_679_23746)">
+                <path d="M17.0564 4.86001C14.1244 5.3376 11.9865 7.90953 11.9865 10.0003C11.9865 7.90953 10.2558 5.40128 6.89628 4.86001C4.11701 4.41425 1.37846 6.66425 1.80604 10.1878C2.54921 16.2904 11.0017 20.5003 11.9865 21.0876C13.0017 20.5003 21.21 16.1525 22.167 10.1878C22.6964 6.89774 20.2429 4.35057 17.0564 4.86001Z" stroke="#262433" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_679_23746">
+                <rect width="22" height="18" fill="white" transform="translate(1 4)"/>
+                </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <div class="customer_account_name_new">
+              Wishlist
+            </div>    
+          </a>
+        </div>
+      </div>
+
+      <div class="customer_account_innerleftside_innerloops_title_new">
+        <div class="customer_account_innerleftside_innerloops_titletext_new">
+          <a href="{{ routes.account_logout_url }}" class="signout_new">Sign Out</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+{%- if collection.metafields.custom.collection_explore_video_or_image != blank -%}
+  <div class="Collection_object_banners_main_new {{ section.settings.customClass }}" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Collection_object_banners_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Collection_object_banners_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if collection.metafields.custom.collection_explore_video_or_image != blank -%}
+          <div class="Collection_object_banners_mainloop_new">
+            <div class="Collection_object_banners_innerloop_new">
+              {%- for columns in collection.metafields.custom.collection_explore_video_or_image.value -%}
+                {%- if columns.video_or_image.value != blank and columns.redirect_link.value != blank -%}
+                  <div class="Collection_object_banners_innerloop_mainbox_new">
+                    <div class="Collection_object_banners_innerloop_innerbox_new">
+                      {%- if columns.redirect_link.value != blank -%}
+                        <a href="{{ columns.redirect_link.value }}">
+                      {%- endif -%}
+                          <div class="Collection_object_banners_innerloop_innerbox_videoimageboth_new">
+                            {%- if columns.video_or_image.value.sources[1].url contains '.mp4' or columns.video_or_image.value.sources[1].url contains '.MP4' -%}
+                              <div class="Collection_object_banners_innerloop_innerbox_videoimage_new">
+                                <video
+                                  id="Mp4Video-{{ section.id }}-{{ forloop.index0 }}-inner"
+                                  class="video-div"
+                                  data-type="mp4"
+                                  src="{{ columns.video_or_image.value.sources[1].url }}"
+                                  loop muted playsinline autoplay>
+                                </video>
+                              </div>
+                            {%- else -%}
+                              <div class="Collection_object_banners_innerloop_innerbox_videoimage_new">
+                                {{
+                                  columns.video_or_image.value | 
+                                  image_url: width: img.width | 
+                                  image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                  fetchpriority: 'auto', 
+                                  class:'Hover_image_new'
+                                }}
+                              </div>
+                            {%- endif -%}  
+                          </div>
+                      {%- if columns.redirect_link.value != blank -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Collection Object Banners",
+    "class": "Collection_object_banners_new",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "customClass",
+        "label": "Add Custom Class",
+        "info": "men_collection_banner_new"
+      },
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Explore More"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Object Banners"
+      }
+    ]
+  }
+{% endschema %}

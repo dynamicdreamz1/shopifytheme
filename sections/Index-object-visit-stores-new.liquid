@@ -1,0 +1,117 @@
+{%- if section.settings.main_heading_text != blank and section.settings.meta_object_handle_name_text != blank -%}
+  <div class="Index_object_visit_stores_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Index_object_visit_stores_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Index_object_visit_stores_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.meta_object_handle_name_text != blank -%}
+          <div class="Index_object_visit_stores_mainloop_new">
+            <div class="Index_object_visit_stores_innerloop_new">
+              <div class="swiper-container Index_visit_stores_slider">
+                <div class="swiper-wrapper">
+                  {% capture value %}{{ section.settings.meta_object_handle_name_text }}{% endcapture %}
+                  {% assign currentMetafield_text = shop.metaobjects[value] %}
+                  {%- for custom in currentMetafield_text.values -%}
+                    {%- for rows in custom.our_stores.value -%}
+                      {%- if rows.thumbnail_video_or_image.value != blank or rows.address.value != blank -%}
+                        <div class="swiper-slide Index_object_visit_stores_innerloop_mainboxs_new">
+                          <div class="Index_object_visit_stores_innerloop_innerboxs_new">
+                            {%- if rows.thumbnail_video_or_image.value != blank -%}
+                              <div class="Index_object_visit_stores_innerloop_innerboxs_mainvideoimage_new">
+                                <a href="{{ rows.system.url }}" aria-label="{{ rows.title.value }} store">
+                                  <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_new">
+                                    {%- if rows.thumbnail_video_or_image.value.sources[1].url contains '.mp4' or rows.thumbnail_video_or_image.value.sources[1].url contains '.MP4' -%}
+                                      <div class="Index_object_visit_stores_innerloop_innerboxs_video_OR_image_new">
+                                        <video
+                                          id="Mp4Video-{{ forloop.index0 }}-inner"
+                                          class="video-div"
+                                          data-type="mp4"
+                                          src="{{ rows.thumbnail_video_or_image.value.sources[1].url }}"
+                                          loop muted playsinline autoplay>
+                                        </video>
+                                      </div>
+                                    {%- else -%}
+                                      <div class="Index_object_visit_stores_innerloop_innerboxs_video_OR_image_new">
+                                        {{
+                                          rows.thumbnail_video_or_image.value | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'Hover_image_new',
+                                          alt: rows.title.value
+                                        }}
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </a>
+                              </div>
+                            {%- endif -%}
+                            {%- if rows.address.value != blank -%}
+                              <div class="Index_object_visit_stores_innerloop_innerboxs_mainvideoimage_details_new">
+                                <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_details_new">
+                                  {%- if rows.address.value != blank -%}
+                                    <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_titles_new">
+                                      {{ rows.address.value }}
+                                    </div>
+                                  {%- endif -%}
+                                  {%- if rows.system.url != blank -%}
+                                    <div class="Index_object_visit_stores_innerloop_innerboxs_innervideoimage_button_new">
+                                      <a href="{{ rows.system.url }}">
+                                        View Details <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.06074 3H13.5M13.5 3V10.3333M13.5 3L3.5 13" stroke="black" stroke-width="1.6" stroke-linecap="square"/></svg>
+                                      </a>
+                                    </div>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                            {%- endif -%}  
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endfor -%} 
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Index Object Visit Stores",
+    "class": "Index_object_visit_stores_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Visit our Store"
+      },
+      {
+        "type": "textarea",
+        "id": "meta_object_handle_name_text",
+        "label": "Add Meta Object Handle Name Text",
+        "info": "For EX: index_visit_our_stores Etc..."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Object Visit Stores"
+      }
+    ]
+  }
+{% endschema %}

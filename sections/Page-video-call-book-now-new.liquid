@@ -1,0 +1,148 @@
+{%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank or section.settings.main_heading_text != blank or section.settings.main_information_text != blank or section.settings.main_button_link != blank -%}
+  <div class="Page_video_call_book_now_main_new{% if section.settings.main_custom_class_text != blank %} {{ section.settings.main_custom_class_text }}{% endif %}" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_video_call_book_now_inner_new">
+        {%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+          <div class="Page_video_call_book_now_1_new">
+            <div class="Page_video_call_book_now_1_detail_new">
+              <div class="Page_video_call_book_now_1_detail_videoimageboth_new">
+                {%- if section.settings.main_desktop_mp4_video != blank -%}
+                  <div class="Page_video_call_book_now_1_detail_videoimage_new">
+                    {%- if section.settings.main_desktop_mp4_video != blank -%}
+                      {{ section.settings.main_desktop_mp4_video | video_tag: controls: false, autoplay: true, loop: true}}
+                    {%- endif -%}
+                  </div>
+                {% else %}  
+                  {%- if section.settings.main_desktop_full_image != blank and section.settings.main_mobile_full_image != blank -%}
+                    <div class="Page_video_call_book_now_1_detail_videoimage_new">
+                      {%- if section.settings.main_desktop_full_image != blank -%}
+                        {{
+                          section.settings.main_desktop_full_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'desktop_image_new'
+                        }}
+                      {%- endif -%}
+                      {%- if section.settings.main_mobile_full_image != blank -%}
+                        {{
+                          section.settings.main_mobile_full_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'mobile_image_new'
+                        }}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.main_heading_text != blank or section.settings.main_information_text != blank or section.settings.main_button_link != blank -%}
+          <div class="Page_video_call_book_now_2_new">
+            <div class="Page_video_call_book_now_2_detail_new">
+              <div class="Page_video_call_book_now_2_detail_leftrightboth_new">
+                {%- if section.settings.main_heading_text != blank or section.settings.main_information_text != blank -%}
+                  <div class="Page_video_call_book_now_2_detail_mainleft_new">
+                    <div class="Page_video_call_book_now_2_detail_innerleft_new">
+                      {%- if section.settings.main_heading_text != blank -%}
+                        <div class="Page_video_call_book_now_2_detail_innerleft_title_new">
+                          <h3>{{ section.settings.main_heading_text }}</h3>
+                        </div>  
+                      {%- endif -%}
+                      {%- if section.settings.main_information_text != blank -%}
+                        <div class="Page_video_call_book_now_2_detail_innerleft_infos_new">
+                          {{ section.settings.main_information_text }}
+                        </div>  
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.main_button_text != blank and section.settings.main_button_link != blank -%}
+                  <div class="Page_video_call_book_now_2_detail_mainright_new">
+                    <div class="Page_video_call_book_now_2_detail_innerright_new">
+                      {%- if section.settings.main_button_text != blank and section.settings.main_button_link != blank -%}
+                        <div class="Page_video_call_book_now_2_detail_innerright_button_new">
+                          <a href="{{ section.settings.main_button_link }}" class="button button_white button_border">
+                            {{ section.settings.main_button_text }}
+                          </a>
+                        </div>  
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Video Call Book Now",
+    "class": "Page_video_call_book_now_new",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "main_custom_class_text",
+        "label": "Add Main Custom Class Text",
+        "info": "EX: Page_offline_book_now_main_new ETC..."
+      },
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "video",
+        "id": "main_desktop_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      },
+      {
+        "type": "textarea",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Book Bridal Appointment with our stylist"
+      },
+      {
+        "type": "richtext",
+        "id": "main_information_text",
+        "label": "Add Main Information Text",
+        "default": "<p>Cutting-edge trends, design the perfect trousseau based on your personal colour palette, body shape and lifestyle, style your wedding outfit keeping all your needs in consideration while doing it all within your prescribed budget.</p>"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text",
+        "label": "Add Main Button Text",
+        "default": "Book Now"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link",
+        "label": "Add Main Button Link",
+        "default": "/"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video Call Book Now"
+      }
+    ]
+  }
+{% endschema %}

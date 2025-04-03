@@ -1,0 +1,126 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Page_press_room_details_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_press_room_details_inner_new">
+        <div class="Page_press_room_details_loops_new">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.main_icon_image != blank or block.settings.title != blank or block.settings.main_information_text != blank or block.settings.main_sub_heading_text != blank or block.settings.main_contact_detail_text != blank -%}
+              <div class="Page_press_room_details_loops_mainboxs_new">
+                <div class="Page_press_room_details_loops_innerboxs_new">
+                  {%- if block.settings.main_icon_image != blank or block.settings.title != blank -%}
+                    <div class="Page_press_room_details_loops_innerboxs_1_new">
+                      <div class="Page_press_room_details_loops_innerboxs_1_detail_new">
+                        {%- if block.settings.main_icon_image != blank -%}
+                          <div class="Page_press_room_details_loops_innerboxs_1_detail_icons_new">
+                            {{
+                              block.settings.main_icon_image | 
+                              image_url: width: img.width | 
+                              image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                              fetchpriority: 'auto', 
+                              class:'Icon_image_new'
+                            }}
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.title != blank -%}
+                          <div class="Page_press_room_details_loops_innerboxs_1_detail_title_new">
+                            <h3>{{ block.settings.title }}</h3>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.main_information_text != blank -%}
+                    <div class="Page_press_room_details_loops_innerboxs_2_new">
+                      <div class="Page_press_room_details_loops_innerboxs_2_infos_new">
+                        {{ block.settings.main_information_text }}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.main_sub_heading_text != blank -%}
+                    <div class="Page_press_room_details_loops_innerboxs_3_new">
+                      <div class="Page_press_room_details_loops_innerboxs_3_texts_new">
+                        {{ block.settings.main_sub_heading_text }}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.main_contact_detail_text != blank -%}
+                    <div class="Page_press_room_details_loops_innerboxs_4_new">
+                      <div class="Page_press_room_details_loops_innerboxs_4_contact_new">
+                        {{ block.settings.main_contact_detail_text }}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>      
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Page Press Room Details",
+    "class": "Page_press_room_details_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_icon_image",
+            "label": "Add Main Icon Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          },
+          {
+            "type": "text",
+            "id": "main_sub_heading_text",
+            "label": "Add Main Sub Heading Text",
+            "info": "EX: KALKI Corporate Communications ETC.."
+          },
+          {
+            "type": "richtext",
+            "id": "main_contact_detail_text",
+            "label": "Add Main Contact Detail Text",
+            "info": "EX: <p>kalkiPR@kalki.com</p><p>1-000-00000</p> ETC.."
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Press Room Details",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

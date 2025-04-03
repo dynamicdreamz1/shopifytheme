@@ -1,23 +1,108 @@
-<style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
-  }
-
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
-    }
-  }
-</style>
-
 <div class="template-404 page-width page-margin center">
-  <p>
+  <p class="subtext-404">
     {{ 'templates.404.subtext' | t }}
   </p>
+  <div class="image-404">
+    <img src="https://cdn.shopify.com/s/files/1/0636/0134/4666/files/broken-link-404-top-img.jpg?v=1742281491" alt="hanger">
+  </div>
   <h1 class="title">
     {{ 'templates.404.title' | t }}
   </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
+  <p class="description-404">please check the spelling or try searching something else</p>
+  <form action="{{ routes.search_url }}">
+    <label>Search</label>
+    <div>
+       <input type="text"
+        placeholder="What are you looking for? Lehengas, Suits, Sarees"
+        name="q"
+        value=""
+        maxlength="128" role="combobox" aria-haspopup="false" aria-autocomplete="both" autocomplete="off"
+       >
+      <input type="submit" value="Search">
+    </div>
+  </form>
 </div>
+<style type="text/css">
+  div.template-404 {
+    margin: 28px auto 12px;
+  }
+  div.template-404 .subtext-404 {
+    font-size: 24px;
+    margin: 0 0 24px;
+    line-height: 1.4;
+  }
+  div.template-404 h1.title {
+    font-size: 32px;
+    margin: 40px 0 5px;
+    line-height: 1;
+  }
+  div.template-404 .description-404 {
+    color: #959595;
+    font-size: 14px;
+    margin: 0 0 16px;
+    line-height: normal;
+  }
+  div.template-404 form {
+    max-width: 860px;
+    margin: auto;
+  }
+  div.template-404 label {
+    text-align: left;
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  div.template-404 form div {
+    display: flex;
+  }
+  div.template-404 form input[type="text"] {
+    width: 100%;
+    border: 1px solid #d9d9d9;
+    height: 50px;
+    border-radius: 6px 0 0 6px;
+    padding: 0 12px;
+    color: #000;
+    font-size: 14px;
+  }
+  div.template-404 form input[type="text"]::placeholder{color:#000;}
+  div.template-404 form input[type="text"]::-webkit-input-placeholder{color:#000;}
+  div.template-404 form input[type="text"]::-moz-placeholder{color:#000;}
+  div.template-404 form input[type="text"]:-ms-input-placeholder{color:#000;}
+  div.template-404 form input[type="submit"] {
+    border: 1px solid #d9d9d9;
+    background: none;
+    border-left: 0;
+    padding: 0 16px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .template-404 .rich-text__blocks {
+    max-width: 860px;
+  }
+  .template-404 .rich-text__blocks a:hover {
+    color: #662505;
+  }
+  .template-404 .rich-text__blocks a {
+      text-decoration: none;
+      color: #8c8c8c;
+      transition: 0.3s;
+  }
+  .template-404 .rich-text__blocks p {
+      font-size: 14px;
+      color: #8c8c8c;
+      font-weight: bold;
+      line-height: normal;
+  }
+  @media only screen and (max-width: 767px) {
+    div.template-404 {
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+    div.template-404 .subtext-404 {
+      font-size: 20px;
+    }
+    div.template-404 h1.title {
+      font-size: 22px;
+    }
+  }
+</style>

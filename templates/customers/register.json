@@ -1,14 +1,1 @@
-{
-  "sections": {
-    "main": {
-      "type": "main-register",
-      "settings": {
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    }
-  },
-  "order": [
-    "main"
-  ]
-}
+{"sections":{"main":{"type":"Customer-register-template-new","settings":{"main_background_color":"#ffffff","main_heading_text":"<p>Register & Be A Part Of The <br\/>KALKI Circle!<\/p>","main_information_text":"Get 10% Off* On Your First Order","main_use_code_text":"Use Code: FIRSTG10","main_desktop_full_image":"shopify:\/\/shop_images\/Frame_1472-min.jpg","main_mobile_full_image":"shopify:\/\/shop_images\/Frame_1482-min.jpg","main_right_information_text_1":"<p>Welcome to Kalki! It's quick and easy to set up an account.<\/p>","main_right_information_text_2":"<p>By continuing, I agree to the <a href=\"\/pages\/terms-conditions\" target=\"_blank\" title=\"Terms & conditions\">Terms of Use<\/a> and <a href=\"\/pages\/privacy-policy\" target=\"_blank\" title=\"Privacy Policy\">Privacy Policy<\/a><\/p>","main_right_information_text_3":"<p>Already Have an Account?  <a href=\"\/account\/login\" title=\"\/account\/login\">Sign In<\/a><\/p>"}}},"order":["main"]}

@@ -1,0 +1,71 @@
+{%- if shop.metaobjects.faq_page_list_select.values -%}
+  <div class="Page_FAQs_template_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_FAQs_template_inner_new">
+        <div class="Page_FAQs_template_breadcrumb_new">
+          {% render 'Breadcrumb-navigation-new' %}
+        </div>
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Page_FAQs_template_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if shop.metaobjects.faq_page_list_select.values -%}
+          <div class="Page_FAQs_template_mainloop_new">
+            <div class="Page_FAQs_template_innerloop_new">
+              {%- for custom in shop.metaobjects.faq_page_list_select.values -%}
+                {%- for custom in custom.faq_page_list_select.value -%}
+                  {%- if custom.icon.value != blank or custom.page_title.value != blank -%}
+                    <div class="Page_FAQs_template_innerloop_mainboxs_new">
+                        <a href="{{ custom.system.url }}">
+                          <div class="Page_FAQs_template_innerloop_innerboxs_new">
+                            {%- if custom.icon.value != blank -%}
+                              <div class="Page_FAQs_template_innerloop_innerboxs_icons_new">
+                                {{
+                                  custom.icon.value | 
+                                  image_url: width: img.width | 
+                                  image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                  fetchpriority: 'auto', 
+                                  class:'Icon_image_new'
+                                }}
+                              </div>
+                            {%- endif -%}
+                            {%- if custom.page_title.value != blank -%}
+                              <div class="Page_FAQs_template_innerloop_innerboxs_title_new">
+                                <h4>{{ custom.page_title.value }}</h4>
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        </a>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Page FAQs Template",
+    "class": "Page_FAQs_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "FAQs"
+      }
+    ]
+  }
+{% endschema %}

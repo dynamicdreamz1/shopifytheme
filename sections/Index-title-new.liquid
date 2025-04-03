@@ -1,0 +1,39 @@
+{%- if section.settings.main_heading_text != blank -%}
+  <div class="Index_title_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Index_title_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Index_title_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Index Title",
+    "class": "Index_title_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Title"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Title"
+      }
+    ]
+  }
+{% endschema %}

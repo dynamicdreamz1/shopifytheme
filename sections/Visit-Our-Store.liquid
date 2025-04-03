@@ -1,0 +1,485 @@
+{%- if section.settings.main_heading_text != blank and section.settings.meta_object_handle_name_text != blank -%}
+  <div class="Page_Store_google_reviews_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_Store_google_reviews_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Page_Store_google_reviews_title_new">
+            <h2 style=" text-align: center;">{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+          <div class="Visit-our-Store-section">
+            <div class="Visit-our-Store-section-innerbox">
+                  {% capture value %}{{ section.settings.meta_object_handle_name_text }}{% endcapture %}
+                    {% assign currentMetafield_text = shop.metaobjects[value] %}
+                      
+                        {%- for custom in currentMetafield_text.values -%}                            
+                        {%- for rows in custom.our_stores.value  -%}
+                             
+                                <div  class="storebox w25 {% if rows.title.value == "Delhi South Ex 2" %}order-1{% endif %}{% if rows.title.value == "Mumbai" %}order-2{% endif %}{% if rows.title.value == "Hyderabad" %}order-3{% endif %}{% if rows.title.value == "Ahmedabad" %}order-4{% endif %}{% if rows.title.value == "Bengaluru" %}order-5{% endif %}{% if rows.title.value == "Surat" %}order-6{% endif %}{% if rows.title.value == "Indore" %}order-7{% endif %}{% if rows.title.value == "Delhi Pitampura" %}order-8{% endif %} ">
+                                
+                                  {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                    {%- if rows.visit_our_store_section_image.value != blank -%}
+                                        {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                
+                                                  <video
+                                                    id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                    class="video-div"
+                                                    data-type="mp4"
+                                                    src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                    loop muted playsinline autoplay>
+                                                  </video>
+                                                
+                                              {%- else -%}
+                                                
+                                                  {{
+                                                    rows.visit_our_store_section_image.value | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '360, 540, 750', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'Hover_image_new'
+                                                  }}
+                                                
+                                              {%- endif -%}
+                                      {%- endif -%}
+                                    <div class="textbox">
+                                      {%- if rows.title.value != blank -%}
+                                            <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                       {%- endif -%}
+                                      <div class="button-box">
+                                          {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                          
+                                          {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                      </div>
+                                    </div>
+                                   {%- endif -%}
+                                   
+                                </div>
+                              
+                          {% comment %} 
+                             {%- if rows.title.value == "Mumbai" -%}
+                                <div class="storebox w25" style="order:2">
+                                
+                                  {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                    {%- if rows.visit_our_store_section_image.value != blank -%}
+                                        {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                
+                                                  <video
+                                                    id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                    class="video-div"
+                                                    data-type="mp4"
+                                                    src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                    loop muted playsinline autoplay>
+                                                  </video>
+                                                
+                                              {%- else -%}
+                                                
+                                                  {{
+                                                    rows.visit_our_store_section_image.value | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'Hover_image_new'
+                                                  }}
+                                                
+                                              {%- endif -%}
+                                      {%- endif -%}
+                                    <div class="textbox">
+                                      {%- if rows.title.value != blank -%}
+                                            <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                       {%- endif -%}
+                                      <div class="button-box">
+                                          {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                          
+                                          {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                      </div>
+                                    </div>
+                                   {%- endif -%}
+                                   
+                                </div>
+                              {%- endif -%}
+                          
+                              {%- if rows.title.value == "Hyderabad" -%}
+                                    <div class="storebox w25" style="order:3">
+                                    
+                                      {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                        {%- if rows.visit_our_store_section_image.value != blank -%}
+                                            {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                    
+                                                      <video
+                                                        id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                        class="video-div"
+                                                        data-type="mp4"
+                                                        src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                        loop muted playsinline autoplay>
+                                                      </video>
+                                                    
+                                                  {%- else -%}
+                                                    
+                                                      {{
+                                                        rows.visit_our_store_section_image.value | 
+                                                        image_url: width: img.width | 
+                                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                        fetchpriority: 'auto', 
+                                                        class:'Hover_image_new'
+                                                      }}
+                                                    
+                                                  {%- endif -%}
+                                          {%- endif -%}
+                                        <div class="textbox">
+                                          {%- if rows.title.value != blank -%}
+                                                <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                           {%- endif -%}
+                                          <div class="button-box">
+                                              {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                              
+                                              {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                          </div>
+                                        </div>
+                                       {%- endif -%}
+                                       
+                                    </div>
+                              {%- endif -%}
+                          
+                              {%- if rows.title.value == "Ahmedabad" -%}
+                                    <div class="storebox w25" style="order:4">
+                                    
+                                      {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                        {%- if rows.visit_our_store_section_image.value != blank -%}
+                                            {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                    
+                                                      <video
+                                                        id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                        class="video-div"
+                                                        data-type="mp4"
+                                                        src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                        loop muted playsinline autoplay>
+                                                      </video>
+                                                    
+                                                  {%- else -%}
+                                                    
+                                                      {{
+                                                        rows.visit_our_store_section_image.value | 
+                                                        image_url: width: img.width | 
+                                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                        fetchpriority: 'auto', 
+                                                        class:'Hover_image_new'
+                                                      }}
+                                                    
+                                                  {%- endif -%}
+                                          {%- endif -%}
+                                        <div class="textbox">
+                                          {%- if rows.title.value != blank -%}
+                                                <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                           {%- endif -%}
+                                          <div class="button-box">
+                                              {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                              
+                                              {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                          </div>
+                                        </div>
+                                       {%- endif -%}
+                                       
+                                    </div>
+                              {%- endif -%}
+                          
+                              {%- if rows.title.value == "Bengaluru" -%}
+                                    <div class="storebox w25" style="order:5">
+                                    
+                                      {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                        {%- if rows.visit_our_store_section_image.value != blank -%}
+                                            {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                    
+                                                      <video
+                                                        id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                        class="video-div"
+                                                        data-type="mp4"
+                                                        src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                        loop muted playsinline autoplay>
+                                                      </video>
+                                                    
+                                                  {%- else -%}
+                                                    
+                                                      {{
+                                                        rows.visit_our_store_section_image.value | 
+                                                        image_url: width: img.width | 
+                                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                        fetchpriority: 'auto', 
+                                                        class:'Hover_image_new'
+                                                      }}
+                                                    
+                                                  {%- endif -%}
+                                          {%- endif -%}
+                                        <div class="textbox">
+                                          {%- if rows.title.value != blank -%}
+                                                <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                           {%- endif -%}
+                                          <div class="button-box">
+                                              {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                              
+                                              {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                          </div>
+                                        </div>
+                                       {%- endif -%}
+                                       
+                                    </div>
+                              {%- endif -%}
+                          
+                              {%- if rows.title.value == "Surat" -%}
+                                    <div class="storebox w25" style="order:6">
+                                    
+                                      {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                        {%- if rows.visit_our_store_section_image.value != blank -%}
+                                            {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                    
+                                                      <video
+                                                        id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                        class="video-div"
+                                                        data-type="mp4"
+                                                        src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                        loop muted playsinline autoplay>
+                                                      </video>
+                                                    
+                                                  {%- else -%}
+                                                    
+                                                      {{
+                                                        rows.visit_our_store_section_image.value | 
+                                                        image_url: width: img.width | 
+                                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                        fetchpriority: 'auto', 
+                                                        class:'Hover_image_new'
+                                                      }}
+                                                    
+                                                  {%- endif -%}
+                                          {%- endif -%}
+                                        <div class="textbox">
+                                          {%- if rows.title.value != blank -%}
+                                                <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                           {%- endif -%}
+                                          <div class="button-box">
+                                              {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                              
+                                              {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                          </div>
+                                        </div>
+                                       {%- endif -%}
+                                       
+                                    </div>
+                              {%- endif -%}
+                          
+                              {%- if rows.title.value == "Indore" -%}
+                                    <div class="storebox w25" style="order:7">
+                                    
+                                      {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                        {%- if rows.visit_our_store_section_image.value != blank -%}
+                                            {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                    
+                                                      <video
+                                                        id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                        class="video-div"
+                                                        data-type="mp4"
+                                                        src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                        loop muted playsinline autoplay>
+                                                      </video>
+                                                    
+                                                  {%- else -%}
+                                                    
+                                                      {{
+                                                        rows.visit_our_store_section_image.value | 
+                                                        image_url: width: img.width | 
+                                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                        fetchpriority: 'auto', 
+                                                        class:'Hover_image_new'
+                                                      }}
+                                                    
+                                                  {%- endif -%}
+                                          {%- endif -%}
+                                        <div class="textbox">
+                                          {%- if rows.title.value != blank -%}
+                                                <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                           {%- endif -%}
+                                          <div class="button-box">
+                                              {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                              
+                                              {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                          </div>
+                                        </div>
+                                       {%- endif -%}
+                                       
+                                    </div>
+                              {%- endif -%}
+                          
+                              {%- if rows.title.value == "Delhi Pitampura" -%}
+                                    <div class="storebox w25" style="order:8">
+                                    
+                                      {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                        {%- if rows.visit_our_store_section_image.value != blank -%}
+                                            {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                    
+                                                      <video
+                                                        id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                        class="video-div"
+                                                        data-type="mp4"
+                                                        src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                        loop muted playsinline autoplay>
+                                                      </video>
+                                                    
+                                                  {%- else -%}
+                                                    
+                                                      {{
+                                                        rows.visit_our_store_section_image.value | 
+                                                        image_url: width: img.width | 
+                                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                        fetchpriority: 'auto', 
+                                                        class:'Hover_image_new'
+                                                      }}
+                                                    
+                                                  {%- endif -%}
+                                          {%- endif -%}
+                                        <div class="textbox">
+                                          {%- if rows.title.value != blank -%}
+                                                <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                           {%- endif -%}
+                                          <div class="button-box">
+                                              {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                              
+                                              {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                          </div>
+                                        </div>
+                                       {%- endif -%}
+                                       
+                                    </div>
+                              {%- endif -%} 
+                          {% endcomment %}
+                          
+                        {%- endfor -%}
+                         {% comment %} 
+                          {%- for rows in custom.our_stores.value limit: 2 offset: continue -%} 
+                                 <div class="storebox w25">
+                                
+                                  {%- if rows.visit_our_store_section_image.value != blank or rows.title.value != blank or rows.visit_our_store_detail.value != blank-%}
+                                    {%- if rows.visit_our_store_section_image.value != blank -%}
+                                        {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                
+                                                  <video
+                                                    id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                    class="video-div"
+                                                    data-type="mp4"
+                                                    src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                    loop muted playsinline autoplay>
+                                                  </video>
+                                                
+                                              {%- else -%}
+                                                
+                                                  {{
+                                                    rows.visit_our_store_section_image.value | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'Hover_image_new'
+                                                  }}
+                                                
+                                              {%- endif -%}
+                                      {%- endif -%}
+                                    <div class="textbox">
+                                      {%- if rows.title.value != blank -%}
+                                            <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                       {%- endif -%}
+                                      <div class="button-box">
+                                          {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                          
+                                          {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                      </div>
+                                    </div>
+                                   {%- endif -%}
+                                   
+                                </div>
+                          {%- endfor -%}
+                                <div class="swiper-container Index_custom_category_slider visit-our-Store-slider">
+                                    <div class="swiper-wrapper"> 
+                                          {%- for rows in custom.our_stores.value offset: continue -%} 
+                                              <div class="swiper-slide ">
+                                                  <div class="storebox ">                                    
+                                                    {%- if rows.visit_our_store_section_image.value != blank -%}
+                                                    {%- if rows.visit_our_store_section_image.value.sources[1].url contains '.mp4' or rows.visit_our_store_section_image.value.sources[1].url contains '.MP4' -%}
+                                                            
+                                                              <video
+                                                                id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                                class="video-div"
+                                                                data-type="mp4"
+                                                                src="{{ rows.visit_our_store_section_image.value.sources[1].url }}"
+                                                                loop muted playsinline autoplay>
+                                                              </video>
+                                                            
+                                                          {%- else -%}
+                                                            
+                                                              {{
+                                                                rows.visit_our_store_section_image.value | 
+                                                                image_url: width: img.width | 
+                                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                                fetchpriority: 'auto', 
+                                                                class:'Hover_image_new'
+                                                              }}
+                                                            
+                                                          {%- endif -%}
+                                                    {%- endif -%}
+                                                    <div class="textbox">
+                                                      {%- if rows.title.value != blank -%}
+                                                            <h2 class="">KALKI {{ rows.title.value }} </h2>
+                                                       {%- endif -%}
+                                                            <div class="button-box">
+                                                                {%- if rows.system.url != blank -%}<a href="{{ rows.system.url }}">Visit Store</a>{%- endif -%}
+                                                                
+                                                                {%- if rows.collection_page_link.value != blank -%}<a href="{{ rows.collection_page_link.value }}">View Collection</a>{%- endif -%}
+                                                            </div>
+                                                      </div>
+                                              </div>
+                                            </div>
+                                         {%- endfor -%}       
+                                    </div>                              
+                                    <div class="swiper-button-prev"></div>
+                                    <div class="swiper-button-next"></div>
+                                </div>
+                          
+                          {% endcomment %}
+
+                           {%- endfor -%}  
+               
+              </div>
+            </div>
+        
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Visit our Store new1",
+    "class": "page_store_detail_slider_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Visit our Store"
+      },
+      {
+        "type": "textarea",
+        "id": "meta_object_handle_name_text",
+        "label": "Add Meta Object Handle Name Text",
+        "info": "For EX: index_visit_our_stores Etc..."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Visit our Store new1"
+      }
+    ]
+  }
+{% endschema %}

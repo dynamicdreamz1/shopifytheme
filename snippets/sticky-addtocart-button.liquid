@@ -1,0 +1,65 @@
+{{ "sticky-addtocart-button.css" | asset_url | stylesheet_tag }}
+<div class="sticky-addtocart-button"js-pdp-sticky-addtocart-wrapper>
+    <div class="page-width">
+        <div class="wrapper">
+            <div class="main-grid">
+                <div class="image_content">
+                    {% if product.featured_image != blank %}
+                        <div class="image">
+                            <img src="{{ product.featured_image | img_url: "200x" }}" alt="{{ product.title }}">
+                        </div>
+                    {% endif %}
+                    <div class="content">
+                        <div class="text_wrap">
+                            <h2 class="title">{{  product.title }}</h2>
+                            <span class="custom_text" js-pdp-sticky-addToCart-option-label></span>
+                        </div>
+                        <div class="regular_price">
+                            {%- assign price = product.selected_or_first_available_variant.price  -%}
+                            {%- assign compate_at_price = product.selected_or_first_available_variant.compare_at_price   -%}
+                          
+                            <span class="price" js-pdp-original-price >{{ product.selected_or_first_available_variant.price | money }}</span>
+                            <span class="compare_at_price  " js-pdp-sticky-compare-at-price>{% if compate_at_price > 0 %}{{ product.selected_or_first_available_variant.compare_at_price | money }}{% endif %}</span>
+
+                            {% if compate_at_price %}
+                                {%- assign discount_price = compate_at_price | minus: price -%}
+                                {%- assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+                                
+                                <span class="discount_percentage" >
+                                    {{ discount_percent }}% Off 
+                                </span>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="atc-wishlist-wrap">
+                    <div class="atc-wishlist-counter">
+                      <div class="visitors_counter visitors_counter_mobile"></div>
+                      <div class="card_wishlist_new js-sticky-wishlist-btn"></div>
+                    </div>
+                    <div class="addtocart_button">
+                        {% form 'product', product %}
+                            <input type="hidden" value="{{ product.selected_or_first_available_variant.id }}" name="id">
+                            <input type="hidden" value="1" name="quantity">
+                            {% assign stitched = false %}
+                            {%- for option in product.options_with_values -%}
+                              {% if option.name == "Stitched" %}
+                                {% assign stitched = true %}
+                              {% endif %}
+                            {% endfor %}
+                            {% if stitched == true %}
+                              <span class="button" js-pdp-stick-addToCart-btn-stitched ><span js-sticky-atc-btn-text>add to cart</span> <span class="sticky-atc-dot"></span> <span js-pdp-original-price> {{ product.selected_or_first_available_variant.price | money }} </span></span>
+                              <span class="button" js-pdp-stick-addToCart-btn ><span js-sticky-atc-btn-text>add to cart</span> <span class="sticky-atc-dot"></span> <span js-pdp-original-price> {{ product.selected_or_first_available_variant.price | money }} </span></span> 
+                            {% else %}
+                              <span class="button" js-pdp-stick-addToCart-btn ><span js-sticky-atc-btn-text>add to cart</span> <span class="sticky-atc-dot"></span> <span js-pdp-original-price> {{ product.selected_or_first_available_variant.price | money }} </span></span>
+                            {% endif %}
+                        {% endform %}
+                    </div>
+                    <p>Free Shipping within India* • 5 Days Easy Returns*</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ 'sticky-atc.js' | asset_url }}" defer="defer"></script>

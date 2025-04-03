@@ -1,0 +1,28 @@
+{%  assign learn_more_text_ = learn_more_text %}
+{{ 'upsell-media-popup.css' | asset_url | stylesheet_tag }}
+{%- assign productFall = product.metafields.custom.fall_and_pico_option.value -%}
+{% if product.metafields.custom.fall_and_pico_option != blank and productFall != null %}
+  <div class="Option_drop" js-upsell-product js-khadi-saree-upsell>
+    <div class="Unstitched_with_text">
+      <h3 class="Unstitched_title">Fall & Pico with the Saree</h3>
+      {%  if tooltip_text != blank %}
+        <div class="tooltip">
+          {% render 'tooltip', tooltip_text: tooltip_text %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="option_text flex" js-product-fall-wrap>
+      {% render 'upsell-product-input', 
+      product_: product.metafields.custom.fall_and_pico_option.value, 
+      has_image: false,
+      learn_more_text: learn_more_text, 
+      stitch_return_note: 'No returns/exchange on Fall and Pico products' ,
+      snippet_name: "saree"
+      %}
+    </div>
+  </div>
+{% endif %}
+
+{% if learn_more_text_ %}
+  <script src="{{ 'upsell-text-popup.js' | asset_url }}" defer="defer"></script>
+{% endif %}

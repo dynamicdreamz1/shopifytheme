@@ -14,7 +14,7 @@
 {{ 'component-pagination.css' | asset_url | stylesheet_tag }}
 
 {%- if paginate.parts.size > 0 -%}
-  <div class="pagination-wrapper" data-page="{{ paginate.current_page }}">
+  <div class="pagination-wrapper">
     <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
       <ul class="pagination__list list-unstyled" role="list">
         {%- if paginate.previous -%}
@@ -23,10 +23,11 @@
               href="{{ paginate.previous.url }}{{ anchor }}"
               class="pagination__item pagination__item--next pagination__item-arrow link motion-reduce"
               aria-label="{{ 'general.pagination.previous' | t }}"
+              js-pagination-item
             >
-              <span class="svg-wrapper">
-                {{- 'icon-caret.svg' | inline_asset_content -}}
-              </span>
+              <svg width="12" height="12" viewBox="0 0 12 12" class="icon icon-caret" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 10.5L9.5 6L4.5 1.5" stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
           </li>
         {%- endif -%}
@@ -38,6 +39,7 @@
                 href="{{ part.url }}{{ anchor }}"
                 class="pagination__item link"
                 aria-label="{{ 'general.pagination.page' | t: number: part.title }}"
+                js-pagination-item
               >
                 {{- part.title -}}
               </a>
@@ -65,10 +67,11 @@
               href="{{ paginate.next.url }}{{ anchor }}"
               class="pagination__item pagination__item--prev pagination__item-arrow link motion-reduce"
               aria-label="{{ 'general.pagination.next' | t }}"
+              js-pagination-item
             >
-              <span class="svg-wrapper">
-                {{- 'icon-caret.svg' | inline_asset_content -}}
-              </span>
+              <svg width="12" height="12" viewBox="0 0 12 12" class="icon icon-caret" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 10.5L9.5 6L4.5 1.5" stroke="black" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </a>
           </li>
         {%- endif -%}

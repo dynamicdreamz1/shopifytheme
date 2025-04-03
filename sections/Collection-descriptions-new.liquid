@@ -1,0 +1,35 @@
+{%- if collection.description != blank -%}
+  <div class="Collection_descriptions_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      {% if template.suffix == 'mens-detail-new' %}
+        <h1 class="hide">{{ collection.title }}</h1>
+      {% endif %}
+      <div class="Collection_descriptions_inner_new">
+        <div class="Collection_descriptions_infos_new rte">
+          {{ collection.description }}
+        </div>
+        <div class="read_more_new">Read More</div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Collection Descriptions",
+    "class": "Collection_descriptions_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Descriptions"
+      }
+    ]
+  }
+{% endschema %}

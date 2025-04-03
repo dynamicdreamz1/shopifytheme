@@ -1,0 +1,76 @@
+{% assign stitct_note = stitch_return_note %}
+{% if product_ != blank %}
+  <upsell-product class="upsell-product-wrapper"
+    {% if snippet_name != blank  %} data-upsell-petticoat-container="{{ snippet_name }}" {% endif %} data-upsell-product-price="{{ product_.price | money_without_currency }}">
+    {% if has_image %}
+        <div class="Petticoat_wrap_text-image flex">
+          <div class="image">
+            <img src="{{ product_.featured_image | img_url: "master" }}" alt="{{ product_.title }}">
+          </div>
+          <h2 class="title">{{  product_.title}}</h2>
+        </div>
+        <div class="checkbox_with_text flex">
+          <input type="checkbox" id="{{ product_.selected_or_first_available_variant.id }}" data-product-id="{{ product_.selected_or_first_available_variant.id }}" class="checkbox">
+          <label for="{{ product_.selected_or_first_available_variant.id }}" class="text">Add {{ product_.title }} +<span class="upsell-product-price"> {{ product_.price | money_without_trailing_zeros }}</span></label>
+        </div>
+    {% else %}
+        <input type="checkbox" class="checkbox" value="pre_drape" data-product-id="{{  product_.selected_or_first_available_variant.id }}" name="{{ product_.title }}" id="{{ product_.handle }}">
+        <label for="{{ product_.handle }}" class="checkbox_text">
+            <span class="upsell-product-title">{{ product_.title }} </span>
+            + 
+            <span class="upsell-product-price">
+                {{  product_.price | money_without_trailing_zeros }}
+            </span>
+            
+        </label>
+        
+        {% if learn_more_media != blank %}
+          <upsell-media-popup class="upsell-popup-container">
+            <span class="learn-more-btn" data-learn-more-data="{{  learn_more_media.sources[1].url }}" js-media-popup-btn data-media-type="video" data-media-url="{{  learn_more_media.sources[1].url }}">Learn More</span>
+            {% comment %} {%  render 'upsell-learn-more-popup', media_type: 'video' %} {% endcomment %}
+            {% render 'upsell-media-popup' %}
+          </upsell-media-popup>
+        {% endif %}
+
+        {% if learn_more_text != blank %}
+          <upsell-text-popup class="upsell-popup-container">
+            <span class="learn-more-btn" js-text-popup-btn>Learn More</span>
+            {% render 'upsell-text-popup', learn_more_text: learn_more_text %}
+          </upsell-text-popup>
+        {% endif %}
+
+        {% if stitct_note != blank %}
+          {% render 'stitch-return-note' , stitch_return_note: stitch_return_note %}
+        {% endif %}
+    {% endif %}
+    {% liquid assign product_attributes_group = product.metafields.custom.attributes_select_pre_drape_attributes_group.value %}
+    {% if product_attributes_group %}
+      {% assign required_option = false %}
+      <div class="{% if stitche_selected_option == 'Unstitched' or confSizeOption_selected_option == 'Made to Order' %}hide{% endif %} options-dropdown-list options-dropdown-list-pre-drap hide" {{ confSizeOption_attribute }} {{ stitche_attribute }} {{ templateName }} {% if templateName=='khadi-product-template' %}
+        js-khadi-options-list-container {% endif %}>
+        <div class="options-wrapper">
+          <div class="options">
+            {% for attriutes_ in product_attributes_group.select_attributes.value %}
+              {% assign required = attriutes_.required %}
+              {% assign required_option = true %}
+              <div class="option">
+                <div class="option-title">
+                  <span>{{ attriutes_.title }}</span>
+                  {% if required %}<span class="required-sterik">*</span>{% endif %}
+                </div>
+                <div class="option-drop cs-option-drop" js-option-drop-1>
+                  <select name="items[0][properties][{{attriutes_.title}}]" js-custom-option-select {% if
+                    required %} js-required-property-field {% unless templateName=='bridal-template' %} required {% endunless %}
+                    js-pdp-bridal-size-option-required js-pdp-bridal-size-option-required {% endif %}
+                    data-option-name="{{ attriutes_.title }}">
+                    {% render 'custom-product-options', options: attriutes_.values, layout: "dropdown" %}
+                  </select>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </upsell-product>
+{% endif %}

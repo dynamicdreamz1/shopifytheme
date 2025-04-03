@@ -1,0 +1,132 @@
+{%- if section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank or section.settings.main_author_name_text != blank or section.settings.main_author_designation_text != blank or section.settings.main_author_detail_text != blank -%}
+  <div class="Page_offline_testimonial_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_offline_testimonial_inner_new" style="background: {{ section.settings.inner_background_color }};">
+        <div class="Page_offline_testimonial_leftrightboth_new">
+          {%- if section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank or section.settings.main_author_name_text != blank or section.settings.main_author_designation_text != blank -%}
+            <div class="Page_offline_testimonial_mainleft_new">
+              <div class="Page_offline_testimonial_innerleft_new">
+                {%- if section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank -%}
+                  <div class="Page_offline_testimonial_innerleft_1_new">
+                    <div class="Page_offline_testimonial_innerleft_1_videoimageboth_new">
+                      {%- if section.settings.main_mp4_video != blank -%}
+                        <div class="Page_offline_testimonial_innerleft_1_videoimage_new">
+                          {{ section.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                        </div>
+                      {% else %}  
+                        {%- if section.settings.main_desktop_image != blank and section.settings.main_mobile_image != blank -%}
+                          <div class="Page_offline_testimonial_innerleft_1_videoimage_new">
+                            {%- if section.settings.main_desktop_image != blank -%}
+                              {{
+                                section.settings.main_desktop_image | 
+                                image_url: width: img.width | 
+                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                fetchpriority: 'auto', 
+                                class:'desktop_image_new'
+                              }}
+                            {%- endif -%}
+                            {%- if section.settings.main_mobile_image != blank -%}
+                              {{
+                                section.settings.main_mobile_image | 
+                                image_url: width: img.width | 
+                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                fetchpriority: 'auto', 
+                                class:'mobile_image_new'
+                              }}
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.main_author_name_text != blank or section.settings.main_author_designation_text != blank -%}
+                  <div class="Page_offline_testimonial_innerleft_2_new">
+                    <div class="Page_offline_testimonial_innerleft_2_titletextsboth_new">
+                      {%- if section.settings.main_author_name_text != blank -%}
+                        <div class="Page_offline_testimonial_innerleft_2_title_new">
+                          <h4>{{ section.settings.main_author_name_text }}</h4>
+                        </div>  
+                      {%- endif -%}
+                      {%- if section.settings.main_author_designation_text != blank -%}
+                        <div class="Page_offline_testimonial_innerleft_2_texts_new">
+                          {{ section.settings.main_author_designation_text }}
+                        </div>  
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.main_author_detail_text != blank -%}
+            <div class="Page_offline_testimonial_mainright_new">
+              <div class="Page_offline_testimonial_innerright_new">
+                {{ section.settings.main_author_detail_text }}
+              </div>  
+            </div>
+          {%- endif -%}
+        </div>  
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Offline Testimonial New",
+    "class": "Page_offline_testimonial_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "inner_background_color",
+        "label": "Add Inner Background Color",
+        "default": "#F3EFEC"
+      },
+      {
+        "type": "video",
+        "id": "main_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_image",
+        "label": "Add Main Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_image",
+        "label": "Add Main Mobile Image"
+      },
+      {
+        "type": "text",
+        "id": "main_author_name_text",
+        "label": "Add Main Author Name Text",
+        "default": "Rohit Singh Rajput"
+      },
+      {
+        "type": "text",
+        "id": "main_author_designation_text",
+        "label": "Add Main Author Designation Text",
+        "default": "Kalki Expert"
+      },
+      {
+        "type": "richtext",
+        "id": "main_author_detail_text",
+        "label": "Add Main Author Detail Text",
+        "default": "<p>“Give the bride of today the most experimental Indian cuts & flare and she'll totally own it. KALKI Noor is a perfect blend of femininity and elegance.”</p>"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Offline Testimonial New"
+      }
+    ]
+  }
+{% endschema %}

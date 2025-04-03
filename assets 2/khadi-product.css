@@ -1,0 +1,41 @@
+.template--khadi {
+    overflow-x: hidden;
+}
+.khadi-product-form fieldset {
+    border: unset;
+    margin-bottom: 25px;
+}
+/*fieldset.o-Size label:has(.label-unavailable) {
+    display: none;
+}*/
+.khadi-product-form .options-header {
+    display: flex;
+    justify-content: space-between;
+}
+.template--khadi .product-custom .product_details .title {
+    font-size: 18px;
+}
+.template--khadi .product-custom .price .price-item {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    margin-right: 9px;
+}
+.template--khadi .product-custom .price--on-sale .price-item--regular {
+    font-size: 16px !important;
+}
+.template--khadi .product-custom .Inclusive {
+    font-size: 14px;
+}
+.template--khadi .product-custom .price--on-sale .price__sale {
+    margin: 0 0 9px;
+}
+.template--khadi .sizeguide .link--text {
+    color: #0F3D99;
+}
+.template--khadi .product-form__input {
+    margin: 0 0 15px 0;
+}
+.template--khadi .option-drop.cs-option-drop  {
+    margin-bottom: 11px;
+}

@@ -1,0 +1,134 @@
+{%- if collection.metafields.custom.collection_faqs_accordions != blank or collection.metafields.custom.collection_meta_selected_price_list != blank -%}
+
+  <div class="Collection_object_faqs_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Collection_object_faqs_inner_new">
+        <div class="Collection_object_faqs_detail_new">
+          {%- if collection.metafields.custom.collection_faqs_accordions != blank -%}
+            <div class="Collection_object_faqs_detail_mainleft_new {% if collection.metafields.custom.collection_meta_selected_price_list == blank %} Collection_object_faqs_detail_100_new {% endif %}">
+              <div class="Collection_object_faqs_detail_innerleft_new">
+                {%- if collection.metafields.custom.collection_faqs_accordions != blank -%}
+                  {% assign totalCount = 0 %}
+                  {%- assign features = collection.metafields.custom.collection_faqs_accordions.value -%}
+                  
+                  {% if features.title != blank %}
+                    <div class="Common_title_new Collection_object_faqs_detail_innerleft_title_new">
+                      <h2>{{ features.title }}</h2>
+                    </div>
+                  {% elsif section.settings.main_left_heading_text != blank %}
+                    <div class="Common_title_new Collection_object_faqs_detail_innerleft_title_new">
+                      <h2>{{ section.settings.main_left_heading_text }}</h2>
+                    </div>
+                  {% endif %}
+                  
+                  <div class="Collection_object_faqs_detail_innerleft_mainloop_new">
+                    <div class="Collection_object_faqs_detail_innerleft_innerloop_new Common_faqs_accordion_new">
+                      <div class="accordion">
+                        <ul class="list-unstyled">
+                          {%- for i in (1..15) -%}
+                            {%- assign Question = 'question_' | append: forloop.index -%}
+                            {%- assign Answer = 'answer_' | append: forloop.index -%}
+                            {%- if features[Question].value != blank and features[Answer].value != blank -%}
+                              {% assign totalCount = totalCount | plus: 1 %}
+                              <li>
+                                {%- if features[Question].value != blank -%}
+                                  <div class="question">
+                                    <h2>{{ features[Question].value }}</h2>
+                                  </div>
+                                {%- endif -%}
+                                {%- if features[Answer].value != blank -%}
+                                  <div class="answer">
+                                    {{ features[Answer] | metafield_tag }}
+                                  </div>
+                                {%- endif -%}
+                              </li>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if collection.metafields.custom.collection_meta_selected_price_list != blank -%}
+            <div class="Collection_object_faqs_detail_mainright_new {% if collection.metafields.custom.collection_faqs_accordions == blank %} Collection_object_faqs_detail_100_new {% endif %}">
+              <div class="Collection_object_faqs_detail_innerright_new">
+                {%- if collection.title != blank and section.settings.main_right_heading_text != blank -%}
+                  <div class="Common_title_new Collection_object_faqs_detail_innerright_title_new">
+                    <h2>Latest {{ collection.metafields.custom.collection_meta_selected_price_list.value.title }} {{ section.settings.main_right_heading_text }}</h2>
+                  </div>
+                {%- endif -%}
+                {%- if collection.metafields.custom.collection_meta_selected_price_list != blank -%}
+                  <div class="Collection_object_faqs_detail_innerright_mainloop_new">
+                    <div class="Collection_object_faqs_detail_innerright_innerloop_new">
+                      <div class="Collection_object_faqs_detail_innerright_innerloop_titleboth_new">
+                        <div class="Collection_object_faqs_detail_innerright_innerloop_title_1_new">
+                          <h3>{{ collection.metafields.custom.collection_meta_selected_price_list.value.title }} List</h3>
+                        </div>
+                        <div class="Collection_object_faqs_detail_innerright_innerloop_title_2_new">
+                          <h3>Price</h3>
+                        </div>
+                      </div>
+                      <div class="Collection_object_faqs_detail_innerright_innerloop_allloop_new">
+                        {% assign collection_selected = collection.metafields.custom.collection_meta_selected_price_list.value %}
+                        {% paginate collection_selected.products by 10 %}
+                          {%- for product_selected in collection_selected.products -%}
+                            <div class="Collection_object_faqs_detail_innerright_innerloop_allloop_boxs_new">
+                              <div class="Collection_object_faqs_detail_innerright_innerloop_allloop_boxs_title_new">
+                                <a href="{{ product_selected.url }}">{{ product_selected.title }}</a>
+                              </div>
+                              <div class="Collection_object_faqs_detail_innerright_innerloop_allloop_boxs_price_new">
+                                {{ product_selected.price | money }}
+                              </div>
+                            </div>
+                          {%- endfor -%}  
+                        {% endpaginate %}
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+                <div class="Collection_object_faqs_detail_innerright_updatedate_new">
+                  The data was last updated on {{ 'now' | date: "%d/%m/%Y" }}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>  
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Collection Object FAQs",
+    "class": "Collection_object_faqs_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_left_heading_text",
+        "label": "Add Main Left Heading Text",
+        "default": "FAQ’s"
+      },
+      {
+        "type": "text",
+        "id": "main_right_heading_text",
+        "label": "Add Main Right Heading Text",
+        "default": "Collection with Price"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Object FAQs"
+      }
+    ]
+  }
+{% endschema %}

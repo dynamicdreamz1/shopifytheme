@@ -43,6 +43,8 @@
   if media.media_type == 'image'
     assign image_class = 'image-magnify-' | append: section.settings.image_zoom
   endif
+    assign image_class = image_class | append: ' image-magnify-hover-new'
+   
 -%}
 
 {%- capture sizes -%}
@@ -58,26 +60,22 @@
     data-modal="#ProductModal-{{ modal_id }}"
   >
     <span
-      class="product__media-icon motion-reduce quick-add-hidden{% if media.media_type == 'image' %} product__media-icon--{{ section.settings.image_zoom }}{% endif %}"
+      class="hidden product__media-icon motion-reduce quick-add-hidden{% if media.media_type == 'image' %} product__media-icon--{{ section.settings.image_zoom }}{% endif %}"
       aria-hidden="true"
     >
-      {% case media.media_type %}
-        {% when 'video', 'external_video' %}
-          <span class="svg-wrapper">
-            {{- 'icon-play.svg' | inline_asset_content -}}
-          </span>
-        {% when 'model' %}
-          <span class="svg-wrapper">
-            {{- 'icon-3d-model.svg' | inline_asset_content -}}
-          </span>
-        {% else %}
-          <span class="svg-wrapper">
-            {{- 'icon-zoom.svg' | inline_asset_content -}}
-          </span>
-      {% endcase %}
+      {%- liquid
+        case media.media_type
+          when 'video', 'external_video'
+            render 'icon-play'
+          when 'model'
+            render 'icon-3d-model'
+          else
+            render 'icon-zoom'
+        endcase
+      -%}
     </span>
     {%- render 'loading-spinner' -%}
-    <div class="product__media media media--transparent">
+    <div class="product__media media media--transparent product__media_modal_toggle" data-media-id="{{ media.id }}">
       {{
         media.preview_image
         | image_url: width: 1946
@@ -88,7 +86,8 @@
           widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
       }}
     </div>
-    <button
+    
+    <!-- <button
       class="product__media-toggle quick-add-hidden product__media-zoom-{{ section.settings.image_zoom }}"
       type="button"
       aria-haspopup="dialog"
@@ -97,7 +96,8 @@
       <span class="visually-hidden">
         {{ 'products.product.media.open_media' | t: index: position }}
       </span>
-    </button>
+    </button> -->
+    
   </modal-opener>
 
   {%- if media.media_type != 'image' -%}
@@ -110,14 +110,10 @@
       <span class="deferred-media__poster-button motion-reduce">
         {%- if media.media_type == 'model' -%}
           <span class="visually-hidden">{{ 'products.product.media.play_model' | t }}</span>
-          <span class="svg-wrapper">
-            {{- 'icon-3d-model.svg' | inline_asset_content -}}
-          </span>
+          {%- render 'icon-3d-model' -%}
         {%- else -%}
           <span class="visually-hidden">{{ 'products.product.media.play_video' | t }}</span>
-          <span class="svg-wrapper">
-            {{- 'icon-play.svg' | inline_asset_content -}}
-          </span>
+          {%- render 'icon-play' -%}
         {%- endif -%}
       </span>
       {{
@@ -159,9 +155,7 @@
           data-shopify-title="{{ product.title | escape }}"
           data-shopify-xr-hidden
         >
-          <span class="svg-wrapper">
-            {{- 'icon-3d-model.svg' | inline_asset_content -}}
-          </span>
+          {% render 'icon-3d-model' %}
           {{ 'products.product.xr_button' | t }}
         </button>
       {%- endif -%}

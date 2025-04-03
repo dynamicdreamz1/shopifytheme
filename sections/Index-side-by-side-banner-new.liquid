@@ -1,0 +1,130 @@
+{%- if section.settings.main_heading_text != blank or section.blocks.size > 0 -%}
+  <div class="Index_side_by_side_banner_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Index_side_by_side_banner_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Index_side_by_side_banner_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Index_side_by_side_banner_mainloop_new">
+            <div class="Index_side_by_side_banner_innerloop_new">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.main_desktop_mp4_video != blank or block.settings.main_mobile_mp4_video != blank or block.settings.main_desktop_full_image != blank or block.settings.main_mobile_full_image != blank -%}
+                  <div class="Index_side_by_side_banner_innerloop_mainboxs_new">
+                    <div class="Index_side_by_side_banner_innerloop_innerboxs_new">
+                      {%- if block.settings.main_banner_redirect_link != blank -%}
+                        <a href="{{ block.settings.main_banner_redirect_link }}">
+                      {%- endif -%}
+                          <div class="Index_side_by_side_banner_innerloop_innerboxs_videoimageboth_new">
+                            {%- if block.settings.main_desktop_mp4_video != blank and block.settings.main_mobile_mp4_video != blank -%}
+                              <div class="Index_side_by_side_banner_innerloop_innerboxs_videoimage_new">
+                                {%- if block.settings.main_desktop_mp4_video != blank -%}
+                                  {{ block.settings.main_desktop_mp4_video | video_tag: controls: false, autoplay: true, loop: true, class: 'desktop_image_new' }}
+                                {%- endif -%}
+                                {%- if block.settings.main_mobile_mp4_video != blank -%}
+                                  {{ block.settings.main_mobile_mp4_video | video_tag: controls: false, autoplay: true, loop: true, class: 'mobile_image_new' }}
+                                {%- endif -%}
+                              </div>
+                            {% else %}  
+                              {%- if block.settings.main_desktop_full_image != blank and block.settings.main_mobile_full_image != blank -%}
+                                <div class="Index_side_by_side_banner_innerloop_innerboxs_videoimage_new">
+                                  <picture>
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 170, quality: 80 }}" media="(max-width: 380px)" loading="lazy" />
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 230, quality: 80 }}" media="(max-width: 500px)" loading="lazy" />
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 355, quality: 80 }}" media="(max-width: 749px)" loading="lazy" />
+                                    <source srcset="{{ block.settings.main_desktop_full_image | image_url: width: 1438, quality: 80 }}" media="(min-width: 750px)" loading="lazy" />
+                                    <img src="{{ block.settings.main_desktop_full_image | image_url: width: 710, quality: 80 }}" alt="{{ block.settings.alt_text }}" loading="lazy" width="{{ block.settings.main_desktop_full_image.width }}" height="{{ block.settings.main_desktop_full_image.height }}" />
+                                  </picture>
+                                </div>
+                              {%- endif -%}
+                            {%- endif -%}
+                          </div>
+                      {%- if block.settings.main_banner_redirect_link != blank -%}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Index Side By Side Banner",
+    "class": "Index_side_by_side_banner_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Editor's Picks"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "video",
+            "id": "main_desktop_mp4_video",
+            "label": "Add Main Desktop MP4 Video"
+          },
+          {
+            "type": "video",
+            "id": "main_mobile_mp4_video",
+            "label": "Add Main Mobile MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_full_image",
+            "label": "Add Main Desktop Full Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_full_image",
+            "label": "Add Main Mobile Full Image"
+          },
+          {
+            "type": "text",
+            "id": "alt_text",
+            "label": "Add alt text"
+          },
+          {
+            "type": "url",
+            "id": "main_banner_redirect_link",
+            "label": "Add Main Banner Redirect Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Side By Side Banner",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

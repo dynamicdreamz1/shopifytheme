@@ -1,0 +1,82 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Index_information_lists_main_new">
+    <div class="page-width">
+      <div class="Index_information_lists_inner_new Index_information_lists_main_new_{{ section.id }}"  style="{% if section.settings.main_desktop_full_image != blank %}background: url({{ section.settings.main_desktop_full_image | img_url: 'master' }}) no-repeat center center; background-size: cover;{% else %}background: {{ section.settings.main_background_color }};{% endif %}">
+        {%- if section.settings.main_mobile_full_image != blank -%}
+          <style>
+            @media(min-width:0px) and (max-width:749px){
+              .Index_information_lists_main_new_{{ section.id }}{
+                background: url({{ section.settings.main_mobile_full_image | img_url: 'master' }}) no-repeat center center !important;
+                background-size: cover !important;
+              }
+            }
+          </style>
+        {%- endif -%}
+        <div class="Index_information_lists_allloop_new">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.title != blank -%}
+              <div class="Index_information_lists_allloop_mainboxs_new">
+                <div class="Index_information_lists_allloop_innerboxs_new">
+                  {{ block.settings.title }}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Index Information Lists",
+    "class": "Index_information_lists_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#EFEFEF"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Information Lists",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

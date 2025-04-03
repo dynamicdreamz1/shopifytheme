@@ -1,0 +1,49 @@
+<script>
+    let isElementsWithAccountClickable = true;
+    function getCustomerId() {
+      {% if customer %}
+      return {{ customer.id | json }};
+      {% else %}
+      return null
+      {% endif %}
+    }
+    
+    function getThemeId() {
+      {% if theme %}
+      return {{ theme.id | json }};
+      {% else %}
+      return null
+      {% endif %}
+    }
+    window.merchantInfo  = {      
+      ...window.merchantInfo,
+            mid: "19g6im7ybsfly",
+            environment: "production",
+            type: "merchantInfo"
+      } 
+    document.addEventListener('DOMContentLoaded', function() {
+      handleDOMUpdate();
+    });
+    
+    window.addEventListener('update-dom', function() {
+      handleDOMUpdate();
+    });
+  </script>
+
+  <script src="https://pdp.gokwik.co/kwikpass/kwikpass-core-functions-min.js" defer></script>
+  <script defer src="https://pdp.gokwik.co/kwikpass/plugin/build/kp-merchant-v2.js"></script>
+  <script defer src="https://pdp.gokwik.co/kwikpass/plugin/build/kp-shopify-app-sdk.js"></script>
+  <style>
+.customer-popup.is-open {
+    opacity: 0!important;
+    visibility: hidden!important;
+    display: none!important;
+}
+.kp-carttxtlink{
+    color: #000;
+    border-color: #000;
+    border-bottom: 1px solid;
+    cursor: pointer;
+  }
+
+  </style>

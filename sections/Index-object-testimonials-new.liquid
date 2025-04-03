@@ -1,0 +1,124 @@
+{%- if section.settings.main_heading_text != blank and section.settings.meta_object_handle_name_text != blank -%}
+  <div class="Index_custom_testimonials_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      {%- if section.settings.main_heading_text != blank -%}
+        <div class="Common_title_new Index_custom_testimonials_title_new">
+          <h4 class="hometestimonials">{{ section.settings.main_heading_text }}</h4>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.meta_object_handle_name_text != blank -%}
+        <div class="Index_custom_testimonials_inner_new">
+          <div class="Index_custom_testimonials_allloop_new">
+            <div class="swiper-container Index_custom_testimonials_slider">
+              <div class="swiper-wrapper">
+                {% capture value %}{{ section.settings.meta_object_handle_name_text }}{% endcapture %}
+                {% assign currentMetafield_text = shop.metaobjects[value] %}
+                {%- for custom in currentMetafield_text.values -%}
+                  {%- for rows in custom.customer_stories.value -%}
+                    {%- if rows.image_or_video.value != blank or rows.details.value != blank or rows.name.value != blank or rows.country_name.value != blank -%}
+                      <div class="swiper-slide Index_custom_testimonials_allloop_mainboxs_new">
+                        <div class="Index_custom_testimonials_allloop_innerboxs_new">
+                          {%- if rows.image_or_video.value != blank -%}
+                            <div class="Index_custom_testimonials_allloop_innerboxs_mainleft_new">
+                              <div class="Index_custom_testimonials_allloop_innerboxs_innerleft_new">
+                                <div class="Index_custom_testimonials_allloop_innerboxs_innerleft_videoimageboth_new">
+                                  {%- if rows.image_or_video.value.sources[1].url contains '.mp4' or rows.image_or_video.value.sources[1].url contains '.MP4' -%}
+                                    <div class="Index_custom_testimonials_allloop_innerboxs_innerleft_videoimage_new">
+                                      <video
+                                        id="Mp4Video-{{ forloop.index0 }}-inner"
+                                        class="video-div"
+                                        data-type="mp4"
+                                        src="{{ rows.image_or_video.value.sources[1].url }}"
+                                        loop muted playsinline autoplay>
+                                      </video>
+                                    </div>
+                                  {% else %}  
+                                    <div class="Index_custom_testimonials_allloop_innerboxs_innerleft_videoimage_new">
+                                      {{
+                                        rows.image_or_video.value | 
+                                        image_url: width: img.width | 
+                                        image_tag: widths: '180, 225, 301', 
+                                        fetchpriority: 'auto', 
+                                        class:'',
+                                        alt:rows.name.value
+                                      }}
+                                    </div>
+                                  {%- endif -%}
+                                </div>
+                                {%- if rows.view_product.value != blank -%}
+                                  <div class="Index_custom_testimonials_allloop_innerboxs_button_new">
+                                    <a href="{{ rows.view_product.value.url }}" class="button button_white">VIEW PRODUCT</a>
+                                  </div>
+                                {%- endif -%}
+                              </div>
+                            </div>
+                          {%- endif -%}
+                          {%- if rows.details.value != blank or rows.name.value != blank or rows.country_name.value != blank -%}
+                            <div class="Index_custom_testimonials_allloop_innerboxs_mainright_new">
+                              <div class="Index_custom_testimonials_allloop_innerboxs_innerright_new">
+                                {%- if rows.details.value != blank -%}
+                                  <div class="Index_custom_testimonials_allloop_innerboxs_innerright_allinfo_new">
+                                    {{ rows.details | metafield_tag }}
+                                  </div>
+                                {%- endif -%}
+                                {%- if rows.name.value != blank -%}
+                                  <div class="Index_custom_testimonials_allloop_innerboxs_innerright_authors_new">
+                                    {{ rows.name.value }}
+                                  </div>
+                                {%- endif -%}
+                                {%- if rows.country_name.value != blank -%}
+                                  <div class="Index_custom_testimonials_allloop_innerboxs_innerright_country_name_new">
+                                    {{ rows.country_name.value }}
+                                  </div>
+                                {%- endif -%}
+                              </div>
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endfor -%}
+              </div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Index Object Testimonials",
+    "class": "Index_custom_testimonials_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Customer Stories"
+      },
+      {
+        "type": "textarea",
+        "id": "meta_object_handle_name_text",
+        "label": "Add Meta Object Handle Name Text",
+        "info": "For EX: index_customer_stories Etc..."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Object Testimonials"
+      }
+    ]
+  }
+{% endschema %}

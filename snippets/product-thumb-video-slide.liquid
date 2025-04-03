@@ -1,0 +1,33 @@
+ <li
+              id="Slide-Thumbnails-{{ section_id }}-{{ forloop_index }}"
+              class="thumbnail-list-video-slide thumbnail-list__item slider__slide{% if section.settings.hide_variants and variant_images contains media.src %} thumbnail-list_item--variant{% endif %}"
+              data-target="{{ section_id }}-video_1"
+              data-media-position="{{ media_index }}"
+            >
+             
+                <span class="thumbnail__badge" aria-hidden="true">
+                  {%- render 'icon-play' -%}
+                </span>
+             
+              {%- capture thumbnail_id -%}
+                Thumbnail-{{ section_id }}-{{ forloop_index }}
+              {%- endcapture -%}
+              <button
+                class="thumbnail global-media-settings global-media-settings--no-shadow"
+                aria-label="{{ 'products.product.media.load_video' | t: index: media_index }}"
+                aria-controls="GalleryViewer-{{ section_id }}"
+                aria-describedby="{{ thumbnail_id }}"
+              >
+                {{
+                  media.preview_image
+                  | image_url: width: 416
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: sizes,
+                    widths: '54, 74, 104, 162, 208, 324, 416',
+                    id: thumbnail_id,
+                    alt: media.alt
+                  | escape
+                }}
+              </button>
+            </li>

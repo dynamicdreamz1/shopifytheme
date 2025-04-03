@@ -1,0 +1,116 @@
+.customer-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 11;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+    z-index: 99999;
+}
+.customer-popup.is-open { 
+    opacity: 1;
+    visibility: visible;
+}
+.customer-popup .Customer_register_template_inner_new {
+    max-width: 900px;
+    margin: 0 auto;
+    height: 85%;
+    width: 100%;
+    padding-inline: 30px;
+    z-index: 11;
+}
+.customer-popup #sign-up {
+    display: block;
+}
+.customer-popup #login {
+    display: none;
+}
+.customer-popup .sign-up-btn {
+    cursor: pointer;
+}
+.customer-popup .Customer_register_template_innerright_new {
+    width: 100%;
+}
+.customer-popup .Customer_register_template_mainright_new {
+    min-height: unset;
+    height: 100%;
+    position: relative;
+    background-color: #fff;
+    padding-block: 40px;
+    overflow: auto;
+    align-items: flex-start;
+}
+.customer-popup .Customer_register_template_mainright_new > div {
+    margin: auto !important;
+}
+.customer-popup .popup-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  z-index:0;
+}
+.customer-popup .Customer_register_template_innerright_mainform_new {
+    padding-top: 0;
+}
+.customer-popup .popup-inner {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+.customer-popup .Customer_login_template_innerright_titleinfos_infos_new {
+    margin-bottom: 20px;
+}
+.customer-popup .close-btn {
+    max-width: 18px;
+    height: 18px;
+    display: flex;
+    width: 100%;
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    cursor: pointer;
+    z-index: 1;
+}
+.customer-popup .close-btn svg {
+    height: 100%;
+    width: 100%;
+}
+/* .customer-popup #login {
+    display: block;
+} */
+.Customer_register_template_mainright_new .info-message {
+    font-size: 12px;
+    margin: 10px 0 0;
+    line-height: 1.4;
+}
+
+@media screen and (max-width: 767px) {
+    .customer-popup .Customer_register_template_inner_new {
+        padding-inline: 20px;
+    }
+    .customer-popup .popup-inner {
+        overflow: auto;
+        flex-wrap: wrap;
+    }
+    .customer-popup .Customer_register_template_mainright_new {
+        height: unset;
+        margin: 0;
+    }
+    .customer-popup .close-btn {
+        max-width: 14px;
+        height: 14px;
+        top: 14px;
+        right: 14px;
+    }
+}

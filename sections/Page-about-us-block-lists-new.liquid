@@ -1,0 +1,140 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Page_about_us_block_lists_main_new {{ section.settings.customClass }}" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_about_us_block_lists_inner_new">
+        <div class="Page_about_us_block_lists_loops_new">
+          {%- if section.blocks.size > 0 -%}
+            <div class="Page_about_us_block_lists_mainleftright_new">
+              <div class="Page_about_us_block_lists_innerleftright_new">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'left_contact_details' -%}
+                    {%- if block.settings.main_heading_text != blank and block.settings.main_information_text != blank -%}
+                      <div class="Page_about_us_block_lists_innerleftright_mainboxs_new">
+                        <div class="Page_about_us_block_lists_innerleftright_innerboxs_new">
+                          {%- if block.settings.main_heading_text != blank -%}
+                            <div class="Page_about_us_block_lists_innerleftright_innerboxs_title_new">
+                              <h4>{{ block.settings.main_heading_text }}</h4>
+                            </div>  
+                          {%- endif -%}
+                          {%- if block.settings.main_information_text != blank -%}
+                            <div class="Page_about_us_block_lists_innerleftright_innerboxs_texts_new">
+                              {{ block.settings.main_information_text }}
+                            </div>  
+                          {%- endif -%}
+                        </div>
+                      </div>  
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if section.blocks.size > 0 -%}
+            <div class="Page_about_us_block_lists_mainleftright_new">
+              <div class="Page_about_us_block_lists_innerleftright_new">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'right_contact_details' -%}
+                    {%- if block.settings.main_heading_text != blank and block.settings.main_information_text != blank -%}
+                      <div class="Page_about_us_block_lists_innerleftright_mainboxs_new">
+                        <div class="Page_about_us_block_lists_innerleftright_innerboxs_new">
+                          {%- if block.settings.main_heading_text != blank -%}
+                            <div class="Page_about_us_block_lists_innerleftright_innerboxs_title_new">
+                              <h4>{{ block.settings.main_heading_text }}</h4>
+                            </div>  
+                          {%- endif -%}
+                          {%- if block.settings.main_information_text != blank -%}
+                            <div class="Page_about_us_block_lists_innerleftright_innerboxs_texts_new">
+                              {{ block.settings.main_information_text }}
+                            </div>  
+                          {%- endif -%}
+                        </div>
+                      </div>  
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Page About Us Block Lists",
+    "class": "Page_about_us_block_lists_new",
+    "settings": [
+      {
+        "type": "text",
+        "id": "customClass",
+        "label": "Add Custom Class",
+        "info": "Page_contact_us_block_lists_new"
+      },
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "left_contact_details",
+        "name": "Left Contact Details",
+        "settings": [
+          {
+            "type": "text",
+            "id": "main_heading_text",
+            "label": "Add Main Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      },
+      {
+        "type": "right_contact_details",
+        "name": "Right Contact Details",
+        "settings": [
+          {
+            "type": "text",
+            "id": "main_heading_text",
+            "label": "Add Main Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page About Us Block Lists",
+        "blocks": [
+          {
+            "type": "left_contact_details"
+          },
+          {
+            "type": "left_contact_details"
+          },
+          {
+            "type": "left_contact_details"
+          },
+          {
+            "type": "right_contact_details"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

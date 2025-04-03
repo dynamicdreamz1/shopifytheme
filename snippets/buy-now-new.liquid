@@ -1,0 +1,81 @@
+<button type="button" class="shopify-payment-button__button shopify-payment-button__button--unbranded" data-buy-now>
+  Buy it now
+</button>
+<button type="button" class="shopify-payment-button__button shopify-payment-button__button--unbranded" data-buy-now-done>
+  Done
+</button>
+<script>
+  if (window.innerWidth > 767) {
+    document.querySelector('[data-buy-now]').addEventListener('click', () => {
+      let addToCartForm = document.querySelector('form[action$="/cart/add"]');
+      if (addToCartForm.checkValidity()) {
+        let formData = new FormData(addToCartForm);
+        if(addToCartForm.getAttribute('upsell')) {
+          // for upsell product reference
+          let refTimeStamp = Date.now()
+          // in case of upsell also add reference to main product
+          formData.append('items[0][properties][_ref_id]', refTimeStamp)
+
+          let upsellProducts = addToCartForm.querySelectorAll('[js-upsell-product] input:checked')
+          console.log('upsellProducts', upsellProducts)
+          upsellProducts.forEach((elm, index_) => {
+            if(elm.dataset.productId) {
+              formData.append(`items[${index_ + 1}][id]`, Number(elm.dataset.productId))
+              formData.append(`items[${index_ + 1}][quantity]`, 1)
+              formData.append(`items[${index_ + 1}][properties][_ref_id]`, refTimeStamp)
+            }
+          })
+        }
+        fetch(window.Shopify.routes.root + 'cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          window.location.href = '/checkout';
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      } else {
+        addToCartForm.reportValidity();
+      }
+    });
+  }
+  
+  const observeAllSubmitButtons = () => {
+    const productSubmitButtons = document.querySelectorAll('.product-custom .product_details .button');
+    
+    if (productSubmitButtons.length === 0) return;
+  
+    productSubmitButtons.forEach((submitButton) => {
+      const buyNowButton = submitButton.closest('.product-form')?.querySelector('.shopify-payment-button__button');
+      
+      if (!buyNowButton) return;
+  
+      // Initial check for the state of the button on page load
+      if (submitButton.disabled || submitButton.classList.contains('disabled')) {
+        buyNowButton.setAttribute('disabled', 'disabled');
+      } else {
+        buyNowButton.removeAttribute('disabled');
+      }
+  
+      // Create a MutationObserver for future attribute changes
+      const observer = new MutationObserver(() => {
+        if (submitButton.disabled || submitButton.classList.contains('disabled')) {
+          buyNowButton.setAttribute('disabled', 'disabled');
+        } else {
+          buyNowButton.removeAttribute('disabled');
+        }
+      });
+  
+      observer.observe(submitButton, {
+        attributes: true,
+        attributeFilter: ['disabled', 'class']
+      });
+    });
+  };
+
+observeAllSubmitButtons();
+document.addEventListener('DOMContentLoaded', observeAllSubmitButtons);
+</script>

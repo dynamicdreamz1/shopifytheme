@@ -1,0 +1,205 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Page_about_us_template_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_about_us_template_inner_new">
+        <div class="Page_about_us_template_loops_new">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'video_or_image_banner' -%}
+                {%- if block.settings.youtube_video_id != blank or block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank -%}
+                  <div class="Page_about_us_template_loops_1_new">
+                    <div class="Page_about_us_template_loops_1_videoimageboth_new">
+                      {%- if block.settings.youtube_video_id != blank -%}
+                        <div class="Page_about_us_template_loops_youtube">
+                          <iframe
+                            src="https://www.youtube.com/embed/{{ block.settings.youtube_video_id }}?enablejsapi=1&autoplay=1"
+                            class="about-youtube"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen
+                          ></iframe>
+                        </div>
+                      {% endif %}
+                      {%- if block.settings.main_mp4_video != blank -%}
+                        <div class="Page_about_us_template_loops_1_videoimage_new">
+                          {{ block.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                        </div>
+                      {% else %}  
+                        {%- if block.settings.main_desktop_image != blank and block.settings.main_mobile_image != blank -%}
+                          <div class="Page_about_us_template_loops_1_videoimage_new">
+                            {%- if block.settings.main_desktop_image != blank -%}
+                              {{
+                                block.settings.main_desktop_image | 
+                                image_url: width: img.width | 
+                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                fetchpriority: 'auto', 
+                                class:'desktop_image_new'
+                              }}
+                            {%- endif -%}
+                            {%- if block.settings.main_mobile_image != blank -%}
+                              {{
+                                block.settings.main_mobile_image | 
+                                image_url: width: img.width | 
+                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                fetchpriority: 'auto', 
+                                class:'mobile_image_new'
+                              }}
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              
+              {%- when 'logo_with_small_texts' -%}
+                {%- if block.settings.main_small_logo_image != blank or block.settings.main_small_heading_text != blank or block.settings.main_small_information_text != blank -%}
+                  <div class="Page_about_us_template_loops_2_new">
+                    <div class="Page_about_us_template_loops_2_logostextsboth_new">
+                      {%- if block.settings.main_small_logo_image != blank -%}
+                        <div class="Page_about_us_template_loops_2_icons_new">
+                          {{
+                            block.settings.main_small_logo_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'Icon_image_new'
+                          }}
+                        </div>
+                      {%- else -%}
+                        {%- if block.settings.main_small_heading_text != blank -%}
+                          <div class="Common_title_new Page_about_us_template_loops_2_title_new">
+                            <h2>{{ block.settings.main_small_heading_text }}</h2>
+                          </div>  
+                        {%- endif -%}
+                      {%- endif -%}
+                      {%- if block.settings.main_small_information_text != blank -%}
+                        <div class="Page_about_us_template_loops_2_texts_new">
+                          {{ block.settings.main_small_information_text }}
+                        </div>  
+                      {%- endif -%}
+                    </div>
+                  </div>  
+                {%- endif -%}
+              
+              {%- when 'heading_with_large_texts' -%}
+                {%- if block.settings.main_large_heading_text != blank or block.settings.main_large_information_text != blank -%}
+                  <div class="Page_about_us_template_loops_3_new">
+                    <div class="Page_about_us_template_loops_3_titletextsboth_new">
+                      {%- if block.settings.main_large_heading_text != blank -%}
+                        <div class="Common_title_new Page_about_us_template_loops_3_title_new">
+                          <h2>{{ block.settings.main_large_heading_text }}</h2>
+                        </div>  
+                      {%- endif -%}
+                      {%- if block.settings.main_large_information_text != blank -%}
+                        <div class="Page_about_us_template_loops_3_texts_new">
+                          {{ block.settings.main_large_information_text }}
+                        </div>  
+                      {%- endif -%}
+                    </div>
+                  </div>  
+                {%- endif -%}
+
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%} 
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org/",
+      "@type": "ClothingStore",
+      "name": "KALKI Store in Mumbai",
+      "telephone": "Phone : +91 22 4890 0247",
+      "email": "Email: info@kalkifashion.com",
+      "openingHours": "Mo-Su 11:00-20:30",
+      "address": {
+        "@type": "PostalAddress",
+        "name":"Prime Plaza, 101, Swami Vivekananda Rd, Navyug Colony, Santacruz West, Mumbai, Maharashtra 400054"
+      }
+    }
+</script>
+{% schema %}
+  {
+    "name": "Page About Us Template",
+    "class": "Page_about_us_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "video_or_image_banner",
+        "name": "Video OR Image Banner",
+        "settings": [
+          {
+            "type": "video",
+            "id": "main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "text",
+            "id": "youtube_video_id",
+            "label": "Youtube video ID"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          }
+        ]
+      },
+      {
+        "type": "logo_with_small_texts",
+        "name": "Logo With Small Texts",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_small_logo_image",
+            "label": "Add Main Small Logo Image"
+          },
+          {
+            "type": "text",
+            "id": "main_small_heading_text",
+            "label": "Add Main Small Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "main_small_information_text",
+            "label": "Add Main Small Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      },
+      {
+        "type": "heading_with_large_texts",
+        "name": "Heading With Large Texts",
+        "settings": [
+          {
+            "type": "text",
+            "id": "main_large_heading_text",
+            "label": "Add Main Large Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "main_large_information_text",
+            "label": "Add Main Large Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

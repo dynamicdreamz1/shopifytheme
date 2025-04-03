@@ -1,0 +1,702 @@
+<div class="customer_dashboard_new customer_order_history_new">
+  <div class="order_back_main_new">
+    <a class="order_back_new" href="/account?view=orders">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 4L2 12L10 20" stroke="#0F0D1A" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M2 12H24" stroke="#0F0D1A" stroke-width="1.2"/>
+      </svg>
+    </a>
+  </div>
+  <div class="order_details_new">
+    <div class="order_details_in_new">
+      <div class="order_details_title_new">
+        <div class="order_details_amount_new">Order Total : {{ order.total_net_amount | money_with_currency }}</div>
+        <div class="order-btn-wrap">
+          {% render 'returnprime_script' %}
+          {% if order.fulfillment_status == 'fulfilled' %}
+            <button class="js-return-exchange {% if order.fulfillment_status != 'fulfilled' %} disabled{% endif %}" data-order="{{ order.name }}" data-customer="{{ customer.email }}">Return / Exchange</button>
+          {% else %}
+            <p class="js-return-exchange disabled">Return Not Available </p>
+          {% endif %}
+          <button id="reorder-all-btn">Reorder All Items</button>
+          <button id="print-invoice">Print</button>
+        </div>
+        {% comment %}
+        <div class="order_details_print_new">
+          <a href="javascript:void(0)" class="button printPage">PRINT</a>
+        </div>
+        {% endcomment %}
+      </div>
+
+      <div class="order_details_date_new">
+        {%- assign order_date = order.created_at | time_tag: format: 'date_at_time' -%}
+        <div class="order_placed_new"><span>Order Placed</span>{{ order_date }}</div>
+        {%- if order.cancelled -%}
+          {%- assign cancelled_at = order.cancelled_at | time_tag: format: 'date_at_time' -%}
+          <div class="order_placed_new"><span class="Order_Cancelled_new">Order Cancelled</span>{{ cancelled_at }}</div>
+          <div class="order_placed_new"><span class="Order_Cancelled_new">Reason</span>{{ order.cancel_reason_label }}</div>
+        {%- endif -%}
+      </div>
+      <h1 class="order_details_id_new">{{ order.name }}</h1>
+
+      {% assign all_items = '' %}
+      <div class="item_orders_new">
+        <div class="item_ordered_new">Items Ordered</div>
+        
+            {%- assign order_index = 0 -%}
+            {%- for line_item in order.line_items -%}
+               {%- assign product = line_item.product -%}
+                {%- assign mto =  product.metafields.magento.mto | handleize -%}
+                {% if mto != blank %}
+                  {% assign delivery_days =  product.metafields.magento.fast_shipping %}
+                  {% assign rts_delivery_days =  product.metafields.custom.mto_rts_days %}
+            
+                  {% if mto == 'yes' %}
+                    {% assign selected_or_first_available_variant_inventory_quantity = product.variants.first.inventory_quantity %}
+                    {% if selected_or_first_available_variant_inventory_quantity < 1 %}
+                      {% assign init_delivery_days = delivery_days %}
+                    {% else %}
+                      {% assign init_delivery_days = rts_delivery_days %}
+                    {% endif %}
+                  {% endif %}
+            
+                  {% if mto == 'no' %}
+                    {% assign init_delivery_days = delivery_days %}
+                  {% endif %}
+            
+                  {% if product.metafields.custom.days_override != blank %}
+                    {% assign init_delivery_days = product.metafields.custom.days_override %}
+                  {% endif %}
+              {% endif %}
+              {% assign all_items = all_items | append: '{"variant_id": "' | append: line_item.variant_id | append: '", "quantity": "' | append: line_item.quantity | append: '"}' %}
+              {% unless forloop.last and forloop.parentloop.last %}
+                {% assign all_items = all_items | append: ',' %}
+              {% endunless %}
+              <div class="item_orders_list_new">
+                <input type="hidden" id="js-estimated-delivery-input{{ order_index }}" js-estimated-delivery-input="" name="items[{{ order_index }}][properties][Estimated delivery]" value="">
+                {% assign order_index = order_index | plus: 1 %}
+                
+                  <div class="item_orders_list_left_new">
+                    {%- if line_item.url != blank -%}
+                    <a href="{{ line_item.url }}"><img src="{{ line_item.product.featured_image.src | img_url: '180x' }}" alt="{{ line_item.product.title }}"></a>
+                    {%- else -%}
+                      <img src="{{ line_item.product.featured_image.src | img_url: '180x' }}" alt="{{ line_item.product.title }}">
+                    {%- endif -%}
+                  </div>
+                  <div class="item_orders_list_right_new">
+                    <div class="item_orders_list_sku_new">{{ line_item.sku }}</div>
+                    <div>
+                      <div class="item_orders_list_title_main_new">
+                        <div class="item_orders_list_title_new">
+                          {%- if line_item.url != blank -%}
+                            <a href="{{ line_item.url }}">{{ line_item.title }}</a>
+                          {%- else -%}
+                            <p>{{ line_item.title }}</p>
+                          {%- endif -%}
+                        </div>
+                        <div class="item_orders_list_price_new">
+                          {%- if line_item.original_price != line_item.final_price or line_item.unit_price_measurement -%}
+                            <dl>
+                              {%- if line_item.original_price != line_item.final_price -%}
+                                <dt>
+                                  <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                                </dt>
+                                <dd class="regular-price">
+                                  <s>{{ line_item.original_price | money }}</s>
+                                </dd>
+                                <dt>
+                                  <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                                </dt>
+                                <dd>
+                                  <span>{{ line_item.final_price | money }}</span>
+                                </dd>
+                              {%- else -%}
+                                <dt>
+                                  <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                                </dt>
+                                <dd>
+                                  {{ line_item.original_price | money }}
+                                </dd>
+                              {%- endif -%}
+                              {%- if line_item.unit_price_measurement -%}
+                                <dt>
+                                  <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+                                </dt>
+                                <dd class="unit-price">
+                                  <span>
+                                    {%- capture unit_price_separator -%}
+                                      <span aria-hidden="true">/</span
+                                      ><span class="visually-hidden">{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+                                    {%- endcapture -%}
+                                    {%- capture unit_price_base_unit -%}
+                                      {%- if line_item.unit_price_measurement.reference_value != 1 -%}
+                                        {{- line_item.unit_price_measurement.reference_value -}}
+                                      {%- endif -%}
+                                      {{ line_item.unit_price_measurement.reference_unit }}
+                                    {%- endcapture -%}
+                                    <span data-unit-price>{{ line_item.unit_price | money }}</span>
+                                    {{- unit_price_separator -}}
+                                    {{- unit_price_base_unit -}}
+                                  </span>
+                                </dd>
+                              {%- endif -%}
+                            </dl>
+                          {%- else -%}
+                            <span>{{ line_item.final_price | money }}</span>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                      <div class="item_orders_list_qty_new">
+                        <div class="item_orders_list_qty_in_new">Qty:{{ line_item.quantity }}</div>
+                      </div>
+                      {%- assign property_size = line_item.properties | size -%}
+                      {%- unless line_item.selling_plan_allocation == null and property_size == 0 -%}
+                        <div class="properties">
+                          {%- unless line_item.product.has_only_default_variant -%}
+                            <span>
+                              {{ line_item.variant.title }}
+                            </span>
+                          {%- endunless -%}
+                          {%- unless line_item.selling_plan_allocation == null -%}
+                            <span>
+                              {{ line_item.selling_plan_allocation.selling_plan.name }}
+                            </span>
+                          {%- endunless -%}
+                          {%- if property_size != 0 -%}
+                            {%- for property in line_item.properties -%}
+                              {% assign property_first_char = property.first | slice: 0 %}
+                              {%- if property.last != blank and property_first_char != '_' -%}
+                                <div class="main_property_new">
+                                  <span>{{ property.first }}:</span>
+                                  <span>
+                                    {%- if property.last contains '/uploads/' -%}
+                                      <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                                    {%- else -%}
+                                      {{ property.last }}
+                                    {%- endif -%}
+                                  </span>
+                                </div>
+                              {%- endif -%}
+                            {%- endfor -%}
+                          {%- endif -%}
+                        </div>
+                      {%- endunless -%}
+    
+                      {%- if line_item.line_level_discount_allocations != blank -%}
+                        <ul role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                          {%- for discount_allocation in line_item.line_level_discount_allocations -%}
+                            <li>
+                              <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+                                <use href="#icon-discount" />
+                              </svg>
+                              {{- discount_allocation.discount_application.title }} (-
+                              {{- discount_allocation.amount | money -}}
+                              )
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+    
+                      {%- if line_item.fulfillment -%}
+                        <div class="fulfillment">
+                          {%- assign created_at = line_item.fulfillment.created_at | time_tag: format: 'date' -%}
+                          <span>{{ 'customer.order.fulfilled_at_html' | t: date: created_at }}</span>
+    
+                          {%- if line_item.fulfillment.tracking_url -%}
+                            <a href="{{ line_item.fulfillment.tracking_url }}">
+                              {{ 'customer.order.track_shipment' | t }}
+                            </a>
+                          {%- endif -%}
+                          <span>
+                            {{ line_item.fulfillment.tracking_company }}
+                            {%- if line_item.fulfillment.tracking_number -%}
+                              #{{ line_item.fulfillment.tracking_number }}
+                            {%- endif -%}
+                          </span>
+                        </div>
+                      {%- endif -%}
+                    </div>
+
+              
+                    
+  
+                
+                    
+
+                    {% comment %}  
+                      {%- if line_item.original_line_price != line_item.final_line_price -%}
+                        <dl>
+                          <dt>
+                            <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                          </dt>
+                          <dd class="regular-price">
+                            <s>{{ line_item.original_line_price | money }}</s>
+                          </dd>
+                          <dt>
+                            <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                          </dt>
+                          <dd>
+                            <span>{{ line_item.final_line_price | money }}</span>
+                          </dd>
+                        </dl>
+                      {%- else -%}
+                        {{ line_item.original_line_price | money }}
+                      {%- endif -%}
+                    {% endcomment %}  
+                  </div>
+              </div>     
+            {%- endfor -%}
+            <div class="order_total_main_new">
+              <div class="order_total_in_new">
+                {{ 'customer.order.subtotal' | t }} : {{ order.line_items_subtotal_price | money }}
+              </div>
+              {%- if order.cart_level_discount_applications != blank -%}
+                {%- for discount_application in order.cart_level_discount_applications -%}
+                  <div class="order_total_in_new">
+                    {{ 'customer.order.discount' | t }}
+                    <span class="cart-discount">
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+                        <use href="#icon-discount" />
+                      </svg>
+                      {{- discount_application.title -}}
+                    </span>
+                    <span>
+                      <span>-{{ discount_application.total_allocated_amount | money }}</span>
+                      <span class="cart-discount">
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 12 12">
+                          <use href="#icon-discount" />
+                        </svg>
+                        {{- discount_application.title -}}
+                      </span>
+                    </span>
+                  </div>
+                {%- endfor -%}
+              {%- endif -%}
+              {%- for shipping_method in order.shipping_methods -%}
+                <div class="order_total_in_new">
+                  {{ 'customer.order.shipping' | t }} ({{ shipping_method.title }}) : {{ shipping_method.price | money }}
+                </div>
+              {%- endfor -%}
+              {%- for tax_line in order.tax_lines -%}
+                <div class="order_total_in_new">
+                  {{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%) : {{ tax_line.price | money }}
+                </div>
+              {%- endfor -%}
+              {%- if order.total_duties -%}
+                <div class="order_total_in_new">
+                  {{ 'customer.order.total_duties' | t }} : {{ order.total_duties | money }}
+                </div>
+              {%- endif -%}
+              {%- if order.total_refunded_amount > 0 -%}
+                <div class="order_total_in_new">
+                  {{ 'customer.order.total_refunded' | t }} : -{{ order.total_refunded_amount | money_with_currency }}
+                </div>
+              {%- endif -%}
+              <div class="order_total_in_new order_total_final_new">
+                  {{ 'customer.order.total' | t }} : {{ order.total_net_amount | money_with_currency }}
+              </div>
+          </div>
+      </div>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() { 
+  
+  function addBusinessDays(originalDate, numDaysToAdd) {
+    const Sunday = 0;
+    const Saturday = 6;
+    let daysRemaining = numDaysToAdd;
+
+    const newDate = originalDate.clone();
+
+    while (daysRemaining > 0) {
+      newDate.add(1, 'days');
+      if (newDate.day() !== Sunday) {
+        daysRemaining--;
+      }
+    }
+    return newDate;
+  }
+
+  // Set delivery time for individual cart items
+  function setDeliveryTime(days, index) {
+    const deliveryTimeWithoutFormat = addBusinessDays(moment(), parseInt(days));
+    const day = moment(deliveryTimeWithoutFormat).format('dddd');
+    const date = moment(deliveryTimeWithoutFormat).format("DD MMM YYYY");
+
+    const input = document.querySelector(`#js-estimated-delivery-input${index}`);
+    if (input) {
+      input.value = `${day}, ${date}`;
+    } else {
+      console.error(`Input with ID js-estimated-delivery-input${index} not found.`);
+    }
+  }
+
+  const orderItems = {{ order.line_items | json }};
+  orderItems.forEach((product, index) => {
+    let refId = "";
+
+    const productProperties = product.properties || [];
+
+    for (let i = 0; i < productProperties.length; i++) {
+      if (productProperties[i][0] === "_ref_id") {
+        refId = productProperties[i][1];
+        break;
+      }
+    }
+    const deliveryDay = "{{ init_delivery_days }}";
+    if ((product.variant && product.variant.title && product.variant.title.includes('Stitched')) || refId != '') {
+      setDeliveryTime(parseInt(deliveryDay), index);
+    } else {
+      setDeliveryTime(parseInt(deliveryDay), index);
+    }
+  });
+
+  document.getElementById('reorder-all-btn').addEventListener('click', function() {
+    try {
+      var allOrderItems = {{ order.line_items | json }};
+
+      if (Array.isArray(allOrderItems)) {
+        reorderAllItems(allOrderItems);
+      } else {
+        console.error('Items is not an array:', allOrderItems);
+      }
+    } catch (error) {
+      console.error('Error parsing data-items:', error);
+    }
+  });
+
+  // Check if item is in stock and return the available quantity
+  function getAvailableQuantity(item) {
+    if (item.product && item.product.variants) {
+      const variant = item.product.variants.find(v => v.id === item.variant_id);
+      return variant ? variant.inventory_quantity : 0;
+    }
+    return 0;
+  }
+
+  function reorderAllItems(items) {
+    var outOfStockItems = [];
+    var inStockItems = [];
+  
+    items.forEach(function(item) {
+      const availableQuantity = getAvailableQuantity(item);
+  
+      if (availableQuantity === 0) {
+        outOfStockItems.push(item.title); 
+      } else {
+        const estimatedDeliveryValue = document.getElementById(`js-estimated-delivery-input${items.indexOf(item)}`);
+        let properties = {};
+  
+        if (Array.isArray(item.properties)) {
+          item.properties.forEach(function(property) {
+            if (Array.isArray(property) && property.length === 2) {
+              properties[property[0]] = property[1];
+            }
+          });
+        } else if (typeof item.properties === 'object' && item.properties !== null) {
+          properties = item.properties;
+        }
+  
+        const updatedProperties = {
+          ...properties,
+          "Estimated delivery": estimatedDeliveryValue ? estimatedDeliveryValue.value : ''
+        };
+  
+        const quantityToAdd = Math.min(item.quantity, availableQuantity);
+  
+        inStockItems.push({
+          id: item.variant_id,
+          properties: updatedProperties,
+          quantity: quantityToAdd 
+        });
+      }
+    });
+  
+    if (outOfStockItems.length > 0) {
+      alert(`The following items are out of stock: ${outOfStockItems.join(', ').replace(/&#39;/g, "'")}`);
+    }
+  
+    if (inStockItems.length > 0) {
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ items: inStockItems }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(err => {
+            throw new Error(err.message || 'Failed to add items');
+          });
+        }
+        return response.json();
+      })
+      .then(data => {
+        window.location.href = '/cart';
+      })
+      .catch(error => {
+        alert(error.message || 'There was an error adding the items to the cart. Please try again.');
+      });
+    } else if (outOfStockItems.length === 0) {
+      alert('No items in stock to reorder.');
+    }
+  }
+});
+
+</script>      
+    <div class="order_address_new">
+      <div class="order_address_in_new">
+        <h2>{{ 'customer.order.billing_address' | t }}</h2>
+        {{ order.billing_address | format_address }}
+      </div>
+      <div class="order_address_in_new">
+        <h2>{{ 'customer.order.shipping_address' | t }}</h2>
+        {{ order.shipping_address | format_address }}
+      </div>
+    </div>
+
+    <div class="order_address_new order_status_new">
+      <div class="order_address_in_new">
+        <h2>{{ 'customer.order.payment_status' | t }}</h2>
+        <div class="order_status_in_new">{{ order.financial_status_label }}</div>
+      </div>
+    </div>
+
+    <div class="order_address_new order_status_new">
+      <div class="order_address_in_new">
+        <h2>{{ 'customer.order.fulfillment_status' | t }}</h2>
+        <div class="order_status_in_new">{{ order.fulfillment_status_label }}</div>
+      </div>
+    </div>
+                            
+  </div>
+</div>
+<script>
+    document.getElementById('print-invoice').addEventListener('click', function() {
+        window.print();
+    });
+</script>
+<div class="order-print">
+  <h3>Sold By: KALKIFASHION</h3>
+  <p><i><b>Ship-from Address: </b>Suarabhakti goods Pvt. Ltd, KALKI Flagship Store Santacruz, 400054 Mumbai Maharashtra, India</i></p>
+  <div class="print-order-details">
+    <div>
+      <h4>Order ID: {{ order.name }}</h4>
+      <p><b>Order Date:</b> {{ order_date }}</p>
+    </div>
+    <div>
+      <h4>Billing Address</h4>
+      <div>{{ order.billing_address | format_address }}</div>
+    </div>
+    <div>
+      <h4>Shipping Address</h4>
+      <div>{{ order.shipping_address | format_address }}</div>
+    </div>
+  </div>
+  <table>
+    <body>
+      <tr>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Gross Amount</th>
+        <th>Total</th>
+      </tr>
+      {%- for line_item in order.line_items -%}
+        <tr>
+          <td>
+            <p><b>{{ line_item.title }}</b></p>
+            {%- assign property_size = line_item.properties | size -%}
+            {%- if property_size != 0 -%}
+              <span class="print-properties">
+                {%- unless line_item.product.has_only_default_variant -%}
+                  <span>
+                    {{ line_item.variant.title }}
+                  </span>
+                {%- endunless -%}
+                {%- unless line_item.selling_plan_allocation == null -%}
+                  <span>
+                    {{ line_item.selling_plan_allocation.selling_plan.name }}
+                  </span>
+                {%- endunless -%}
+                {%- if property_size != 0 -%}
+                  {%- for property in line_item.properties -%}
+                    {% assign property_first_char = property.first | slice: 0 %}
+                    {%- if property.last != blank and property_first_char != '_' -%}
+                      <div>
+                        <span>{{ property.first }}:</span>
+                        <span>
+                          {%- if property.last contains '/uploads/' -%}
+                            <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                          {%- else -%}
+                            {{ property.last }}
+                          {%- endif -%}
+                        </span>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              </span>
+            {%- endif -%}
+          </td>
+          <td>{{ line_item.quantity }}</td>
+          <td>
+            {{ line_item.price | money }}
+          </td>
+          <td>
+            {{ line_item.line_price | money }}
+          </td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="4">
+          <div class="order_total_main_new">
+            <div class="order_total_in_new">
+              {{ 'customer.order.subtotal' | t }} : {{ order.line_items_subtotal_price | money }}
+            </div>
+            {%- if order.cart_level_discount_applications != blank -%}
+              {%- for discount_application in order.cart_level_discount_applications -%}
+                <div class="order_total_in_new">
+                  {{ 'customer.order.discount' | t }} : -{{ discount_application.total_allocated_amount | money }}
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+            {%- for shipping_method in order.shipping_methods -%}
+              <div class="order_total_in_new">
+                {{ 'customer.order.shipping' | t }} ({{ shipping_method.title }}) : {{ shipping_method.price | money }}
+              </div>
+            {%- endfor -%}
+            {%- for tax_line in order.tax_lines -%}
+              <div class="order_total_in_new">
+                {{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%) : {{ tax_line.price | money }}
+              </div>
+            {%- endfor -%}
+            {%- if order.total_duties -%}
+              <div class="order_total_in_new">
+                {{ 'customer.order.total_duties' | t }} : {{ order.total_duties | money }}
+              </div>
+            {%- endif -%}
+            <h3>
+                {{ 'customer.order.total' | t }} : {{ order.total_net_amount | money_with_currency }}
+            </h3>
+          </div>
+        </td>
+      </tr>
+    </body>
+  </table>
+</div>
+                            
+<style>
+.order-print {
+  display: none;
+}
+@media print {
+  .template-customers-order {
+    display: block;
+    background: #fff;
+  }
+  .order-print {
+    display: block;
+    width: 100%;
+    font-family: sans-serif, serif;
+  }
+  .section-header {
+    position: static;
+  }
+  header-drawer, .header_second_menu_new, .Header_desktop_left_menu_main_new, .header__icons, .search-modal__content_drawer_new, 
+  .customer_account_page_details_left_new, .customer_order_history_new, .shopify-section-group-footer-group, #shop-hcaptcha-badge-container,
+  .Header_announcement_bar_new, .Customer_login_template_new, #gototop, #fc_frame, #fc_frame.fc-widget-normal, .limoniapps-notification[data-token='RDWH']{
+    display: none !important;
+  }
+  #preview-bar-iframe {
+    display: none !important;
+  }
+  .customer_account_page_new .page-width {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  .customer_account_page_details_right_new {
+    width: 100%;
+    padding: 0;
+  }
+  .customer_account_page_new {
+    padding: 0;
+  }
+  .header--middle-center a.header__heading-link {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+  .order-print h4 {
+    font-size: 16px;
+  }
+  .order-print h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .order-print p {
+    font-size: 14px;
+  }
+  .order-print .order-print table td:first-child * {
+    text-align: left !important;
+  }
+  .order-print .order_total_main_new {
+    padding: 0;
+  }
+  .order-print .order_total_main_new h3 {
+    margin: 0;
+  }
+  .order-print .order tfoot tr:last-of-type * {
+    text-align: right !important;
+  }
+  .print-order-details {
+    display: flex;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+  .print-order-details > div {
+    width: 33.33%;
+    padding-right: 20px;
+  }
+  .print-order-details > div:last-child {
+    padding-right: 0;
+  }
+  .order-print table td:empty {
+    display: table-cell;
+  }
+  .order-print table {
+    border-bottom: 1px solid #000;
+    box-shadow: none;
+  }
+  .order-print table th { 
+    white-space: nowrap;
+  }
+  .order-print table td, .order-print table th {
+    border: 0;
+    text-align: center !important;
+    padding: 20px 10px !important;
+    vertical-align: top !important;
+  }
+  .order-print table td:first-child, .order-print table th:first-child {
+    width: 50%;
+    text-align: left !important;
+  }
+  .order-print table thead tr {
+    border: 0 !important;
+  }
+  .order-print table tr {
+    border-bottom: 1px solid #000 !important;
+    border-top: 1px solid #000 !important;
+  }
+  .order-print table thead:after {
+    display: none;
+  }
+  .order-print table .print-properties {
+    margin: 10px 0 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 150%;
+    display: block;
+  }
+}
+</style>

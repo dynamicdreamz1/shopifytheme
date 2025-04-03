@@ -1,0 +1,22 @@
+{% if settings.free_shipping_threshold != blank %}
+  {% assign cartTotal = cart.total_price | money_without_trailing_zeros | remove: cart.currency.symbol | remove: "Rs." | remove: "," | times: 1 %}
+  {% assign freeShippingthreshold = settings.free_shipping_threshold | remove: cart.currency.symbol | remove: "Rs." | remove: "," | times: 1 %}
+  {% assign progressBarPercentage = cartTotal | times: 100 | divided_by: freeShippingthreshold %}
+
+  {% if cartTotal < freeShippingthreshold %}
+    {% assign thresholdPrice = freeShippingthreshold | minus: cartTotal %}
+  {% else %}
+    {% assign progressBarPercentage = 100 %}
+  {% endif %}
+
+  <div class="progress-bar">
+    {% if cartTotal < freeShippingthreshold %}
+      <div class="progress-label">Yay! Spend {{ cart.currency.symbol }}{{thresholdPrice}} to avail <strong>shipping</strong></div>
+    {% else %}
+      <div class="progress-label">Congratulations! You’ve unlocked <strong>free shipping</strong></div>
+    {% endif %}
+    <div class="progress-meter-bar">
+      <div class="progress-meter" style="width: {{ progressBarPercentage }}%"></div>
+    </div>
+  </div>
+{% endif %}

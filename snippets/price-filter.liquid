@@ -1,0 +1,306 @@
+{% liquid
+  assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,UYU,VES,VND' | split: ','
+  assign uses_comma_decimals = false
+  if currencies_using_comma_decimals contains cart.currency.iso_code
+    assign uses_comma_decimals = true
+  endif
+%}
+
+{% if type == 'desktop' %}
+<details
+  id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
+  class="{% if filter_type == 'horizontal' %}disclosure-has-popup facets__disclosure{% else %} facets__disclosure-vertical{% endif %} js-filter"
+  data-index="{{ forloop.index }}"
+  {% if filter_type == 'vertical' and forloop.index == 1 %}
+    open
+  {% endif %}
+>
+  <summary class="facets__summary caption-large focus-offset">
+    <div>
+      <span>{{ filter.label | escape }}</span>
+      {% render 'icon-caret' %}
+    </div>
+  </summary>
+  <div
+    id="Facet-{{ forloop.index }}-{{ section.id }}"
+    class="{% if filter_type == 'horizontal' %}facets__display{% else %}facets__display-vertical{% endif %}"
+  >
+    <div class="{% if filter_type == 'horizontal' %}facets__header{% else %}facets__header-vertical{% endif %}">
+      {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
+      <span class="facets__selected">
+        {{- 'products.facets.max_price' | t: price: max_price_amount -}}
+      </span>
+      {%- if filter_type != 'vertical' -%}
+        <facet-remove>
+          <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link">
+            {{ 'products.facets.reset' | t }}
+          </a>
+        </facet-remove>
+      {%- endif -%}
+    </div>
+
+    <ul class="facets-layout-list facets__list--vertical list-unstyled no-js-hidden price-filter-list" role="list" >
+      {% assign max_price = filter.range_max | divided_by: 100  %}
+      {% assign pricePack = max_price | divided_by:5  %}
+      {% assign updatedPriceMax = pricePack %}
+      {% assign updatedPriceMin = 0 %}
+      {% for i in (1 .. 5) %}
+        <li class="list-menu__item facets__item">
+              <label
+                for=""
+                class="facet-checkbox"
+                js-price-filter-label
+              >
+                <input
+                  type="radio"
+                  name="{{ filter.min_value.param_name }}"
+                  value="{{ updatedPriceMin }}" 
+                  hidden
+                >
+                <input
+                  type="radio"
+                  name="{{ filter.max_value.param_name }}"
+                  value="{{ updatedPriceMax }}" 
+                  hidden
+                >
+                
+                <span class="facet-checkbox__text">₹{{ updatedPriceMin | times: 100.0 | money_without_currency }} - ₹{{ updatedPriceMax | times: 100.0 | money_without_currency }}</span>
+                <span class="counter_new price_counter_new" data-min="{{ updatedPriceMin }}" data-max="{{ updatedPriceMax }}"></span>
+              </label>
+        </li> 
+        {% assign updatedPriceMax = updatedPriceMax | plus: pricePack %}
+        {% assign updatedPriceMin = updatedPriceMin | plus: pricePack %} 
+      {% endfor %}
+    </ul>
+
+    <price-range class="facets__price">
+      <span class="field-currency">{{ cart.currency.symbol }}</span>
+      <div class="field">
+        <input
+          js-ignore-input-field
+          class="field__input"
+          name="{{ filter.min_value.param_name }}"
+          id="Filter-{{ filter.label | escape }}-GTE"
+          {%- if filter.min_value.value -%}
+            {%- if uses_comma_decimals -%}
+              value="{{ filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            {%- else -%}
+              value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+            {%- endif %}
+          {%- endif -%}
+          type="number"
+          placeholder="0"
+          min="0"
+          step="1"
+          oninput="validateInput(this)"
+          {%- if uses_comma_decimals -%}
+            max="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+          {%- else -%}
+            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+          {% endif %}
+        >
+        <label class="field__label" for="Filter-{{ filter.label | escape }}-GTE">
+          {{- 'products.facets.from' | t -}}
+        </label>
+      </div>
+      <span class="field-currency">-</span>
+      <div class="field">
+        <input
+          class="field__input"
+          name="{{ filter.max_value.param_name }}"
+          id="Filter-{{ filter.label | escape }}-LTE"
+          {%- if filter.max_value.value -%}
+            {%- if uses_comma_decimals -%}
+              value="{{ filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            {%- else -%}
+              value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+            {%- endif %}
+          {%- endif -%}
+          type="number"
+          min="1"
+          step="1"
+          oninput="validateInput(this)"
+          {%- if uses_comma_decimals -%}
+            placeholder="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            max="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+          {%- else -%}
+            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+          {% endif %}
+        >
+        <label class="field__label" for="Filter-{{ filter.label | escape }}-LTE">
+          {{- 'products.facets.to' | t -}}
+        </label>
+      </div>
+    </price-range>
+  </div>
+</details>
+{% endif %}
+
+
+{% if type == 'mobile' %}
+{% liquid
+  assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,UYU,VES,VND' | split: ','
+  assign uses_comma_decimals = false
+  if currencies_using_comma_decimals contains cart.currency.iso_code
+    assign uses_comma_decimals = true
+  endif
+%}
+<details
+  id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
+  class="mobile-facets__details js-filter"
+  data-index="mobile-{{ forloop.index }}"
+  open
+>
+  <summary class="mobile-facets__summary focus-inset">
+    <div>
+      <span>{{ filter.label | escape }}</span>
+      <span class="mobile-facets__arrow no-js-hidden">{% render 'icon-arrow' %}</span>
+      <noscript>{% render 'icon-caret' %}</noscript>
+    </div>
+  </summary>
+  <div
+    id="FacetMobile-{{ forloop.index }}-{{ section.id }}"
+    class="mobile-facets__submenu gradient"
+  >
+    <button
+      class="mobile-facets__close-button link link--text focus-inset"
+      aria-expanded="true"
+      type="button"
+    >
+      {% render 'icon-arrow' %}
+      {{ filter.label | escape }}
+    </button>
+
+    {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
+    <p class="mobile-facets__info">
+      {{ 'products.facets.max_price' | t: price: max_price_amount }}
+    </p>
+
+    <ul class="facets-layout-list facets__list--vertical list-unstyled no-js-hidden price-filter-list" role="list" >
+      {% assign max_price = filter.range_max | divided_by: 100  %}
+      {% assign pricePack = max_price | divided_by:5  %}
+      {% assign updatedPriceMax = pricePack %}
+      {% assign updatedPriceMin = 0 %}
+      {% for i in (1 .. 5) %}
+        <li class="list-menu__item facets__item">
+              <label
+                for=""
+                class="facet-checkbox"
+                js-price-filter-label
+              >
+                <input
+                  type="radio"
+                  name="{{ filter.min_value.param_name }}"
+                  value="{{ updatedPriceMin }}" 
+                  hidden
+                >
+                <input
+                  type="radio"
+                  name="{{ filter.max_value.param_name }}"
+                  value="{{ updatedPriceMax }}" 
+                  hidden
+                >
+                
+                <span class="facet-checkbox__text">₹{{ updatedPriceMin | times: 100.0 | money_without_currency }} - ₹{{ updatedPriceMax | times: 100.0 | money_without_currency }}</span>
+                <span class="counter_new price_counter_new" data-min="{{ updatedPriceMin }}" data-max="{{ updatedPriceMax }}"></span>
+              </label>
+        </li> 
+        {% assign updatedPriceMax = updatedPriceMax | plus: pricePack %}
+        {% assign updatedPriceMin = updatedPriceMin | plus: pricePack %} 
+      {% endfor %}
+    </ul>
+
+    <price-range class="facets__price">
+      <span class="field-currency">{{ cart.currency.symbol }}</span>
+      <div class="field">
+        <input
+          class="field__input"
+          js-ignore-input-field
+          name="{{ filter.min_value.param_name }}"
+          id="Mobile-Filter-{{ filter.label | escape }}-GTE"
+          {%- if filter.min_value.value -%}
+            {%- if uses_comma_decimals -%}
+              value="{{ filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            {%- else -%}
+              value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+            {%- endif %}
+          {%- endif -%}
+          type="number"
+          placeholder="0"
+          min="0"
+          inputmode="decimal"
+          step="1"
+          oninput="this.value = Math.floor(this.value)"
+          {%- if uses_comma_decimals -%}
+            max="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+          {%- else -%}
+            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+          {% endif %}
+        >
+        <label class="field__label" for="Mobile-Filter-{{ filter.label | escape }}-GTE">
+          {{- 'products.facets.from' | t -}}
+        </label>
+      </div>
+
+      <span class="field-currency">-</span>
+      <div class="field">
+        <input
+          class="field__input"
+          name="{{ filter.max_value.param_name }}"
+          id="Mobile-Filter-{{ filter.label | escape }}-LTE"
+          {%- if filter.max_value.value -%}
+            {%- if uses_comma_decimals -%}
+              value="{{ filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            {%- else -%}
+              value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+            {%- endif %}
+          {%- endif -%}
+          type="number"
+          min="1"
+          inputmode="decimal"
+          step="1"
+          oninput="this.value = Math.floor(this.value)"
+          {%- if uses_comma_decimals -%}
+            placeholder="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+            max="{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}"
+          {%- else -%}
+            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+          {% endif %}
+        >
+        <label class="field__label" for="Mobile-Filter-{{ filter.label | escape }}-LTE">
+          {{- 'products.facets.to' | t -}}
+        </label>
+      </div>
+    </price-range>
+    <div class="no-js-hidden mobile-facets__footer">
+      <facet-remove class="mobile-facets__clear-wrapper">
+        <a href="{{ filter.url_to_remove }}" class="mobile-facets__clear underlined-link">
+          {{- 'products.facets.clear' | t -}}
+        </a>
+      </facet-remove>
+      <button
+        type="button"
+        class="no-js-hidden button button--primary"
+        onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+      >
+        {{ 'products.facets.apply' | t }}
+      </button>
+      <noscript
+        ><button class="button button--primary">
+          {{ 'products.facets.apply' | t }}
+        </button></noscript
+      >
+    </div>
+  </div>
+</details>
+{% endif %}
+<script>
+  function validateInput(input) {
+    var cursorPosition = input.selectionStart;
+    var cleanedValue = input.value.replace(/[^\d]/g, '');
+    input.value = cleanedValue;
+    input.setSelectionRange(cursorPosition, cursorPosition);
+  }
+</script>

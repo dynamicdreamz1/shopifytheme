@@ -1,0 +1,235 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  .rumi-footer-text-color-change--white{color:#ffffff}
+   @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+   }
+{%- endstyle -%} 
+{%- liquid
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+  if section.settings.color_scheme == section.settings.section_color_scheme and section.settings.content_layout == 'no-overlap'
+    assign remove_color_classes = true
+  endif
+-%}
+
+ <div class="section-{{ section.id }}-padding gradient color-{{ section.block.settings.section_color_scheme }} ">
+<div class="page-width">
+  <div class="rumi-footer--box" style="background-image:url({{ section.settings.background_image | image_url}})" >
+        <p class="rumi-footer--textline">The collection is also available at KALKI Store.</p>
+        <div class="rumi-footer-store-box">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.button_link != blank or block.settings.store_name != blank or block.settings.location_image != blank or block.settings.colorchange != blank -%}
+                  <a class="rumi-footer-store-box-group rumi-footer-text-color-change--{% if block.settings.colorchange == 'color_white' %}white{% endif %}" href="{{ block.settings.button_link }}" target="_blank" rel="noopener">
+                        <span class="img-box">
+                        {%- if block.settings.location_image != blank -%}
+                          {%- if block.settings.image_behavior == 'ambient' or block.settings.image_behavior == 'zoom-in' -%}
+                            {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
+                            {%- capture sizes -%}
+                          (min-width: {{ block.settings.page_width }}px) {{ block.settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
+                          (min-width: 750px) calc((100vw - 130px) / 1.667), calc((100vw - 50px) / 1.667)
+                        {%- endcapture -%}
+                          {%- else -%}
+                            {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
+                            {%- capture sizes -%}
+                          (min-width: {{ block.settings.page_width }}px) {{ block.settings.page_width | minus: 100 | divided_by: 2 }}px,
+                          (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+                        {%- endcapture -%}
+                          {%- endif -%}
+                          {{
+                            block.settings.location_image
+                            | image_url: width: 1500
+                            | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                          }}
+                        {%- else -%}
+                          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- endif -%}
+                    
+                    </span>                      
+                          {%- if block.settings.store_name != blank -%}
+                           <p class="footertext">{{block.settings.store_name }}</p>
+                          {%- endif -%}
+                        
+                    </a>
+                  {%- endif -%}
+              {%- endfor -%}
+      </div>
+        <div class="rumi-footer-store-box">
+                  {%- for block in section.blocks -%}
+                    {%- if block.settings.button_link_2 != blank or block.settings.store_name_2 != blank or block.settings.location_image_2 != blank or block.settings.colorchange_2 != blank -%}
+                      <a class="rumi-footer-store-box-group rumi-footer-text-color-change--{% if block.settings.colorchange_2 == 'color_white' %}white{% endif %}" href="{{ block.settings.button_link_2 }}" target="_blank" rel="noopener">
+                            <span class="img-box2">
+                            {%- if block.settings.location_image_2 != blank -%}
+                              {%- if block.settings.image_behavior == 'ambient' or block.settings.image_behavior == 'zoom-in' -%}
+                                {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
+                                {%- capture sizes -%}
+                              (min-width: {{ block.settings.page_width }}px) {{ block.settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
+                              (min-width: 750px) calc((100vw - 130px) / 1.667), calc((100vw - 50px) / 1.667)
+                            {%- endcapture -%}
+                              {%- else -%}
+                                {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
+                                {%- capture sizes -%}
+                              (min-width: {{ block.settings.page_width }}px) {{ block.settings.page_width | minus: 100 | divided_by: 2 }}px,
+                              (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+                            {%- endcapture -%}
+                              {%- endif -%}
+                              {{
+                                block.settings.location_image_2
+                                | image_url: width: 1500
+                                | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                              }}
+                            {%- else -%}
+                              {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                            {%- endif -%}
+                        
+                        </span>                      
+                              {%- if block.settings.store_name_2 != blank -%}
+                               <p class="footertext2">{{block.settings.store_name_2 }}</p>
+                              {%- endif -%}
+                            
+                        </a>
+                      {%- endif -%}
+                  {%- endfor -%}
+          </div>
+  </div>
+</div>
+   </div>
+
+
+
+{% schema %}
+  {
+    "name": "Rumi footer block",
+    "tag": "section",
+    "class": "section",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Change background image"
+      },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+      
+    ],
+    "blocks": [
+      {
+        "type": "addlocation",
+        "name": "Add Location",
+         "settings": [
+             {
+              "type": "image_picker",
+              "id": "location_image",
+              "label": "Change Location Icon Image"
+            },
+             {
+              "type": "url",
+              "id": "button_link",
+              "label": "Add Link"
+            },
+             {
+              "type": "select",
+              "id": "colorchange",
+              "options": [
+                {
+                  "value": "color_black",
+                  "label": "Color Black"
+                },
+                {
+                  "value": "color_white",
+                  "label": "Color White"
+                }
+              ],
+              "default": "color_black",
+              "label": "Color Change",
+              "info": "Color Change"
+            },
+              {
+              "type": "text",
+              "id": "store_name",
+              "label": "Store Name"
+            }
+             
+         ]
+      },
+      {
+        "type": "addsocialicon",
+        "name": "Add Social Icon",
+         "settings": [
+             {
+                "type": "image_picker",
+                "id": "location_image_2",
+                "label": "Change Social Media Icon Image"
+              },
+             {
+                "type": "url",
+                "id": "button_link_2",
+                "label": "Add Link"
+              },
+             {
+              "type": "select",
+              "id": "colorchange_2",
+              "options": [
+                {
+                  "value": "color_black",
+                  "label": "Color Black"
+                },
+                {
+                  "value": "color_white",
+                  "label": "Color White"
+                }
+              ],
+              "default": "color_black",
+              "label": "Color Change",
+              "info": "Color Change"
+            },
+              {
+              "type": "text",
+              "id": "store_name_2",
+              "label": "Store Name"
+            }
+         ]
+      }
+    ],
+    "presets": [
+        {
+          "name": "Rumi footer block",
+          "blocks": [
+          {
+            "type": "addlocation"
+          }
+        ]
+        }
+      
+      ]
+  }
+{% endschema %}

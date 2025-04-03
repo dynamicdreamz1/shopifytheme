@@ -1,0 +1,93 @@
+{%- if section.settings.main_heading_text != blank or section.settings.main_button_link != blank -%}
+  <script async src='//asset.fwcdn3.com/js/storyblock.js'></script>
+  <div class="Page_bridal_script_video_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="">
+      <div class="Page_bridal_script_video_inner_new">
+        <div class="Page_bridal_script_video_detail_new">
+          {%- if section.settings.main_left_video != blank -%}
+            <div class="Page_bridal_script_video_detail_mainscript_new">
+              <div class="Page_bridal_script_video_detail_innerscript_new">
+                {{ section.settings.main_left_video }}
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.main_heading_text != blank or section.settings.main_button_link != blank -%}
+            <div class="Page_bridal_script_video_detail_maininfos_new">
+              <div class="Page_bridal_script_video_detail_innerinfos_new">
+                {%- if section.settings.main_heading_text != blank -%}
+                  <div class="Page_bridal_script_video_detail_innerinfos_title_new">
+                    {{ section.settings.main_heading_text }}
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.main_button_text != blank and section.settings.main_button_link != blank -%}
+                  <div class="Page_bridal_script_video_detail_innerinfos_links_new">
+                    <a href="{{ section.settings.main_button_link }}" class="button button_black">
+                      {{ section.settings.main_button_text }}
+                    </a>
+                  </div>  
+                {%- endif -%}
+              </div>
+            </div>  
+          {%- endif -%}
+          {%- if section.settings.main_right_video != blank -%}
+            <div class="Page_bridal_script_video_detail_mainscript_new">
+              <div class="Page_bridal_script_video_detail_innerscript_new">
+                {{ section.settings.main_right_video }}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Page Bridal Script Video",
+    "class": "Page_bridal_script_video_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "textarea",
+        "id": "main_left_video",
+        "label": "Add Left Video",
+        "default": "<fw-storyblock channel='kalkifashion' playlist='gMp83o' autoplay='true'></fw-storyblock>"
+      },
+      {
+        "type": "richtext",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "<p>From 'Yes' To 'I Do' - All In Videos</p>"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text",
+        "label": "Add Main Button Text",
+        "default": "Discover Collection"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link",
+        "label": "Add Main Button Link",
+        "default": "/"
+      },
+      {
+        "type": "textarea",
+        "id": "main_right_video",
+        "label": "Add Right Video",
+        "default": "<fw-storyblock channel='kalkifashion' playlist='vJ20Nv' autoplay='true'></fw-storyblock>"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Bridal Script Video"
+      }
+    ]
+  }
+{% endschema %}

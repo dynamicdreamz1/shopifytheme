@@ -1,0 +1,50 @@
+{% if section.settings.main_information_text !=blank %}
+  <div class="Page_store_detail_texts_main_new Page_bridal_details_texts_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_store_detail_texts_inner_new">
+        <div class="Page_store_detail_texts_object_new">
+          {%- if section.settings.main_heading_text != blank -%}
+            <div class="Common_title_new Page_store_detail_texts_object_title_new">
+              <h2>{{ section.settings.main_heading_text }}</h2>
+            </div>
+          {%- endif -%}
+            <div class="Collection_descriptions_infos_new Page_store_detail_texts_object_infos_new">
+              {{ section.settings.main_information_text }}
+            </div>
+            <div class="read_more_new">Read More...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Page Bridal Details Texts",
+    "class": "Page_bridal_details_texts_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text"
+      },
+      {
+        "type": "liquid",
+        "id": "main_information_text",
+        "label": "Add Main Information Text",
+        "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Bridal Details Texts"
+      }
+    ]
+  }
+{% endschema %}

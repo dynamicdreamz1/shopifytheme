@@ -1,0 +1,77 @@
+{%- liquid
+  assign media_count = product.media.size
+
+  -%}
+ 
+ {%- assign mt_current_variant = product.selected_variant | default: product.selected_or_first_available_variant -%}
+ {%- assign mt_featured_image = mt_current_variant.featured_media | default: product.featured_media -%}
+ {%- assign mt_featured_image_ = '' -%}
+
+  {%- for media in product.media -%}
+
+      {%- assign aspect_ratio = media.aspect_ratio | times: 1 -%}
+        
+        {%- if aspect_ratio < 1 -%}
+            {%- assign h = SelectorvMaxHeight  -%}        
+          {%- assign aspect_ratio = 1 | divided_by : aspect_ratio  -%}        
+            {%- assign w = h | times : aspect_ratio | round -%}        
+        {%- else -%}
+            {%- assign w = SelectorvMaxHeight  -%}        
+          {%- assign aspect_ratio = 1 | divided_by : aspect_ratio  -%}        
+            {%- assign h = w | times : aspect_ratio | round -%}
+        {%- endif -%}
+
+
+
+      {%- if forloop.index == 3 and product.metafields.custom.gumlet_video_url != blank -%}
+          <a  class="js-no-transition mz-thumb blurred" data-slide-id="video-1" href="{{ product.metafields.custom.gumlet_video_url }}">
+             {%- liquid
+              assign media_position = media_position | default: 0 | plus: 1
+              assign lazy_load = false
+              if media_position > 1
+                assign lazy_load = true
+              endif
+            -%}
+            {% render 'product-thumbnail',
+              media: media,
+              media_count: media_count,
+              position: media_position,
+              desktop_layout: section.settings.gallery_layout,
+              mobile_layout: section.settings.mobile_thumbnails,
+              loop: section.settings.enable_video_looping,
+              modal_id: section.id,
+              xr_button: true,
+              media_width: media_width,
+              media_fit: section.settings.media_fit,
+              constrain_to_viewport: section.settings.constrain_to_viewport,
+              lazy_load: lazy_load
+            %}
+          </a>
+      {%- endif -%}  
+                <div                
+                   class="swiper-slide {{ class }}"
+                   title="{{ image.alt | escape }}">
+                       {%- liquid
+              assign media_position = media_position | default: 0 | plus: 1
+              assign lazy_load = false
+              if media_position > 1
+                assign lazy_load = true
+              endif
+            -%}
+                {% render 'product-thumbnail',
+                  media: media,
+                  media_count: media_count,
+                  position: media_position,
+                  desktop_layout: section.settings.gallery_layout,
+                  mobile_layout: section.settings.mobile_thumbnails,
+                  loop: section.settings.enable_video_looping,
+                  modal_id: section.id,
+                  xr_button: true,
+                  media_width: media_width,
+                  media_fit: section.settings.media_fit,
+                  constrain_to_viewport: section.settings.constrain_to_viewport,
+                  lazy_load: lazy_load
+                %}
+                </div>
+    
+    {%- endfor -%}

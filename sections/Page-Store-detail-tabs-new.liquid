@@ -1,0 +1,169 @@
+{%- if metaobject.photos_list_tabs.value != blank or metaobject.video_list_tabs.value != blank -%}
+  
+  <div class="page_store_detail_tabs_main_new test" style="background: {{ section.settings.main_back_color }};">
+    <div class="page-width">
+      <div class="page_store_detail_tabs_inner_new tabs_collection_main_new">
+        <div class="tab">
+          {%- if metaobject.photos_list_tabs.value != blank -%}
+            <button class="tablinks tabs_collection_new active" tab_id="tab_photos">
+              Photos
+            </button>
+          {%- endif -%}
+          {%- if metaobject.video_list_tabs.value != blank -%}
+            <button class="tablinks tabs_collection_new {%- if metaobject.photos_list_tabs.value == blank -%} active {% endif %}" tab_id="tab_videos">
+              Videos
+            </button>
+          {%- endif -%}
+        </div>
+        {%- if metaobject.photos_list_tabs.value != blank -%}
+          <div class="tabcontent tab_photos_open" style="display:block;">
+            <div class="page_store_detail_tabs_maindetail_new">
+              <div class="page_store_detail_tabs_innerdetail_new">
+                {%- assign photos_list_tabs = metaobject.photos_list_tabs.value -%} 
+                <div class="swiper-container page_store_detail_tabs_slider">
+                  <div class="swiper-wrapper">
+                    {%- for photos_list_tabs in photos_list_tabs -%}
+                      <div class="swiper-slide page_store_detail_tabs_image_new">
+                        <div class="page_store_detail_tabs_image_inner_new">
+                          {{
+                            photos_list_tabs | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto'
+                          }}
+                        </div>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if metaobject.video_list_tabs.value != blank -%}
+          <div class="tabcontent tab_videos_open" style="display:none;">
+            <div class="page_store_detail_tabs_maindetail_new">
+              <div class="page_store_detail_tabs_innerdetail_new">
+                {%- assign video_list_tabs = metaobject.video_list_tabs.value -%} 
+                <div class="swiper-container page_store_detail_tabs_slider">
+                  <div class="swiper-wrapper">
+                    {%- for video_list_tabs in video_list_tabs -%}
+                      <div class="swiper-slide page_store_detail_tabs_image_new">
+                        <div class="page_store_detail_tabs_image_inner_new">
+                          {{ video_list_tabs | video_tag: controls: false, autoplay: true, loop: true }}
+                        </div>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>  
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Page Store Detail Tabs",
+    "class": "page_store_detail_tabs",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_back_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "textarea",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Collections"
+      },
+      {
+        "type": "select",
+        "id": "image_ratio",
+        "options": [
+          {
+            "value": "adapt",
+            "label": "t:sections.featured-collection.settings.image_ratio.options__1.label"
+          },
+          {
+            "value": "portrait",
+            "label": "t:sections.featured-collection.settings.image_ratio.options__2.label"
+          },
+          {
+            "value": "square",
+            "label": "t:sections.featured-collection.settings.image_ratio.options__3.label"
+          }
+        ],
+        "default": "adapt",
+        "label": "t:sections.featured-collection.settings.image_ratio.label"
+      },
+      {
+        "type": "select",
+        "id": "image_shape",
+        "options": [
+          {
+            "value": "default",
+            "label": "t:sections.all.image_shape.options__1.label"
+          },
+          {
+            "value": "arch",
+            "label": "t:sections.all.image_shape.options__2.label"
+          },
+          {
+            "value": "blob",
+            "label": "t:sections.all.image_shape.options__3.label"
+          },
+          {
+            "value": "chevronleft",
+            "label": "t:sections.all.image_shape.options__4.label"
+          },
+          {
+            "value": "chevronright",
+            "label": "t:sections.all.image_shape.options__5.label"
+          },
+          {
+            "value": "diamond",
+            "label": "t:sections.all.image_shape.options__6.label"
+          },
+          {
+            "value": "parallelogram",
+            "label": "t:sections.all.image_shape.options__7.label"
+          },
+          {
+            "value": "round",
+            "label": "t:sections.all.image_shape.options__8.label"
+          }
+        ],
+        "default": "default",
+        "label": "t:sections.all.image_shape.label",
+        "info": "t:sections.all.image_shape.info"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_secondary_image",
+        "default": true,
+        "label": "t:sections.featured-collection.settings.show_secondary_image.label"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_quick_add",
+        "default": false,
+        "label": "t:sections.featured-collection.settings.enable_quick_buy.label"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Store Detail Tabs"
+      }
+    ]
+  }
+{% endschema %}

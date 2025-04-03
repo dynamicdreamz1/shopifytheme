@@ -1,0 +1,165 @@
+{%- if section.blocks.size > 0 or section.settings.main_heading_text != blank -%}
+  <div class="Page_collection_detail_curated_main_new" style="background: {{ section.settings.main_background_color }};">    
+    {%- if section.settings.main_heading_text != blank -%}
+      <div class="page-width">
+        <div class="Common_title_new Page_collection_detail_curated_title_new">
+          <h2>{{ section.settings.main_heading_text }}</h2>
+        </div>
+      </div>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="Page_collection_detail_curated_inner_new">      
+        <div class="Page_collection_detail_curated_mainloop_new">
+          <div class="Page_collection_detail_curated_innerloop_new">
+            <div class="swiper-container Index_collection_detail_curated_slider">
+              <div class="swiper-wrapper">
+                {%- for block in section.blocks -%}
+                  {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank or block.settings.title != blank or block.settings.main_button_text != blank -%}
+                    <div class="swiper-slide Page_collection_detail_curated_innerloop_mainboxs_new">
+                      {%- if block.settings.main_redirect_link != blank -%}
+                        <a href="{{ block.settings.main_redirect_link }}"></a>
+                      {%- endif -%}  
+                      <div class="Page_collection_detail_curated_innerloop_innerboxs_new">
+                        {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank -%}
+                          <div class="Page_collection_detail_curated_innerloop_innerboxs_1_new">
+                            <div class="Page_collection_detail_curated_innerloop_innerboxs_1_videoimageboth_new">
+                              {%- if block.settings.main_mp4_video != blank -%}
+                                <div class="Page_collection_detail_curated_innerloop_innerboxs_1_videoimage_new">
+                                  {{ block.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                                </div>
+                              {% else %}  
+                                {%- if block.settings.main_desktop_image != blank and block.settings.main_mobile_image != blank -%}
+                                  <div class="Page_collection_detail_curated_innerloop_innerboxs_1_videoimage_new">
+                                    {%- if block.settings.main_desktop_image != blank -%}
+                                      {{
+                                        block.settings.main_desktop_image | 
+                                        image_url: width: img.width | 
+                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                        fetchpriority: 'auto', 
+                                        class:'desktop_image_new'
+                                      }}
+                                    {%- endif -%}
+                                    {%- if block.settings.main_mobile_image != blank -%}
+                                      {{
+                                        block.settings.main_mobile_image | 
+                                        image_url: width: img.width | 
+                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                        fetchpriority: 'auto', 
+                                        class:'mobile_image_new'
+                                      }}
+                                    {%- endif -%}
+                                  </div>
+                                {%- endif -%}
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.title != blank or block.settings.main_button_text != blank -%}
+                          <div class="Page_collection_detail_curated_innerloop_innerboxs_2_new">
+                            <div class="Page_collection_detail_curated_innerloop_innerboxs_2_titletextboth_new">
+                              {%- if block.settings.title != blank -%}
+                                <div class="Page_collection_detail_curated_innerloop_innerboxs_2_title_new">
+                                  <h3>{{ block.settings.title }}</h3>
+                                </div>  
+                              {%- endif -%}
+                              {%- if block.settings.main_button_text != blank -%}
+                                <div class="Page_collection_detail_curated_innerloop_innerboxs_2_texts_new">
+                                  {{ block.settings.main_button_text }}
+                                </div>  
+                              {%- endif -%}
+                            </div>
+                          </div>  
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+        </div>      
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Collection Detail Curated",
+    "class": "Page_collection_detail_curated_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Curated Collections"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "video",
+            "id": "main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Heading"
+          },
+          {
+            "type": "text",
+            "id": "main_button_text",
+            "label": "Add Main Button Text",
+            "default": "Explore"
+          },
+          {
+            "type": "url",
+            "id": "main_redirect_link",
+            "label": "Add Main Redirect Link",
+            "default": "/"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Detail Curated",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

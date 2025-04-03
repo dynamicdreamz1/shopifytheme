@@ -1,0 +1,40 @@
+{% if template.name == 'collection' %}
+  {%- if collection.metafields.custom.collection_faqs_accordions != blank -%}
+    {% assign totalCount = 0 %}
+    {%- assign features = collection.metafields.custom.collection_faqs_accordions.value -%}
+  
+            {%- for i in (1..15) -%}
+              {%- assign Question = 'question_' | append: forloop.index -%}
+              {%- assign Answer = 'answer_' | append: forloop.index -%}
+              {%- if features[Question].value != blank and features[Answer].value != blank -%}
+                {% assign totalCount = totalCount | plus: 1 %}
+              {%- endif -%}
+            {%- endfor -%}
+  
+  {%- endif -%}
+  {%- if collection.metafields.custom.collection_faqs_accordions != blank -%}
+    {%- assign features = collection.metafields.custom.collection_faqs_accordions.value -%}
+    <script type="application/ld+json" defer="defer">
+      {
+        "@context":"https:\/\/schema.org",
+        "@type":"FAQPage",
+        "mainEntity":[
+        {%- for i in (1..totalCount) -%}
+          {%- assign Question = 'question_' | append: forloop.index -%}
+          {%- assign Answer = 'answer_' | append: forloop.index -%}
+          {%- if features[Question].value != blank and features[Answer].value != blank -%}
+            {
+              "@type": "Question",
+              "name": "{{ features[Question].value }}",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "{{ features[Answer] | metafield_tag | strip_html }}"
+              }
+            } {% unless forloop.index == totalCount %},{% endunless %}
+          {%- endif -%}
+        {%- endfor -%}
+        ]
+      }
+    </script>
+  {%- endif -%}
+{%  endif %}

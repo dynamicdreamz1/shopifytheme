@@ -1,0 +1,104 @@
+{%- if section.blocks.size > 0 or section.settings.main_heading_text != blank -%}
+  <div class="Page_offline_icons_with_texts_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_offline_icons_with_texts_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Page_offline_icons_with_texts_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Page_offline_icons_with_texts_mainloop_new">
+            <div class="Page_offline_icons_with_texts_innerloop_new">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.main_icon_image != blank and block.settings.main_information_text != blank -%}
+                  <div class="Page_offline_icons_with_texts_innerloop_mainboxs_new">
+                    <div class="Page_offline_icons_with_texts_innerloop_innerboxs_new">
+                      {%- if block.settings.main_icon_image != blank -%}
+                        <div class="Page_offline_icons_with_texts_innerloop_icons_new">
+                          {{
+                            block.settings.main_icon_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'Icon_image_new'
+                          }}
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.main_information_text != blank -%}
+                        <div class="Page_offline_icons_with_texts_innerloop_infos_new">
+                          {{ block.settings.main_information_text }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+        <div class="Page_offline_icons_with_texts_maintable_new">
+          <div class="Page_offline_icons_with_texts_innertable_new">
+            ==========Hello===========
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Offline Icons With Texts",
+    "class": "Page_offline_icons_with_texts_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "How it Works"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_icon_image",
+            "label": "Add Main Icon Image"
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Offline Icons With Texts",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

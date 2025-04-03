@@ -1,0 +1,69 @@
+
+<div class="page-width">
+<div class="rumi-video" style="background-image:url({{ section.settings.background_image | image_url}})" >
+  {% if section.settings.title != blank %}
+        <div class="Index_title_inner_new" bis_skin_checked="1">
+            <div class="Common_title_new Index_title_title_new" bis_skin_checked="1">
+              <h2>{{ section.settings.title }}</h2>
+            </div>
+        </div>
+      {% endif %}
+      {% if section.settings.playlist_id != blank %}    
+        <fw-embed-feed
+          channel="kalkifashion"
+          playlist="{{ section.settings.playlist_id }}"
+          mode="row"
+          open_in="default"
+          max_videos="0"
+          placement="middle"
+          branding="false"
+          player_placement="bottom-right"                                         
+        ></fw-embed-feed>
+        <script async type="text/javascript" src="//asset.fwcdn3.com/js/embed-feed.js"></script>
+      {% endif %}
+   {% if section.settings.subtitle != blank %}
+        <div class="rumi-firework-subtitle">{{ section.settings.subtitle }}</div>
+      {% endif %}
+  
+</div>
+  </div>
+
+
+{% schema %}
+  {
+    "name": "Rumi firework video",
+    "tag": "section",
+    "class": "section",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Change background image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle",
+        "label": "Sub Title"
+      },
+      {
+        "type": "text",
+        "id": "playlist_id",
+        "label": "Playlist Id"
+      }
+      
+    ],
+    "presets": [
+        {
+          "name": "Rumi firework video"
+        }
+      ]
+  }
+{% endschema %}

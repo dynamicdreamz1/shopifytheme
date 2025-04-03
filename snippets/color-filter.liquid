@@ -1,0 +1,139 @@
+{{ 'color-swatch-style.css' | asset_url | stylesheet_tag }}
+
+{% if filter.values.size > 0 %}
+
+  {%  capture color_swatch_html %} 
+    <fieldset class="facets-wrap parent-wrap {% if filter_type == 'vertical' %} facets-wrap-vertical{% endif %}">
+      <legend class="visually-hidden">{{ filter.label | escape }}</legend>
+      <ul
+        class="color-swatch-list"
+        role="list"
+      >
+        {%- liquid
+          assign sorted_values = filter.values
+          # Keep the selected values grouped together when operator is AND
+          if filter.operator == 'AND'
+            assign active_filter_values = filter.values | where: 'active', true
+            assign inactive_filter_values = filter.values | where: 'active', false
+            assign sorted_values = active_filter_values | concat: inactive_filter_values
+          endif
+        -%}
+        {% assign filterCounter = 0 %}
+        {%- for value in sorted_values -%}
+          {% liquid
+            assign is_disabled = false
+            if value.count == 0 and value.active == false
+              assign is_disabled = true
+            endif
+          %}
+
+          {% unless is_disabled %}
+            {% assign filterCounter = filterCounter | plus: 1 %}
+            {% render 'color-swatch' 
+            filter: filter, 
+            value: value, 
+            forloop: forloop,
+            %}
+          {% endunless %}
+        {%- endfor -%}
+      </ul>
+      
+    </fieldset>
+  {% endcapture %}
+
+  {% if filterType == 'desktop-filter' %}
+  <details
+    id="Details-{{ filter.param_name | escape }}-{{ section.id }}"
+    class="facets__disclosure-vertical js-filter color-filter-facets"
+    data-index="{{ forloop.index }}"
+    {% if forloop.index == 1 %}
+      open
+    {% endif %}
+  >
+    <summary
+      class="facets__summary caption-large focus-offset"
+      aria-label="{{ filter.label | escape }} ({{ 'products.facets.filters_selected.one' | t: count: filter.active_values.size }})"
+    >
+      <div>
+        <span class="facets__summary-label">
+          {{- filter.label | escape }}
+          {%- if filter_type == 'vertical' -%}
+            <span class="facets__selected no-js-hidden{% if filter.active_values.size == 0 %} hidden{% endif %}">
+              ({{ filter.active_values.size }})</span
+            >
+          {%- endif -%}
+        </span>
+        {%- if filter_type == 'vertical' and filter.operator == 'AND' -%}
+          <span class="facets__and-helptext">
+            {{ 'products.facets.filter_and_operator_subtitle' | t }}
+          </span>
+        {%- endif -%}
+        {% render 'icon-caret' %}
+      </div>
+    </summary>
+    <div
+      id="Facet-{{ forloop.index }}-{{ section.id }}"
+      class="color-swatch-wrapper"
+    >
+
+      {{ color_swatch_html }}
+
+      {%- if filterCounter > show_more_number and filter_type == 'vertical' -%}
+        <show-more-button>
+          <button
+            class="button-show-more link underlined-link no-js-hidden"
+            id="Show-More-{{ forloop.index }}-{{ section.id }}"
+            type="button"
+          >
+            <span class="label-show-more label-text"
+              ><span aria-hidden="true">+ </span>{{ 'products.facets.show_more' | t -}}
+            </span>
+            <span class="label-show-less label-text hidden"
+              ><span aria-hidden="true">- </span>{{ 'products.facets.show_less' | t -}}
+            </span>
+          </button>
+        </show-more-button>
+      {%- endif %}
+
+    </div>
+  </details>
+  {% endif %}
+
+
+  {% if filterType == 'filter-drawer' %}
+    <details
+      id="Details-Mobile-{{ filter.param_name | escape }}-{{ section.id }}"
+      class="mobile-facets__details js-filter color-filter-facets 
+      {% if template.suffix == "luxe-collection-new"%}
+      {% if filter.label contains "Delivery" or filter.label contains "Product Category" or filter.label contains "Size" or filter.label contains "Stores" %} medium-hide large-up-hide {% endif %} 
+      {% endif %}
+      "
+      data-index="mobile-{{ forloop.index }}"
+    >
+      <summary class="mobile-facets__summary focus-inset">
+        <div>
+          <span>{{ filter.label | escape }}</span>
+          <span class="mobile-facets__arrow no-js-hidden">{% render 'icon-arrow' %}</span>
+          <noscript>{% render 'icon-caret' %}</noscript>
+        </div>
+      </summary>
+
+    <div
+      id="FacetMobile-{{ forloop.index }}-{{ section.id }}"
+      class="color-swatch-wrapper"
+    >
+      {{ color_swatch_html }}
+    </div>
+  </details>
+  {% endif %}
+
+{% endif %}
+
+<style>
+  {% for swatch in shop.metaobjects.color_swatch.values %}
+    .color-swatch-wrapper .color-list-item.{{ swatch.color_name | handleize  }},
+    .active-color-swatch-item.{{ swatch.color_name | handleize  }} {
+      background-color: {{ swatch.color }} !important;
+    }
+  {% endfor %} 
+</style> 

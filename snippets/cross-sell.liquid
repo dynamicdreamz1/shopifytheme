@@ -1,0 +1,115 @@
+{% if product.metafields.custom.cross_sell != blank %}
+    {{ "cross-sell.css" | asset_url | stylesheet_tag }}
+    <script src="{{ "cross-sell.js" | asset_url }}" defer></script>
+
+    <cross-sell class="cross-sell">
+        <h2 class="cross-sell-title">Style it with</h2>
+        <div class="cross-sell-slider" js-cross-sell-slider>
+            <div class="swiper-wrapper">
+                {% for crossSellProduct in product.metafields.custom.cross_sell.value %}
+                    {% if crossSellProduct.options.size == 1 %}
+                        <product-form
+                            class="product-form swiper-slide"
+                            data-section-id="{{ section.id }}_{{ crossSellProduct.id }}"
+                          >
+                        <div class="cross-sell__item swiper-slide" js-cross-product data-select-option="">
+                            {% form 'product', crossSellProduct, js-atc-form: "" %}
+                            <div class="cross-sell__grid flex">
+                                <a href="{{ crossSellProduct.url }}" class="product__image">
+                                    <img src="{{ crossSellProduct.featured_image |  image_url: width: '200x' }}" alt="{{ crossSellProduct.featured_image.alt | default: crossSellProduct.title }}">
+                                </a>
+                                <div class="product__rte">
+                                    <div class="card_review_new cross_card_review_new">
+                                      <!-- Stamped - Begin Star Rating Badge -->
+                                      <span 
+                                      class="stamped-product-reviews-badge" 
+                                      data-id="{{ crossSellProduct.id }}"
+                                      data-product-sku="{{ crossSellProduct.handle }}" 
+                                      data-product-type="{{crossSellProduct.type}}" 
+                                      data-product-title="{{crossSellProduct.title}}" 
+                                      style="display:block;">
+                                      </span>
+                                      <!-- Stamped - End Star Rating Badge -->
+                                    </div>
+                                    <h2 class="product__title">{{ crossSellProduct.title }}</h2>
+                                    <span class="product__price">{{ crossSellProduct.price | money }}</span>
+                                    <div class="option">
+                                        <div class="selection__block option-drop cs-option-drop">
+                                            <div class="selection__grid select">
+
+                                                    
+                                                {% for option in crossSellProduct.options_with_values %}
+                                                    {% if option.name == 'Size' %}
+                                                        <select name="id" class="product-variant-id" required js-cross-sell-option>
+                                                            <option data-option-available="false" value="">Please Select {{ option.name }} *</option>
+                                                            {% for variant in crossSellProduct.variants %}
+                                                            <option data-option-available="{{ variant.available }}" data-variant-price="{{ variant.price | money }}" value="{{ variant.id }}">{{ variant.title }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if crossSellProduct.has_only_default_variant %}
+                                                <input type="hidden" name="id" value="{{ crossSellProduct.selected_or_first_available_variant.id }}">
+                                                {% endif %}
+
+                                                <input type="hidden" name="quantity" value="1">
+                                                
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% liquid assign product_attributes_group = crossSellProduct.metafields.custom.select_attributes_group.value %}
+                            
+                                    {% if product_attributes_group %}
+                                        <div class="option-group">
+                                            {% for attriutes_ in product_attributes_group.select_attributes.value %}
+                                                {% assign required = attriutes_.required %}
+                                                <div class="option">
+                                                    <div class="option-drop cs-option-drop" >
+                                                      <div class="select">
+                                                        <select name="items[0][properties][{{attriutes_.title}}]"  {% if
+                                                        required %} required {% endif %} >
+                                                            {% render 'custom-product-options', options: attriutes_.values, layout: "cross_sell_option", label_: attriutes_.title, required: required  %}
+                                                        </select>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <button
+                                id="ProductSubmitButton-{{ section_id }}"
+                                type="submit"
+                                name="add"
+                                class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+                                {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+                                  disabled
+                                {% endif %}
+                              >
+                                <span>
+                                  {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                                    {{ 'products.product.sold_out' | t }}
+                                  {%- else -%}
+                                    {{ 'products.product.add_to_cart' | t }}
+                                  {%- endif -%}
+                                </span>
+                                {%- render 'loading-spinner' -%}
+                                <span class="kalki-atc-dot"></span> 
+                                <span js-pdp-original-price> {{ product.selected_or_first_available_variant.price | money }} </span>
+                            </button>
+
+
+                            {% endform %}
+                        </div>
+                        </product-form>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </cross-sell>
+{% endif %}

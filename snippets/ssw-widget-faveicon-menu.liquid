@@ -1,0 +1,40 @@
+{% comment %}
+/**************************************************
+* DO NOT MODIFY THIS FILE!!!                      *
+* IT WILL BE OVERWRITTEN BY UPDATES FROM GROWAVE! *
+**************************************************/
+{% endcomment %}
+{% assign gwSettings = shop.metafields.ssw['settings'] %}
+{% if gwSettings.type == 'json' %}
+{% assign gwSettings = shop.metafields.ssw['settings'].value %}
+{% endif %}
+{% if shop.customer_accounts_enabled or gwSettings.wishlist_users_only != 1 %}
+{% assign customer_locale = shop.locale | prepend: 'lang_' %}
+{% unless shop.metafields.ssw[customer_locale] %}
+{% for published_locale in shop.published_locales %}
+{% if published_locale.primary == true %}
+{% assign customer_locale = published_locale.iso_code | prepend: 'lang_' %}
+{% endif %}
+{% endfor %}
+{% endunless %}
+{% assign ssw_fave_enabled = 1 %}
+{% if shop.metafields.ssw['fave_enabled'] %}
+{% assign ssw_fave_enabled = shop.metafields.ssw['fave_enabled'] | plus: 0 %}
+{% endif %}
+{% if ssw_fave_enabled == 1 %}
+<a class="ssw-link-fave-menu ssw-link-fave-menu-hide-count header__icon header__icon--wishlist" href="{{ whishlist_url }}" aria-label="{{ shop.metafields.ssw[customer_locale].value.my_faves }}" tabindex="0">
+  <svg width="22" height="18" class="icon" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id="mask0_174_18652" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="18">
+    <path d="M22 0H0V18H22V0Z" fill="white"/>
+    </mask>
+    <g mask="url(#mask0_174_18652)">
+    <path d="M16.0525 0.860009C13.1205 1.3376 10.9826 3.90953 10.9826 6.0003C10.9826 3.90953 9.25189 1.40128 5.89237 0.860009C3.1131 0.414249 0.374554 2.66425 0.802134 6.1878C1.5453 12.2904 9.99779 16.5003 10.9826 17.0876C11.9978 16.5003 20.2061 12.1525 21.1631 6.1878C21.6925 2.89774 19.239 0.350569 16.0525 0.860009Z" stroke="black" stroke-width="1.2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </svg>
+  <span class="ssw-counter-fave-menu ssw-hide"></span>
+</a>
+<script defer>
+var sswFaveCounterMenuLoaded = true;
+</script>
+{% endif %}
+{% endif %}

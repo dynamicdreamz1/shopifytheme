@@ -1,0 +1,122 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Page_FAQs_accordions_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_FAQs_accordions_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Page_FAQs_accordions_title_new">
+            <h3>{{ section.settings.main_heading_text }}</h3>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Page_FAQs_accordions_mainloop_new">
+            <div class="Page_FAQs_accordions_innerloop_new Common_faqs_accordion_new">
+              <div class="accordion">
+                <ul class="list-unstyled">
+                  {%- for block in section.blocks -%}
+                    {%- if block.settings.title != blank or block.settings.infos != blank or block.settings.image != blank -%}
+                      <li>
+                        {%- if block.settings.title != blank -%}
+                          <div class="question">
+                            <h2>{{ block.settings.title }}</h2>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.infos != blank or block.settings.image != blank -%}
+                          <div class="answer">
+                            {{ block.settings.infos }}
+                            {%- if block.settings.image != blank -%}
+                              <div class="faq_image_new first_image_{{ block.id }}">
+                                {{
+                                  block.settings.image | 
+                                  image_url: width: img.width | 
+                                  image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                  fetchpriority: 'auto'
+                                }}
+                                <style>
+                                  .first_image_{{ block.id }}{ padding-bottom:10px; } 
+                                  .first_image_{{ block.id }} img{ max-width:{{ block.settings.image_size }}px; }
+                                </style>
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        {%- endif -%}
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Page FAQs Accordions",
+    "class": "Page_FAQs_accordions_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Question Text",
+            "default": "Lorem Ipsum is simply dummy text."
+          },
+          {
+            "type": "richtext",
+            "id": "infos",
+            "label": "Add Answer Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Add Image",
+            "info": "Optional"
+          },
+          {
+            "type": "number",
+            "id": "image_size",
+            "label": "Image size",
+            "info": "Image Size in PX"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page FAQs Accordions",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

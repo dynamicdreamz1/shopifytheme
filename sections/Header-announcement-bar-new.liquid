@@ -1,0 +1,93 @@
+{%- if section.blocks.size > 0 and customer == blank -%}
+  <style>
+    .shopify-section-header-sticky { top: 32px; }
+
+    @media screen and (max-width: 749px) {
+      /* .section-header.shopify-section-header-sticky { top: 54px; } */
+      .bridal-wedding-dresses_page_new .section-header.shopify-section-header-sticky,
+      .template--luxe-collection-new .section-header.shopify-section-header-sticky { top: 0px; }
+    }
+    @media (min-width: 434px) and (max-width: 749px) {
+      .section-header.shopify-section-header-sticky { top: 32px; }
+    }
+  </style>
+  <div class="Header_announcement_bar_main_new" style="background: {{ section.settings.main_back_color }}; color: {{ section.settings.main_text_color }};">
+    <div class="page-width">
+      <div class="Header_announcement_bar_inner_new">
+        <div class="Header_announcement_bar_allloop_new">
+          <div class="swiper-container {% if section.blocks.size > 1 %} Index_announcement_slider {% endif %}">
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.title != blank -%}
+                  <div class="swiper-slide Header_announcement_bar_allloop_mainboxs_new">
+                    <div class="Header_announcement_bar_allloop_innerboxs_new">
+                      {{
+                          block.settings.icon
+                          | image_url: width: 16
+                          | image_tag: widths: '16', loading: 'lazy'
+                        }}
+                      {{ block.settings.title }}
+                    </div>
+                  </div>  
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Header Announcement Bar",
+    "class": "Header_announcement_bar_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_back_color",
+        "label": "Add Main Background Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "main_text_color",
+        "label": "Add Main Text Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "Add Main Information Text",
+            "default": "<p>16% Off orders $249, code: INTSWEET16 SHOP NOW</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Add Main Information Icon"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Header Announcement Bar",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,37 @@
+{% assign mto =  current_product.metafields.magento.mto | handleize %}
+
+{% if mto != blank %}
+
+  {% assign product_category =  current_product.metafields.custom.filter_product_category.value[0] | handleize %}
+  {% assign deliverys_metaobject  =  shop.metaobjects.delivery_days.values | first %}
+
+  {% for category in deliverys_metaobject.delivery_days_key.value %}
+    {% assign handleize_category = category | handleize %}
+    {% if handleize_category == product_category %}
+      {% assign delivery_days =  deliverys_metaobject.delivery_days_value.value[forloop.index0] %}
+      {% assign metaobject_days =  delivery_days %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign collection_delivery_message = 'Ready to ship' %}
+
+  {% if mto == 'yes' %}
+    {% if current_product.options.size == 1 %}
+      {% assign selected_or_first_available_variant_inventory_quantity = current_product.variants[0].inventory_quantity %}
+    {% else %}
+      {% assign selected_or_first_available_variant_inventory_quantity = current_product.variants[1].inventory_quantity %}
+    {% endif %}
+    
+    {% if selected_or_first_available_variant_inventory_quantity < 1 %}
+      {% assign delivery_days =  current_product.metafields.magento.fast_shipping %}
+      {% assign metafield_days =  delivery_days %}
+      {% assign collection_delivery_message = 'Delivers in 45 days' %}
+    {% endif %}
+  {% endif %}
+
+ 
+  {% if delivery_days != blank %}
+    <div js-upsell-delivery-day="{{ delivery_days }}" js-upsell-metafield-days="{{ metafield_days }}" js-upsell-metaobject-days="{{ metaobject_days }}"></div>
+  {% endif %}
+
+{% endif %}

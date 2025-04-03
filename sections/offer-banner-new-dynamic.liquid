@@ -1,0 +1,47 @@
+{{ 'summerfest-offer-banner.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top }}px * 0.75);
+    padding-bottom: calc({{ section.settings.padding_bottom }}px  * 0.75);
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="page-width">
+{% if collection.metafields.custom.offer_banner != blank %}
+  {{ collection.metafields.custom.offer_banner.value }}
+{% else %}
+  {%- for offer in shop.metaobjects.offers.values -%}
+    {%- if offer.offer_disc != blank -%}
+       {{ offer.offer_disc }}
+    {%- endif -%}
+  {%- endfor -%}
+{% endif %}
+ 
+</div>
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Offer Banner new",
+    "class": "page_store_detail_slider_new",
+    
+    "presets": [
+      {
+        "name": "Offer Banner new"
+      }
+    ]
+  }
+{% endschema %}
+
+ 

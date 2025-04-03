@@ -1,0 +1,27 @@
+{% assign productCount = 0 %}
+{% assign totalProductsInCollection  = collection.products_count %}
+{%- paginate collection.products by 50 -%}
+<script type="application/ld+json">
+    {
+        "@context":"https:\/\/schema.org",
+        "@type":"ItemList",
+        "name":"Collection with {{ collection.products_count }} Items",
+        "numberOfItems":"50",
+        "itemListElement":[
+            {% for product in collection.products %}
+            {% assign productCount = productCount | plus: 1 %}
+                {
+                  "@type":"ListItem",
+                  "position": {{ forloop.index }},
+                  "url":"{{ product.url }}"
+                }
+                {% if totalProductsInCollection > 50 %}
+                    {% unless forloop.index == 50 %},{% endunless %}
+                {% else %}
+                    {% unless forloop.index == totalProductsInCollection %},{% endunless %}
+                {%  endif %}
+            {% endfor %}
+        ]
+    }
+</script> 
+{% endpaginate %}

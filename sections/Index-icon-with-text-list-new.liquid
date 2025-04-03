@@ -1,0 +1,142 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Index_icon_with_text_list_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Index_icon_with_text_list_inner_new">
+        <div class="Index_icon_with_text_list_allloop_new">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.icon != blank and block.settings.title != blank -%}
+              <div class="Index_icon_with_text_list_allloop_mainboxs_new" >
+                <div class="Index_icon_with_text_list_allloop_innerboxs_new" popup_id="Index_popup_{{ block.id }}">
+                  {%- if block.settings.icon != blank -%}
+                    <div class="Index_icon_with_text_list_allloop_innerboxs_icons_new">
+                      {{
+                        block.settings.icon | 
+                        image_url: width: img.width | 
+                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                        fetchpriority: 'auto', 
+                        class:'Icon_image_new',
+                        loading: 'lazy'
+                      }}
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                    <div class="Index_icon_with_text_list_allloop_innerboxs_title_new">
+                      {{ block.settings.title }}
+                    </div>
+                  {%- endif -%}
+                </div>
+                {% if block.settings.popup_title != blank %}
+                  <div class="Index_icon_with_text_list_allloop_popup_new Index_popup_{{ block.id }}_open">
+                    <div class="Index_icon_with_text_list_allloop_popup_inner_new">
+                      <div>
+                        <div class="Index_icon_with_text_list_allloop_popup_title_new">
+                          <div class="Index_icon_with_text_list_allloop_popup_title_left_new">{{ block.settings.popup_title }}</div>
+                          <div class="Index_icon_with_text_list_allloop_popup_title_right_new">
+                            <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path> </svg>
+                          </div>
+                        </div>
+                        <div class="Index_icon_with_text_list_allloop_popup_desc_main_new">
+                          {%- if block.settings.popup_desc != blank -%}
+                            <div class="Index_icon_with_text_list_allloop_popup_desc_new">
+                              {{ block.settings.popup_desc }}
+                            </div>
+                          {%- endif -%}
+                          {%- if block.settings.popup_btn != blank and block.settings.popup_btn_url != blank -%}
+                            <div class="Index_icon_with_text_list_allloop_popup_button_new">
+                              <a href="{{ block.settings.popup_btn_url }}" class="button">
+                                {{ block.settings.popup_btn }}
+                              </a>
+                            </div>  
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="index-popup-overlay"></div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Index Icon With Text List",
+    "class": "Index_icon_with_text_list_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "limit": 6,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Add Icon Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Title Text",
+            "default": "Heading"
+          },
+          {
+            "type": "header",
+            "content": "== Popup Details =="
+          },
+          {
+            "type": "text",
+            "id": "popup_title",
+            "label": "Add Popup Title"
+          },
+          {
+            "type": "richtext",
+            "id": "popup_desc",
+            "label": "Add Popup Description"
+          },
+          {
+            "type": "text",
+            "id": "popup_btn",
+            "label": "Add Popup Button"
+          },
+          {
+            "type": "url",
+            "id": "popup_btn_url",
+            "label": "Add Popup Button Url"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Icon With Text List",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

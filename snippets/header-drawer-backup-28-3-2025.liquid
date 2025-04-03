@@ -1,0 +1,520 @@
+{% comment %}
+  Renders a header drawer menu for mobile and desktop.
+
+  Usage:
+  {% render 'header-drawer' %}
+{% endcomment %}
+
+
+
+<header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}">
+  <details id="Details-menu-drawer-container" class="menu-drawer-container">
+    <summary
+      class="header__icon header__icon--menu header__icon--summary link focus-inset"
+      aria-label="{{ 'sections.header.menu' | t }}"
+    >
+      <span>
+        {% render 'icon-hamburger' %}
+        {% render 'icon-close' %}
+      </span>
+    </summary>
+    <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">
+      <div class="menu-drawer__inner-container">
+        <div class="menu-drawer__navigation-container">
+          {%- if shop.customer_accounts_enabled and customer == null -%}
+            <div class="mobile-menu-banner">
+              <div class="mobile-menu-banner-title">Get exclusive<br>insider information.</div>
+              <span onclick="kpHandleLogin('/account')" class="kp-carttxtlink">
+                Sign in/Sign Up
+                <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M0.999999 13L7 7L1 1" stroke="#781710" stroke-width="1.3" stroke-linecap="round"></path> </svg>
+              </span>
+            </div>
+          {% endif %}
+          <nav class="menu-drawer__navigation">
+        
+            <ul class="tab menu-drawer__menu has-submenu list-menu first_menu_new" role="list">
+              {%- for link in section.settings.menu.links -%}
+                {%- assign link_title = link.title | handleize -%}
+                <li class="main_menu_click_new tablinks" {% unless link.title contains 'Luxe' %} onclick="openMobTabs(event, 'link-{{ link.handle | escape }}')" {% endunless %} id="new-{{ link.handle | escape }}">
+                  {% assign flag = 0 %}
+                  {%- if section.blocks.size > 0 -%}
+                    {%- for block in section.blocks -%}
+                      {%- if block.type == 'mega-menu' -%}
+                        {%- if block.settings.main_menu_name != blank or block.settings.mega_menu != blank -%}
+                          {%- assign main_menu_name = block.settings.main_menu_name | handleize -%}
+                          {%- assign mega_menu = block.settings.mega_menu -%}
+                          
+                          {% if main_menu_name == link_title %}
+                            {% assign flag = 1 %}
+                          {% endif %}
+                          
+                        {% endif %}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+
+                  {% if flag == 1 %}
+                    {% assign flag = 0 %}
+                    {%- if section.blocks.size > 0 -%}
+                      {%- for block in section.blocks -%}
+                        {%- if block.type == 'mega-menu' -%}
+                          {%- if block.settings.main_menu_name != blank or block.settings.mega_menu != blank -%}
+                            {%- assign main_menu_name = block.settings.main_menu_name | handleize -%}
+                            {%- assign mega_menu = block.settings.mega_menu -%}
+                            
+                            {% if main_menu_name == link_title %}
+                              <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
+                                <summary
+                                  id="HeaderDrawer-{{ link.handle }}"
+                                  class="menu-drawer__menu-item main_menu_click_open_new list-menu__item link link--text focus-inset{% if link.child_active %} menu-drawer__menu-item--active{% endif %}"
+                                >
+                                  
+                                  <div class="mobile_menu_title_new">{{ link.title | escape }}</div>
+                                  {% render 'icon-caret' %}
+                                </summary>
+                              </details>
+                              {% endif %}
+                            
+                          {% endif %}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                    
+                  {% else %}
+
+                    {%- if link.links != blank -%}
+                      
+                    {%- else -%}
+                      <a id="HeaderDrawer-{{ link.handle }}" href="{{ link.url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.current %} menu-drawer__menu-item--active{% endif %}" {% if link.current %} aria-current="page" {% endif %} >                        
+                        <div class="mobile_menu_title_new">{{ link.title | escape }}</div>                        
+                        {% render 'icon-caret' %}
+                      </a>
+                    {%- endif -%}
+                    
+                  {% endif %}
+                
+                </li>
+              {%- endfor -%}
+            </ul>
+
+
+            <ul class="list-menu list-menu2" role="list">
+              {%- for link in section.settings.menu.links -%}
+                  {%- assign link_title = link.title | handleize -%}
+                  {% assign flag = 0 %}
+                  {%- if section.blocks.size > 0 -%}
+                    {%- for block in section.blocks -%}
+                      {%- if block.type == 'mega-menu' -%}
+                        {%- if block.settings.main_menu_name != blank or block.settings.mega_menu != blank -%}
+                          {%- assign main_menu_name = block.settings.main_menu_name | handleize -%}
+                          {%- assign mega_menu = block.settings.mega_menu -%}
+                          
+                          {% if main_menu_name == link_title %}
+                            {% assign flag = 1 %}
+                          {% endif %}
+                          
+                        {% endif %}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+
+                  {% if flag == 1 %}
+                    {% assign flag = 0 %}
+                    {%- if section.blocks.size > 0 -%}
+                      {%- for block in section.blocks -%}
+                        {%- if block.type == 'mega-menu' -%}
+                          {%- if block.settings.main_menu_name != blank or block.settings.mega_menu != blank -%}
+                            {%- assign main_menu_name = block.settings.main_menu_name | handleize -%}
+                            {%- assign mega_menu = block.settings.mega_menu -%}
+                           
+                            {% if main_menu_name == link_title %}
+                            
+                            <li id="link-{{ link.handle | escape }}" class="tabcontent-box" tabindex="-1" style="display: none;">
+                              {% assign bottom_menu_title = link.title | handleize %}
+                                <!-- <button class="menu-drawer__close-button main_menu_click_close_new link link--text focus-inset {% if bottom_menu_title == "bridal" %}inner_menu_open_bottom_close_new{% endif %}" aria-expanded="true">
+                                  {% if bottom_menu_title == "bridal" %}
+                                    <svg width="24" height="24" class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M10 4L2 12L10 20" stroke="#0F0D1A" stroke-width="1.2" stroke-linecap="round"/>
+                                      <path d="M2 12H24" stroke="#0F0D1A" stroke-width="1.2"/>
+                                    </svg>
+                                  {% else %}
+                                    {% render 'icon-arrow' %}
+                                    {{ link.title | escape }}
+                                  {% endif %}
+                                </button> -->
+                                {% if bottom_menu_title == "bridal" %}
+                                  <div class="inner_menu_open_bottom_title_image_new">
+                                    <!-- <div class="inner_menu_open_bottom_title_new">{{ link.title | escape }}</div> -->
+                                    {% assign megamenu_custom_image_product = shop.metaobjects.megamenu_custom_image_product.values %}
+                                      {% paginate shop.metaobjects.megamenu_custom_image_product.values by 1000 %}
+                                        {% for megamenu_custom_image_product in megamenu_custom_image_product %}
+                                          
+                                          {% assign inner_menu_child = link.title | handleize %}
+                                          {% assign inner_menu_name = megamenu_custom_image_product.inner_menu_name.value | handleize %}
+                          
+                                            {% if inner_menu_name == inner_menu_child %}
+                                              <div class="">
+                                                {%- if megamenu_custom_image_product.image_or_video_mobile.value != blank -%}
+                                                  <div class="inner_menu_open_bottom_image_new">
+                                                    <div class="megamenu_right_top_mainvideoimage_new">
+                                                      {% if megamenu_custom_image_product.button_redirect_url.value != blank %}
+                                                        <a href="{{ megamenu_custom_image_product.button_redirect_url.value }}">
+                                                      {% endif %}
+                                                        <div class="megamenu_right_top_innervideoimage_new">
+                                                          {%- if megamenu_custom_image_product.image_or_video_mobile.value.sources[1].url contains '.mp4' or megamenu_custom_image_product.image_or_video_mobile.value.sources[1].url contains '.MP4' -%}
+                                                            <div class="megamenu_right_top_video_OR_image_new">
+                                                              <video
+                                                                id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                                class="video-div"
+                                                                data-type="mp4"
+                                                                src="{{ megamenu_custom_image_product.image_or_video_mobile.value.sources[1].url }}"
+                                                                loop muted playsinline autoplay>
+                                                              </video>
+                                                            </div>
+                                                          {%- else -%}
+                                                            <div class="megamenu_right_top_video_OR_image_new">
+                                                              {{
+                                                                megamenu_custom_image_product.image_or_video_mobile.value | 
+                                                                image_url: width: img.width | 
+                                                                image_tag: widths: '750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                                fetchpriority: 'auto', 
+                                                                class:'Hover_image_new'
+                                                              }}
+                                                            </div>
+                                                          {%- endif -%}
+                                                        </div>
+                                                      
+                                                      {% if megamenu_custom_image_product.button_redirect_url.value != blank %}
+                                                        </a>
+                                                      {% endif %}
+                                                    </div>
+                                                  </div>
+                                                {%- endif -%}
+                          
+                                              
+                                              </div>
+                                            {% endif %}
+                                          
+                                        {% endfor %}
+                                      {% endpaginate %}
+                                  </div>
+                                {% endif %}
+                                <ul class="menu-drawer__menu list-menu {% if bottom_menu_title == "bridal" %}inner_menu_open_bottom_new submenu2bridal{% endif %} submenu2 " role="list" tabindex="-1">
+                                  {%- assign selected_menu_name = link.title | handleize -%}
+                                  {%- for childlink in mega_menu.links -%}
+                                    {% assign inner_menu_child = childlink.title | handleize %}
+                                    <li>
+                                      {% assign menu_2_text_color = shop.metaobjects.menu_2_text_color.values %}
+                                      
+                                        {% for menu_2_text_color in menu_2_text_color %}
+                                            {%- assign main_menu_name = menu_2_text_color.menu_name.value | handleize -%}                                            
+                                            {% assign inner_menu_name = menu_2_text_color.inner_menu_name.value | handleize %}
+                                          
+                                            {%- if main_menu_name == selected_menu_name -%}
+                                              {% if inner_menu_name == inner_menu_child %}
+                                                <style>
+                                                  .{{ childlink.title | handleize }}_2_new span{ background:{{ menu_2_text_color.text_color.value }}; color:{{ menu_2_text_color.text_color_main.value }} !important; padding: 3.8px 4.8px 5.8px 4.8px; border-radius: 4px; margin: -4.8px; }
+                                                </style>
+                                                
+                                              {% endif %}                                              
+                                            {% endif %}
+                                          
+                                        {% endfor %}
+                                      
+                                      
+                                      
+                                      {%- if childlink.links == blank -%}
+                                        <a
+                                          id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
+                                          href="{{ childlink.url }}"
+                                          class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %} {{ childlink.title | handleize }}_2_new"
+                                          {% if childlink.current %}
+                                            aria-current="page"
+                                          {% endif %}
+                                        >
+                                          
+                                          <span>
+                                          {{ childlink.title | escape }}
+                                          
+                                          </span>
+                                        </a>
+                                      {%- else -%}
+                                        <details id="Details-menu-drawer-{{ link.handle }}-{{ childlink.handle }}" class="{% if bottom_menu_title == "bridal" %}submenu2bridal-inner{% endif %}">
+                                          <summary
+                                            id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
+                                            class="menu-drawer__menu-item link link--text list-menu__item {% if bottom_menu_title == "bridal" %}item_uppercase_new{% endif %} focus-inset {{ childlink.title | handleize }}_2_new"
+                                          ><span>
+                                            {{ childlink.title | escape }}</span>
+                                            {% render 'icon-arrow-new' %}
+                                            {% render 'icon-caret' %}
+                                          </summary>
+                                          <div
+                                            id="childlink-{{ childlink.handle | escape }}"
+                                            class="menu-drawer__submenu has-submenu gradient motion-reduce"
+                                          >
+                                             <button
+                                              class="menu-drawer__close-button link link--text focus-inset inner_menu_open_bottom_close_new"
+                                              aria-expanded="true"
+                                            >
+                                              <svg width="24" height="24" class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10 4L2 12L10 20" stroke="#0F0D1A" stroke-width="1.2" stroke-linecap="round"/>
+                                                <path d="M2 12H24" stroke="#0F0D1A" stroke-width="1.2"/>
+                                              </svg>
+                                            </button>
+                          
+                                            {% unless bottom_menu_title == "bridal" %}
+                                              <div class="inner_menu_open_bottom_title_image_new">
+                                                <div class="inner_menu_open_bottom_title_new">{{ childlink.title | escape }}</div>
+                                                {% assign megamenu_custom_image_product = shop.metaobjects.megamenu_custom_image_product.values %}
+                                                  {% paginate shop.metaobjects.megamenu_custom_image_product.values by 1000 %}
+                                                    {% for megamenu_custom_image_product in megamenu_custom_image_product %}
+                                                      {% assign main_menu_name = megamenu_custom_image_product.main_menu_name.value | handleize %}
+                                                      
+                                                      {% assign inner_menu_child = childlink.title | handleize %}
+                                                      {% assign inner_menu_name = megamenu_custom_image_product.inner_menu_name.value | handleize %}
+                                  
+                                                      {% if main_menu_name == selected_menu_name %}
+                                                        {% if inner_menu_name == inner_menu_child %}
+                                                          {%- if megamenu_custom_image_product.image_or_video_mobile.value != blank -%}
+                                                            <div class="">
+                                                                <div class="inner_menu_open_bottom_image_new">
+                                                                  <div class="megamenu_right_top_mainvideoimage_new">
+                                                                    {% if megamenu_custom_image_product.button_redirect_url.value != blank %}
+                                                                      <a href="{{ megamenu_custom_image_product.button_redirect_url.value }}">
+                                                                    {% endif %}
+                                                                      <div class="megamenu_right_top_innervideoimage_new">
+                                                                        {%- if megamenu_custom_image_product.image_or_video_mobile.value.sources[1].url contains '.mp4' or megamenu_custom_image_product.image_or_video_mobile.value.sources[1].url contains '.MP4' -%}
+                                                                          <div class="megamenu_right_top_video_OR_image_new">
+                                                                            <video
+                                                                              id="Mp4Video-{{ forloop.index0 }}-inner"
+                                                                              class="video-div"
+                                                                              data-type="mp4"
+                                                                              src="{{ megamenu_custom_image_product.image_or_video_mobile.value.sources[1].url }}"
+                                                                              loop muted playsinline autoplay>
+                                                                            </video>
+                                                                          </div>
+                                                                        {%- else -%}
+                                                                          <div class="megamenu_right_top_video_OR_image_new">
+                                                                            {{
+                                                                              megamenu_custom_image_product.image_or_video_mobile.value | 
+                                                                              image_url: width: img.width | 
+                                                                              image_tag: widths: '750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                                              fetchpriority: 'auto', 
+                                                                              class:'Hover_image_new'
+                                                                            }}
+                                                                          </div>
+                                                                        {%- endif -%}
+                                                                      </div>
+                                                                      {% comment %}
+                                                                      <div class="megamenu_right_top_titlebutton_new">
+                                                                        {% if megamenu_custom_image_product.image_title.value != blank %}
+                                                                          <div class="megamenu_right_top_title_new">{{ megamenu_custom_image_product.image_title.value }}</div>
+                                                                        {% endif %}
+                                                                        {% if megamenu_custom_image_product.button_name.value != blank %}
+                                                                          <div class="button button_white">{{ megamenu_custom_image_product.button_name.value }}</div>
+                                                                        {% endif %}
+                                                                      </div>
+                                                                      {% endcomment %}
+                                                                    {% if megamenu_custom_image_product.button_redirect_url.value != blank %}
+                                                                      </a>
+                                                                    {% endif %}
+                                                                  </div>
+                                                                </div>
+                                                              {% comment %}
+                                                                {%- if megamenu_custom_image_product.select_product.value != blank -%}
+                                                                  <div class="megamenu_right_bottom_new">
+                                                                    {% assign mega_product = all_products[megamenu_custom_image_product.select_product] %}
+                                                                    <div class="megamenu_right_bottom_inner_new">
+                                                                        <a href="{{ mega_product.url }}">
+                                                                        <div class="megamenu_right_bottom_image_new">
+                                                                          {% if mega_product.metafields.custom.product_grid_tag != blank %}
+                                                                            <div class="card__badge top right">
+                                                                              <span class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}">
+                                                                                {{ mega_product.metafields.custom.product_grid_tag }}
+                                                                              </span>
+                                                                            </div>
+                                                                          {% endif %}
+                                                                          {{
+                                                                            mega_product.featured_media | 
+                                                                            image_url: width: img.width | 
+                                                                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                                            fetchpriority: 'auto'
+                                                                          }}
+                                                                        </div>
+                                                                        <div class="megamenu_right_bottom_titleprice_new">
+                                                                          <div class="megamenu_right_bottom_title_new">{{ mega_product.title }}</div>
+                                                                          <div class="megamenu_right_bottom_price_new">{{ mega_product.price | money }}</div>
+                                                                        </div>
+                                                                        </a>
+                                                                    </div>
+                                                                  </div>
+                                                                {%- endif -%}
+                                                              {% endcomment %}
+                                                            </div>
+                                                          {%- endif -%}
+                                                        {% endif %}
+                                                      {% endif %}
+                                                    {% endfor %}
+                                                  {% endpaginate %}
+                                              </div>
+                                            {% endunless %}
+                                            <ul
+                                              class="menu-drawer__menu list-menu inner_menu_open_bottom_new submenu3"
+                                              role="list"
+                                              tabindex="-1"
+                                            >
+                                              {%- for grandchildlink in childlink.links -%}
+                                                <li ggg>
+                                                  {%- if grandchildlink.links == blank -%}
+                                                    <a
+                                                      id="HeaderDrawer-{{ link.handle }}-{{ grandchildlink.handle }}"
+                                                      href="{{ grandchildlink.url }}"
+                                                      class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if grandchildlink.current %} menu-drawer__menu-item--active{% endif %}"
+                                                      {% if grandchildlink.current %}
+                                                        aria-current="page"
+                                                      {% endif %}
+                                                    >
+                                                      {{ grandchildlink.title | escape }}
+                                                    </a>
+                                                  {%- else -%}
+                                                    <details id="Details-menu-drawer-{{ link.handle }}-{{ grandchildlink.handle }}" class="sub-link-menu">
+                                                      <summary
+                                                        id="HeaderDrawer-{{ link.handle }}-{{ grandchildlink.handle }}"
+                                                        class="menu-drawer__menu-item link link--text list-menu__item item_uppercase_new focus-inset {{ grandchildlink.title | handleize }}_3_new"
+                                                      >
+                                                        {{ grandchildlink.title | escape }}
+                                                        {% render 'icon-arrow' %}
+                                                        {% render 'icon-caret' %}
+                                                      </summary>
+                                                      <div
+                                                        id="grandchildlink-{{ grandchildlink.handle | escape }}"
+                                                        class="menu-drawer__submenu has-submenu gradient motion-reduce"
+                                                      >
+                                                        <button
+                                                          class="menu-drawer__close-button link link--text focus-inset"
+                                                          aria-expanded="true"
+                                                        >
+                                                          {% render 'icon-arrow' %}
+                                                          {{ grandchildlink.title | escape }}
+                                                        </button>
+                                                        <ul
+                                                          class="menu-drawer__menu list-menu"
+                                                          role="list"
+                                                          tabindex="-1"
+                                                        >
+                                                          {%- for grandchildlinkgrand in grandchildlink.links -%}
+                                                            <li>
+                                                              {% assign menu_3_text_color = shop.metaobjects.menu_3_text_color.values %}
+                                                              {% paginate shop.metaobjects.menu_3_text_color.values by 1000 %}
+                                                                {% for menu_3_text_color in menu_3_text_color %}
+                                                                  {% assign menu_title = grandchildlinkgrand.title | handleize %}
+                                                                  {% assign menu_name_title = menu_3_text_color.menu_name.value | handleize %}
+                                                                  {% if menu_title == menu_name_title %}
+                                                                    <style>
+                                                                      .{{ grandchildlinkgrand.title | handleize }}_3_new{ color:{{ menu_3_text_color.text_color.value }} !important; }
+                                                                    </style>
+                                                                  {% endif %}
+                                                                {% endfor %}
+                                                              {% endpaginate %}
+                                                            
+                                                              {% assign grandchildlink_title = grandchildlink.title | handleize %}
+                                                            
+                                                              <a
+                                                                id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}-{{ grandchildlinkgrand.handle }}"
+                                                                href="{{ grandchildlinkgrand.url }}"
+                                                                class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if grandchildlinkgrand.current %} menu-drawer__menu-item--active{% endif %} {{ grandchildlinkgrand.title | handleize }}_3_new {% if grandchildlink_title contains "color" %} color_menu_new {% endif %}"
+                                                                {% if grandchildlinkgrand.current %}
+                                                                  aria-current="page"
+                                                                {% endif %}
+                                                              >
+                                                                {% if grandchildlink_title contains "color" %}
+                                                                  {% assign menu_3_dot_color = shop.metaobjects.menu_3_dot_color.values %}
+                                                                  {% paginate shop.metaobjects.menu_3_dot_color.values by 1000 %}
+                                                                    {% for menu_3_dot_color in menu_3_dot_color %}
+                                                                      {% assign menu_title = grandchildlinkgrand.title %}
+                                                                      {% assign menu_name_title = menu_3_dot_color.menu_name.value %}
+                                                                      {% if menu_title contains menu_name_title %}
+                                                                        <div class="color_dot_new {{ menu_name_title | handleize }}_border_new" style="background:{{ menu_3_dot_color.dot_color.value }};"></div>
+                                                                      {% endif %}
+                                                                    {% endfor %} 
+                                                                  {% endpaginate %}
+                                                                {% endif %}
+                                                                {{ grandchildlinkgrand.title | escape }}<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="menu3_arrow_icon"><path d="M5.5318 13.1369C5.46971 13.075 5.42045 13.0014 5.38685 12.9204C5.35324 12.8394 5.33594 12.7526 5.33594 12.6649C5.33594 12.5772 5.35324 12.4904 5.38685 12.4094C5.42045 12.3284 5.46971 12.2548 5.5318 12.1929L9.7278 7.99824L5.5318 3.80357C5.40661 3.67839 5.33629 3.50861 5.33629 3.33157C5.33629 3.15454 5.40661 2.98475 5.5318 2.85957C5.65698 2.73439 5.82676 2.66406 6.0038 2.66406C6.18083 2.66406 6.35061 2.73439 6.4758 2.85957L11.1425 7.52624C11.2045 7.58817 11.2538 7.66173 11.2874 7.74273C11.321 7.82372 11.3383 7.91055 11.3383 7.99824C11.3383 8.08593 11.321 8.17276 11.2874 8.25375C11.2538 8.33474 11.2045 8.40831 11.1425 8.47024L6.4758 13.1369C6.41387 13.199 6.3403 13.2482 6.25931 13.2819C6.17831 13.3155 6.09149 13.3328 6.0038 13.3328C5.91611 13.3328 5.82928 13.3155 5.74828 13.2819C5.66729 13.2482 5.59372 13.199 5.5318 13.1369Z" fill="#270739"/></svg>
+                                                              </a>
+                                                            </li>
+                                                          {%- endfor -%}
+                                                        </ul>
+                                                      </div>
+                                                    </details>
+                                                  {%- endif -%}
+                          
+                                                </li>
+                                              {%- endfor -%}
+                                            </ul>
+                                          </div>
+                                        </details>
+                                      {%- endif -%}
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                            </li>
+                            
+                              
+                            {% endif %}
+                            
+                          {% endif %}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                  {% endif %}
+              {%- endfor -%}
+              {% if customer %}
+                <details id="Details-menu-drawer-menu-item-myaccount">
+                  <summary
+                    id="HeaderDrawer-{{ link.handle }}"
+                    class="menu-drawer__menu-item link link--text list-menu__item"
+                  >
+                    <span>My Account</span>
+                    {% render 'icon-arrow-new' %}
+                  </summary>
+                   <div
+                      id="childlink-myaccount"
+                      class="menu-drawer__submenu has-submenu gradient motion-reduce"
+                    >
+                       <button
+                        class="menu-drawer__close-button link link--text focus-inset inner_menu_open_bottom_close_new"
+                        aria-expanded="true"
+                      >
+                        <svg width="24" height="24" class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10 4L2 12L10 20" stroke="#0F0D1A" stroke-width="1.2" stroke-linecap="round"/>
+                          <path d="M2 12H24" stroke="#0F0D1A" stroke-width="1.2"/>
+                        </svg>
+                      </button>
+                      <ul class="menu-drawer__menu list-menu">
+                        <li><a href="javascript:void(0)"> Welcome {{ customer.first_name }}!</a></li>
+                        <li><a href="/account" aria-label="Login">Account Details</a></li>
+                        <li><a href="/account?view=orders">Order History</a></li>
+                        <li><a href="/apps/wishlist" aria-label="Wishlist">Wishlist</a></li>
+                        <li><a href="{{ routes.account_logout_url }}" class="signout_new">Sign Out</a></li>
+                      </ul>
+                  </div>
+                </details>
+              {% endif %}
+            </ul>
+
+            
+          </nav>
+
+          {%- if section.settings.bottom_mobile_button_text != blank and section.settings.bottom_mobile_button_link != blank -%}
+            <div class="Header_drawer_mobile_bottom_2_new">
+              <a href="{{ section.settings.bottom_mobile_button_link }}" class="button">
+                {{ section.settings.bottom_mobile_button_text }}
+              </a>
+            </div>  
+          {%- endif -%}
+         
+        </div>
+      </div>
+    </div>
+  </details>
+</header-drawer>

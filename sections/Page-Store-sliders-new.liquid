@@ -1,0 +1,190 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Page_Store_google_reviews_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_Store_google_reviews_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Page_Store_google_reviews_titleinfosboth_new">
+            {%- if section.settings.main_heading_text != blank -%}
+              <div class="Common_title_new Page_Store_google_reviews_title_new">
+                <h2>{{ section.settings.main_heading_text }}</h2>
+              </div>
+            {%- endif -%}
+            
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Page_Store_google_reviews_mainloop_new">
+            <div class="Page_Store_google_reviews_innerloop_new">
+              <div class="swiper-container page_store_google_slider">
+                <div class="swiper-wrapper">
+                  {%- for block in section.blocks -%}
+                    {%- if block.settings.main_author_image != blank or block.settings.title != blank or block.settings.store_address_text != blank or block.settings.google_ahref_link != blank or block.settings.opening_hours != blank or block.settings.callno != blank or block.settings.email != blank or block.settings.view_detial_link != blank or block.settings.book_appointment_link != blank -%}
+                      <div class="swiper-slide Page_Store_Slider_innerloop_mainbox">
+                         <div class="Page_Store_slider_innerloop_innerboxs">
+
+                           
+                          {%- if block.settings.main_author_image != blank -%}
+                            <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_new">
+                               {%- if block.settings.main_author_image != blank -%}
+                                    {{
+                                          block.settings.main_author_image | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'Author_image_new'
+                                        }}
+                                {%- endif -%}
+                            </div>
+                          {%- endif -%} 
+                           
+                          {%- if block.settings.title != blank or block.settings.store_address_text != blank or block.settings.google_ahref_link != blank or block.settings.opening_hours != blank or block.settings.callno != blank or block.settings.email != blank or block.settings.view_detial_link != blank or block.settings.book_appointment_link != blank -%}
+                               {%- if block.settings.title != blank -%}
+                                    <h3>KALKI {{ block.settings.title }} store</h3>
+                               {%- endif -%}
+                                {%- if block.settings.store_address_text != blank -%}
+                                   <p>{{ block.settings.store_address_text }}</p>  
+                                {%- endif -%}
+                                {%- if block.settings.google_ahref_link != blank -%}
+                                  <a href="{{ block.settings.google_ahref_link }}"  target="_blank">Get Direction</a>
+                                {%- endif -%}
+                                 <h3>Opening hours</h3>
+                                {%- if block.settings.opening_hours != blank -%}
+                                    <p>{{ block.settings.opening_hours }}</p>
+                                {%- endif -%}
+                                  <h3>Contact</h3>
+                                {%- if block.settings.callno != blank -%}
+                                    <p>Tel :{{ block.settings.callno }}</p>
+                                {%- endif -%}
+                                {%- if block.settings.email != blank -%}
+                                    <p>Email :{{ block.settings.email }}</p>
+                                {%- endif -%}
+                                <div class="Page_Store_slider_innerloop_buttonbox">
+                                     {%- if block.settings.view_detial_link != blank -%}
+                                      <a href="{{  block.settings.view_detial_link }}" target="_blank"> VIEW DETAILS <span> <svg width="12" height="12" viewBox="0 0 22 22"
+                                                                      fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                                      class="cmsb666-hover:bg-223330 cmsb666-bg-transparent cmsb666-transition-all cmsb666-duration-500 cmsb666-ease-in-out group-hover:brightness-[100]">
+                                                                      <path d="M8 4L15 11L8 18" stroke="#0F0D1A" stroke-width="2" stroke-linecap="round"
+                                                                          stroke-linejoin="round"></path>
+                                                                  </svg> </span> 
+                                      </a>
+                                      {%- endif -%}
+                                       {%- if block.settings.book_appointment_link != blank -%}
+                                          <a href="{{ block.settings.book_appointment_link }}" target="_blank">BOOK APPOINTMENT</a>
+                                      {%- endif -%}
+                             
+                                 </div>
+                          {%- endif -%}
+
+                           
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}  
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      
+      </div>
+    </div>
+  </div>
+<div>  
+
+
+  
+  
+</div>
+  
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Page Store Slider",
+    "class": "Page_Store_google_reviews_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Visit our stores"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_author_image",
+            "label": "Add Main Author Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Mumbai"
+          },
+          {
+            "type": "text",
+            "id": "store_address_text",
+            "label": "Add Store Address Text",
+            "default": "101, Prime Plaza, S. V. Road, Santacruz. (W), Mumbai - 400054, India."
+          },
+          {
+            "type": "url",
+            "id": "google_ahref_link",
+            "label": "Add google location link"
+          },
+          {
+            "type": "text",
+            "id": "opening_hours",
+            "label": "Opening hours Text",
+            "default": "10.30am to 9.00pm - All days Open."
+          },
+          {
+            "type": "text",
+            "id": "callno",
+            "label": "call number",
+            "default": "+91 22 4890 0247"
+          },
+          {
+            "type": "text",
+            "id": "email",
+            "label": "email id",
+            "default": "info@kalkifashion.com"
+          },
+          {
+            "type": "url",
+            "id": "view_detial_link",
+            "label": "Add view detial link"
+          },
+          {
+            "type": "url",
+            "id": "book_appointment_link",
+            "label": "Add book appointment link"
+          }          
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Store Slider",
+        "blocks": [
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

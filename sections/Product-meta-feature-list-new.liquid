@@ -1,0 +1,85 @@
+{%- if product.metafields.custom.product_features_video_or_image != blank or product.metafields.custom.product_features_title_text != blank or product.metafields.custom.product_features_information_list_text != blank -%}
+  <div class="Product_meta_feature_list_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Product_meta_feature_list_inner_new">
+        {%- if product.metafields.custom.product_features_title_text != blank -%}
+          <div class="Product_meta_feature_list_innerright_titletexts_new mobile_image_new">
+            <h2>{{ product.metafields.custom.product_features_title_text }}</h2>
+          </div>
+        {%- endif -%}
+        <div class="Product_meta_feature_list_mainleftright_new">
+          <div class="Product_meta_feature_list_innerleftright_new">
+            {%- if product.metafields.custom.product_features_video_or_image != blank -%}
+              <div class="Product_meta_feature_list_mainleft_new">
+                <div class="Product_meta_feature_list_innerleft_new">
+                  {%- if product.metafields.custom.product_features_video_or_image.value.sources[1].url contains '.mp4' or product.metafields.custom.product_features_video_or_image.value.sources[1].url contains '.MP4' -%}
+                    <div class="Product_meta_feature_list_innerleft_videoimage_new">
+                      <video
+                        id="Mp4Video-{{ section.id }}-main"
+                        class="Product_video_new"
+                        data-type="mp4"
+                        src="{{ product.metafields.custom.product_features_video_or_image.value.sources[1].url }}"
+                        loop muted playsinline autoplay>
+                      </video>
+                    </div>
+                  {%- else -%}
+                    <div class="Product_meta_feature_list_innerleft_videoimage_new">
+                      {{
+                        product.metafields.custom.product_features_video_or_image | 
+                        image_url: width: img.width | 
+                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                        fetchpriority: 'auto', 
+                        class:'Product_image_new'
+                      }}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+            {%- if product.metafields.custom.product_features_title_text != blank or product.metafields.custom.product_features_information_list_text != blank -%}
+              <div class="Product_meta_feature_list_mainright_new">
+                <div class="Product_meta_feature_list_innerright_new">
+                  {%- if product.metafields.custom.product_features_title_text != blank -%}
+                    <div class="Product_meta_feature_list_innerright_titletexts_new desktop_image_new">
+                      <h2>{{ product.metafields.custom.product_features_title_text }}</h2>
+                    </div>
+                  {%- endif -%}
+                  {%- if product.metafields.custom.product_features_information_list_text != blank -%}
+                    <div class="Product_meta_feature_list_innerright_infoslists_new">
+                      {%- for rows in product.metafields.custom.product_features_information_list_text.value -%}
+                        <div class="Product_meta_feature_list_innerright_infoslists_lists_new">
+                          {{ rows }}
+                        </div>
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+
+{% schema %}
+  {
+    "name": "Product Meta Feature List",
+    "class": "Product_meta_feature_list_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Meta Feature List"
+      }
+    ]
+  }
+{% endschema %}

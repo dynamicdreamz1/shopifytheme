@@ -1,0 +1,82 @@
+{%- if section.settings.main_icon_image != blank or section.settings.main_information_text != blank -%}
+  <div class="collection_luxe_banners_main_new collection_luxe_banners_main_new_{{ section.id }}"  style="{% if section.settings.main_desktop_full_image != blank %}background: url({{ section.settings.main_desktop_full_image | img_url: 'master' }}) no-repeat center center; background-size: cover;{% else %}background: {{ section.settings.main_background_color }};{% endif %}">
+    <div class="page-width">
+      <div class="collection_luxe_banners_inner_new">
+        {%- if section.settings.main_mobile_full_image != blank -%}
+          <style>
+            @media(min-width:0px) and (max-width:749px){
+              .collection_luxe_banners_main_new_{{ section.id }}{
+                background: url({{ section.settings.main_mobile_full_image | img_url: 'master' }}) no-repeat center center !important;
+                background-size: cover !important;
+              }
+            }
+          </style>
+        {%- endif -%}
+        {%- if section.settings.main_icon_image != blank or section.settings.main_information_text != blank -%}
+          <div class="collection_luxe_banners_mainboxs_new">
+            <div class="collection_luxe_banners_innerboxs_new">
+              {%- if section.settings.main_icon_image != blank -%}
+                <div class="collection_luxe_banners_innerboxs_icons_new">
+                  {{
+                    section.settings.main_icon_image | 
+                    image_url: width: img.width | 
+                    image_tag: widths: '1080, 1296, 1512, 1728, 1944, 2048', 
+                    fetchpriority: 'auto', 
+                    class:'Icon_image_new'
+                  }}
+                </div>
+              {%- endif -%}
+              {%- if section.settings.main_information_text != blank -%}
+                <div class="collection_luxe_banners_innerboxs_infos_new">
+                  {{ section.settings.main_information_text }}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Collection Luxe Banners",
+    "class": "collection_luxe_banners_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#EFEFEF"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_icon_image",
+        "label": "Add Main Icon Image"
+      },
+      {
+        "type": "richtext",
+        "id": "main_information_text",
+        "label": "Add Main Information Text",
+        "default": "<p>Embark on an exclusive journey with our meticulously curated collection, tailored to elevate your festive, wedding & special occasion looks.</p>"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Luxe Banners"
+      }
+    ]
+  }
+{% endschema %}

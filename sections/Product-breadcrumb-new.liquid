@@ -1,0 +1,27 @@
+<div class="Product_breadcrumb_main_new" style="background: {{ section.settings.main_background_color }};">
+  <div class="page-width">
+    <div class="Product_breadcrumb_inner_new">
+      {% render 'Breadcrumb-navigation-new', product: product %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Product Breadcrumb",
+    "class": "Product_breadcrumb_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Breadcrumb"
+      }
+    ]
+  }
+{% endschema %}

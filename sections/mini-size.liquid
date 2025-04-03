@@ -1,0 +1,286 @@
+{%- for option in product.options_with_values -%}
+  {%- for value in option.values -%}
+    {% if option.name == 'Size' or option.name == 'Confi size' or option.name == 'Confi Size' %}
+    {% assign varSize = true %}
+    {% for variant in product.variants %}
+      {% if value contains 'Months' or value contains 'Years' %}
+        {% assign miniSizeContains = true %}
+      {% endif %}
+    {% endfor %}
+    {% if forloop.index == 1 %}
+      {% unless value contains 'Months' or value contains 'Years' %}
+        {% assign miniSize = true %}
+      {% endunless  %}
+    {% endif %}
+  {% endif %}
+  {% endfor %}
+{% endfor %}
+{% if varSize == true and miniSizeContains == true and miniSize == true %}
+  {{ 'minisize-popup.css' | asset_url | stylesheet_tag }}
+  <div class="minisize-popup" id="minisize-popup">
+    <div class="minisize-popup-wrap">
+      <span id="close-minisize">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 3L21 21" stroke="black" stroke-width="1.2" stroke-linecap="round"></path>
+          <path d="M21 3L3 21" stroke="black" stroke-width="1.2" stroke-linecap="round"></path>
+        </svg>
+      </span>
+      <div class="product-custom">
+        <div class="minisize-image">
+          {{
+            product.featured_image
+            | image_url: width: 400
+            | image_tag: widths: '400'
+          }}
+        </div>
+        
+        <div class="product_details" js-product-details>
+          <div class="title_with_heart-icon">
+            <h1 class="title">{{ product.title }} (For kids)</h1>
+            <div class="product_whishlist_new">
+              <div class="btn" >
+                {%- for block in section.blocks -%}
+                  {%- case block.type -%}
+                    {%- when '@app' -%}
+                      {% render block %}
+                  {% endcase %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="product-stamps-wrap">
+            {% if product.metafields.magento.online_stamps != blank %}
+              <div class="product_online_stamps">
+                  {{ product.metafields.magento.online_stamps }}
+              </div>
+            {% endif %}
+            {% if product.metafields.magento.festival_stamp != blank %}
+              <div class="product_festival_stamp">
+                  {{ product.metafields.magento.festival_stamp }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+            {%- render 'price',
+                product: product,
+                use_variant: true,
+                show_badges: true,
+                price_class: 'price--large'
+             -%}
+          </div>
+          <h3 class="Inclusive">Inclusive of all taxes</h3>
+          
+          <product-form
+            class="product-form khadi-product-form"
+            data-hide-errors="{{ gift_card_recipient_feature_active }}"
+            data-section-id="{{ section.id }}"
+            js-template-one-product-form
+            js-khadi-product-form
+          >
+            {%- assign product_form_id = 'product-form-' | append: section.id -%}
+            {%- form 'product',
+              product,
+              id: product_form_id,
+              class: 'form',
+              data-type: 'add-to-cart-form',
+              data-delivery-current-delivery-day-value: ''
+            -%}
+
+              <input type="hidden" value="main product" name="items[0][properties][_type]" />
+
+              {% render "discount-code" section: section %}
+
+              {% render 'metafield-color-options' product: product %}
+
+              {% render 'alternate-variants', 
+                product: product, 
+                product_form_id: product_form_id, 
+                section: section, 
+                stitche_attribute: stitche_attribute 
+                stitche_selected_option: stitche_selected_option 
+                confSizeOption_attribute: confSizeOption_attribute 
+                confSizeOption_selected_option: confSizeOption_selected_option,
+                tooltip_text: section.settings.stitched_tooltip
+               %}
+
+              <div class="upsell-product-variant-size">
+                {% render 'custom-measurement', customMeasurements: custom_measurement.value  %}
+                
+                {% render 'mini-size-chart', full_width: true %}
+                
+                <div class="form-error-wrapper" js-pdp-form-error>
+                  <ul></ul>
+                </div>
+                
+                {% if product.metafields.custom.whatsapp_number_for_order_and_call == blank %}       
+                  {%- render 'buy-buttons-new', 
+                    block: block, product: product, 
+                    product_form_id: product_form_id, 
+                    section_id: section.id, 
+                    show_pickup_availability: true -%} 
+                {% endif %}
+              </div>
+            {%- endform -%}
+          </product-form>
+          {% render "product-delivery-days" current_product: product,  additional_delivery_days: section.settings.additional_delivery_days  %}
+          {% render 'delivery-message' message: section.settings.delivery_message %}
+          {% render 'extra-product-info' section: section %}
+          {% render 'pdp-accordion' product: product, section: section %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get elements
+      const openPopupButton = document.getElementById('mini-size');
+      const closePopupButton = document.getElementById('close-minisize');
+      const popup = document.getElementById('minisize-popup');
+      const body = document.body;
+    
+      // Open popup when button is clicked
+       openPopupButton.addEventListener('click', function() {
+        popup.classList.add('popup-open');
+        body.classList.add('popup-active');
+      });
+    
+      // Close popup when close button is clicked
+      closePopupButton.addEventListener('click', function() {
+        popup.classList.remove('popup-open');
+        body.classList.remove('popup-active');
+      });
+    
+      // Close popup when clicking outside the popup content
+      window.addEventListener('click', function(event) {
+        if (event.target === popup) {
+          popup.classList.remove('popup-open');
+          body.classList.remove('popup-active');
+        }
+      });
+
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+    
+      // Check if 'quick_view' is present in the URL and set to 'true'
+      const quickViewParam = getQueryParam('miniSize');
+      if (quickViewParam === 'true') {
+        popup.classList.add('popup-open');
+        body.classList.add('popup-active');
+      }
+    });
+  </script>
+{% endif %}
+{% schema %}
+  {
+    "name": "Mini Size",
+    "class": "mini_size",
+    "settings": [
+      {
+        "type": "text",
+        "id" :"additional_delivery_days",
+        "label" : "Additional Delivery Days (Enter Numbers Only)"
+      },
+      {
+        "type": "text",
+        "id": "delivery_message",
+        "label": "Delivery Message"
+      },
+      {
+        "type": "text",
+        "id": "contact_title",
+        "label": "Contact Title",
+        "default": "Reach our agents for your customize styles !"
+      },
+      {
+        "type": "text",
+        "id": "call",
+        "label": "Call us Number",
+        "default": "022 489 00416"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "Whatsapp Number",
+        "default": "+91 9920012474"
+      },
+       {
+        "type": "text",
+        "id": "contact_mail",
+        "label": "Contact Email",
+        "default": "info@kalkifashion.com"
+      },
+    ],
+    "blocks": [
+      {
+        "type": "@app"
+      },
+      {
+        "name": "Image Logo",
+        "type": "image_logo_text",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_logo",
+            "label": "Logo"
+          }, 
+          {
+            "type": "text",
+            "id": "text_bottom",
+            "label": "Text  "
+          }, 
+           {
+            "type": "text",
+            "id": "text_bottom_no_return",
+            "label": "Non Returnable Product Text"
+          }, 
+          {
+            "type": "url",
+            "id": "image_logo_url",
+            "label": "Image Logo Url"
+          },
+           {
+            "type": "text",
+            "id": "class",
+            "label": "Class"
+          }, 
+        ]
+      },
+      {
+        "name": "Faq Product",
+        "type": "faq_product",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "faq_text",
+            "label": "Faq Text"
+          }, 
+          {
+
+            "type": "richtext",
+            "id": "details",
+            "label": "Details"
+          },
+           {
+
+            "type": "richtext",
+            "id": "details_no_return",
+            "label": "Non Returnable Details"
+          },
+           {
+            "type": "text",
+            "id": "class",
+            "label": "Class"
+          }, 
+        ]
+      }, 
+    ],
+    "presets": [
+      {
+        "name": "Mini Size"
+      }
+    ]
+  }
+{% endschema %}

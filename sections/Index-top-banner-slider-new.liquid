@@ -1,0 +1,131 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Index_top_banner_slider_main_new page-width" style="background: {{ section.settings.main_background_color }};">
+    <div class="Index_top_banner_slider_inner_new">
+      <div class="Index_top_banner_slider_allloop_new">
+        <div class="swiper-container {% if section.blocks.size > 1 %} Index_top_banner_slider {% endif %}">
+          <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.main_desktop_mp4_video != blank or block.settings.main_mobile_mp4_video != blank or block.settings.main_desktop_full_image != blank or block.settings.main_mobile_full_image != blank -%}
+                <div class="swiper-slide Index_top_banner_slider_allloop_mainboxs_new">
+                  <div class="Index_top_banner_slider_allloop_innerboxs_new">
+                    {%- if block.settings.main_banner_redirect_link != blank -%}
+                      <a href="{{ block.settings.main_banner_redirect_link }}">
+                    {%- endif -%}
+                        <div class="Index_top_banner_slider_allloop_innerboxs_videoimageboth_new">
+                          {%- if block.settings.main_desktop_mp4_video != blank and block.settings.main_mobile_mp4_video != blank -%}
+                            <div class="Index_top_banner_slider_allloop_innerboxs_videoimage_new">
+                              {%- if block.settings.main_desktop_mp4_video != blank -%}
+                                {{ block.settings.main_desktop_mp4_video | video_tag: controls: false, autoplay: true, loop: true, class: 'desktop_image_new' }}
+                              {%- endif -%}
+                              {%- if block.settings.main_mobile_mp4_video != blank -%}
+                                {{ block.settings.main_mobile_mp4_video | video_tag: controls: false, autoplay: true, loop: true, class: 'mobile_image_new' }}
+                              {%- endif -%}
+                            </div>
+                          {% else %}  
+                            {%- if block.settings.main_desktop_full_image != blank and block.settings.main_mobile_full_image != blank -%}
+                              <div class="Index_top_banner_slider_allloop_innerboxs_videoimage_new">
+                                {%- if forloop.first %}
+                                  <picture>
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 380, quality: 80 }}" media="(max-width: 380px)" loading="eager" />
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 500, quality: 80 }}" media="(max-width: 500px)" loading="eager" />
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 750, quality: 80 }}" media="(max-width: 748px)" loading="eager" />
+                                    <source srcset="{{ block.settings.main_desktop_full_image | image_url: width: 1438, quality: 80 }}" media="(min-width: 749px)" loading="eager" />
+                                    <img src="{{ block.settings.main_desktop_full_image | image_url: width: 1438, quality: 80 }}" alt="{{ block.settings.alt_text }}" loading="eager" width="1438" height="539" />
+                                  </picture>
+                                {%- else -%}
+                                  <picture>
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 380, quality: 80 }}" media="(max-width: 380px)" loading="eager" />
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 500, quality: 80 }}" media="(max-width: 500px)" loading="eager" />
+                                    <source srcset="{{ block.settings.main_mobile_full_image | image_url: width: 750, quality: 80 }}" media="(max-width: 748px)" loading="eager" />
+                                    <source srcset="{{ block.settings.main_desktop_full_image | image_url: width: 1438, quality: 80 }}" media="(min-width: 749px)" loading="lazy" />
+                                    <img src="{{ block.settings.main_desktop_full_image | image_url: width: 1438, quality: 80 }}" alt="{{ block.settings.alt_text }}" loading="lazy" width="1438" height="539" />
+                                  </picture>
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          {%- endif -%}
+                        </div>
+                    {%- if block.settings.main_banner_redirect_link != blank -%}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {% if section.blocks.size > 1 %}
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination"></div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Index Top Banner Slider",
+    "class": "Index_top_banner_slider_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "video",
+            "id": "main_desktop_mp4_video",
+            "label": "Add Main Desktop MP4 Video"
+          },
+          {
+            "type": "video",
+            "id": "main_mobile_mp4_video",
+            "label": "Add Main Mobile MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_full_image",
+            "label": "Add Main Desktop Full Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_full_image",
+            "label": "Add Main Mobile Full Image"
+          },
+          {
+            "type": "text",
+            "id": "alt_text",
+            "label": "Add Alt text"
+          },
+          {
+            "type": "url",
+            "id": "main_banner_redirect_link",
+            "label": "Add Main Banner Redirect Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Top Banner Slider",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

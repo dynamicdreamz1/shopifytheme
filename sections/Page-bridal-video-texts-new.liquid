@@ -1,0 +1,115 @@
+{%- if section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank or section.settings.main_heading_text != blank or section.settings.main_button_link != blank -%}
+  <div class="Page_bridal_video_texts_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_bridal_video_texts_inner_new">
+        <div class="Page_bridal_video_texts_detail_new">
+          {%- if section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank -%}
+            <div class="Page_bridal_video_texts_detail_1_new">
+              <div class="Page_bridal_video_texts_detail_1_videoimageboth_new">
+                {%- if section.settings.main_mp4_video != blank -%}
+                  <div class="Page_bridal_video_texts_detail_1_videoimage_new">
+                    {{ section.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                  </div>
+                {% else %}  
+                  {%- if section.settings.main_desktop_image != blank and section.settings.main_mobile_image != blank -%}
+                    <div class="Page_bridal_video_texts_detail_1_videoimage_new">
+                      {%- if section.settings.main_desktop_image != blank -%}
+                        {{
+                          section.settings.main_desktop_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'desktop_image_new'
+                        }}
+                      {%- endif -%}
+                      {%- if section.settings.main_mobile_image != blank -%}
+                        {{
+                          section.settings.main_mobile_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'mobile_image_new'
+                        }}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.main_heading_text != blank or section.settings.main_button_link != blank -%}
+            <div class="Page_bridal_video_texts_detail_2_new">
+              <div class="Page_bridal_video_texts_detail_2_titlelinksboth_new">
+                {%- if section.settings.main_heading_text != blank -%}
+                  <div class="Page_bridal_video_texts_detail_2_title_new">
+                    {{ section.settings.main_heading_text }}
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.main_button_text != blank and section.settings.main_button_link != blank -%}
+                  <div class="Page_bridal_video_texts_detail_2_links_new">
+                    <a href="{{ section.settings.main_button_link }}" class="button button_black">
+                      {{ section.settings.main_button_text }}
+                    </a>
+                  </div>  
+                {%- endif -%}
+              </div>
+            </div>  
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Page Bridal Video Texts",
+    "class": "Page_bridal_video_texts_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "video",
+        "id": "main_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_image",
+        "label": "Add Main Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_image",
+        "label": "Add Main Mobile Image"
+      },
+      {
+        "type": "richtext",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "<p>Bridal Jewelry For <br>Your Big Day</p>"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text",
+        "label": "Add Main Button Text",
+        "default": "View Collection"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link",
+        "label": "Add Main Button Link",
+        "default": "/"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Bridal Video Texts"
+      }
+    ]
+  }
+{% endschema %}

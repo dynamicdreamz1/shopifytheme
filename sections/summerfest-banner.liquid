@@ -1,0 +1,33 @@
+
+{{ 'summerfest-offer-banner.css' | asset_url | stylesheet_tag }}
+
+
+    <div class="page-width">
+                <div class="color-{{ section.settings.color_scheme }} gradient">
+                  <div class="section-{{ section.id }}-padding">
+                    {{ section.settings.summerfest_liquid }}
+                  </div>
+                </div>
+    </div>
+
+
+{% schema %}
+{
+  "name": "t:sections.summerfest.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "summerfest_liquid",
+      "label": "t:sections.summerfest.settings.summerfest_liquid.label",
+      "info": "t:sections.summerfest.settings.summerfest_liquid.info"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.summerfest.presets.name"
+    }
+  ]
+}
+{% endschema %}

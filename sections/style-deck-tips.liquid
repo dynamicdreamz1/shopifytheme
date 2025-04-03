@@ -1,0 +1,99 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding">
+  <div class=" page-width">
+    <div class="style-deck-tips-wrap" x-data="{readMore: false}" {% if section.settings.section-bg %}style="background-color: {{ section.settings.section-bg }};"{% endif %}>
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: section.settings.image.width
+          | image_tag: widths: '564'
+        }}
+      {% endif %}
+      {% if section.settings.text != blank %}
+        {{ section.settings.text }}
+        {% if section.settings.read-more-text != blank %}
+          <span class="celb-styledeck-button" x-show="readMore == false" @click="readMore = true">Read More</span>
+          <div class="all-text" x-show="readMore" style="display: none;">
+            {{ section.settings.read-more-text }}
+            <span class="celb-styledeck-button" x-show="readMore == true" @click="readMore = false"> Read Less</span>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Style deck tips",
+  "tag": "section",
+  "class": "style-deck-tips",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 52
+    },
+    {
+      "type": "color",
+      "id": "section-bg",
+      "label": "Section background color"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "read-more-text",
+      "label": "Read More Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.image-with-text.settings.image.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Style deck tips"
+    }
+  ]
+}
+{% endschema %}

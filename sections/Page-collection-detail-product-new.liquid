@@ -1,0 +1,119 @@
+{%- if section.blocks.size > 0 or section.settings.main_heading_text != blank -%}
+  <div class="Page_collection_detail_product_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="Page_collection_detail_product_inner_new">
+      {%- if section.settings.main_heading_text != blank -%}
+        <div class="page-width">
+          <div class="Common_title_new Page_collection_detail_product_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="Page_collection_detail_product_mainloop_new">
+          <div class="Page_collection_detail_product_innerloop_new">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.main_product_display != blank -%}
+                {%- assign product = all_products[block.settings.main_product_display] -%}
+                {%- assign current_variant = product.selected_or_first_available_variant -%}
+                {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+                {%- if featured_image != blank -%}
+                  <div class="Page_collection_detail_product_innerloop_mainboxs_new">
+                    <div class="Page_collection_detail_product_innerloop_innerboxs_new">
+                      <a href="{{ current_variant.url }}">
+                        <div class="Page_collection_detail_product_innerloop_innerboxs_image_new">
+                          {{
+                            featured_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'Product_image_new'
+                          }}
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.main_button_text != blank and section.settings.main_button_link != blank -%}
+        <div class="page-width">
+          <div class="Page_collection_detail_product_mainloop_button_new">
+            <a href="{{ section.settings.main_button_link }}" class="button button_white button_border">
+              {{ section.settings.main_button_text }}
+            </a>
+          </div>  
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Collection Detail Product",
+    "class": "Page_collection_detail_product_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "A look at the Collections"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text",
+        "label": "Add Main Button Text",
+        "default": "View All"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link",
+        "label": "Add Main Button Link"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "product",
+            "id": "main_product_display",
+            "label": "Selected Main Product Display"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Detail Product",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

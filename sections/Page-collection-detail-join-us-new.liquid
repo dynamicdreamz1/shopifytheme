@@ -1,0 +1,115 @@
+{%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank or section.settings.main_heading_text != blank or section.settings.main_button_link != blank -%}
+  <div class="Page_collection_detail_join_us_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="Page_collection_detail_join_us_inner_new">
+      {%- if section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+        <div class="Page_collection_detail_join_us_1_new">
+          <div class="Page_collection_detail_join_us_1_detail_new">
+            <div class="Page_collection_detail_join_us_1_detail_videoimageboth_new">
+              {%- if section.settings.main_desktop_mp4_video != blank -%}
+                <div class="Page_collection_detail_join_us_1_detail_videoimage_new">
+                  {{ section.settings.main_desktop_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                </div>
+              {% else %}  
+                {%- if section.settings.main_desktop_full_image != blank and section.settings.main_mobile_full_image != blank -%}
+                  <div class="Page_collection_detail_join_us_1_detail_videoimage_new">
+                    {%- if section.settings.main_desktop_full_image != blank -%}
+                      {{
+                        section.settings.main_desktop_full_image | 
+                        image_url: width: img.width | 
+                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                        fetchpriority: 'auto', 
+                        class:'desktop_image_new'
+                      }}
+                    {%- endif -%}
+                    {%- if section.settings.main_mobile_full_image != blank -%}
+                      {{
+                        section.settings.main_mobile_full_image | 
+                        image_url: width: img.width | 
+                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                        fetchpriority: 'auto', 
+                        class:'mobile_image_new'
+                      }}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.main_heading_text != blank or section.settings.main_button_link != blank -%}
+        <div class="Page_collection_detail_join_us_2_new">
+          <div class="page-width">
+            <div class="Page_collection_detail_join_us_2_detail_new">
+              {%- if section.settings.main_heading_text != blank -%}
+                <div class="Page_collection_detail_join_us_2_detail_title_new">
+                  <h2>{{ section.settings.main_heading_text }}</h2>
+                </div>  
+              {%- endif -%}
+              {%- if section.settings.main_button_text != blank and section.settings.main_button_link != blank -%}
+                <div class="Page_collection_detail_join_us_2_detail_button_new">
+                  <a href="{{ section.settings.main_button_link }}" class="button button_white button_border">
+                    {{ section.settings.main_button_text }}
+                  </a>
+                </div>  
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Collection Detail Join Us",
+    "class": "Page_collection_detail_join_us_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "video",
+        "id": "main_desktop_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      },
+      {
+        "type": "richtext",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "<p>Join Us For An Exclusive Preview Of Our 'NOOR' Collection.</p>"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text",
+        "label": "Add Main Button Text",
+        "default": "Register Now"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link",
+        "label": "Add Main Button Link",
+        "default": "/"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Detail Join Us"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,260 @@
+{% comment %}
+  Renders a megamenu for the header.
+
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+{% assign template_name = template | replace: '.', ' ' | truncatewords: 1, '' | handle %}
+{% assign megamenu_custom_image_product = shop.metaobjects.megamenu_custom_image_product.values %}
+{%- assign megamenu_size_position = shop.metaobjects.megamenu_size_position.values -%}
+{% assign menu_3_text_color = shop.metaobjects.menu_3_text_color.values %}
+{% assign menu_3_dot_color = shop.metaobjects.menu_3_dot_color.values %}
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in left_menu.links -%}
+      <li class="custom_mega_menu_top_left_new custom_mega_menu_top_new
+        {% if forloop.first and template_name == "index" %} select_first_element {% endif %} 
+        {% if forloop.first and template_name == "list-collections" %} select_first_element {% endif %} 
+        {% if forloop.first and template_name == "page" %} {% unless page.metafields.custom.header_transparent == true %} select_first_element {% endunless %} {% endif %} 
+        {% if forloop.first and template_name contains "customers" %} select_first_element {% endif %} 
+        {% if forloop.first and template_name contains "metaobject" %} select_first_element {% endif %} 
+        {% if forloop.first and request.path contains "/collections/all" %} select_first_element {% endif %}
+        {% if forloop.first and request.path contains "/collections/kids" %} select_first_elementkids {% endif %}
+
+        
+        {% if link.title == collection.metafields.custom.collection_menu and template_name == "collection" %} select_first_element {% endif %}
+        {% if forloop.first and template_name == "collection" %} {% if collection.metafields.custom.collection_menu == blank %} select_first_element {% endif %} {% endif %} 
+
+        {% if link.title == product.metafields.custom.navigation_menu_for_product and template_name == "product" %} select_first_element {% endif %}
+        {% if forloop.first and template_name == "product" %} {% if product.metafields.custom.navigation_menu_for_product == blank %} select_first_element {% endif %} {% endif %}">
+        
+        {% if collection.metafields.custom.collection_menu != blank %}
+          {% assign bridal_menu = collection.metafields.custom.collection_menu | handleize %}
+        {% elsif product.metafields.custom.navigation_menu_for_product != blank %}
+          {% assign bridal_menu = product.metafields.custom.navigation_menu_for_product | handleize %}
+        {% elsif page.metafields.custom.display_bridal_megamenu == true %}
+          {% assign bridal_menu = "bridal" %}
+        {% endif %}
+  
+        {%- if link.links != blank -%}
+          <header-menu class="{% if bridal_menu == "bridal" %} display_bridal_menu_new {% endif %}">
+            <div class="mega-menu">
+              <a
+                id="HeaderMenu-{{ link.handle }}"
+                href="{{ link.url }}"
+                class="header__menu-item list-menu__item link link--text focus-inset"
+                {% if link.current %}
+                  aria-current="page"
+                {% endif %}
+              >
+                <span
+                  {%- if link.current %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </span>
+              </a>
+              {% comment %}
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span
+                  {%- if link.child_active %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </span>
+                {% render 'icon-caret' %}
+              </summary>
+              {% endcomment %}
+
+              {% if bridal_menu == "bridal" %}
+                <div
+                  id="MegaMenu-Content-{{ forloop.index }}"
+                  class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                  tabindex="-1" style="display:none;"
+                >
+                  
+                      {%- paginate shop.metaobjects.megamenu_size_position.values by 250 -%}
+                        {%- for megamenu_size_position in megamenu_size_position -%}
+                          {%- assign selected_menu_name = selected_menu_name | handleize -%}
+                          {%- assign main_menu_name = megamenu_size_position.main_menu_name.value | handleize -%}
+                          
+                          {%- assign inner_menu_child = link.title | handleize -%}
+                          {%- assign inner_menu_name = megamenu_size_position.inner_menu_name.value | handleize -%}  
+                        {%- endfor -%}
+                      {%- endpaginate -%} 
+                    
+                    <div class="page-width megamenu_leftright_new ">
+                      <div class="megamenu_left_new">
+                            <ul class="mega-menu__list {% if link.levels == 1 %} mega-menu__list--condensed{% endif %}" role="list">
+                            
+                            {%- for childlink in link.links -%}
+                                <li class="mega-tab-menu-label" onmouseover="openCity(event, '{{ link.handle }}{{ childlink.handle }}')">
+                                  <span id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}" class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}" {% if childlink.current %} aria-current="page" {% endif %} >
+                                      {{ childlink.title | escape }}
+                                  </span>
+                                </li>
+                            {%- endfor -%}
+                            </ul>
+                          <div class="mega-menu-box">
+                            
+                            {% assign link_handle = link.title | handleize %}
+                            {% assign selected_menu_name_handle = selected_menu_name | handleize %}
+                              {%- for childlink in link.links -%}
+                                {%- if childlink.links != blank -%}
+                                  <div class="list-unstyled level2" id="{{ link.handle }}{{ childlink.handle }}">
+                                    <div class="menu-list-leftside {{ link.handle }}{{ childlink.title | handleize }}-leftside">
+                                        {% assign childlink_handle = childlink.title | handleize %}
+                                        <ul class="ul-menu-list" role="list">
+                                            {%- for grandchildlink in childlink.links -%}
+                                            <li class="{{ link.handle }}{{ childlink.title | handleize }}-right-img">
+                                                {% assign menu_title = grandchildlink.title | handleize %}
+                                                {% paginate menu_3_text_color by 1000 %}
+                                                  {% for menu_3_text_color in menu_3_text_color %}
+                                                      {% assign menu_name_title = menu_3_text_color.menu_name.value | handleize %}
+                                                      {% if menu_title == menu_name_title %}
+                                                        <style>
+                                                            .{{ grandchildlink.title | handleize }}_3_new { color: {{ menu_3_text_color.text_color.value }} !important; }
+                                                            .{{ grandchildlink.title | handleize }}_3_new:hover { color: #CC8F67 !important; }
+                                                        </style>
+                                                      {% endif %}
+                                                  {% endfor %}
+                                                {% endpaginate %}
+                                                
+                                                <!-- Image and Custom Styles for Grandchild -->
+                                                {%- assign grandchildlink_handle = grandchildlink.title | handleize -%}
+                                                  
+                                                {%- paginate megamenu_custom_image_product by 1000 -%}
+                                                 {%- for megamenu_custom_image_product in megamenu_custom_image_product -%}
+                                                    {%- assign main_menu_name_handle = megamenu_custom_image_product.main_menu_name.value | handleize -%}
+                                                    {%- assign inner_menu_name_handle = megamenu_custom_image_product.inner_menu_name.value | handleize -%}
+                                                    {%- assign sub_category_name_handle = megamenu_custom_image_product.sub_category_name.value | handleize -%}
+                                                    {%- assign category_name_handle = megamenu_custom_image_product.category_name.value | handleize -%}
+                                                        {%- if main_menu_name_handle == selected_menu_name_handle and inner_menu_name_handle == link_handle and sub_category_name_handle == childlink_handle and category_name_handle == grandchildlink_handle -%}
+                                                        {%- assign image_url = megamenu_custom_image_product.category_image_square.value -%}
+                                                        
+                                                        {%- if image_url != blank -%}
+                                                          <div class="category-img">
+                                                            <style>
+                                                              .{{ link.handle }}{{ childlink.title | handleize }}-right-img a { text-align: center !important; }
+                                                            </style>
+                                                            <div class="megamenu_right_top_video_OR_image_new">
+                                                                <a href="{{ grandchildlink.url }}">
+                                                                  <!-- Use image_tag to properly generate the image -->
+                                                                  {{
+                                                                      image_url  | 
+                                                                      image_url: width: img.width | 
+                                                                      image_tag: widths: '750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                                      fetchpriority: 'auto', 
+                                                                      class: 'Hover_image_new',
+                                                                      loading: 'lazy'
+                                                                  }}
+                                                                </a>
+                                                              </div>
+                                                          </div>
+                                                        {%- endif -%}
+                                                    {%- endif -%}
+                                                   {%- endfor -%}
+                                                {%- endpaginate -%}
+                                
+                                                <!-- Grandchild Link -->
+                                                {%- assign childlink_title_handle = childlink.title | handleize -%}
+                                                    <a id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}" href="{{ grandchildlink.url }}" class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %} {{ grandchildlink.title | handleize }}_3_new {% if childlink_title_handle contains 'color' %} color_menu_new {% endif %}"  {% if grandchildlink.current %} aria-current="page" {% endif %}>
+                                                    {%- if childlink_title_handle contains 'color' -%}
+                                                    
+                                                    {%- paginate menu_3_dot_color by 1000 -%}
+                                                        {%- for menu_3_dot_color in menu_3_dot_color -%}
+                                                        {%- if grandchildlink.title contains menu_3_dot_color.menu_name.value -%}
+                                                            <div class="color_dot_new {{ menu_3_dot_color.menu_name.value | handleize }}_border_new" style="background:{{ menu_3_dot_color.dot_color.value }};"></div>
+                                                        {%- endif -%}
+                                                        {%- endfor -%}
+                                                    {%- endpaginate -%}
+                                                {%- endif -%}
+                                                {{ grandchildlink.title | escape }}
+                                                </a>
+                                            </li>
+                                            {%- endfor -%}
+                                        </ul>
+                                       
+                                        <!-- Image and Custom Styles for subcategory image -->
+                                        {%- paginate megamenu_custom_image_product by 1000 -%}
+                                          {%- for megamenu_custom_image_product in megamenu_custom_image_product -%}
+                                              {%- assign main_menu_name_handle = megamenu_custom_image_product.main_menu_name.value | handleize -%}
+                                              {%- assign inner_menu_name_handle = megamenu_custom_image_product.inner_menu_name.value | handleize -%}
+                                              {%- assign sub_category_name_handle = megamenu_custom_image_product.sub_category_name.value | handleize -%}
+                                              
+                                              {%- if main_menu_name_handle == selected_menu_name_handle and inner_menu_name_handle == link_handle and sub_category_name_handle == childlink_handle -%}
+                                              <div class="sub-category-img">
+                                                  {%- if megamenu_custom_image_product.sub_category_image_desktop.value != blank -%}
+                                                  <style>
+                                                      .{{ link.handle }}{{ childlink.title | handleize }}-right-img{ width: 50% !important; }
+                                                      .{{ link.handle }}{{ childlink.title | handleize }}-leftside{display:flex;align-items: flex-start;}
+                                                      .{{ link.handle }}{{ childlink.title | handleize }}-leftside .sub-category-img{width: 195px !important;}
+                                                  </style>
+                                                  <div class="megamenu_right_top_video_OR_image_new">
+                                                      <a href="{{  megamenu_custom_image_product.button_redirect_url.value }}">
+                                                      {{
+                                                          megamenu_custom_image_product.sub_category_image_desktop.value | 
+                                                          image_url: width: img.width | 
+                                                          image_tag: widths: '200', 
+                                                          fetchpriority: 'auto', 
+                                                          class: 'Hover_image_new'
+                                                      }}
+                                                      </a>
+                                                  </div>
+                                                  {%- endif -%}
+                                              </div>
+                                              {%- endif -%}
+                                          {%- endfor -%}
+                                        {%- endpaginate -%}
+                                    </div>
+                                  </div>
+                                {%- endif -%}
+                              {%- endfor -%}
+                          </div>
+                      </div>
+                    </div>
+                </div>
+              {% endif %}
+            </div>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            <span
+              {%- if link.current %}
+                class="header__active-menu-item"
+              {% endif %}
+            >
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+    <li class="custom_mega_menu_top_left_new custom_mega_menu_top_new">
+      <a
+        id="HeaderMenu-{{ link.handle }}"
+        href="/pages/our-stores/"
+        class="header__menu-item list-menu__item link link--text focus-inset find-store"
+        {% if link.current %}
+          aria-current="page"
+        {% endif %}
+      >
+        <img src="{{ 'Find-a-store-icon-black.svg' | file_url }}" width="30" height="25" alt="">
+        Find Store
+      </a>
+    </li>
+  </ul>
+</nav>

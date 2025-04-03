@@ -1,0 +1,112 @@
+{%- if section.blocks.size > 0 or section.settings.main_heading_text != blank or section.settings.main_button_text != blank -%}
+  <div class="Page_video_call_template_main_new" >
+    <div class="page-width">
+      <div class="Page_video_call_template_inner_new" style="background: {{ section.settings.main_background_color }};">
+        <div class="Page_video_call_template_leftrightboth_new">
+          {%- if section.blocks.size > 0 or section.settings.main_heading_text != blank or section.settings.main_button_text != blank -%}
+            <div class="Page_video_call_template_mainleft_new">
+              <div class="Page_video_call_template_innerleft_new">
+                {%- if section.settings.main_heading_text != blank -%}
+                  <div class="Common_title_new Page_video_call_template_innerleft_title_new">
+                    <h2>{{ section.settings.main_heading_text }}</h2>
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.main_button_text != blank -%}
+                  <div class="Page_video_call_template_innerleft_button_new">
+                    <a href="#" class="button">
+                      {{ section.settings.main_button_text }}
+                    </a>
+                  </div>  
+                {%- endif -%}
+                {%- if section.blocks.size > 0 -%}
+                  <div class="Page_video_call_template_innerleft_mainloop_new">
+                    <div class="Page_video_call_template_innerleft_innerloop_new">
+                      {%- for block in section.blocks -%}
+                        {%- if block.settings.main_icon_image != blank and block.settings.main_information_text != blank -%}
+                          <div class="Page_video_call_template_innerleft_innerloop_mainboxs_new">
+                            <div class="Page_video_call_template_innerleft_innerloop_innerboxs_new">
+                              {%- if block.settings.main_icon_image != blank -%}
+                                <div class="Page_video_call_template_innerleft_innerloop_icons_new">
+                                  {{
+                                    block.settings.main_icon_image | 
+                                    image_url: width: img.width | 
+                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                    fetchpriority: 'auto', 
+                                    class:'Icon_image_new'
+                                  }}
+                                </div>
+                              {%- endif -%}
+                              {%- if block.settings.main_information_text != blank -%}
+                                <div class="Page_video_call_template_innerleft_innerloop_infos_new">
+                                  {{ block.settings.main_information_text }}
+                                </div>
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+          <div class="Page_video_call_template_mainright_new">
+            <div class="Page_video_call_template_innerright_new">
+             <!-- Calendly inline widget begin -->
+             <div class="calendly-inline-widget" data-url="https://calendly.com/kalkishopping/kalki-in-store-appointment" style="min-width:320px;height:700px;"></div>
+             <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+             <!-- Calendly inline widget end -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Video Call Template New",
+    "class": "Page_video_call_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#F0EBE7"
+      },
+      {
+        "type": "textarea",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Book your appointment for Live Video shopping"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text",
+        "label": "Add Main Button Text",
+        "default": "Schedule A Video Call"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_icon_image",
+            "label": "Add Main Icon Image"
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

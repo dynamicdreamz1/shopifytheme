@@ -1,0 +1,185 @@
+{{ 'component-newsletter.css' | asset_url | stylesheet_tag }}
+{{ 'newsletter-section.css' | asset_url | stylesheet_tag }}
+
+{%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+{% comment %} Use string splitting to pull the value from content_for_header and apply some string clean up {% endcomment %}
+{%- assign pageUrl = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'.myshopify.com' | last |
+   replace:'\/','/' | 
+   replace:'%20',' ' | 
+   replace:'\u0026','&'
+-%}
+{%- assign pageQuerystring = pageUrl | split:'?' | last -%}
+
+{% if pageQuerystring contains "form_type=customer" or pageQuerystring contains "customer_posted=true" %}
+  <script>
+    
+  </script>
+{% endif %}
+
+{%- if section.settings.main_left_heading_text != blank or section.settings.main_left_information_text != blank or section.settings.main_right_information_text != blank -%}
+  <div class="Index_newsletter_form_main_new" style="background: {{ section.settings.main_full_background_color }};" js-newsletter-wrapper>
+    <div class="page-width">
+      <div class="Index_newsletter_form_inner_new">
+        <div class="Index_newsletter_form_leftrightboth_new">
+          {%- if section.settings.main_left_heading_text != blank or section.settings.main_left_information_text != blank -%}
+            <div class="Index_newsletter_form_mainleft_new">
+              <div class="Index_newsletter_form_innerleft_new">
+                {%- if section.settings.main_left_heading_text != blank -%}
+                  <div class="Index_newsletter_form_innerleft_title_new">
+                    <h2>{{ section.settings.main_left_heading_text }}</h2>
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.main_left_information_text != blank -%}
+                  <div class="Index_newsletter_form_innerleft_infos_new">
+                    {{ section.settings.main_left_information_text }}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+          <div class="Index_newsletter_form_mainright_new">
+            <div class="Index_newsletter_form_innerright_new">
+              <div class="Index_newsletter_form_innerright_mainform_new">
+                <div class="Index_newsletter_form_innerright_innerform_new">
+                  {% form 'customer', class: 'newsletter-form' %}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <div
+                      class="newsletter-form__field-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                      {% if settings.animations_reveal_on_scroll %}
+                        data-cascade
+                        style="--animation-order: {{ forloop.index }};"
+                      {% endif %}
+                    >
+                      <div class="field">
+                        <input
+                          id="NewsletterForm--{{ section.id }}"
+                          type="email"
+                          name="contact[email]"
+                          class="field__input"
+                          value="{{ form.email }}"
+                          aria-required="true"
+                          autocorrect="off"
+                          autocapitalize="off"
+                          autocomplete="email"
+                          {% if form.errors %}
+                            autofocus
+                            aria-invalid="true"
+                            aria-describedby="Newsletter-error--{{ section.id }}"
+                          {% elsif form.posted_successfully? %}
+                            aria-describedby="Newsletter-success--{{ section.id }}"
+                          {% endif %}
+                          placeholder="{{ 'newsletter.label' | t }}"
+                          required
+                        >
+                        <label class="field__label" for="NewsletterForm--{{ section.id }}">
+                          {{ 'newsletter.label' | t }}
+                        </label>
+                        <button
+                          type="submit"
+                          class="newsletter-form__button field__button button"
+                          name="commit"
+                          id="Subscribe"
+                          aria-label="{{ 'newsletter.button_label' | t }}"
+                        >{{ 'newsletter.button_label' | t }}{% comment %}{% render 'icon-arrow' %}{% endcomment %}</button>
+                      </div>
+                      {% if pageQuerystring contains "form_type=customer" %}
+                        <small class="newsletter-form__message form__message" id="Newsletter-error--{{ section.id }}">
+                            {%- render 'icon-error' -%}
+                          You have already subscribed!
+                        </small>
+                      {% else %}
+                        {%- if form.errors -%}
+                          <small class="newsletter-form__message form__message" id="Newsletter-error--{{ section.id }}">
+                            {%- render 'icon-error' -%}
+                            {{- form.errors.translated_fields.email | capitalize }}
+                            {{ form.errors.messages.email -}}
+                          </small>
+                        {%- endif -%}
+                      {%- endif -%}
+                    </div>
+                    
+                    {%- if form.posted_successfully? -%}
+                      <h3
+                        class="newsletter-form__message newsletter-form__message--success form__message"
+                        id="Newsletter-success--{{ section.id }}"
+                        tabindex="-1"
+                        autofocus
+                      >
+                        {% render 'icon-success' -%}
+                        {{- 'newsletter.success' | t }}
+                      </h3>
+                    {%- endif -%}
+                  {% endform %}
+                </div>
+              </div>  
+              {%- if section.settings.main_right_information_text != blank -%}
+                <div class="Index_newsletter_form_innerright_maininfo_new">
+                  <div class="Index_newsletter_form_innerright_innerinfo_new">
+                    {{ section.settings.main_right_information_text }}
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+<script>
+  function offsetNewsLetter(el) {
+    var rect = el.getBoundingClientRect(),
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+  }
+  const includesFormId = location.href.includes('#contact_form')
+  if(includesFormId) {
+    const newsLetterWrap = document.querySelector('[js-newsletter-wrapper]')
+    setTimeout(() => {
+        let offset_ = offsetNewsLetter(newsLetterWrap)
+        offset_.top -= 178;
+        window.scrollTo({ top: offset_.top, behavior: 'smooth' });
+        }
+    , 1000)
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "Index Newsletter Form",
+    "class": "Index_newsletter_form_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_full_background_color",
+        "label": "Add Main Full Background Color",
+        "default": "#F9EBE0"
+      },
+      {
+        "type": "text",
+        "id": "main_left_heading_text",
+        "label": "Add Main Left Heading Text",
+        "default": "Want 15% off your first purchase?"
+      },
+      {
+        "type": "richtext",
+        "id": "main_left_information_text",
+        "label": "Add Main Left Information Text",
+        "default": "<p>Register to our KALKI Circle and enjoy exclusive benefits for early collection showcases, amazing offers, discounts, and <strong>15% off your first order!</strong></p>"
+      },
+      {
+        "type": "richtext",
+        "id": "main_right_information_text",
+        "label": "Add Main Right Information Text",
+        "default": "<p>By signing up you agree to receive marketing communications from us. To opt out, click unsubscribe at the bottom of our emails.</p>"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Newsletter Form"
+      }
+    ]
+  }
+{% endschema %}

@@ -7,22 +7,31 @@
   Usage:
   {% render 'header-search', input_id: 'My-Id'%}
 {% endcomment %}
-
+<div class="ps-widget-5971"></div>
+<script type="text/javascript">
+!function(x,e,t,n,r,i,a){var o=localStorage.getItem("va-uid")||function x(){let e=new Date().getTime(),t="xxxxxxxx.xxxx.4xxx.yxxx.xxxxxxxxxxxx".replace(/[xy]/g,x=>{let t=(e+16*Math.random())%16|0;return e=Math.floor(e/16),("x"===x?t:3&t|8).toString(16)});return t}(),c=x.getElementsByTagName(e)[0],d=x.createElement(e),g=new URL(`https://search.visenze.com/v2/widget-init?app_key=${t}&placement_id=${n}&container=${r}&uid=${o}`);i&&(g+=`&contexts=${i}`),d.async=!0,d.src=g,d.onload=function(){a&&a()},c.parentNode.insertBefore(d,c)}(document,"script","6c794e28d7ce49ba80632f510585c74a","7683",".ps-widget-5971");
+</script>
 <details-modal class="header__search">
   <details>
     <summary
-      class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle"
+      class="header__icon--search header__icon--summary link focus-inset modal__toggle"
       aria-haspopup="dialog"
       aria-label="{{ 'general.search.search' | t }}"
     >
+      <div class="search_main_new">
+        <span class="search_main_left_new">Search for&nbsp;<span class="search_main_placeholder" data-period="2000" data-type="[ &quot;Saree&quot;, &quot;Suits&quot;, &quot;Gown&quot;, &quot;Anarkali&quot;, &quot;Lehengas&quot; ]"><span class="wrap"></span></span></span>
+        <div class="search_main_right_new"><svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.33313 0.5C6.99297 0.500034 5.67259 0.823285 4.48397 1.44234C3.29536 2.06139 2.27358 2.95797 1.5053 4.05605C0.737026 5.15413 0.244913 6.4213 0.0707069 7.75009C-0.1035 9.07887 0.0453389 10.4301 0.504598 11.6891C0.963857 12.9481 1.71999 14.0778 2.70886 14.9823C3.69773 15.8868 4.89016 16.5395 6.18502 16.885C7.47988 17.2305 8.83897 17.2586 10.147 16.9669C11.455 16.6752 12.6734 16.0724 13.6988 15.2095L17.8569 19.3667L18.8665 18.3571L14.7093 14.199C15.7314 12.9846 16.3853 11.5034 16.5942 9.9299C16.803 8.35637 16.5582 6.75593 15.8884 5.31685C15.2185 3.87777 14.1517 2.65993 12.8132 1.80661C11.4748 0.953279 9.92045 0.499966 8.33313 0.5ZM1.42836 8.83333C1.42836 7.92659 1.60696 7.02872 1.95396 6.191C2.30095 5.35327 2.80956 4.5921 3.45072 3.95093C4.09189 3.30976 4.85306 2.80116 5.69079 2.45416C6.52851 2.10717 7.42638 1.92857 8.33313 1.92857C9.23987 1.92857 10.1377 2.10717 10.9755 2.45416C11.8132 2.80116 12.5744 3.30976 13.2155 3.95093C13.8567 4.5921 14.3653 5.35327 14.7123 6.191C15.0593 7.02872 15.2379 7.92659 15.2379 8.83333C15.2379 10.6646 14.5104 12.4208 13.2155 13.7157C11.9206 15.0106 10.1644 15.7381 8.33313 15.7381C6.50187 15.7381 4.74562 15.0106 3.45072 13.7157C2.15583 12.4208 1.42836 10.6646 1.42836 8.83333Z" fill="white"/></svg></div>
+      </div>
+      {% comment %}
       <span>
-        <span class="svg-wrapper">
-          {{- 'icon-search.svg' | inline_asset_content -}}
-        </span>
-        <span class="svg-wrapper header__icon-close">
-          {{- 'icon-close.svg' | inline_asset_content -}}
-        </span>
+        <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false">
+          <use href="#icon-search">
+        </svg>
+        <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false">
+          <use href="#icon-close">
+        </svg>
       </span>
+      {% endcomment %}
     </summary>
     <div
       class="search-modal modal__content gradient"
@@ -69,14 +78,12 @@
               class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}"
               aria-label="{{ 'general.search.reset' | t }}"
             >
-              <span class="svg-wrapper">
-                {{- 'icon-reset.svg' | inline_asset_content -}}
-              </span>
+              <svg class="icon icon-close" aria-hidden="true" focusable="false">
+                <use xlink:href="#icon-reset">
+              </svg>
             </button>
             <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
-              <span class="svg-wrapper">
-                {{- 'icon-search.svg' | inline_asset_content -}}
-              </span>
+              <svg class="icon icon-search" width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.33313 0.5C6.99297 0.500034 5.67259 0.823285 4.48397 1.44234C3.29536 2.06139 2.27358 2.95797 1.5053 4.05605C0.737026 5.15413 0.244913 6.4213 0.0707069 7.75009C-0.1035 9.07887 0.0453389 10.4301 0.504598 11.6891C0.963857 12.9481 1.71999 14.0778 2.70886 14.9823C3.69773 15.8868 4.89016 16.5395 6.18502 16.885C7.47988 17.2305 8.83897 17.2586 10.147 16.9669C11.455 16.6752 12.6734 16.0724 13.6988 15.2095L17.8569 19.3667L18.8665 18.3571L14.7093 14.199C15.7314 12.9846 16.3853 11.5034 16.5942 9.9299C16.803 8.35637 16.5582 6.75593 15.8884 5.31685C15.2185 3.87777 14.1517 2.65993 12.8132 1.80661C11.4748 0.953279 9.92045 0.499966 8.33313 0.5ZM1.42836 8.83333C1.42836 7.92659 1.60696 7.02872 1.95396 6.191C2.30095 5.35327 2.80956 4.5921 3.45072 3.95093C4.09189 3.30976 4.85306 2.80116 5.69079 2.45416C6.52851 2.10717 7.42638 1.92857 8.33313 1.92857C9.23987 1.92857 10.1377 2.10717 10.9755 2.45416C11.8132 2.80116 12.5744 3.30976 13.2155 3.95093C13.8567 4.5921 14.3653 5.35327 14.7123 6.191C15.0593 7.02872 15.2379 7.92659 15.2379 8.83333C15.2379 10.6646 14.5104 12.4208 13.2155 13.7157C11.9206 15.0106 10.1644 15.7381 8.33313 15.7381C6.50187 15.7381 4.74562 15.0106 3.45072 13.7157C2.15583 12.4208 1.42836 10.6646 1.42836 8.83333Z" fill="#000"/></svg>
             </button>
           </div>
 
@@ -98,11 +105,14 @@
           class="search-modal__close-button modal__close-button link link--text focus-inset"
           aria-label="{{ 'accessibility.close' | t }}"
         >
-          <span class="svg-wrapper">
-            {{- 'icon-close.svg' | inline_asset_content -}}
-          </span>
+          <svg class="icon icon-close" aria-hidden="true" focusable="false">
+            <use href="#icon-close">
+          </svg>
         </button>
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded",()=>{class t{constructor(t,e,s){this.toRotate=e,this.el=t,this.loopNum=0,this.period=parseInt(s,10)||2e3,this.txt="",this.isDeleting=!1,this.tick()}tick(){const t=this.loopNum%this.toRotate.length,e=this.toRotate[t];this.txt=this.isDeleting?e.substring(0,this.txt.length-1):e.substring(0,this.txt.length+1),this.el.innerHTML=`<span class="wrap">${this.txt}</span>`;let s=200-Math.random()*100;this.isDeleting&&(s/=2),!this.isDeleting&&this.txt===e?(s=this.period,this.isDeleting=!0):this.isDeleting&&""===this.txt&&(this.isDeleting=!1,this.loopNum++,s=500),setTimeout(()=>this.tick(),s)}}document.querySelectorAll(".search_main_placeholder").forEach(e=>{const s=e.getAttribute("data-type"),i=e.getAttribute("data-period");s&&new t(e,JSON.parse(s),i)})});
+    </script>
   </details>
 </details-modal>

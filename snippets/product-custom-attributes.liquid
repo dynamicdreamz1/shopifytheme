@@ -1,0 +1,92 @@
+{% liquid assign product_attributes_group = product.metafields.custom.select_attributes_group.value %}
+{% liquid assign select_single_attributes = product.metafields.custom.select_single_attributes.value %}
+{% if product_attributes_group %}
+  <div class="{% if stitche_selected_option == 'Unstitched' or confSizeOption_selected_option == 'Made to Order' %}hide{% endif %} options-dropdown-list" {{ confSizeOption_attribute }} {{ stitche_attribute }} {{ templateName }} {% if templateName=='khadi-product-template' %}
+    js-khadi-options-list-container {% endif %}>
+    <div class="options-wrapper">
+      <div class="options">
+  
+        {% if product_attributes_group %}
+          {% for attriutes_ in product_attributes_group.select_attributes.value %}
+            {% assign attribute_handle =  attriutes_.title | handleize %}
+            {% if attribute_handle == 'blouse-design' %} 
+              <div class="option">
+                <div class="option-title">
+                  <span>Blouse Style</span>
+                </div>
+                <div class="option-drop cs-option-drop modal-link option-drop-blouse" js-khadi-open-popup-modal
+                  js-pdp-open-modal data-modal="blouse-style">
+                  <div>
+                    <span js-open-popup-modal js-pdp-open-modal data-modal="blouse-style">Please Select</span>
+                  </div>
+                  <div class="svg-icon">
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11.1183 8.36196L5.54534 13.672C5.45235 13.7606 5.32881 13.8101 5.20034 13.8101C5.07187 13.8101 4.94833 13.7606 4.85534 13.672L4.84934 13.666C4.8041 13.623 4.76808 13.5713 4.74347 13.5139C4.71885 13.4566 4.70616 13.3949 4.70616 13.3325C4.70616 13.2701 4.71885 13.2083 4.74347 13.151C4.76808 13.0937 4.8041 13.0419 4.84934 12.999L10.0973 7.99896L4.84934 3.00096C4.8041 2.95799 4.76808 2.90626 4.74347 2.84893C4.71885 2.7916 4.70616 2.72986 4.70616 2.66746C4.70616 2.60507 4.71885 2.54333 4.74347 2.486C4.76808 2.42866 4.8041 2.37694 4.84934 2.33396L4.85534 2.32796C4.94832 2.23932 5.07187 2.18987 5.20034 2.18987C5.32881 2.18987 5.45235 2.23932 5.54534 2.32796L11.1183 7.63796C11.1673 7.68466 11.2064 7.74082 11.233 7.80305C11.2597 7.86528 11.2734 7.93227 11.2734 7.99996C11.2734 8.06766 11.2597 8.13465 11.233 8.19688C11.2064 8.2591 11.1673 8.31527 11.1183 8.36196Z" fill="black"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              {% assign required = attriutes_.required %}
+              <div class="option">
+                <div class="option-title">
+                  <span>{{ attriutes_.title }}</span>
+                  {% if required %}<span class="required-sterik">*</span>{% endif %}
+                </div>
+                <div class="option-drop cs-option-drop" js-option-drop-1>
+                  <select name="items[0][properties][{{attriutes_.title}}]" js-custom-option-select {% if
+                    required %} js-required-property-field {% unless templateName=='bridal-template' %} required {% endunless %}
+                    js-pdp-bridal-size-option-required js-pdp-bridal-size-option-required {% endif %}
+                    data-option-name="{{ attriutes_.title }}">
+                    {% render 'custom-product-options', options: attriutes_.values, layout: "dropdown" %}
+                  </select>
+                </div>
+              </div>
+            {% endif %}
+
+          {% endfor %}
+        {% endif %}
+        {% if select_single_attributes %}
+          {% for attriutes_ in select_single_attributes %}
+            {% assign attribute_handle =  attriutes_.title | handleize %}
+            {% if attribute_handle == 'blouse-design' %} 
+              <div class="option">
+                <div class="option-title">
+                  <span>Blouse Style</span>
+                </div>
+                <div class="option-drop cs-option-drop modal-link option-drop-blouse" js-khadi-open-popup-modal
+                  js-pdp-open-modal data-modal="blouse-style">
+                  <div>
+                    <span js-open-popup-modal js-pdp-open-modal data-modal="blouse-style">Please Select</span>
+                  </div>
+                  <div class="svg-icon">
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11.1183 8.36196L5.54534 13.672C5.45235 13.7606 5.32881 13.8101 5.20034 13.8101C5.07187 13.8101 4.94833 13.7606 4.85534 13.672L4.84934 13.666C4.8041 13.623 4.76808 13.5713 4.74347 13.5139C4.71885 13.4566 4.70616 13.3949 4.70616 13.3325C4.70616 13.2701 4.71885 13.2083 4.74347 13.151C4.76808 13.0937 4.8041 13.0419 4.84934 12.999L10.0973 7.99896L4.84934 3.00096C4.8041 2.95799 4.76808 2.90626 4.74347 2.84893C4.71885 2.7916 4.70616 2.72986 4.70616 2.66746C4.70616 2.60507 4.71885 2.54333 4.74347 2.486C4.76808 2.42866 4.8041 2.37694 4.84934 2.33396L4.85534 2.32796C4.94832 2.23932 5.07187 2.18987 5.20034 2.18987C5.32881 2.18987 5.45235 2.23932 5.54534 2.32796L11.1183 7.63796C11.1673 7.68466 11.2064 7.74082 11.233 7.80305C11.2597 7.86528 11.2734 7.93227 11.2734 7.99996C11.2734 8.06766 11.2597 8.13465 11.233 8.19688C11.2064 8.2591 11.1673 8.31527 11.1183 8.36196Z" fill="black"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              {% assign required = attriutes_.required %}
+              <div class="option">
+                <div class="option-title">
+                  <span>{{ attriutes_.title }}</span>
+                  {% if required %}<span class="required-sterik">*</span>{% endif %}
+                </div>
+                <div class="option-drop cs-option-drop" js-option-drop-1>
+                  <select name="items[0][properties][{{attriutes_.title}}]" js-custom-option-select {% if
+                    required %} js-required-property-field {% unless templateName=='bridal-template' %} required {% endunless %}
+                    js-pdp-bridal-size-option-required js-pdp-bridal-size-option-required {% endif %}
+                    data-option-name="{{ attriutes_.title }}">
+                    {% render 'custom-product-options', options: attriutes_.values, layout: "dropdown" %}
+                  </select>
+                </div>
+              </div>
+            {% endif %}
+
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}

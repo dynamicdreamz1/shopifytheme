@@ -1,1 +1,210 @@
-{"sections":{"main":{"type":"main-404","settings":{}}},"order":["main"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {}
+    },
+    "rich_text_Qk9aCD": {
+      "type": "rich-text",
+      "blocks": {
+        "text_pTAGjt": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Popular searches: </strong><a href=\"/collections/salwar-kameez\" title=\"Salwar Kameez\">Salwar Kameez</a><strong>, </strong><a href=\"/collections/saree\" title=\"Saree\">Sarees</a>, <a href=\"/collections/lehenga\" title=\"Lehenga\">Lehengas</a><strong>, </strong><a href=\"/collections/gown\" title=\"Gown\">Gowns</a><strong>, </strong><a href=\"/collections/kids\" title=\"Kids\">Kidswear</a><strong>, </strong><a href=\"/collections/blouse\" title=\"Blouse\">Saree Blouse</a><strong>, </strong><a href=\"/collections/kurti\" title=\"Kurti\">Kurtis</a><strong>, </strong><a href=\"/collections/men\" title=\"Men\">Mens</a><strong>, </strong><a href=\"/collections/accessories\" title=\"Accessories\">Accessories</a><strong>, </strong><a href=\"/collections/sale\" title=\"Sale\">Sales</a><strong>, </strong><a href=\"/collections/bridal\" title=\"Bridal\">Bridal</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_pTAGjt"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 100
+      }
+    },
+    "video_nMT4Vh": {
+      "type": "video",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "enable_video_looping": false,
+        "auto_play_video": false,
+        "video_url": "https://www.youtube.com/watch?v=0p3NbRvetIU",
+        "cover_image": "shopify://shop_images/maxresdefault.png",
+        "description": "",
+        "full_width": false,
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "multicolumn_images_6natBq": {
+      "type": "multicolumn-images",
+      "blocks": {
+        "column_i8VJ3V": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img1.jpg",
+            "link": "shopify://collections/anarkali-suits"
+          }
+        },
+        "column_AMMmKw": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img3.jpg",
+            "link": "shopify://collections/lehenga"
+          }
+        },
+        "column_iJaQwN": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img2.jpg",
+            "link": "shopify://collections/anarkali-suits"
+          }
+        },
+        "column_ViVnPx": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img4.jpg",
+            "link": "shopify://collections/frill-collection"
+          }
+        },
+        "column_3aCmxE": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img5.jpg",
+            "link": "shopify://collections/sharara-suits"
+          }
+        },
+        "column_tVRdF9": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img6.jpg",
+            "link": "shopify://collections/ready-pleated-saree"
+          }
+        },
+        "column_FnqKKY": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img7.jpg",
+            "link": "shopify://collections/lehenga"
+          }
+        },
+        "column_Kzt4ka": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img8.jpg",
+            "link": "shopify://collections/sequin-dresses"
+          }
+        },
+        "column_Y33R4a": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img9.jpg",
+            "link": "shopify://collections/lehenga"
+          }
+        },
+        "column_x7zCHA": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img10.jpg",
+            "link": "shopify://collections/bride"
+          }
+        },
+        "column_fFPkJW": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img11.jpg",
+            "link": "shopify://collections/gown"
+          }
+        },
+        "column_iD9kVK": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img12.jpg",
+            "link": "shopify://collections/bridal"
+          }
+        },
+        "column_tirxdg": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img13.jpg",
+            "link": "shopify://collections/sharara-suits"
+          }
+        },
+        "column_YaxztR": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img15.jpg",
+            "link": "shopify://collections/sequin-dresses"
+          }
+        },
+        "column_YNUKRz": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img16.jpg",
+            "link": "shopify://collections/lehenga"
+          }
+        },
+        "column_M4X6yK": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/collection-img14.jpg",
+            "link": "shopify://collections/lehenga"
+          }
+        }
+      },
+      "block_order": [
+        "column_i8VJ3V",
+        "column_AMMmKw",
+        "column_iJaQwN",
+        "column_ViVnPx",
+        "column_3aCmxE",
+        "column_tVRdF9",
+        "column_FnqKKY",
+        "column_Kzt4ka",
+        "column_Y33R4a",
+        "column_x7zCHA",
+        "column_fFPkJW",
+        "column_iD9kVK",
+        "column_tirxdg",
+        "column_YaxztR",
+        "column_YNUKRz",
+        "column_M4X6yK"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 20,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_Qk9aCD",
+    "video_nMT4Vh",
+    "multicolumn_images_6natBq"
+  ]
+}

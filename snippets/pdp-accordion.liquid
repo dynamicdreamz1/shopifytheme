@@ -1,0 +1,223 @@
+
+{% assign show_accordion =  false %}
+
+{% comment %}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'faq_product' or product.metafields.custom.product_details != blank -%}
+      {% assign show_accordion =  true %}
+  {% endif %}
+{% endfor %}
+{% endcomment %}
+
+{% assign show_accordion =  true %}
+
+{% if show_accordion %}
+<div class="product-faq-wrapper">
+  <accordion-section>
+    <div class="product-faq-wrapper_main-wrap">
+      
+        <div class="js-accordion-item">
+          <div class="product_faq-items" js-accordion-item>
+            <div class="text_with_icon flex" js-accordion-header>
+              <span class="text">Product Details</span>
+              <div class="icon_arrow">
+                <div class="arrow_minus arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="2" viewBox="0 0 13 2" fill="none">
+                    <path d="M0 -0.00146484H13V1.99854H0V-0.00146484Z" fill="black" />
+                  </svg>
+                </div>
+                <div class="arrow_plus arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+                    <path d="M14 8.6626H8V14.6626H6V8.6626H0V6.6626H6V0.662598H8V6.6626H14V8.6626Z" fill="black" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="details accordion-content__answer" js-accordion-body>
+              <div class="metafield-rich_text_field">
+                <div class="product-details-meta-wrap">
+                  {% if product.metafields.custom.style_no != blank %}
+                    <p><b>Style No:</b> {{ product.metafields.custom.style_no }}</p>
+                  {% endif %}
+                  {% if product.metafields.custom.design_no_ != blank %}
+                    <p><b>Design No:</b>  {% for design_no in product.metafields.custom.design_no_.value %}{{ design_no }}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
+                  {% endif %}
+                  {% if product.metafields.custom.filter_color != blank %}
+                    <p><b>Color:</b> {% for color_details in product.metafields.custom.filter_color.value %}{{ color_details }}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
+                  {% endif %}
+                  {% if product.metafields.custom.filter_fabric != blank %}
+                    <p><b>Fabric:</b> {% for fabric_details in product.metafields.custom.filter_fabric.value %}{{ fabric_details }}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
+                  {% endif %}
+                  {% if product.metafields.custom.filter_work != blank %}
+                    <p><b>Work:</b> {% for filter_work_details in product.metafields.custom.filter_work.value %}{{ filter_work_details }}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
+                  {% endif %}
+                  {% if product.metafields.magento.neck_line != blank %}
+                    <p><b>Neck Line:</b> {{ product.metafields.magento.neck_line }}</p>
+                  {% endif %}
+                  {% if product.metafields.magento.sleeves != blank %}
+                    <p><b>Sleeves:</b> {{ product.metafields.magento.sleeves }}</p>
+                  {% endif %}
+                  {% if product.metafields.magento.can_can != blank %}
+                    <p><b>Can Can:</b> {{ product.metafields.magento.can_can }}</p>
+                  {% endif %}
+                  {% if product.metafields.magento.top_length != blank %}
+                    <p><b>Top Length:</b> {{ product.metafields.magento.top_length }}</p>
+                  {% endif %}
+                  {% if product.metafields.magento.pack_contains != blank %}
+                    <p><b>Pack Contains:</b> {{ product.metafields.magento.pack_contains }}</p>
+                  {% endif %}
+                  {% if product.metafields.magento.dimension != blank %}
+                    <p><b>Dimension:</b> {{ product.metafields.magento.dimension }}</p>
+                  {% endif %}
+                  <p><b>Manufactured / Packed by:</b> <span class="popup_manufacturing_click" popup_id="popup_manufacturing">Suarabhakti Goods Pvt ltd</span></p>
+                </div>
+                <div class="index-popup-overlay"></div>
+                {% if section.settings.manufacturing_popup != blank %}
+                  <div class="Index_icon_with_text_list_allloop_popup_new popup_manufacturing_open">
+                    <div class="Index_icon_with_text_list_allloop_popup_inner_new">
+                      <div>
+                        <div class="Index_icon_with_text_list_allloop_popup_title_right_new popup_manufacturing_close">
+                          <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path> </svg>
+                        </div>
+                        <div class="Index_icon_with_text_list_allloop_popup_desc_main_new">
+                          {%- if section.settings.manufacturing_popup != blank -%}
+                            <div class="Index_icon_with_text_list_allloop_popup_desc_new">
+                              {{ section.settings.manufacturing_popup }}
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+                <p>There may be slight color variation depending on the screen one is looking through and once you receive the product.</p>
+                <p>Inclusive of all taxes</p>
+                {% if product.description != blank %}
+                  <div class="product-details-meta">
+                    <p><b>Product Speciality :</b></p>
+                    <div class="product_description_details_new">
+                      <div class="short_des">
+                        {{ product.description | truncatewords: 30 }}
+                        <span class="desc_more">More Product Details</span>
+                      </div>
+                      <div class="long_des" style="display:none;">
+                        {{ product.description }}
+                        <span class="desc_more">View Less Product Details</span>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+                <div class="product-details-meta">
+                  {% if product.metafields.custom.care_instructions != blank %}
+                    <p><b>Care instructions :</b></p>
+                    {{ product.metafields.custom.care_instructions | metafield_tag }}
+                  {% endif %}
+                </div>
+                <div class="product-details-meta">
+                  {% if product.metafields.custom.disclaimer != blank %}
+                    <p><b>Disclaimer :</b></p>
+                    {{ product.metafields.custom.disclaimer | metafield_tag }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% if product.metafields.magento.style_fit_tips != blank %}
+          <div class="js-accordion-item">
+            <div class="product_faq-items product_style-items" js-accordion-item>
+              <div class="text_with_icon flex" js-accordion-header>
+                <span class="text">Style & Fit Tips</span>
+                <div class="icon_arrow">
+                  <div class="arrow_minus arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="2" viewBox="0 0 13 2" fill="none">
+                      <path d="M0 -0.00146484H13V1.99854H0V-0.00146484Z" fill="black" />
+                    </svg>
+                  </div>
+                  <div class="arrow_plus arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+                      <path d="M14 8.6626H8V14.6626H6V8.6626H0V6.6626H6V0.662598H8V6.6626H14V8.6626Z" fill="black" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="details accordion-content__answer" js-accordion-body>
+                <div class="metafield-rich_text_field">
+                  {{ product.metafields.magento.style_fit_tips }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if product.metafields.magento.fall_text_saree != blank %}
+          <div class="js-accordion-item">
+            <div class="product_faq-items product_style-items" js-accordion-item>
+              <div class="text_with_icon flex" js-accordion-header>
+                <span class="text">Fall & Edging</span>
+                <div class="icon_arrow">
+                  <div class="arrow_minus arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="2" viewBox="0 0 13 2" fill="none">
+                      <path d="M0 -0.00146484H13V1.99854H0V-0.00146484Z" fill="black" />
+                    </svg>
+                  </div>
+                  <div class="arrow_plus arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+                      <path d="M14 8.6626H8V14.6626H6V8.6626H0V6.6626H6V0.662598H8V6.6626H14V8.6626Z" fill="black" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="details accordion-content__answer" js-accordion-body>
+                <div class="metafield-rich_text_field">
+                  {{ product.metafields.magento.fall_text_saree }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq_product' -%}
+          {%- if block.settings.details != blank -%}
+            <div class="js-accordion-item {{  block.settings.class }}">
+              <div class="product_faq-items product_style-items" js-accordion-item>
+                <div class="text_with_icon flex" js-accordion-header>
+                  {%- if block.settings.faq_text != blank -%}
+                  <div class="text">{{ block.settings.faq_text }}</div>
+                  {%- endif -%}
+                  <div class="icon_arrow">
+                    <div class="arrow_minus arrow">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="2" viewBox="0 0 13 2" fill="none">
+                        <path d="M0 -0.00146484H13V1.99854H0V-0.00146484Z" fill="black" />
+                      </svg>
+                    </div>
+                    <div class="arrow_plus arrow">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+                        <path d="M14 8.6626H8V14.6626H6V8.6626H0V6.6626H6V0.662598H8V6.6626H14V8.6626Z" fill="black" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="details style-detail accordion-content__answer" js-accordion-body>
+                  <div class="metafield-rich_text_field">
+                    {%- if block.settings.details != blank -%}
+                    {{ block.settings.details }}
+                    {%- endif -%}
+                  </div>
+                  <div class="metafield-rich_text_field hide">
+                    {%- if block.settings.details_no_return != blank -%}
+                      {{ block.settings.details_no_return }}
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </accordion-section>
+</div>
+{% endif %}

@@ -1,0 +1,63 @@
+{% assign isOfferBannerTimer = false %}
+{% for collection in product.collections %}
+  {% if collection.metafields.custom.offer_banner_with_timer.value != blank %}
+    {% assign isOfferBannerTimer = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{% if isOfferBannerTimer == true %}
+  {{ 'offer-banner-with-timer.css' | asset_url | stylesheet_tag }}
+  <div class="offer-banner-with-timer">
+    <div class="offer-banner-with-timer-wrap">
+      {% for collection in product.collections %}
+        {{ collection.metafields.custom.offer_banner_with_timer.value }}
+      {% endfor %}
+    
+      <script>
+        const timerWrapper = document.querySelector('.offer-banner-with-timer');
+        const timerSelector = document.querySelector('.sales_timer_wrapper .timer-div');
+  
+        // Get start and end times from data attributes
+        var startTime = new Date(timerSelector?.getAttribute('data-start-time')).getTime();
+        var endTime = new Date(timerSelector?.getAttribute('data-end-time')).getTime();
+  
+        var x = setInterval(function() {
+          var now = new Date().getTime();
+      
+          if (now < startTime) {
+              // Before start time, no timer started
+              timerWrapper.classList.remove('timer-started');
+              timerWrapper.classList.add('timer-finished');
+          } else if (now >= startTime && now <= endTime) {
+              // Between start time and end time, timer started
+              timerWrapper.classList.add('timer-started');
+              timerWrapper.classList.remove('timer-finished');
+      
+              var distance = endTime - now;
+      
+              var hours = Math.floor(distance / (1000 * 60 * 60));
+              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+              // Update the elements only if they exist
+              if (document.getElementById("hrs")) {
+                  document.getElementById("hrs").innerHTML = hours;
+              }
+              if (document.getElementById("min")) {
+                  document.getElementById("min").innerHTML = minutes;
+              }
+              if (document.getElementById("sec")) {
+                  document.getElementById("sec").innerHTML = seconds;
+      
+              }
+          } else {
+              // After end time, timer finished
+              timerWrapper.classList.remove('timer-started');
+              timerWrapper.classList.add('timer-finished');
+              clearInterval(x); // Stop the timer after the end time
+          }
+        }, 1000);
+      </script>
+    </div>
+  </div>
+{% endif %}

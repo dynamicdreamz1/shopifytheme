@@ -1,0 +1,153 @@
+{%- if section.settings.main_author_heading_text != blank or section.settings.main_author_detail_text != blank or section.settings.main_author_name_text != blank or section.settings.main_author_designation_text != blank or section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank -%}
+  <div class="Page_collection_detail_devide_main_new Page_collection_detail_devide_main_new_{{ section.id }}" style="{% if section.settings.main_desktop_full_image != blank %}background: url({{ section.settings.main_desktop_full_image | img_url: 'master' }}) no-repeat center center; background-size: cover;{% else %}background: {{ section.settings.main_background_color }};{% endif %}">
+    {%- if section.settings.main_mobile_full_image != blank -%}
+      <style>
+        @media(min-width:0px) and (max-width:749px){
+          .Page_collection_detail_devide_main_new_{{ section.id }}{
+            background: url({{ section.settings.main_mobile_full_image | img_url: 'master' }}) no-repeat center center !important;
+            background-size: cover !important;
+          }
+        }
+      </style>
+    {%- endif -%}
+    <div class="page-width">
+      <div class="Page_collection_detail_devide_inner_new">
+        <div class="Page_collection_detail_devide_leftrightboth_new">
+          {%- if section.settings.main_author_heading_text != blank or section.settings.main_author_detail_text != blank or section.settings.main_author_name_text != blank or section.settings.main_author_designation_text != blank -%}
+            <div class="Page_collection_detail_devide_mainleft_new">
+              <div class="Page_collection_detail_devide_innerleft_new">
+                <div class="Page_collection_detail_devide_innerleft_titletextboth_new">
+                  {%- if section.settings.main_author_heading_text != blank -%}
+                    <div class="Page_collection_detail_devide_innerleft_titletext_new">
+                      <h3>{{ section.settings.main_author_heading_text }}</h3>
+                    </div>  
+                  {%- endif -%}
+                  {%- if section.settings.main_author_detail_text != blank -%}
+                    <div class="Page_collection_detail_devide_innerleft_infostext_new">
+                      {{ section.settings.main_author_detail_text }}
+                    </div>  
+                  {%- endif -%}
+                  {%- if section.settings.main_author_name_text != blank -%}
+                    <div class="Page_collection_detail_devide_innerleft_authortext_new">
+                      <h4>- {{ section.settings.main_author_name_text }},</h4>
+                    </div>  
+                  {%- endif -%}
+                  {%- if section.settings.main_author_designation_text != blank -%}
+                    <div class="Page_collection_detail_devide_innerleft_designation_new">
+                      {{ section.settings.main_author_designation_text }}
+                    </div>  
+                  {%- endif -%}
+                </div>
+              </div>  
+            </div>
+          {%- endif -%}
+          {%- if section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank -%}
+            <div class="Page_collection_detail_devide_mainright_new">
+              <div class="Page_collection_detail_devide_innerright_new">
+                <div class="Page_collection_detail_devide_innerright_videoimageboth_new">
+                  {%- if section.settings.main_mp4_video != blank -%}
+                    <div class="Page_collection_detail_devide_innerright_videoimage_new">
+                      {{ section.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                    </div>
+                  {% else %}  
+                    {%- if section.settings.main_desktop_image != blank and section.settings.main_mobile_image != blank -%}
+                      <div class="Page_collection_detail_devide_innerright_videoimage_new">
+                        {%- if section.settings.main_desktop_image != blank -%}
+                          {{
+                            section.settings.main_desktop_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'desktop_image_new'
+                          }}
+                        {%- endif -%}
+                        {%- if section.settings.main_mobile_image != blank -%}
+                          {{
+                            section.settings.main_mobile_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'mobile_image_new'
+                          }}
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+  
+{% schema %}
+  {
+    "name": "Collection Detail Devide",
+    "class": "Page_collection_detail_devide_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#EFEFEF"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      },
+      {
+        "type": "text",
+        "id": "main_author_heading_text",
+        "label": "Add Main Author Heading Text",
+        "default": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "main_author_detail_text",
+        "label": "Add Main Author Detail Text",
+        "default": "<p>“I love the way this look feels so effortless, yet such a dreamy and royal outfit. KALKI's Noor Couture 'has all the things that represent me; the color palette, the cuts & silhouettes, it's a great vibe there. Precisely, it has everything that an Indian bride would LOVE.”</p>"
+      },
+      {
+        "type": "text",
+        "id": "main_author_name_text",
+        "label": "Add Main Author Name Text",
+        "default": "Tara Sutaria"
+      },
+      {
+        "type": "text",
+        "id": "main_author_designation_text",
+        "label": "Add Main Author Designation Text",
+        "default": "Showstopper"
+      },
+      {
+        "type": "video",
+        "id": "main_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_image",
+        "label": "Add Main Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_image",
+        "label": "Add Main Mobile Image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Detail Devide"
+      }
+    ]
+  }
+{% endschema %}

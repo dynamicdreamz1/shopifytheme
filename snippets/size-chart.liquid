@@ -1,0 +1,124 @@
+{% if product.metafields.custom.size_guide_new != blank %}
+  {{ "size-chart.css" |  asset_url |  stylesheet_tag }}
+
+  <div class="size-chart size-chart-old hide {% if full_width %} active {% endif %}" js-pdp-size-chart-popup data-popup-modal="size-chart" js-popup-modal>
+    <div class="size_chart_inner_new">
+      <div class="cross-icon modal-link" js-popup-close-btn data-modal="size-chart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M3 3L21 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M21 3L3 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="size_chart_inner_scroll_new optiscroll_common_new optiscroll">
+        <div class="page-width">
+          <div class="size-chart_wrapper ">
+              <div class="content-top">
+                <h3 class="main-title common-style">size guide</h3>
+                <div class="switch-buttons" js-size-convert-buttons>
+                    <div class="inches-button convert-btns active" js-size-convert-btn-inch>Inches</div>
+                    <div class="cm-button convert-btns" js-size-convert-btn-cm>cm</div>
+                </div>
+              </div>
+              <div class="size-chart__content">
+                {% assign size_chart = product.metafields.custom.size_guide_new.value %}
+                <div class="size-chart__main">
+                  <div class="img-wrap hide-mobile" js-size-chart-image data-parameter="in">
+                    {% if size_chart.desktop_inches != blank %}
+                      <img src="{{ size_chart.desktop_inches |  image_url: width: '2000x' }}" alt="">
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  <div class="img-wrap hide-mobile visually-hide" js-size-chart-image data-parameter="cm">
+                    {% if size_chart.desktop_cms != blank %}
+                      <img src="{{ size_chart.desktop_cms |  image_url: width: '2000x' }}" alt="">
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  <div class="img-wrap hide-desktop" js-size-chart-image data-parameter="in">
+                    {% if size_chart.mobile_inches != blank %}
+                      <img src="{{ size_chart.mobile_inches |  image_url: width: '2000x' }}" alt="">
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  <div class="img-wrap hide-desktop visually-hide" js-size-chart-image data-parameter="cm">
+                    {% if size_chart.mobile_cms != blank %}
+                      <img src="{{ size_chart.mobile_cms |  image_url: width: '2000x' }}" alt="">
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+    {% for collection in product.collections %}
+        {% if collection.metafields.custom.size_guide %}
+          {% assign size_chart = collection.metafields.custom.size_guide.value %}
+          {% if size_chart %}
+            {{ "size-chart.css" |  asset_url |  stylesheet_tag }}
+            <div class="size-chart  hide {% if full_width %} active {% endif %}" js-pdp-size-chart-popup data-popup-modal="size-chart" js-popup-modal>
+              <div class="size_chart_inner_new">
+                <div class="cross-icon modal-link" js-popup-close-btn data-modal="size-chart">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 3L21 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M21 3L3 21" stroke="black" stroke-width="1.2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="size_chart_inner_scroll_new optiscroll_common_new optiscroll">
+                  <div class="page-width">
+                    <div class="size-chart_wrapper ">
+                        <div class="content-top">
+                          <h3 class="main-title common-style">size guide</h3>
+                          <div class="switch-buttons" js-size-convert-buttons>
+                              <div class="inches-button convert-btns active" js-size-convert-btn-inch>Inches</div>
+                              <div class="cm-button convert-btns" js-size-convert-btn-cm>cm</div>
+                          </div>
+                        </div>
+                        <div class="size-chart__content">
+                          <div class="size-chart__main">
+                            <div class="img-wrap hide-mobile" js-size-chart-image data-parameter="in">
+                              {% if size_chart.desktop_inches != blank %}
+                                <img src="{{ size_chart.desktop_inches |  image_url: width: '2000x' }}" alt="">
+                              {% else %}
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                              {% endif %}
+                            </div>
+                            <div class="img-wrap hide-mobile visually-hide" js-size-chart-image data-parameter="cm">
+                              {% if size_chart.desktop_cms != blank %}
+                                <img src="{{ size_chart.desktop_cms |  image_url: width: '2000x' }}" alt="">
+                              {% else %}
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                              {% endif %}
+                            </div>
+                            <div class="img-wrap hide-desktop" js-size-chart-image data-parameter="in">
+                              {% if size_chart.mobile_inches != blank %}
+                                <img src="{{ size_chart.mobile_inches |  image_url: width: '2000x' }}" alt="">
+                              {% else %}
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                              {% endif %}
+                            </div>
+                            <div class="img-wrap hide-desktop visually-hide" js-size-chart-image data-parameter="cm">
+                              {% if size_chart.mobile_cms != blank %}
+                                <img src="{{ size_chart.mobile_cms |  image_url: width: '2000x' }}" alt="">
+                              {% else %}
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+     {% endfor %}
+{% endif %}

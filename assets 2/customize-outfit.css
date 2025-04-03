@@ -1,0 +1,113 @@
+.customize-outfit {
+   padding-bottom: 20px;
+}
+.customize-outfit svg {
+   width: 100%;
+   height: 100%;
+   display: block;
+}
+.customize-outfit .main-title {
+   font-family: var(--font-body-family);
+   font-size: 14px;
+   font-weight: 900;
+   line-height: 128.571%;
+   letter-spacing: 0;
+   color: #0f0d1a;
+   text-transform: capitalize;
+   margin: 0 0 8px;
+}
+.customize-outfit .text{
+   font-family: var(--font-body-family);
+   font-size: 12px;
+   font-weight: 400;
+   line-height: 150%;
+   color: #0F0D1A;
+   padding-left: 10px;
+   flex: 1;
+}
+.customize-outfit .text p strong {
+   font-family: var(--font-body-family);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 150%;
+    letter-spacing: 0;
+    text-transform: capitalize;
+    margin: 0 0 7px;
+}
+.customize-outfit .grid-item {
+   display: flex;
+   flex-wrap: wrap;
+  grid-gap:12px;
+}
+.customize-outfit .inner-wrap {
+   max-width: calc(50% - 6px);
+   flex: 50%;
+}
+.customize-outfit .icon-with-text {
+   display: flex;
+   align-items: flex-start;
+   background: #F9F8F8;
+   padding: 7px 10px;
+   height: 100%;
+}
+.customize-outfit .active {
+    max-width: 100%;
+    flex: 100%;
+}
+.customize-outfit .icon {
+   max-width: 24px;
+   flex: 24px;
+   padding: 7px 0;
+}
+.customize-outfit .bottom-text {
+   font-family: var(--font-body-family);
+   font-size: 13px;
+   font-weight: 500;
+   line-height:138.462%;
+   letter-spacing: 0;
+   text-align: center;
+   display: block;
+  padding-top:20px;
+}
+@media screen  and (max-width: 749px){
+   .customize-outfit .inner-wrap {
+       max-width: 100%;
+       flex: 100%;
+   }
+   .customize-outfit .bottom-text {
+      text-align: start;
+   }
+   .customize-outfit .inner-wrap {
+      padding: 0;
+   }
+  .customize-outfit .icon-with-text {
+    padding: 15px 10px;
+  }
+  .customize-outfit .text p strong{ font-weight:500; display:block; }
+  .customize-outfit {
+      padding-bottom: 16px;
+  }
+  .customize-outfit .bottom-text{ padding-top:16px; }
+
+}
+
+@media(min-width:750px) and (max-width:989px){
+  .customize-outfit .inner-wrap {
+       max-width: 100%;
+       flex: 100%;
+   }
+   .customize-outfit .bottom-text {
+      text-align: start;
+   }
+   .customize-outfit .inner-wrap {
+      padding: 0;
+   }
+  .customize-outfit .icon-with-text {
+    padding: 15px 10px;
+  }
+  .customize-outfit .text p strong{ display:block; }
+  .customize-outfit {
+      padding-bottom: 16px;
+  }
+  .customize-outfit .bottom-text{ padding-top:16px; }
+}

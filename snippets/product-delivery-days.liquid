@@ -1,0 +1,357 @@
+{% assign mto =  current_product.metafields.magento.mto | handleize %} <!-- yes or no condition -->
+
+{% if mto != blank %}
+  
+  {% assign delivery_days =  current_product.metafields.magento.fast_shipping %} <!-- shipping day -->
+  {% assign rts_delivery_days =  current_product.metafields.custom.mto_rts_days %}
+  {% if mto == 'yes' %}
+    {% if current_product.options.size == 1 %}
+      {% assign selected_or_first_available_variant_inventory_quantity = current_product.variants[0].inventory_quantity %}
+    {% else %}
+      {% assign selected_or_first_available_variant_inventory_quantity = current_product.variants[1].inventory_quantity %}
+    {% endif %}
+    
+    {% if selected_or_first_available_variant_inventory_quantity < 1 %}
+      {% assign init_delivery_days =  delivery_days %}
+    {% else %}
+      {% assign init_delivery_days =  rts_delivery_days %}
+    {% endif %}
+  {% endif %}
+
+  {% if mto == 'no' %}
+    {% assign init_delivery_days =  delivery_days %}
+  {% endif %}
+
+  {% if current_product.metafields.custom.days_override != blank %}
+    {% assign init_delivery_days =  current_product.metafields.custom.days_override %}
+  {% endif %}
+
+  {% comment %} Collection Page Delivery Message {% endcomment %}
+  {% if template.name == 'collection' %}
+    {% if current_product.metafields.custom.filter_delivery != blank or current_product.metafields.magento.festival_stamp != blank %}
+    {% assign stamp = current_product.metafields.custom.filter_delivery | downcase %}
+    <div class="plp-delivery-message">
+      {% if current_product.metafields.custom.filter_delivery != blank %}
+        <span class="cs_delivery_wrapper-label {% if stamp contains "ready to ship" %} delivery-ready-to-ship{% endif %}">
+          <span class="cs_delivery_wrapper-icon">
+            {% if stamp contains "ready to ship" %}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_4277_4778)">
+                <path d="M9.88115 4.99993H6.50065C6.50065 4.99993 7.97237 0.120502 8.00049 0L7.50049 0.000155598L1.92344 6.6411C1.80471 6.79106 1.91719 6.99993 2.12027 6.99993H5.50076C5.50076 6.99993 3.98928 11.8617 4.00049 12H4.50049L10.078 5.36143C10.1936 5.2088 10.0842 4.99993 9.88115 4.99993Z" fill="#223330"></path>
+                </g>
+                <defs>
+                <clipPath id="clip0_4277_4778">
+                    <rect width="12" height="12" fill="white"></rect>
+                </clipPath>
+                </defs>
+              </svg>
+            {% else %}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
+              </svg>
+            {% endif %}
+          </span>
+          <span class="cs_delivery_wrapper-text">
+            {{ current_product.metafields.custom.filter_delivery.value }} 
+          </span>
+        </span>
+      {% endif %}
+      {% if current_product.metafields.magento.festival_stamp != blank %}
+        <div class="card_badge_festival_stamp">
+            {{ current_product.metafields.magento.festival_stamp }}
+        </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  {% endif %}
+
+  {% comment %} Product Detials Page Delivery Message {% endcomment %}
+  {% if template.name == 'product' and delivery_days != blank %}
+    <script src="{{ 'moment.min.js' | asset_url }}" defer></script>
+
+    <div class="cs_delivery_wrapper" js-delivery-wrapper>
+      <div class="cs_delivery_inner-wrapper">
+          <span class="cs_delivery_wrapper-label">
+            <span class="cs_delivery_wrapper-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="11" fill="#F0FAF2"/>
+                <rect x="5.5" y="5.5" width="11" height="11" rx="0.5" stroke="#223330"/>
+                <path d="M16.5 16.5V8.59301L20.3173 9.2474C20.9576 9.35716 21.4544 9.86658 21.5482 10.5094L22.4218 16.5H16.5Z" stroke="#223330"/>
+                <path d="M21 16.5C21 17.8807 19.8807 19 18.5 19C17.1193 19 16 17.8807 16 16.5C16 15.737 16.3418 15.0539 16.8806 14.5954C17.3168 14.2241 17.8822 14 18.5 14C19.8807 14 21 15.1193 21 16.5Z" fill="white"/>
+                <circle cx="8.5" cy="16.5" r="2.5" fill="white"/>
+                <circle cx="8.5" cy="16.5" r="2" stroke="#223330"/>
+                <circle cx="18.5" cy="16.5" r="2" stroke="#223330"/>
+                <line x1="2" y1="9.5" x2="8" y2="9.5" stroke="#223330"/>
+                <path d="M3 12.5H8" stroke="#223330"/>
+                <path d="M2 8.5H7" stroke="white"/>
+                <path d="M2 11.5H7" stroke="white"/>
+              </svg>
+            </span>
+            <span class="cs_delivery_wrapper-text">
+              Estimated delivery :
+            </span>
+          </span>
+          <span class="cs_delivery_wrapper-value" js-product-delivery-time ></span>
+          <div class="hide" js-upsell-delivery-days-data>
+            {% if additional_delivery_days != blank %}
+              <input hidden js-additional-delivery-day data-value="{{additional_delivery_days}}" />
+            {% endif %}
+          </div>
+      </div>
+    </div>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const deliveryTimeWrappers = document.querySelectorAll('[js-product-delivery-time]'); // Get all delivery time wrappers
+        const productForms = document.querySelectorAll('form[data-type="add-to-cart-form"]'); // Get all product forms
+      
+        // upsell products
+        const upsellProducts = document.querySelectorAll('product-form upsell-product input');
+      
+        function addBusinessDays(originalDate, numDaysToAdd) {
+         
+          const Sunday = 0;
+          const Saturday = 6;
+          let daysRemaining = numDaysToAdd;
+      
+          const newDate = originalDate.clone();
+          while (daysRemaining > 0) {
+            newDate.add(1, 'days');
+            if (newDate.day() !== Sunday) {
+              daysRemaining--;
+            }
+          }
+          return newDate;
+        }
+      
+        function setDeliveryTime(days, form, deliveryTimeWrapper) {
+          const deliveryTimeWithoutFormat = addBusinessDays(moment(), parseInt(days));
+          const day = moment(deliveryTimeWithoutFormat).format('dddd');
+          const date = moment(deliveryTimeWithoutFormat).format("DD MMM YYYY");
+      
+          // if (deliveryTimeWrapper) {
+          //   deliveryTimeWrapper.textContent = `${day}, ${date}`;
+          // }
+          deliveryTimeWrappers.forEach(elem => {
+            if (elem) {
+                elem.textContent = `${day}, ${date}`;
+            }
+          });
+      
+          if (form) {
+            form.setAttribute('data-delivery-current-delivery-day-value', days);
+            const estimatedDeliveryInput = form.querySelector('[js-estimated-delivery-input]');
+            if (estimatedDeliveryInput) {
+              estimatedDeliveryInput.value = `${day}, ${date}`;
+            } else {
+              form.insertAdjacentHTML("afterBegin", `<input type="hidden" js-estimated-delivery-input name="items[0][properties][Estimated delivery]" value="${day}, ${date}" />`);
+            }
+            const estimatedDeliveryDaysInput = form.querySelector('[js-estimated-delivery-days-input]');
+            if (estimatedDeliveryDaysInput) {
+              estimatedDeliveryDaysInput.value = `${days}`;
+            } else {
+              form.insertAdjacentHTML("afterBegin", `<input type="hidden" js-estimated-delivery-days-input name="items[0][properties][_Delivery days]" value="${days}" />`);
+            }
+          }
+        }
+      
+        // Initialize delivery time and event listeners for each form and deliveryTimeWrapper
+        productForms.forEach((form, index) => {
+          const deliveryTimeWrapper = deliveryTimeWrappers[index]; // Get the corresponding deliveryTimeWrapper
+          setDeliveryTime({{init_delivery_days}}, form, deliveryTimeWrapper); // Initialize with the days provided
+      
+          let rtsDeliveryDays = parseInt({{ rts_delivery_days }});
+          let mtoDays = parseInt({{ delivery_days }});
+          const colletionRrtsDays = parseInt(form.querySelector('[colletion_rts_days]').getAttribute('colletion_rts_days'));
+          const options = form.querySelectorAll('[js-variant-delivery-option]');
+          
+          options.forEach(option => {
+            const variantDeliveryDays = option.dataset.variantDeliveryDays;
+            const quantity = parseInt(option.dataset.variantQuantity);
+            const deliveryWrapper = document.querySelector('[js-delivery-wrapper]');
+            const extraDeliveryDays = deliveryWrapper.querySelector('[js-additional-delivery-day]');
+            const totalUpsellCheckedItems = document.querySelectorAll('product-form upsell-product input:checked');
+            // class stock-item-icon
+            if (variantDeliveryDays) {
+                option.setAttribute('del-day', variantDeliveryDays);
+              } else {
+                if (extraDeliveryDays && totalUpsellCheckedItems.length) {
+                  let additionalMtoDays = parseInt(extraDeliveryDays.dataset.value) + mtoDays;
+                  let additionalRtsDays = parseInt(extraDeliveryDays.dataset.value) + rtsDeliveryDays;
+                  if ('{{ mto }}' === 'yes') {
+                    if (quantity < 1) {
+                      option.setAttribute('del-day', additionalMtoDays);
+                    } else {
+                      option.setAttribute('del-day', additionalRtsDays);
+                    }
+                  } else {
+                    option.setAttribute('del-day', additionalMtoDays);
+                  }
+                } else {
+                  if ('{{ mto }}' === 'yes') {
+                    if (quantity < 1) {
+                      option.setAttribute('del-day', mtoDays);
+                    } else {
+                      option.setAttribute('del-day', rtsDeliveryDays);
+                    }
+                  } else {
+                    option.setAttribute('del-day', mtoDays);
+                  }
+                }
+            }
+            
+            const varDelDay = parseInt(option.getAttribute('del-day'));
+            if (colletionRrtsDays >= varDelDay) {
+              option.classList.add('stock-item-icon');
+            } else {
+              option.classList.remove('stock-item-icon');
+            }
+          });
+          options.forEach(option => {
+            option.addEventListener('click', () => {
+              const quantity = parseInt(option.dataset.variantQuantity);
+              const variantDeliveryDays = option.dataset.variantDeliveryDays;
+            
+              if (variantDeliveryDays) {
+                setDeliveryTime(variantDeliveryDays, form, deliveryTimeWrapper);
+                document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                document.querySelector(".additional_delivery_massage_text").innerHTML = "Est. Delivery by" + deliveryTimeWrapper.innerHTML;
+              } else {
+                const deliveryWrapper = document.querySelector('[js-delivery-wrapper]');
+                const extraDeliveryDays = deliveryWrapper.querySelector('[js-additional-delivery-day]');
+                const totalUpsellCheckedItems = document.querySelectorAll('product-form upsell-product input:checked');
+      
+                if (extraDeliveryDays && totalUpsellCheckedItems.length) {
+                  let additionalMtoDays = parseInt(extraDeliveryDays.dataset.value) + mtoDays;
+                  let additionalRtsDays = parseInt(extraDeliveryDays.dataset.value) + rtsDeliveryDays;
+      
+                  if ('{{ mto }}' === 'yes') {
+                    if (quantity < 1) {
+                      setDeliveryTime(additionalMtoDays, form, deliveryTimeWrapper);
+                      document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                      document.querySelector(".additional_delivery_massage_text").innerHTML = "This size is sold out and will be made to order for you. <br>" + deliveryTimeWrapper.innerHTML;
+                    } else {
+                      setDeliveryTime(additionalRtsDays, form, deliveryTimeWrapper);
+                      document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                      document.querySelector(".additional_delivery_massage_text").innerHTML = "Est. Delivery by" + deliveryTimeWrapper.innerHTML;
+                    }
+                  } else {
+                    setDeliveryTime(additionalMtoDays, form, deliveryTimeWrapper);                    
+                    document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                    document.querySelector(".additional_delivery_massage_text").innerHTML = "Est. Delivery by" + deliveryTimeWrapper.innerHTML;
+                  }
+                } else {
+                  if ('{{ mto }}' === 'yes') {
+                    if (quantity < 1) {
+                      setDeliveryTime(mtoDays, form, deliveryTimeWrapper);
+                      document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                      document.querySelector(".additional_delivery_massage_text").innerHTML = "This size is sold out and will be made to order for you. <br> Est. Delivery by "+ deliveryTimeWrapper.innerHTML;
+                    } else {
+                      setDeliveryTime(rtsDeliveryDays, form, deliveryTimeWrapper);
+                      document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                      document.querySelector(".additional_delivery_massage_text").innerHTML = "Est. Delivery by" + deliveryTimeWrapper.innerHTML;
+                    }
+                  } else {
+                    setDeliveryTime(mtoDays, form, deliveryTimeWrapper);
+                    document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                    document.querySelector(".additional_delivery_massage_text").innerHTML = "Est. Delivery by" + deliveryTimeWrapper.innerHTML;
+                  }
+                }
+                let varValue = option.childNodes[0].nodeValue.trim();
+                if (varValue === '48' || varValue === '50') {
+                  document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                  document.querySelector(".additional_delivery_massage_text").innerHTML = "We usually do no stock this size and it will be made to order for you. This size is non-returnable. <br> Est. Delivery by " + deliveryTimeWrapper.innerHTML;
+                }
+              }
+              
+            });
+            
+          });
+      
+          // variation change
+          const selectors = {
+            templateSelector: '[js-product-template]',
+            variantSelectSelector: '[js-custom-variant-selects]',
+            stitchedGroupSelector: '[js-stitched-group]',
+            optionValuesSelector: '[js-size-options]',
+          };
+          const templateContainer = document.querySelector(selectors.templateSelector);
+          const variantSelects = templateContainer.querySelector('[js-custom-variant-selects]');
+          const optionValues = templateContainer.querySelectorAll(`${selectors.stitchedGroupSelector}${selectors.optionValuesSelector} label`);
+      
+          function handleOptionChange() {
+            const initialSelectedCheckField = templateContainer.querySelector(`${selectors.variantSelectSelector} input:checked`);
+            const totalUpsellCheckedItems = document.querySelectorAll('product-form upsell-product input:checked');
+            const initialSelectedOption = initialSelectedCheckField?.value;
+            const productDetails = document.querySelector('[js-product-details]');
+      
+            if (initialSelectedCheckField && initialSelectedCheckField.hasAttribute("non-returnable")) {
+              productDetails.classList.add('non-returnable-variant');
+            } else {
+              if (productDetails.classList.contains('non-returnable-variant')) {
+                productDetails.classList.remove('non-returnable-variant');
+              }
+            }
+      
+            if (initialSelectedOption && optionValues.length) {
+              if (initialSelectedOption == 'Stitched' && totalUpsellCheckedItems.length == 0) {
+                let currentDays = parseInt(form.getAttribute('data-delivery-current-delivery-day-value'));
+                const deliveryWrapper = document.querySelector('[js-delivery-wrapper]');
+                const extraDeliveryDays = deliveryWrapper.querySelector('[js-additional-delivery-day]');
+                currentDays += parseInt(extraDeliveryDays.dataset.value);
+                setDeliveryTime(currentDays, form, deliveryTimeWrapper);
+                document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                document.querySelector(".additional_delivery_massage_text").innerHTML = "Est. Delivery by" + deliveryTimeWrapper.innerHTML;
+                
+                const options = form.querySelectorAll('[js-variant-delivery-option]');
+                const colletionRrtsDays = parseInt(form.querySelector('[colletion_rts_days]').getAttribute('colletion_rts_days'));
+                options.forEach(option => {
+                  const varDelDay = parseInt(option.getAttribute('del-day'));
+                  if (colletionRrtsDays < varDelDay) {
+                    option.classList.add('stock-item-icon');
+                  } else {
+                    option.classList.remove('stock-item-icon');
+                  }
+                }); 
+              }
+            }
+          }
+      
+          handleOptionChange();
+          variantSelects?.addEventListener('change', handleOptionChange);
+      
+          // upsell product changes
+          upsellProducts.forEach(upsellInput => {
+            upsellInput.addEventListener('click', function(e) {
+              let currentDays = parseInt(form.getAttribute('data-delivery-current-delivery-day-value'));
+              const deliveryWrapper = document.querySelector('[js-delivery-wrapper]');
+              const extraDeliveryDays = deliveryWrapper.querySelector('[js-additional-delivery-day]');
+              const totalUpsellCheckedItems = document.querySelectorAll('product-form upsell-product input:checked');
+              const initialSelectedCheckField = templateContainer.querySelector(`${selectors.variantSelectSelector} input:checked`);
+              const initialSelectedOption = initialSelectedCheckField?.value;
+      
+              if (initialSelectedOption != 'Stitched') {
+                if (currentDays && extraDeliveryDays) {
+                  if (e.target.checked) {
+                    if (totalUpsellCheckedItems.length == 1) {
+                      currentDays += parseInt(extraDeliveryDays.dataset.value);
+                    }
+                  } else {
+                    if (totalUpsellCheckedItems.length == 0) {
+                      currentDays -= parseInt(extraDeliveryDays.dataset.value);
+                    }
+                  }
+                  setDeliveryTime(currentDays, form, deliveryTimeWrapper);
+                  document.querySelector(".additional_delivery_massage_text").classList.remove("hidden");
+                  document.querySelector(".additional_delivery_massage_text").innerHTML = "Est. Delivery by" + deliveryTimeWrapper.innerHTML;
+                }
+              }
+            });
+          });
+        });
+      });
+    </script>
+  {% endif %}
+
+{% endif %}

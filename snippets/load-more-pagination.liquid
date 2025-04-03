@@ -1,0 +1,227 @@
+<script>
+const collectionLoadMore = () => {
+    const mainElement = document.querySelector('[js-main-collection]');
+    const loadMoreLoader = document.querySelector('[js-load-more-loader]');
+    const loadMoreSelector = document.querySelector('[js-load-more-selector]');
+    let nextPageUrl = loadMoreSelector?.getAttribute('data-href');
+    let totalPage = loadMoreSelector?.getAttribute('data-page-limit');
+    let PRODUCTS_PER_PAGE = loadMoreSelector?.getAttribute('products-per-page');
+  
+    let observer = null;
+    let scrollUpObserver = null;
+
+    const getPageFromURL = () => {
+        const params = new URLSearchParams(window.location.search);
+        return parseInt(params.get('p')) || 1;
+    };
+
+    let currentPage = getPageFromURL();
+
+    const updateURL = (page) => {
+        const params = new URLSearchParams(window.location.search);
+        if (page > 1) {
+            params.set('p', page);
+        } else {
+            params.delete('p');
+        }
+        const newURL = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
+        window.history.pushState({ page: page }, "", newURL);
+    };
+
+    const updateNextPageUrl = (doc) => {
+        const newLoadMoreSelector = doc.querySelector('[js-load-more-selector]');
+        if (newLoadMoreSelector) {
+            const newHref = newLoadMoreSelector.getAttribute('data-href');
+            if (newHref) {
+                loadMoreSelector.setAttribute('data-href', newHref);
+                nextPageUrl = newHref;
+            }
+        } else {
+            loadMoreSelector.classList.add('hidden');
+            nextPageUrl = null;
+        }
+    };
+
+    const loadProducts = (callback, stopAtPage = null, scrollToFirstProduct = false) => {
+        if (!nextPageUrl) {
+            return;
+        }
+
+        if (loadMoreLoader) loadMoreLoader.classList.remove('hidden');
+
+        this.request = new XMLHttpRequest();
+        this.request.onreadystatechange = function() {
+            if (this.request.readyState === 4 && this.request.status === 200) {
+                const newContainer = this.request.responseXML.querySelectorAll('#product-grid .grid__item');
+                const newProductsCount = newContainer.length;
+                const productGrid = document.querySelector('#product-grid');
+
+                if (productGrid && newProductsCount > 0) {
+                    newContainer.forEach(item => {
+                        productGrid.insertAdjacentHTML('beforeend', item.outerHTML);
+                    });
+                }
+
+                const totalProductsLoaded = document.querySelectorAll('#product-grid .grid__item').length;
+
+                if (totalProductsLoaded >= currentPage * PRODUCTS_PER_PAGE) {
+                    currentPage++;
+                    updateURL(currentPage);
+                }
+
+                updateNextPageUrl(this.request.responseXML);
+
+                if (loadMoreLoader) loadMoreLoader.classList.add('hidden');
+
+                initScrollUpObserver();
+
+                if (stopAtPage && currentPage >= stopAtPage) {
+                    return;
+                }
+
+                if (nextPageUrl && (!stopAtPage || currentPage < stopAtPage)) {
+                    initIntersectionObserver();
+                }
+
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            }
+        }.bind(this);
+
+        this.request.open('GET', nextPageUrl);
+        this.request.responseType = 'document';
+        this.request.send();
+    };
+
+    const initIntersectionObserver = () => {
+        if (observer) observer.disconnect();
+
+        observer = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    observerInstance.disconnect();
+                    loadProducts(null, null, false);
+                }
+            });
+        }, {
+            rootMargin: '2000px',
+            threshold: 0.1
+        });
+
+        if (loadMoreSelector) {
+            observer.observe(loadMoreSelector);
+        }
+    };
+
+    const initScrollUpObserver = () => {
+        if (scrollUpObserver) scrollUpObserver.disconnect();
+
+        const productGrid = document.querySelector('#product-grid');
+        if (!productGrid) return;
+
+        const products = productGrid.querySelectorAll('.grid__item');
+
+        let lastIntersectingPage = currentPage;
+
+        scrollUpObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const productIndex = Array.from(products).indexOf(entry.target);
+
+                    if (productIndex !== -1) {
+                        const newPage = Math.floor(productIndex / PRODUCTS_PER_PAGE) + 1;
+
+                        if (newPage !== lastIntersectingPage) {
+                            lastIntersectingPage = newPage;
+                            updateURL(newPage);
+                        }
+                    }
+                }
+            });
+        }, {
+            rootMargin: '0px',
+            threshold: 0.5
+        });
+
+        products.forEach(product => scrollUpObserver.observe(product));
+    };
+
+    const loadToPageFromURL = (desiredPage) => {
+        const loadNextPage = () => {
+            if (currentPage < desiredPage) {
+                loadProducts(loadNextPage, desiredPage, currentPage === desiredPage - 1);
+            } else {
+                const productGrid = document.querySelector('#product-grid');
+                const firstProductOnPage = productGrid ? productGrid.children[(desiredPage - 1) * PRODUCTS_PER_PAGE] : null;
+    
+                if (firstProductOnPage) {
+                    window.scrollTo({
+                        top: firstProductOnPage.offsetTop + (firstProductOnPage.offsetHeight / 0.6)
+                    });
+                } else {
+                    loadProducts(() => loadToPageFromURL(desiredPage));
+                }
+            }
+        };
+        loadNextPage();
+    };
+
+    const startPage = getPageFromURL();
+
+    if (startPage > 1) {
+        currentPage = startPage;
+        loadProducts(() => loadToPageFromURL(startPage));
+    } else if (nextPageUrl) {
+        initIntersectionObserver();
+    }
+
+    initScrollUpObserver();
+};
+
+collectionLoadMore();
+
+
+
+</script>
+
+<style>
+  
+.load-more-selector .load-more-loader {
+    margin: 0 auto;
+    height: 40px;
+    width: 40px;
+    animation: rotate .8s infinite linear;
+    border: 5px solid;
+    border-right-color: transparent;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+.load-more-selector {
+    height: 40px;
+}
+.load-more-selector button {
+    border-radius: 30px;
+    border: 1px solid #2E2E33;
+    padding: 8px 20px;
+    color: #223330;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: .42px;
+    text-transform: capitalize;
+    text-decoration: none;
+    min-width: 142px;
+    display: inline-block;
+    background: transparent;
+    outline: none !important;
+    appearance: none;
+    box-shadow: inherit !important;
+    /* margin-left: 10rem; */
+  }
+  
+</style>

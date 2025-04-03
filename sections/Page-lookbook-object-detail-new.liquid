@@ -1,0 +1,103 @@
+{%- style -%}
+ .iframe-container {float: none;
+    clear: both;
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;}
+  .iframe-container iframe { position: absolute; top: 0; left: 0; border: 0; width: 100%;  height: 100%;}
+{%- endstyle -%} 
+
+{%- if metaobject.detail_video_or_image.value != blank or metaobject.detail_heading_text.value != blank or metaobject.detail_information_text.value != blank or metaobject.add_youtube_video.value != blank -%}
+  <div class="Page_lookbook_object_detail_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_lookbook_object_detail_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Page_lookbook_object_detail_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if metaobject.detail_video_or_image.value != blank or metaobject.detail_heading_text.value != blank or metaobject.detail_information_text.value != blank or metaobject.add_youtube_video.value != blank -%}
+          <div class="Page_lookbook_object_detail_maindetail_new">
+            <div class="Page_lookbook_object_detail_innerdetail_new">
+              {%- if metaobject.detail_video_or_image.value != blank or metaobject.add_youtube_video.value != blank -%}
+                <div class="Page_lookbook_object_detail_innerdetail_1_new">
+                  <div class="Page_lookbook_object_detail_innerdetail_1_videoimageboth_new">
+                    {%- if metaobject.detail_video_or_image.value.sources[1].url contains '.mp4' or metaobject.detail_video_or_image.value.sources[1].url contains '.MP4' -%}
+                      <div class="Page_lookbook_object_detail_innerdetail_1_videoimage_new">
+                        <video
+                          id="Mp4Video-{{ section.id }}-inner"
+                          class="video-div"
+                          data-type="mp4"
+                          src="{{ metaobject.detail_video_or_image.value.sources[1].url }}"
+                          loop muted playsinline autoplay>
+                        </video>
+                      </div>
+                     {%elsif metaobject.add_youtube_video.value != blank -%}
+                      <div class="Page_lookbook_object_detail_innerdetail_1_videoimage_new iframe-container">
+                                      {{ metaobject.add_youtube_video.value }}
+                      </div>
+                    {%- else -%}
+                      <div class="Page_lookbook_object_detail_innerdetail_1_videoimage_new">
+                        {{
+                          metaobject.detail_video_or_image.value | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'Full_image_new'
+                        }}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
+              {%- if metaobject.detail_heading_text.value != blank -%}
+                <div class="Page_lookbook_object_detail_innerdetail_2_new">
+                  <div class="Page_lookbook_object_detail_innerdetail_2_titletexts_new">
+                    <h3>{{ metaobject.detail_heading_text.value }}</h3>
+                  </div>
+                </div>
+              {%- endif -%}
+              {%- if metaobject.detail_information_text.value != blank -%}
+                <div class="Page_lookbook_object_detail_innerdetail_3_new">
+                  <div class="Page_lookbook_object_detail_innerdetail_3_infostexts_new">
+                    {{ metaobject.detail_information_text | metafield_tag }}
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>  
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+
+
+{% schema %}
+  {
+    "name": "Lookbook Object Detail",
+    "class": "Page_lookbook_object_detail_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Video"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Lookbook Object Detail"
+      }
+    ]
+  }
+{% endschema %}

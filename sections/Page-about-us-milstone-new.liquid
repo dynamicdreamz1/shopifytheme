@@ -1,0 +1,158 @@
+{%- if section.blocks.size > 0 or section.settings.main_top_heading_text != blank -%}
+  <div class="Page_about_us_milstone_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_about_us_milstone_inner_new">
+        {%- if section.settings.main_top_heading_text != blank -%}
+          <div class="Common_title_new Page_about_us_milstone_title_new">
+            <h2>{{ section.settings.main_top_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Page_about_us_milstone_mainloop_new">
+            <div class="Page_about_us_milstone_innerloop_new">
+              <div class="swiper-container Page_about_us_milstone_slider">
+                <div class="swiper-wrapper">
+                  {%- for block in section.blocks -%}
+                    {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank or block.settings.title != blank or block.settings.main_years_text != blank -%}
+                      <div class="swiper-slide Page_about_us_milstone_innerloop_mainboxs_new">
+                        <div class="Page_about_us_milstone_innerloop_innerboxs_new">
+                          {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank -%}
+                            <div class="Page_about_us_milstone_innerloop_innerboxs_1_new">
+                              <div class="Page_about_us_milstone_innerloop_innerboxs_1_videoimageboth_new">
+                                {%- if block.settings.main_mp4_video != blank -%}
+                                  <div class="Page_about_us_milstone_innerloop_innerboxs_1_videoimage_new">
+                                    {{ block.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                                  </div>
+                                {% else %}  
+                                  {%- if block.settings.main_desktop_image != blank and block.settings.main_mobile_image != blank -%}
+                                    <div class="Page_about_us_milstone_innerloop_innerboxs_1_videoimage_new">
+                                      {%- if block.settings.main_desktop_image != blank -%}
+                                        {{
+                                          block.settings.main_desktop_image | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'desktop_image_new'
+                                        }}
+                                      {%- endif -%}
+                                      {%- if block.settings.main_mobile_image != blank -%}
+                                        {{
+                                          block.settings.main_mobile_image | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'mobile_image_new'
+                                        }}
+                                      {%- endif -%}
+                                    </div>
+                                  {%- endif -%}
+                                {%- endif -%}
+                              </div>
+                            </div>
+                          {%- endif -%}
+                          {%- if block.settings.title != blank or block.settings.main_years_text != blank -%}
+                            <div class="Page_about_us_milstone_innerloop_innerboxs_2_new">
+                              <div class="Page_about_us_milstone_innerloop_innerboxs_2_titleinfosboth_new">
+                                {%- if block.settings.title != blank -%}
+                                  <div class="Page_about_us_milstone_innerloop_innerboxs_2_title_new">
+                                    {{ block.settings.title }}
+                                  </div>  
+                                {%- endif -%}
+                                {%- if block.settings.main_years_text != blank -%}
+                                  <div class="Page_about_us_milstone_innerloop_innerboxs_2_years_new">
+                                    {{ block.settings.main_years_text }}
+                                  </div>  
+                                {%- endif -%}
+                              </div>
+                            </div>  
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Page About Us Milstone",
+    "class": "Page_about_us_milstone_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_top_heading_text",
+        "label": "Add Main Top Heading Text",
+        "default": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "video",
+            "id": "main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Title Text",
+            "default": "Title collection"
+          },
+          {
+            "type": "text",
+            "id": "main_years_text",
+            "label": "Add Main Years Text",
+            "default": "Nov 2020"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page About Us Milstone",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

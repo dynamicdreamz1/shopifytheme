@@ -1,0 +1,198 @@
+{%- liquid
+  assign variants_available_arr = product.variants | map: 'available'
+  assign variants_option1_arr = product.variants | map: 'option1'
+  assign variants_option2_arr = product.variants | map: 'option2'
+  assign variants_option3_arr = product.variants | map: 'option3'
+
+  assign product_form_id = 'product-form-' | append: section.id
+-%}
+
+{% assign isOnlySaree = false %}
+{% for collection in product.collections %}
+  {% if collection.id == 308289634458 %}
+    {% assign isOnlySaree = true %}
+  {% endif %}
+{% endfor %}
+{%- for value in option.values -%}
+  {% if option.name == 'Size' or option.name == 'Confi size' or option.name == 'Confi Size' or option.name == 'Color' %}
+    {% assign varSize = true %}
+    {% for variant in product.variants %}
+      {% if option.position == 1 %}
+        {% assign variantSizeValue = variant.option1 %}
+      {% elsif option.position == 2 %}
+        {% assign variantSizeValue = variant.option2 %}
+      {% elsif option.position == 3 %}
+        {% assign variantSizeValue = variant.option3 %}
+      {% endif %}
+      {% if variantSizeValue == value %}
+        {% assign active_variant = variant %}
+      {% endif %}
+      {% if value contains 'Months' or value contains 'Years' %}
+        {% assign miniSizeContains = true %}
+      {% endif %}
+    {% endfor %}
+    {% if forloop.index == 1 %}
+      {% unless value contains 'Months' or value contains 'Years' %}
+        {% assign miniSize = true %}
+      {% endunless  %}
+    {% endif %}
+  {% endif %}
+  {% if option.name == 'Color' %}
+    {% for variant in product.variants %}
+      {% assign color_variant = variant %}
+    {% endfor %}
+  {% endif %}
+
+  <!-- {% if miniSize == true %}true{% else%}false{% endif %} -->
+  {%- liquid
+    assign option_disabled = true
+
+    for option1_name in variants_option1_arr
+      case option.position
+        when 1
+          if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+        when 2
+          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+        when 3
+          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+      endcase
+    endfor
+
+    assign checkValue = value | downcase | handleize
+    assign checkText = 'Custom Size' | downcase | handleize
+  -%}
+
+  {%- capture input_id -%}
+      {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
+    {%- endcapture -%}
+
+  {%- capture label_unavailable %}
+      <span class="visually-hidden label-unavailable">
+        {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
+      </span>
+    {%- endcapture %}
+  <div
+    class="
+      product-form__input_wrap {% if option.name == 'Size' and forloop.first %}
+        {% if product.options_with_values[0].name == 'Stitched'
+          or product.options_with_values[0].name == 'Size Options'
+        %}
+          hide
+        {% endif %}
+      {% endif %}
+      {% if value contains 'Months' or value contains 'Years' %}
+        {% if miniSize == true %}
+          hidden
+        {% endif %}
+      {% endif %}
+    {% if option.name contains 'Color' %}
+      color-swatch
+    {% endif %}
+    "
+    
+  >
+    <input
+      type="radio"
+      id="{{ input_id }}"
+      name="{{ option.name }}"
+      value="{{ value | escape }}"
+      form="{{ product_form_id }}"
+      {% comment %}
+        {% if isOnlySaree == true %}
+          {% if option.selected_value == value %}
+            checked
+          {% endif %}
+        {% endif %}
+      {% endcomment %}
+      {% unless option.name == 'Size' or option.name == 'Confi size' or option.name == 'Confi Size' %}
+        {% if option.selected_value == value %}
+          checked
+        {% endif %}
+      {% endunless %}
+      required
+      {% unless option.name == 'Stitched' or option.name == 'Made to Order' %}
+        {% if option_disabled %}
+          class="disabled"
+          disabled
+        {% endif %}
+      {% endunless %}
+      {% if active_variant.metafields.custom.easy_returns_variant.value.returnable_product == false %} non-returnable {% endif %}
+      {% if active_variant.compare_at_price != blank %}
+        data-product-compare-price="{{ active_variant.compare_at_price | money }}"
+        data-product-discount="{{ active_variant.compare_at_price | minus: active_variant.price | times: 100.0 | divided_by: active_variant.compare_at_price | round }}% OFF"
+     {% endif %}   
+    >
+    
+    <label
+      {% if checkValue == checkText %}
+        js-pdp-open-modal js-custom-measurement-option data-modal="custom-measurement"
+      {% endif %}
+      for="{{ input_id }}"
+      varid="{{ active_variant.id }}"
+      class="
+        {% if option.name == 'Size' and forloop.first %}
+          {% if product.options_with_values[0].name == 'Stitched' or product.options_with_values[0].name == 'Size Options' %}
+            hide
+          {% endif %}
+        {% endif %}
+        {% if value == 'Fabric Only' %} default-variant-hide {% endif %}
+        {% if active_variant.metafields.custom.hide_variant == true %}
+          hide
+        {% endif %}
+        {% if active_variant.inventory_quantity != 0 and active_variant.inventory_quantity > 0 and active_variant.inventory_quantity < 3 %}
+          stock-item-qty
+        {% endif %}
+      "
+      {% if active_variant %}
+        js-variant-delivery-option
+        data-variant-quantity="{{ active_variant.inventory_quantity }}"
+        data-variant-delivery-days="{{ active_variant.metafields.custom.days_override }}"
+      {% endif %}
+      {% comment %}
+      {% if option.name contains 'Color' %}
+        style="background-color: {%- if active_variant.metafields.custom.color != blank -%}{{ active_variant.metafields.custom.color }}{%- else -%}{{ value }}{%- endif -%};"
+      {% endif %}
+      {% endcomment %}
+    >
+      {{ value -}}
+      {{ label_unavailable }}
+      <span class="stock-item-left-active">
+        {% if active_variant.inventory_quantity != 0 and active_variant.inventory_quantity > 0 and active_variant.inventory_quantity < 3 %}
+          {{ active_variant.inventory_quantity }} left
+        {% endif %}
+      </span>
+      {%- if active_variant.inventory_quantity != 0 -%}
+        {%- assign sizeHoverDetail = shop.metaobjects.size_hover_details -%}
+        {%- for SizeDetail in sizeHoverDetail.values -%}
+          {%- assign ValueHandle = value | handleize -%}
+          {%- assign SizeNameHandle = SizeDetail.size_name | handleize -%}
+    
+          {%- if ValueHandle == SizeNameHandle -%}
+            <div class="size-detail-wrap">
+              <span class="size-name">{{ SizeNameHandle }}</span>
+              <div class="option-detail">
+                {%- for sizeOptions in SizeDetail.size_values.value -%}
+                  <span class="value-with-size">{{ sizeOptions }}</span>
+                {%- endfor -%}
+              </div>
+              {% unless  value contains 'Months' or value contains 'Years' %}
+                <p class="size-detail__text">*units in inches</p>
+              {% endunless  %}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </label>
+  </div>
+{%- endfor -%}
+{% if varSize == true and miniSizeContains == true and miniSize == true %}
+  <div class="product-form__input_wrap mini-size-btn">
+    <label id="mini-size">Mini Size</label>
+  </div>
+{% endif %}

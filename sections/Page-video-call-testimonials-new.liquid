@@ -1,0 +1,102 @@
+{%- if section.settings.meta_object_handle_name_text != blank -%}
+  <div class="Page_video_call_testimonials_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_video_call_testimonials_inner_new">
+        <div class="Page_video_call_testimonials_mainloop_new">
+          <div class="Page_video_call_testimonials_innerloop_new">
+            <div class="swiper-container Page_video_testimonials_slider">
+              <div class="swiper-wrapper">
+                {% capture value %}{{ section.settings.meta_object_handle_name_text }}{% endcapture %}
+                {% assign currentMetafield_text = shop.metaobjects[value] %}
+                {%- for custom in currentMetafield_text.values -%}
+                  {%- for rows in custom.customer_stories.value -%}
+                    {%- if rows.image_or_video.value != blank or rows.details.value != blank or rows.name.value != blank -%}
+                      <div class="swiper-slide Page_video_call_testimonials_innerloop_mainboxs_new">
+                        <div class="Page_video_call_testimonials_innerloop_innerboxs_new">
+                          {%- if rows.image_or_video.value != blank -%}
+                            <div class="Page_video_call_testimonials_innerloop_innerboxs_mainleft_new">
+                              <div class="Page_video_call_testimonials_innerloop_innerboxs_innerleft_new">
+                                <div class="Page_video_call_testimonials_innerloop_innerboxs_innerleft_videoimageboth_new">
+                                  {%- if rows.image_or_video.value.sources[1].url contains '.mp4' or rows.image_or_video.value.sources[1].url contains '.MP4' -%}
+                                    <div class="Page_video_call_testimonials_innerloop_innerboxs_innerleft_videoimage_new">
+                                      <video
+                                        id="Mp4Video-{{ forloop.index0 }}-inner"
+                                        class="video-div"
+                                        data-type="mp4"
+                                        src="{{ rows.image_or_video.value.sources[1].url }}"
+                                        loop muted playsinline autoplay>
+                                      </video>
+                                    </div>
+                                  {% else %}  
+                                    <div class="Page_video_call_testimonials_innerloop_innerboxs_innerleft_videoimage_new">
+                                      {{
+                                        rows.image_or_video.value | 
+                                        image_url: width: img.width | 
+                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                        fetchpriority: 'auto', 
+                                        class:''
+                                      }}
+                                    </div>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                            </div>
+                          {%- endif -%}
+                          {%- if rows.details.value != blank or rows.name.value != blank -%}
+                            <div class="Page_video_call_testimonials_innerloop_innerboxs_mainright_new">
+                              <div class="Page_video_call_testimonials_innerloop_innerboxs_innerright_new">
+                                {%- if rows.details.value != blank -%}
+                                  <div class="Page_video_call_testimonials_innerloop_innerboxs_innerright_allinfo_new">
+                                    {{ rows.details | metafield_tag }}
+                                  </div>
+                                {%- endif -%}
+                                {%- if rows.name.value != blank -%}
+                                  <div class="Page_video_call_testimonials_innerloop_innerboxs_innerright_authors_new">
+                                    by: {{ rows.name.value }}
+                                  </div>
+                                {%- endif -%}
+                              </div>
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endfor -%}
+              </div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Video Call Testimonials",
+    "class": "Page_video_call_testimonials_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "textarea",
+        "id": "meta_object_handle_name_text",
+        "label": "Add Meta Object Handle Name Text",
+        "info": "For EX: index_customer_stories Etc..."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video Call Testimonials"
+      }
+    ]
+  }
+{% endschema %}

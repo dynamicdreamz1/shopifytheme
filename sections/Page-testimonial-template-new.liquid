@@ -1,0 +1,126 @@
+{%- if section.blocks.size > 0 and section.settings.main_heading_text != blank -%}
+  <div class="Page_testimonial_template_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_testimonial_template_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Page_testimonial_template_maintitle_new">
+            <div class="Page_testimonial_template_innertitle_new">
+              {{ section.settings.main_heading_text }}
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Page_testimonial_template_maindetail_new">
+            <div class="Page_testimonial_template_innerdetail_new">
+              {%- if section.blocks.size > 0 -%}
+                <div class="Page_testimonial_template_innerdetail_1_new">
+                  <div class="Page_testimonial_template_innerdetail_1_loop_new">
+                    <div class="swiper-container Page_testimonial_slider">
+                      <div class="swiper-wrapper">
+                        {%- for block in section.blocks -%}
+                          {%- if block.settings.main_information_text != blank and block.settings.title != blank -%}
+                            <div class="swiper-slide Page_testimonial_template_innerdetail_1_loop_mainboxs_new">
+                              <div class="Page_testimonial_template_innerdetail_1_loop_innerboxs_new">
+                                <div class="Page_testimonial_template_innerdetail_1_loop_innerboxs_quote_new">
+                                  <svg width="40" height="41" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.0353 4.5L9.7733 18.2002C12.0571 18.3345 13.9379 19.2411 15.4156 20.9201C16.9605 22.5318 17.733 24.4794 17.733 26.7628C17.733 29.1804 16.8934 31.1952 15.2141 32.807C13.5348 34.4187 11.4526 35.2246 8.96725 35.2246C6.48195 35.2246 4.36608 34.4187 2.61965 32.807C0.873216 31.1952 0 29.0126 0 26.2591C0 24.7816 0.369437 23.1363 1.10831 21.323C1.84719 19.5097 3.02267 17.3607 4.63476 14.8759C6.31402 12.3239 8.46348 9.23462 11.0831 5.6081L11.7884 4.5H18.0353ZM40 4.5L31.6373 18.2002C33.9882 18.3345 35.9026 19.2411 37.3804 20.9201C38.8581 22.5318 39.597 24.4794 39.597 26.7628C39.597 29.1804 38.7573 31.1952 37.0781 32.807C35.466 34.4187 33.4173 35.2246 30.932 35.2246C28.3795 35.2246 26.2301 34.4187 24.4836 32.807C22.8044 31.1952 21.9647 29.0126 21.9647 26.2591C21.9647 24.7816 22.3342 23.1363 23.073 21.323C23.8119 19.5097 24.9874 17.3607 26.5995 14.8759C28.2116 12.3239 30.3275 9.23462 32.9471 5.6081L33.7531 4.5H40Z" fill="#747380"/></svg>
+                                </div>
+                                {%- if block.settings.main_information_text != blank -%}
+                                  <div class="Page_testimonial_template_innerdetail_1_loop_innerboxs_infos_new">
+                                    {{ block.settings.main_information_text }}
+                                  </div>
+                                {%- endif -%}
+                                <div class="Page_testimonial_template_innerdetail_1_loop_innerboxs_lines_new">
+                                  <svg width="131" height="1" viewBox="0 0 131 1" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="0.5" x2="131" y2="0.5" stroke="#8E8D99"/></svg>
+                                </div>
+                                {%- if block.settings.title != blank -%}
+                                  <div class="Page_testimonial_template_innerdetail_1_loop_innerboxs_author_new">
+                                    <h5>{{ block.settings.title }}</h5>
+                                  </div>
+                                {%- endif -%}
+                              </div>
+                            </div>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+              {%- if section.blocks.size > 0 -%}
+                <div class="Page_testimonial_template_innerdetail_2_new">
+                  <div class="Page_testimonial_template_innerdetail_2_loop_new">
+                    <div class="swiper-container Page_testimonial_slider_Thumbs">
+                      <div class="swiper-wrapper">
+                        {%- for block in section.blocks -%}
+                          {%- if block.settings.main_author_image != blank -%}
+                            <div class="swiper-slide Page_testimonial_template_innerdetail_2_loop_mainboxs_new">
+                              <div class="Page_testimonial_template_innerdetail_2_loop_innerboxs_new">
+                                {{
+                                  block.settings.main_author_image | 
+                                  image_url: width: img.width | 
+                                  image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                  fetchpriority: 'auto', 
+                                  class:'Author_image_new'
+                                }}
+                              </div>
+                            </div>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>      
+{%- endif -%}    
+
+{% schema %}
+  {
+    "name": "Page Testimonial Template",
+    "class": "Page_testimonial_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#06060F"
+      },
+      {
+        "type": "richtext",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "<p>Don't just take our word for it.</p><p>Here's what our customers have to say...</p>"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Author Text",
+            "default": "Heading"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_author_image",
+            "label": "Add Main Author Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

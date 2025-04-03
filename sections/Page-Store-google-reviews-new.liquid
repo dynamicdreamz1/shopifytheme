@@ -1,0 +1,189 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Page_Store_google_reviews_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_Store_google_reviews_inner_new">
+        {%- if section.settings.main_heading_text != blank or section.settings.main_reviews_text != blank -%}
+          <div class="Page_Store_google_reviews_titleinfosboth_new">
+            {%- if section.settings.main_heading_text != blank -%}
+              <div class="Common_title_new Page_Store_google_reviews_title_new">
+                <h2>{{ section.settings.main_heading_text }}</h2>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.main_reviews_text != blank -%}
+              <div class="Page_Store_google_reviews_infos_new">
+                <p>{{ section.settings.main_reviews_text }}</p>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Page_Store_google_reviews_mainloop_new">
+            <div class="Page_Store_google_reviews_innerloop_new">
+              <div class="swiper-container page_store_google_slider">
+                <div class="swiper-wrapper">
+                  {%- for block in section.blocks -%}
+                    {%- if block.settings.main_author_image != blank or block.settings.title != blank or block.settings.main_timer_text != blank or block.settings.main_review_image != blank or block.settings.main_information_text != blank -%}
+                      <div class="swiper-slide Page_Store_google_reviews_innerloop_mainboxs_new">
+                        <div class="Page_Store_google_reviews_innerloop_innerboxs_new">
+                          {%- if block.settings.main_author_image != blank or block.settings.title != blank or block.settings.main_timer_text != blank -%}
+                            <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_new">
+                              {%- if block.settings.main_author_image != blank or block.settings.title != blank or block.settings.main_timer_text != blank -%}
+                                <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_new">
+                                  <!-- {%- if block.settings.main_author_image != blank -%}
+                                    <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_1_new">
+                                      <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_1_image_new">
+                                        {{
+                                          block.settings.main_author_image | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'Author_image_new'
+                                        }}
+                                       
+                                      </div>
+                                    </div>
+                                  {%- endif -%} -->
+                                  {%- if block.settings.title != blank -%}
+                                  <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_1_new_letterText">
+                                      <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_1_letterText_new">
+                                   {%- if block.settings.title != blank -%}
+                                           <p>{{ block.settings.title | slice: 0  }}</p>
+                                        {%- endif -%}
+                                      </div>
+                                  </div>
+                                  {%- endif -%}
+                                        
+                                  {%- if block.settings.title != blank or block.settings.main_timer_text != blank -%}
+                                    <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_2_new">
+                                      <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_2_texts_new">
+                                        {%- if block.settings.title != blank -%}
+                                          <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_2_texts_title_new">
+                                            <h4>{{ block.settings.title }}</h4>
+                                          </div>
+                                        {%- endif -%}
+                                        {%- if block.settings.main_timer_text != blank -%}
+                                          <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_leftside_2_texts_infos_new">
+                                            {{ block.settings.main_timer_text }}
+                                          </div>
+                                        {%- endif -%}
+                                      </div>
+                                    </div>
+                                  {%- endif -%}
+                                </div>
+                              {%- endif -%}
+                              <div class="Page_Store_google_reviews_innerloop_innerboxs_detail_rightside_new">
+                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24.6652 12.2695C24.6652 11.4795 24.5937 10.7295 24.4711 9.99951H12.9258V14.5094H19.5363C19.24 15.9894 18.3715 17.2394 17.0841 18.0894V21.0893H21.028C23.337 18.9994 24.6652 15.9194 24.6652 12.2695Z" fill="#4285F4"/><path d="M12.9269 23.9999C16.2372 23.9999 19.0061 22.9199 21.0291 21.0899L17.0853 18.09C15.9818 18.81 14.5821 19.25 12.9269 19.25C9.72895 19.25 7.02141 17.14 6.05079 14.29H1.98438V17.38C3.99715 21.2999 8.13508 23.9999 12.9269 23.9999Z" fill="#34A853"/><path d="M6.05044 14.2895C5.79501 13.5695 5.66218 12.7995 5.66218 11.9995C5.66218 11.1996 5.80522 10.4296 6.05044 9.70958V6.61963H1.98402C1.14622 8.2396 0.666016 10.0596 0.666016 11.9995C0.666016 13.9395 1.14622 15.7595 1.98402 17.3794L6.05044 14.2895Z" fill="#FBBC05"/><path d="M12.9269 4.74992C14.7353 4.74992 16.3496 5.35992 17.6268 6.5499L21.121 3.12995C19.0061 1.18998 16.2372 0 12.9269 0C8.13508 0 3.99715 2.69996 1.98438 6.61989L6.05079 9.70984C7.02141 6.85989 9.72895 4.74992 12.9269 4.74992Z" fill="#EA4335"/></svg>
+                              </div>
+                            </div>
+                          {%- endif -%}  
+                          {%- if block.settings.main_review_image != blank -%}
+                            <div class="Page_Store_google_reviews_innerloop_innerboxs_icons_new">
+                              {{
+                                block.settings.main_review_image | 
+                                image_url: width: img.width | 
+                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                fetchpriority: 'auto', 
+                                class:'Icon_image_new'
+                              }}
+                            </div>
+                          {%- endif -%}
+                          {%- if block.settings.main_information_text != blank -%}
+                            <div class="Page_Store_google_reviews_innerloop_innerboxs_infos_new">
+                              {{ block.settings.main_information_text }}
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}  
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Page Store Google Reviews",
+    "class": "Page_Store_google_reviews_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Our Google Reviews"
+      },
+      {
+        "type": "text",
+        "id": "main_reviews_text",
+        "label": "Add Main Reviews Text",
+        "default": "4.8 rating out of 883 reviews"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_author_image",
+            "label": "Add Main Author Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Lorem Ipsum"
+          },
+          {
+            "type": "text",
+            "id": "main_timer_text",
+            "label": "Add Main Timer Text",
+            "default": "a week ago"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_review_image",
+            "label": "Add Main Review Image"
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Store Google Reviews",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

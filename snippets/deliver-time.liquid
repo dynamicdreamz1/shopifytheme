@@ -1,0 +1,34 @@
+<div class="delivery-time">
+  {%- for block in section.blocks -%}
+  {%- if block.type == 'delivery_time' -%}
+      <div class="delivery-flexer flex">
+          {%- if block.settings.delivey_text != blank -%}
+              <div class="delivery_icon">
+                  <svg
+                      width="25"
+                      height="24"
+                      viewBox="0 0 25 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12.5 23C18.5751 23 23.5 18.0751 23.5 12C23.5 5.92487 18.5751 1 12.5 1C6.42487 1 1.5 5.92487 1.5 12C1.5 18.0751 6.42487 23 12.5 23Z" fill="#F0FAF2" />
+                      <path d="M16.5 5.5H6.5C6.22386 5.5 6 5.72386 6 6V16C6 16.2761 6.22386 16.5 6.5 16.5H16.5C16.7761 16.5 17 16.2761 17 16V6C17 5.72386 16.7761 5.5 16.5 5.5Z" stroke="#223330" />
+                      <path d="M17 16.5007V8.59375L20.8173 9.24814C21.4576 9.3579 21.9544 9.86732 22.0482 10.5101L22.9218 16.5007H17Z" stroke="#223330" />
+                      <path d="M21.5 16.5C21.5 17.8807 20.3807 19 19 19C17.6193 19 16.5 17.8807 16.5 16.5C16.5 15.737 16.8418 15.0539 17.3806 14.5954C17.8168 14.2241 18.3822 14 19 14C20.3807 14 21.5 15.1193 21.5 16.5Z" fill="white" />
+                      <path d="M9 19C10.3807 19 11.5 17.8807 11.5 16.5C11.5 15.1193 10.3807 14 9 14C7.61929 14 6.5 15.1193 6.5 16.5C6.5 17.8807 7.61929 19 9 19Z" fill="white" />
+                      <path d="M9 18.5C10.1046 18.5 11 17.6046 11 16.5C11 15.3954 10.1046 14.5 9 14.5C7.89543 14.5 7 15.3954 7 16.5C7 17.6046 7.89543 18.5 9 18.5Z" stroke="#223330" />
+                      <path d="M19 18.5C20.1046 18.5 21 17.6046 21 16.5C21 15.3954 20.1046 14.5 19 14.5C17.8954 14.5 17 15.3954 17 16.5C17 17.6046 17.8954 18.5 19 18.5Z" stroke="#223330" />
+                      <path d="M2.5 9.5H8.5" stroke="#223330" />
+                      <path d="M3.5 12.5H8.5" stroke="#223330" />
+                      <path d="M2.5 8.5H7.5" stroke="white" />
+                      <path d="M2.5 11.5H7.5" stroke="white" />
+                  </svg>
+              </div>
+              <div class="delivery-text">{{ block.settings.delivey_text }}</div>
+          {%- endif -%}
+      </div>
+      {%- if block.settings.urgent_delivery != blank -%}
+          <div class="urgent-delivery">{{ block.settings.urgent_delivery }}</div>
+      {%- endif -%}
+  {%- endif -%}
+  {%- endfor -%}
+</div>

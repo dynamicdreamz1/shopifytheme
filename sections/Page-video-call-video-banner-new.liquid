@@ -1,0 +1,108 @@
+{%- if section.settings.main_heading_text != blank or section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+  <div class="Page_video_call_video_banner_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_video_call_video_banner_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Page_video_call_video_banner_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.youtube_video_id != blank  or section.settings.main_desktop_mp4_video != blank or section.settings.main_desktop_full_image != blank or section.settings.main_mobile_full_image != blank -%}
+          <div class="Page_video_call_video_banner_mainboxs_new">
+            <div class="Page_video_call_video_banner_innerboxs_new">
+              <div class="Page_video_call_video_banner_innerboxs_videoimageboth_new">
+                {%- if section.settings.main_desktop_mp4_video != blank -%}
+                  <div class="Page_video_call_video_banner_innerboxs_videoimage_new play_video_on_click">
+                    <div class="Page_video_call_video_banner_innerboxs_videoimage_playicon_new play_btn">
+                      <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_498_132780)"><path d="M35.0004 5.83301C18.9004 5.83301 5.83374 18.8997 5.83374 34.9997C5.83374 51.0997 18.9004 64.1664 35.0004 64.1664C51.1004 64.1664 64.1671 51.0997 64.1671 34.9997C64.1671 18.8997 51.1004 5.83301 35.0004 5.83301ZM29.1671 48.1247V21.8747L46.6671 34.9997L29.1671 48.1247Z" fill="white"/></g><defs><clipPath id="clip0_498_132780"><rect width="70" height="70" fill="white"/></clipPath></defs></svg>
+                    </div>  
+                    {%- if section.settings.main_desktop_mp4_video != blank -%}
+                      {{ section.settings.main_desktop_mp4_video | video_tag: controls: false, loop: true, image_size: 'master' }}
+                    {%- endif -%}
+                  </div>
+                {% elsif section.settings.youtube_video_id != blank %}
+                  <div class="Page_video_template_banner_youtube">
+                    <iframe
+                      src="https://www.youtube.com/embed/{{ section.settings.youtube_video_id }}?enablejsapi=1&autoplay=1"
+                      allow="autoplay; encrypted-media"
+                      allowfullscreen
+                    ></iframe>
+                  </div>
+                {% else %}
+                  {%- if section.settings.main_desktop_full_image != blank and section.settings.main_mobile_full_image != blank -%}
+                    <div class="Page_video_call_video_banner_innerboxs_videoimage_new">
+                      {%- if section.settings.main_desktop_full_image != blank -%}
+                        {{
+                          section.settings.main_desktop_full_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'desktop_image_new'
+                        }}
+                      {%- endif -%}
+                      {%- if section.settings.main_mobile_full_image != blank -%}
+                        {{
+                          section.settings.main_mobile_full_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'mobile_image_new'
+                        }}
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}  
+
+{% schema %}
+  {
+    "name": "Video Call Video Banner",
+    "class": "Page_video_call_video_banner_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "How it works"
+      },
+      {
+        "type": "video",
+        "id": "main_desktop_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "text",
+        "id": "youtube_video_id",
+        "label": "Youtube video ID"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video Call Video Banner"
+      }
+    ]
+  }
+{% endschema %}

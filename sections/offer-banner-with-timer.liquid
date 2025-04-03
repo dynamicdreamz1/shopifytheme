@@ -1,0 +1,131 @@
+
+{{ 'offer-banner-with-timer.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top }}px * 0.75);
+    padding-bottom: calc({{ section.settings.padding_bottom }}px  * 0.75);
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+<div class="page-width">
+    <div class="section-{{ section.id }}-padding offer-banner-with-timer">
+      {% if section.settings.offer_banner_timer_liquid != blank and section.settings.offer_banner_after_timer_liquid != blank %}
+        <div class="offer-banner-with-timer-wrap">
+         {{ section.settings.offer_banner_timer_liquid }}
+          <div class="offer-banner-after-sale">
+            {{ section.settings.offer_banner_after_timer_liquid }}
+          </div>
+        
+          <script>
+            const timerWrapper = document.querySelector('.offer-banner-with-timer');
+            const timerSelector = document.querySelector('.sales_timer_wrapper .timer-div');
+    
+            // Get start and end times from data attributes
+            var startTime = new Date(timerSelector?.getAttribute('data-start-time')).getTime();
+            var endTime = new Date(timerSelector?.getAttribute('data-end-time')).getTime();
+    
+            var x = setInterval(function() {
+            var now = new Date().getTime();
+        
+            if (now < startTime) {
+                // Before start time, no timer started
+                timerWrapper.classList.remove('timer-started');
+                timerWrapper.classList.add('timer-finished');
+            } else if (now >= startTime && now <= endTime) {
+                // Between start time and end time, timer started
+                timerWrapper.classList.add('timer-started');
+                timerWrapper.classList.remove('timer-finished');
+        
+                var distance = endTime - now;
+        
+                var hours = Math.floor(distance / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+                // Update the elements only if they exist
+                if (document.getElementById("hrs")) {
+                    document.getElementById("hrs").innerHTML = hours;
+                }
+                if (document.getElementById("min")) {
+                    document.getElementById("min").innerHTML = minutes;
+                }
+                if (document.getElementById("sec")) {
+                    document.getElementById("sec").innerHTML = seconds;
+        
+                }
+            } else {
+                // After end time, timer finished
+                timerWrapper.classList.remove('timer-started');
+                timerWrapper.classList.add('timer-finished');
+                clearInterval(x); // Stop the timer after the end time
+            }
+        
+        }, 1000);
+        </script>
+      </div>
+    {% endif %}
+    {% if section.settings.playlist_id != blank %}
+      <div data-tagalys-smart-widget="{{ section.settings.playlist_id }}"></div>  
+    {%- endif -%}
+   </div>
+</div>
+
+{% schema %}
+{
+  "name": "Offer Banner With Timer",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "offer_banner_timer_liquid",
+      "label": "Add offer banner timer HTML Here"
+    },
+    {
+      "type": "liquid",
+      "id": "offer_banner_after_timer_liquid",
+      "label": "Add offer banner after timer HTML Here"
+    },
+    {
+      "type": "text",
+      "id": "playlist_id",
+      "label": "tagalys Playlist Id"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "padding bottom",
+      "default": 52
+    }
+  ],
+  "presets": [
+    {
+      "name": "Offer Banner With Timer"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,146 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding">
+  <div class=" page-width">
+    {% if section.settings.heading != blank %}
+      <div class="Common_title_new Index_title_title_new">
+        <h2>{{ section.settings.heading }}</h2>
+      </div>
+    {% endif %}
+    <div class="style-deck-testimonals-warp">
+      {%- for block in section.blocks -%}
+          {% case block.type %}
+            {%- when 'testimonial' -%}
+            <div class="style-deck-testimonal">
+              {% if block.settings.testimonial-image != blank %}
+                {{
+                  block.settings.testimonial-image
+                  | image_url: width: 150
+                  | image_tag: widths: '150'
+                }}
+              {% endif %}
+              <div class="style-deck-testimonal-content">
+                {% if block.settings.testimonial-name != blank %}
+                  <div class="testi-head-text">{{ block.settings.testimonial-name }}</div>
+                {% endif %}
+                {% if block.settings.testimonial-designation != blank %}
+                  <div class="testi-usertext">{{ block.settings.testimonial-designation }}</div>
+                {% endif %}
+                {% if block.settings.testimonial-star != blank %}
+                  <div class="testi-stars">
+                    {% assign total_stars = 5 %}
+                    {% assign filled_stars = block.settings.testimonial-star %}
+                    {% assign empty_stars = total_stars | minus: filled_stars %}
+                    {% for i in (1..filled_stars) %}
+                      <i class="fa fa-star"></i>
+                    {% endfor %}
+                    {% for i in (1..empty_stars) %}
+                      <i class="fa fa-star-o"></i>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% if block.settings.testimonial-content != blank %}
+                  <div class="testi-subtext">{{ block.settings.testimonial-content }}</div>
+                {% endif %}
+              </div>
+            </div>
+          {%- endcase -%}
+      {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Style deck testimonials",
+  "tag": "section",
+  "class": "style-deck-testimonials",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 52
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "testimonial-image",
+          "label": "Testimonial image"
+        },
+        {
+          "type": "text",
+          "id": "testimonial-name",
+          "label": "Testimonial name"
+        },
+        {
+          "type": "text",
+          "id": "testimonial-designation",
+          "label": "Testimonial designation"
+        },
+        {
+          "type": "range",
+          "id": "testimonial-star",
+          "label": "Testimonial star",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "testimonial-content",
+          "label": "Testimonial content"
+        },
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Style deck testimonials"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,176 @@
+{%- if metaobject.banner_video_or_image.value != blank or metaobject.title.value != blank or metaobject.address.value != blank or metaobject.call.value != blank or metaobject.opening_hours.value != blank or metaobject.opening_hours_details.value != blank or metaobject.get_direction_map_url.value != blank or metaobject.book_appointment_url.value != blank or metaobject.map_iframe.value != blank -%}
+  <div class="Page_store_detail_objects_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_store_detail_objects_inner_new">
+        <div class="Page_store_detail_objects_detail_new">
+          {%- if metaobject.banner_video_or_image.value != blank -%}
+            <div class="temp_Page_store_detail_objects_detail_1_new">
+              <div class="Page_store_detail_objects_detail_1_videoimageboth_new">
+                {%- if metaobject.banner_video_or_image.value.sources[1].url contains '.mp4' or metaobject.banner_video_or_image.value.sources[1].url contains '.MP4' -%}
+                  <div class="Page_store_detail_objects_detail_1_video_OR_image_new">
+                    <video
+                      id="Mp4Video-{{ forloop.index0 }}-inner"
+                      class="video-div"
+                      data-type="mp4"
+                      src="{{ metaobject.banner_video_or_image.value.sources[1].url }}"
+                      loop muted playsinline autoplay>
+                    </video>
+                  </div>
+                {%- else -%}
+                  <div class="Page_store_detail_objects_detail_1_video_OR_image_new">
+                    <!-- {{
+                      metaobject.banner_video_or_image.value | 
+                      image_url: width: img.width | 
+                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                      fetchpriority: 'auto', 
+                      class:'Hover_image_new'
+                    }} -->
+                 
+                  </div>
+                {%- endif -%}
+              </div>
+
+               {%- for block in section.blocks -%}
+                    <div class="temp_Page_store_detail_objects_detail_1_video_OR_image_new">
+                      {%- if block.settings.main_desktop_image != blank and block.settings.main_mobile_image != blank -%}
+                           {%- if block.settings.main_desktop_image != blank -%}
+                              {{
+                                block.settings.main_desktop_image | 
+                                image_url: width: img.width | 
+                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                fetchpriority: 'auto', 
+                                class:'desktop_image_new'
+                              }}
+                            {%- endif -%}
+                            {%- if block.settings.main_mobile_image != blank -%}
+                              {{
+                                block.settings.main_mobile_image | 
+                                image_url: width: img.width | 
+                                image_tag: widths: '400, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                fetchpriority: 'auto', 
+                                class:'mobile_image_new'
+                              }}
+                            {%- endif -%}
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+            </div>
+          {%- endif -%}
+          {%- if metaobject.title.value != blank or metaobject.address.value != blank or metaobject.call.value != blank or metaobject.opening_hours.value != blank or metaobject.opening_hours_details.value != blank or metaobject.get_direction_map_url.value != blank or metaobject.book_appointment_url.value != blank or metaobject.map_iframe.value != blank -%}
+            <div class="page-width">
+              <div class="Page_store_detail_objects_detail_2_new">
+                <div class="Page_store_detail_objects_detail_2_objectlistsboth_new">
+                  {%- if metaobject.title.value != blank or metaobject.address.value != blank or metaobject.call.value != blank or metaobject.opening_hours.value != blank or metaobject.opening_hours_details.value != blank or metaobject.get_direction_map_url.value != blank or metaobject.book_appointment_url.value != blank -%}
+                    <div class="Page_store_detail_objects_detail_2_mainleft_new">
+                      <div class="Page_store_detail_objects_detail_2_innerleft_new">
+                          
+                              {%- if metaobject.title.value != blank -%}
+                                <div class="Common_title_new Page_store_detail_objects_detail_2_innerleft_title_new">
+                                  <h2>KALKI Store in {{ metaobject.title.value }}</h2>
+                                </div>
+                              {%- endif -%}
+                        <div class="Page_store_detail_objects_detail_2_innerleft_details_new">
+                          {%- if metaobject.address.value != blank -%}
+                            <div class="Page_store_detail_objects_detail_2_innerleft_details_in_new">
+                              {{ metaobject.address.value }}
+                            </div>
+                          {%- endif -%}
+                          {%- if metaobject.call.value != blank -%}
+                            <div class="Page_store_detail_objects_detail_2_innerleft_details_in_new">
+                              Phone : {{ metaobject.call.value }}
+                            </div>
+                          {%- endif -%}
+                          {%- if metaobject.opening_hours.value != blank -%}
+                            <div class="Page_store_detail_objects_detail_2_innerleft_details_in_new">
+                              Time : {{ metaobject.opening_hours.value }}
+                            </div>
+                          {%- endif -%}
+                          {%- if metaobject.opening_hours_details.value != blank -%}
+                            <div class="Page_store_detail_objects_detail_2_innerleft_details_in_new">
+                              {{ metaobject.opening_hours_details.value }}
+                            </div>
+                          {%- endif -%}
+                          {%- if metaobject.get_direction_map_url.value != blank or metaobject.book_appointment_url.value != blank -%}
+                            <div class="Page_store_detail_objects_detail_2_innerleft_bothbutton_new">
+                              {%- if metaobject.get_direction_map_url.value != blank -%}
+                                <div class="Page_store_detail_objects_detail_2_innerleft_fullbutton_new">
+                                  <a href="{{ metaobject.get_direction_map_url.value }}" class="button button_white button_border" target="_blank">
+                                    GET DIRECTION<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 4L15 11L8 18" stroke="#0F0D1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>  
+                                  </a>
+                                </div>  
+                              {%- endif -%}
+                              {%- if metaobject.book_appointment_url.value != blank -%}
+                                <div class="Page_store_detail_objects_detail_2_innerleft_fullbutton_new">
+                                  <a href="{{ metaobject.book_appointment_url.value }}" class="button button_white button_border" target="_blank">
+                                    Book Appointment
+                                  </a>
+                                </div>  
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  {%- endif -%}
+                  {%- if metaobject.map_iframe.value != blank -%}
+                    <div class="Page_store_detail_objects_detail_2_mainright_new">
+                      <div class="Page_store_detail_objects_detail_2_innerright_new">
+                        {{ metaobject.map_iframe.value }}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}  
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Temp Store Detail Objects",
+    "class": "Page_store_detail_objects_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Temp Store Detail Objects",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

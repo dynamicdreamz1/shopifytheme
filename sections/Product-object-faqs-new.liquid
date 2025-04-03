@@ -1,0 +1,68 @@
+{%- if product.metafields.custom.product_faqs_accordions != blank -%}
+  <div class="Product_object_faqs_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Product_object_faqs_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Product_object_faqs_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if product.metafields.custom.product_faqs_accordions != blank -%}
+          {%- assign features = product.metafields.custom.product_faqs_accordions.value -%}
+          <div class="Product_object_faqs_mainloop_new">
+            <div class="Product_object_faqs_innerloop_new Common_faqs_accordion_new">
+              <div class="accordion">
+                <ul class="list-unstyled">
+                  {%- for i in (1..15) -%}
+                    {%- assign Question = 'question_' | append: forloop.index -%}
+                    {%- assign Answer = 'answer_' | append: forloop.index -%}
+                    {%- if features[Question].value != blank and features[Answer].value != blank -%}
+                      <li>
+                        {%- if features[Question].value != blank -%}
+                          <div class="question">
+                            <h2>{{ features[Question].value }}</h2>
+                          </div>
+                        {%- endif -%}
+                        {%- if features[Answer].value != blank -%}
+                          <div class="answer">
+                            {{ features[Answer] | metafield_tag }}
+                          </div>
+                        {%- endif -%}
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </div>
+          </div>  
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Product Object FAQs",
+    "class": "Product_object_faqs_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Frequently Asked Questions"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Object FAQs"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,382 @@
+{{ 'recent-viewed.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  if use_variant
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price | default: 1999
+  assign price_min = product.price_min
+  assign price_max = product.price_max
+  assign available = target.available | default: false
+  assign money_price = price | money
+  assign money_price_min = price_min | money
+  assign money_price_max = price_max | money
+  if settings.currency_code_enabled
+    assign money_price = price | money_with_currency
+    assign money_price_min = price_min | money_with_currency
+    assign money_price_max = price_max | money_with_currency
+  endif
+
+#  if target == product and product.price_varies
+ #   assign money_price = 'products.product.price.from_price_html' | t: price: money_price
+ # endif
+-%}
+
+<div class="recent-view-section-container">
+  <div class="page-width recently-viewed-wrapper swiper-container js-recent-view-swiper-slider" >
+    <div class="Common_title_new Product_related_title_new">
+      <h3 class="recentyview {% if section.settings.heading_position == 'left' %}
+        text-left
+      {% elsif section.settings.heading_position == 'center' %}
+        text-center
+      {% elsif section.settings.heading_position == 'right' %}
+        text-right  
+      {% endif %}">
+        {{ section.settings.heading }}
+      </h3>
+    </div>
+      <div class="recently-viewed-grid swiper-wrapper">
+      <!-- Recently viewed products will appear here -->
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+
+  </div>
+</div>
+
+<script>
+function setRecentlyViewedProducts() {
+  const productData = {
+    productTitle: "{{ product.title }}",
+    productImg: "{{ product.featured_media | image_url: width: 450 }}",
+    productPrice: "{{ product.price | money }}",
+    productUrl: "{{ product.url }}",
+    productImageAltText: "{{ product.featured_media.alt | escape }}",
+    productBadge: `{% if product.metafields.custom.product_grid_tag != blank %}
+      <div class="card__badge card__badge_tag_new {{ settings.badge_position }}">
+        <span
+          id="NoMediaStandardBadge-{{ section_id }}-{{ product.id }}"
+          class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
+        >
+          {{ product.metafields.custom.product_grid_tag }}
+        </span>
+      </div>
+    {% else %}
+      {%- if product.compare_at_price > product.price and product.available -%}
+        {% comment %}
+        <div class="card__badge top right">
+          <span
+            id="NoMediaStandardBadge-{{ section_id }}-{{ product.id }}"
+            class="badge badge--bottom-left off_new color-{{ settings.sale_badge_color_scheme }}"
+          >
+            Save {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%
+          </span>
+        </div>
+        {% endcomment %}
+      {%- elsif product.available == false -%}
+        <div class="card__badge top right">
+          <span
+            id="NoMediaStandardBadge-{{ section_id }}-{{ product.id }}"
+            class="badge badge--bottom-left sold_out_new color-{{ settings.sale_badge_color_scheme }}"
+          >
+            {{- 'products.product.sold_out' | t -}}
+          </span>
+        </div>
+      {%- endif -%}
+    {%- endif -%}`,
+    stampedReview: `<div class="card_review_new">
+      <span 
+      class="stamped-product-reviews-badge" 
+      data-id="{{ product.id }}"
+      data-product-sku="{{ product.handle }}" 
+      data-product-type="{{product.type}}" 
+      data-product-title="{{product.title}}" 
+      style="display:block;">
+      </span>
+    </div>`,
+    price: `<div
+      class="
+        price
+        {%- if price_class %} {{ price_class }}{% endif %}
+        {%- if available == false %} price--sold-out{% endif %}
+        {%- if compare_at_price > price and product.quantity_price_breaks_configured? != true %} price--on-sale{% endif %}
+        {%- if compare_at_price > price and product.quantity_price_breaks_configured? %} volume-pricing--sale-badge{% endif %}
+        {%- if product.price_varies == false and product.compare_at_price_varies %} price--no-compare{% endif %}
+        {%- if show_badges %} price--show-badge{% endif %} Product_price_main_new">
+      <div class="price__container">
+        {%- comment -%}
+          Explanation of description list:
+            - div.price__regular: Displayed when there are no variants on sale
+            - div.price__sale: Displayed when a variant is a sale
+        {%- endcomment -%}
+        <div class="price__regular">
+          {%- if product.quantity_price_breaks_configured? -%}
+            {%- if show_compare_at_price and compare_at_price -%}
+              {%- unless product.price_varies == false and product.compare_at_price_varies %}
+                <span class="visually-hidden visually-hidden--inline">
+                  {{- 'products.product.price.regular_price' | t -}}
+                </span>
+                <span>
+                  <s class="price-item price-item--regular variant-item__old-price">
+                    {% if settings.currency_code_enabled %}
+                      {{ compare_at_price | money_with_currency }}
+                    {% else %}
+                      {{ compare_at_price | money }}
+                    {% endif %}
+                  </s>
+                </span>
+              {%- endunless -%}
+            {%- endif -%}
+            <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+            <span class="price-item price-item--regular">
+              {{- 'products.product.volume_pricing.price_range' | t: minimum: money_price_min, maximum: money_price_max -}}
+            </span>
+          {%- else -%}
+            <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+            <span class="price-item price-item--regular">
+              {{ money_price }}
+            </span>
+          {%- endif -%}
+        </div>
+        <div class="price__sale">
+          <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.sale_price' | t }}</span>
+          <span class="price-item price-item--sale price-item--last">
+            {{ money_price }}
+          </span>
+          {%- unless product.price_varies == false and product.compare_at_price_varies %}
+            <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+            <span>
+              <s class="price-item price-item--regular">
+                {% if settings.currency_code_enabled %}
+                  {{ compare_at_price | money_with_currency }}
+                {% else %}
+                  {{ compare_at_price | money }}
+                {% endif %}
+              </s>
+            </span>
+          {%- endunless -%}
+          {%- if product.compare_at_price_max > product.price -%}
+            <span class="Product_price_save_new">
+              {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}% OFF
+            </span>
+          {%- endif -%}
+        </div>
+        <small class="unit-price caption{% if product.selected_or_first_available_variant.unit_price_measurement == nil %} hidden{% endif %}">
+          <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+          <span class="price-item price-item--last">
+            <span>{{- product.selected_or_first_available_variant.unit_price | money -}}</span>
+            <span aria-hidden="true">/</span>
+            <span class="visually-hidden">&nbsp;{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+            <span>
+              {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+                {{- product.selected_or_first_available_variant.unit_price_measurement.reference_value -}}
+              {%- endif -%}
+              {{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}
+            </span>
+          </span>
+        </small>
+      </div>
+      {%- if show_badges -%}
+        <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
+          {{ 'products.product.on_sale' | t }}
+        </span>
+    
+        <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
+          {{ 'products.product.sold_out' | t }}
+        </span>
+      {%- endif -%}
+    </div>`
+
+  };
+  const productList = [];
+  let jsonResp, jsonRespArr, jsonRespArrStr;
+  const numberOfProducts = 8;
+  productList.push(productData);
+  const currProductPageTitle = productData.productTitle;
+  const productDataString = JSON.stringify(productList);
+  const localData = localStorage.getItem("recentlyViewedProduct");
+
+  if (!localData) {
+    localStorage.setItem("recentlyViewedProduct", productDataString);
+  } else if (localData) {
+    const oldProductData = localStorage.getItem("recentlyViewedProduct");
+    const countProductData = (oldProductData.match(/productTitle/g) || []).length;
+    const sameProduct = oldProductData.includes(currProductPageTitle);
+    if (countProductData < numberOfProducts && sameProduct == false) {
+      jsonResp = JSON.parse(oldProductData);
+      jsonRespArr = jsonResp.concat(productList);
+      jsonRespArrStr = JSON.stringify(jsonRespArr);
+      localStorage.setItem("recentlyViewedProduct", jsonRespArrStr);
+    } else if (countProductData >= numberOfProducts && sameProduct == false) {
+      jsonResp = JSON.parse(oldProductData);
+      jsonResp.shift();
+      jsonRespArr = jsonResp.concat(productList);
+      jsonRespArr = JSON.stringify(jsonRespArr);
+      localStorage.setItem("recentlyViewedProduct", jsonRespArr);
+    }
+  }
+}
+
+setRecentlyViewedProducts();
+const localViewed = localStorage.recentlyViewedProduct;
+function getRecentlyViewedProducts() {
+  const productData = JSON.parse(localStorage.getItem("recentlyViewedProduct"));
+  const recentlyViewedHtml = [];
+  productData.map(item => {
+    recentlyViewedHtml.unshift(`
+      <div class="product_grid_item_new swiper-slide">
+        <div class="card-wrapper product-card-wrapper underline-links-hover">
+          <div class="
+                card card--standard
+                 card--media
+              " style="--ratio-percent: 125.0%;">
+            <div class="card__inner color-scheme-2 gradient ratio" style="--ratio-percent: 125.0%;">
+              <div class="card__media">
+                <div class="media media--transparent media--hover-effect">
+                  <img alt="${item.productTitle}" src="${item.productImg}" class="motion-reduce" loading="lazy" width="1715" height="2410">
+                </div>
+              </div>
+              <div class="card__content">
+                <div class="card__information">
+                  <h3 class="card__heading">
+                    <a href=" ${item.productUrl}"
+                      >
+                        ${item.productTitle}
+                    </a>
+                  </h3>
+                </div>
+      
+      
+                ${item.productBadge}
+              </div>
+            </div>
+            <div class="card__content">
+              <div class="card__information">
+                ${item.stampedReview}
+                <h3 class="card__heading h5"
+                  id="title-template--22093337985304__product_meta_product_list_fF4cBF-8967549452568">
+                  <a href="${item.productUrl}"
+                    id="CardLink-template--22093337985304__product_meta_product_list_fF4cBF-8967549452568"
+                    class="full-unstyled-link"
+                    aria-labelledby="CardLink-template--22093337985304__product_meta_product_list_fF4cBF-8967549452568 Badge-template--22093337985304__product_meta_product_list_fF4cBF-8967549452568">
+                    ${item.productTitle}
+                  </a>
+                </h3>
+                <div class="card-information"><span class="caption-large light"></span>
+                  ${item.price}
+      
+                </div>
+              </div>
+            </div>
+            <a
+              href="${item.productUrl}"
+              class="full-unstyled-link only-for-desktop"
+              target="_blank"
+            >
+            </a>
+          </div>
+        </div>
+      </div>
+   `);
+  });
+  const newProductData = `${recentlyViewedHtml.join("")}`;
+  const fullContent = document.getElementsByClassName("recently-viewed-grid");
+  fullContent[0].innerHTML = newProductData;
+
+  new Swiper('.js-recent-view-swiper-slider', {
+    loop: false,
+    grabCursor: false,
+    spaceBetween: 20,
+    slidesPerGroup: 1,
+    slidesPerView: 5,
+    watchSlidesProgress: true,
+    draggable:!0,
+    autoHeight:!1,
+    watchOverflow:!0,
+    threshold:10,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    mousewheel:{
+      forceToAxis:!0
+    },
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    breakpoints: {
+      0: {
+        slidesPerGroup: 2,
+        spaceBetween: 16,
+        slidesPerView: 2,
+      },
+      600: {
+        slidesPerGroup: 3,
+        spaceBetween: 16,
+        slidesPerView: 3,
+      },
+      900: {
+        spaceBetween: 20,
+        slidesPerGroup: 1,
+        slidesPerView: 5,
+      }
+    }
+  })
+  
+}
+
+document.addEventListener("DOMContentLoaded", function (event) {
+  getRecentlyViewedProducts();
+ 
+});
+
+
+
+</script>
+
+{% schema %}
+  {
+    "name": "Recent Viewed",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Recently Viewed",
+          "label": "Text"
+        },
+        {
+          "type": "select",
+          "id": "heading_position",
+	        "label": "Text align",
+          "default": "center",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+	      }
+	],
+    "presets": [
+        {
+            "name": "Recent Views"
+        }
+    ]
+}
+{% endschema %}

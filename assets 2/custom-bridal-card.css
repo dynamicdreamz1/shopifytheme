@@ -1,0 +1,171 @@
+.custom-bridal-card {
+    
+}
+.custom-bridal-card .page-width {
+    padding: 0 !important;
+}
+.custom-bridal-card .whatsapp-svg {
+    max-width: 24px;
+    flex: 24px;
+    margin-right: 10px;
+}
+.custom-bridal-card .cart-svg {
+    max-width: 17px;
+    flex: 17px;
+    margin-right: 10px;
+    display: none;
+}
+.custom-bridal-card .content-flexer {
+    justify-content: space-between;
+    margin: 0 0 12px;
+}
+.custom-bridal-card .custom-bridal-card-flexer{ width:100%; }
+.custom-bridal-card .style-button {
+    padding: 9px 10px;
+    border-radius: 6px;
+    border: 2px solid #172926;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    min-height:47px;
+}
+.custom-bridal-card .button-text {
+    background: transparent;
+    color: #172926;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0.56px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+  padding:0;
+}
+.custom-bridal-card  .whatsapp-button {
+    margin-bottom: 14px;
+    transition: all .2s ease-in-out;
+    background: #172926;
+}
+.custom-bridal-card  .whatsapp-button .button-text{ color:#fff; }
+
+.custom-bridal-card  .whatsapp-button:hover {
+    background-color: #fff;
+}
+.custom-bridal-card  .whatsapp-button:hover .whatsapp-svg svg path {
+    fill: #172926;
+  -webkit-transition: all 0.3s linear; -moz-transition: all 0.3s linear; -o-transition: all 0.3s linear; -ms-transition: all 0.3s linear; transition: all 0.3s linear;
+}
+.custom-bridal-card  .bridal-cart-button .cart-svg svg path{
+  -webkit-transition: all 0.3s linear; -moz-transition: all 0.3s linear; -o-transition: all 0.3s linear; -ms-transition: all 0.3s linear; transition: all 0.3s linear;
+}
+.custom-bridal-card  .whatsapp-button:hover .button-text {
+    color: #172926;
+}
+.custom-bridal-card .product-form__submit:hover svg path {
+    stroke: #fff;
+}
+.custom-bridal-card  .bridal-cart-button .cart-btn:hover {
+    background: #172926 !important;
+    color:#fff !important;
+}
+
+.custom-bridal-card .cart-btn { 
+    border: 2px solid #172926;
+    padding: 13px 10px !important;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: transparent !important;
+    color: #172926;
+    border-radius: 6px !important;
+    margin-bottom: 0 !important;
+}
+.custom-bridal-card  .video-btn {
+    padding: 9px 10px;
+    border-radius: 6px;
+    border: 2px solid #172926;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+  margin:0;
+}
+.custom-bridal-card .video-btn .video-icon{ margin-right:10px; }
+.custom-bridal-card  .video-btn:hover {
+    background-color: #172926;
+}
+.custom-bridal-card  .video-btn:hover .video-icon svg {
+    fill: #fff;
+}
+.custom-bridal-card  .video-btn:hover .button-text {
+    color: #fff;
+}
+.custom-bridal-card p {
+    font-size: 13px;
+    text-align: center;
+    margin-top: 12px;
+    line-height: 20px;
+}
+
+@media screen and (max-width: 749px) {
+    .custom-bridal-card {
+        padding-bottom: 0;
+    }
+    .custom-bridal-card .content-flexer {
+        flex-direction: row;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #FFF;
+        box-shadow: 0px -1px 3px 0px rgba(0, 0, 0, 0.05);
+        padding: 16px;
+        z-index: 11;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .custom-bridal-card .whatsapp-button {
+           max-width: 56%;
+      flex: 100%;
+      width: 100%;
+      margin: 0 10px 0 0;
+      padding: 5px 7.5px;
+    }
+    .custom-bridal-card .whatsapp-svg {
+        max-width: 20px;
+        flex: 20px;
+        margin-right: 10px;
+    }
+    .custom-bridal-card .button-text {
+      font-size: 12px;
+      letter-spacing: .48px;
+    }
+    .custom-bridal-card .bridal-cart-button {
+        max-width: 41%;
+        flex: 100%;
+        width: 100%;
+    }
+  .custom-bridal-card .content{ padding:20px 0 0 0; }
+  .custom-bridal-card .custom-bridal-card-flexer {
+    display: flex;
+    align-items: flex-start;
+  }
+  .custom-bridal-card .custom-bridal-card-flexer pickup-availability[available] {
+    margin-left: -142%;
+  }
+}
+
+@media(min-width:750px) and (max-width:989px){
+  .custom-bridal-card .content { padding: 20px 0 0; }
+  .custom-bridal-card .content-flexer { margin: 0 0 20px; }
+  .custom-bridal-card .whatsapp-button .button-text{ font-size:13px; } 
+}
+
+@media(min-width:990px) and (max-width:1424px){
+  .custom-bridal-card .whatsapp-button .button-text{ font-size:13px; }
+}

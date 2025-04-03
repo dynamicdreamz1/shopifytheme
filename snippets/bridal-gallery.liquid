@@ -1,0 +1,23 @@
+<div class="bridal-gallery custom-gallery-wrapper">
+    <div class="bridal-wrapper">
+        <div class="gallery-wrapper">
+            <div class="selectors">
+                {%- for image in product.images -%}
+                <div class="bridal-image-wrapper">
+                    <a id="Zoom-1" class="MagicZoom" title="Show your product in stunning detail with Magic Zoom Plus."
+                        href="{{ image |  img_url: 'master' }}"
+                        data-zoom-image-2x="{{ image | img_url: 'master' }}"
+                        data-image-2x="{{ image | img_url: 'master' }}"
+                    >
+                    {% if image  != blank %}
+                    <img alt="Bridal Gallery" src="{{ image |  img_url: 'master' }}" srcset="{{ image | img_url: 'master' }}"
+                    alt=""/>
+                    {% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+

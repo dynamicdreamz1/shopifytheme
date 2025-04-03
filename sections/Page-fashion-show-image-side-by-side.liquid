@@ -1,0 +1,170 @@
+{%- if section.blocks.size > 0 or section.settings.main_top_heading_text != blank -%}
+  <div class="Page_fashion_show_image_texts_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_fashion_show_image_texts_inner_new">
+        {%- if section.settings.main_top_heading_text != blank -%}
+          <div class="Common_title_new Page_fashion_show_image_texts_title_new">
+            <h2>{{ section.settings.main_top_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Page_fashion_show_image_texts_mainloop_new">
+            <div class="Page_fashion_show_image_texts_innerloop_new">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank or block.settings.title != blank or block.settings.main_designation_text != blank or block.settings.main_information_text != blank -%}
+                  <div class="Page_fashion_show_image_texts_innerloop_mainboxs_new{% if block.settings.video_or_image_on_right %} Page_fashion_show_image_texts_video_or_image_on_right_new{% endif %}">
+                    {%- if block.settings.main_mobile_heading_text != blank -%}
+                      <div class="Common_title_new Page_fashion_show_image_texts_innerloop_mobiletitle_new">
+                        <h2>{{ block.settings.main_mobile_heading_text }}</h2>
+                      </div>
+                    {%- endif -%}
+                    <div class="Page_fashion_show_image_texts_innerloop_innerboxs_new">
+                      {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank -%}
+                        <div class="Page_fashion_show_image_texts_innerloop_innerboxs_1_new">
+                          <div class="Page_fashion_show_image_texts_innerloop_innerboxs_1_videoimageboth_new">
+                            {%- if block.settings.main_mp4_video != blank -%}
+                              <div class="Page_fashion_show_image_texts_innerloop_innerboxs_1_videoimage_new">
+                                {{ block.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                              </div>
+                            {% else %}  
+                              {%- if block.settings.main_desktop_image != blank and block.settings.main_mobile_image != blank -%}
+                                <div class="Page_fashion_show_image_texts_innerloop_innerboxs_1_videoimage_new">
+                                  {%- if block.settings.main_desktop_image != blank -%}
+                                    {{
+                                      block.settings.main_desktop_image | 
+                                      image_url: width: img.width | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'desktop_image_new'
+                                    }}
+                                  {%- endif -%}
+                                  {%- if block.settings.main_mobile_image != blank -%}
+                                    {{
+                                      block.settings.main_mobile_image | 
+                                      image_url: width: img.width | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'mobile_image_new'
+                                    }}
+                                  {%- endif -%}
+                                </div>
+                              {%- endif -%}
+                              {%- if block.settings.main_desktop_image2 != blank and block.settings.main_mobile_image2 != blank -%}
+                                <div class="Page_fashion_show_image_texts_innerloop_innerboxs_1_videoimage_new">
+                                  {%- if block.settings.main_desktop_image2 != blank -%}
+                                    {{
+                                      block.settings.main_desktop_image2 | 
+                                      image_url: width: img.width | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'desktop_image_new'
+                                    }}
+                                  {%- endif -%}
+                                  {%- if block.settings.main_mobile_image2 != blank -%}
+                                    {{
+                                      block.settings.main_mobile_image2 | 
+                                      image_url: width: img.width | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'mobile_image_new'
+                                    }}
+                                  {%- endif -%}
+                                </div>
+                              {%- endif -%}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                      
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Fashion Show Image Side",
+    "class": "Page_fashion_show_image_side_by_side_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_top_heading_text",
+        "label": "Add Main Top Heading Text",
+        "default": "Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "video_or_image_on_right",
+            "label": "Video OR Image On Right",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "main_mobile_heading_text",
+            "label": "Add Main Mobile Heading Text"
+          },
+          {
+            "type": "video",
+            "id": "main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image2",
+            "label": "Add Main Desktop Image 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image2",
+            "label": "Add Main Mobile Image 2"
+          }
+
+          
+          
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Fashion Show Image Side",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,111 @@
+<div class="select-measurement hide" js-pdp-select-measurement-popup  js-popup-modal data-popup-modal="select-measurement" data-popup-modal-option-name="{{optionName}}" >
+  <div class="select-measurement-main optiscroll_common_new optiscroll">
+    <div class="select-measurement-inner">
+      <div class="page-width">
+          <div class="wrapper">
+              <div class="content">
+                  <div class="content-alpha">
+                      <div class="alpha-inner">
+                          <h3 class="image-title">{{ title_ }}</h3>
+                          <div class="alpha-image">
+                            {% assign previewImage_ = previewImage.value %}
+                            {%if previewImage_.media_type == 'video' %}
+                                {{ previewImage_ | video_tag: autoplay: true, loop: true, muted: true }}
+                            {% else %}
+                                <img src="{{ previewImage.value | image_url }}"  alt="Select Measurement">
+                            {% endif %}
+                          </div>
+                          <span class="image-description">{{ noteContent }}</span>
+                      </div>
+                      <div class="svg-button mobile">
+                        <span class="btn" js-pdp-select-measurement-back-btn data-option-modal-name="{{optionName}}" data-modal="select-measurement">Back</span>
+                        <div class="close-svg" js-popup-close-btn data-modal="select-measurement" data-option-modal-name="{{optionName}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M3 3L21 21" stroke="black" stroke-width="1.6" stroke-linecap="round"/>
+                                <path d="M21 3L3 21" stroke="black" stroke-width="1.6" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="content-beta" js-select-m-content-beta>
+                      <div class="beta-inner">
+                          <div class="content-item" js-popup-down-btn data-option-modal-name="{{optionName}}">
+                            <h3 class="primery-text"><span>Select (</span>Measurements  in inches<span>)</span></h3>
+                            <div class="svg-button desktop">
+                                <span class="btn" js-pdp-select-measurement-back-btn data-option-modal-name="{{optionName}}" data-modal="select-measurement">Back</span>
+                                <div class="close-svg" js-popup-close-btn data-modal="select-measurement" data-option-modal-name="{{optionName}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M3 3L21 21" stroke="black" stroke-width="1.6" stroke-linecap="round"/>
+                                        <path d="M21 3L3 21" stroke="black" stroke-width="1.6" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="down-icon" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M3 7.5L12 16.5L21 7.5" stroke="#8E8D99" stroke-width="1.95" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                          </div>
+                          <div class="select-content-main">
+                            {% comment %} Second Number select {% endcomment %}
+                            {%  if chooseStyleOption %}
+                                <div class="select-content" js-select-content>
+                                    <h3 class="secondary-title">Choose Style</h3>
+                                    {% for value in measurementData.value %}
+                                        <div class="select-item_secondary">
+                                            <div class="item-image">
+                                                {% assign img_link = '' %}
+                                                {% if  value == 'High Neck' %}
+                                                    {%  assign img_link = 'high-neck.png' %}
+                                                {% elsif value == 'Collar Neck' %}
+                                                    {%  assign img_link = 'collar-neck.png' %}
+                                                {% elsif value == 'Boat Neck' %}
+                                                    {%  assign img_link = 'boat-neck.png' %}
+                                                {% endif %}
+                                            <img src="{{ img_link |  asset_img_url: '100x' }}" alt="Select Measurement">
+                                            </div>
+                                            <label for="{{ value | replace: ' ', '-' }}" class="item-text_secondary">{{ value }}</label>
+                                            <input js-custom-measurement-radio-field hidden type="radio" name="items[0][properties][From Neck Style]" data-option-image-link="{{ img_link | asset_img_url: "100x" }}" value="{{ value }}" id="{{ value | replace: ' ', '-' }}">
+                                            <div class="correct-icon">
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                  <path d="M2 9L5.08571 12.5L13 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    {%  endfor %}
+                                </div>
+                            {% endif %}
+                            {% comment %} First Number select  {% endcomment %}
+                            <div class="select-content" js-select-content>
+                                {%  if chooseStyleOption   %}
+                                    {% assign measurementData = chooseStyleOption %}
+                                    <h3 class="secondary-title">How Deep ?</h3>
+                                {% endif %}
+                                {% for value  in measurementData.value%}
+                                    <div class="input-wrapper">
+                                        <input js-custom-measurement-radio-field hidden type="radio" id="{{optionName}}__{{ value }}" value="{{ value }}" name="items[0][properties][{{ title_ }}]">
+                                        <label for="{{optionName}}__{{ value }}">
+                                            <div class="select-item">
+                                                <span  class="item-text">{{ value }}</span>
+                                                <div class="correct-svg">
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                      <path d="M2 9L5.08571 12.5L13 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                                {% comment %} <div class="ok-button"> 
+                                    <span class="btn" js-pdp-select-measurement-back-btn data-option-modal-name="{{optionName}}" data-modal="select-measurement">OK</span>
+                                </div> {% endcomment %}
+                            </div>
+                          </div>  
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

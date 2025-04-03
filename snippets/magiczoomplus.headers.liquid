@@ -1,0 +1,87 @@
+
+    {% comment %}{% if template contains 'product' %}{% endcomment %}
+    {% assign MagicToolboxUseMagicScroll = 'Yes' %}
+    {% assign MagicToolboxMagicScrollLicenseKey = '' %}
+    {{ 'magiczoomplus.js' | asset_url | script_tag }}
+    {{ 'magiczoomplus.css' | asset_url | stylesheet_tag }}
+    {% if MagicToolboxUseMagicScroll == 'Yes' %}
+    {{ 'magicscroll.js' | asset_url | script_tag }}
+    {{ 'magicscroll.css' | asset_url | stylesheet_tag }}
+    {% endif %}
+    {{ 'magiczoomplus.additional.css' | asset_url | stylesheet_tag }}
+
+
+    
+<script type="text/javascript">
+mzOptions = {
+    'zoomWidth':'{{ shop.metafields.magiczoomplus.options['zoomWidth'] | default: 'auto' }}',
+    'zoomHeight':'{{ shop.metafields.magiczoomplus.options['zoomHeight'] | default: 'auto' }}',
+    'zoomPosition':'{{ shop.metafields.magiczoomplus.options['zoomPosition'] | default: 'right' }}',
+    'zoomDistance':{{ shop.metafields.magiczoomplus.options['zoomDistance'] | default: '15' }},
+    'selectorTrigger':'{{ shop.metafields.magiczoomplus.options['selectorTrigger'] | default: 'click' }}',
+    'transitionEffect':{{ shop.metafields.magiczoomplus.options['transitionEffect'] | default: 'true' }},
+    'cssClass':'{{ shop.metafields.magiczoomplus.options['cssClass'] | default: '' }}',
+    'lazyZoom':{{ shop.metafields.magiczoomplus.options['lazyZoom'] | default: 'false' }},
+    'rightClick':{{ shop.metafields.magiczoomplus.options['rightClick'] | default: 'false' }},
+    'zoomMode':'{{ shop.metafields.magiczoomplus.options['zoomMode'] | default: 'zoom' }}',
+    'zoomOn':'{{ shop.metafields.magiczoomplus.options['zoomOn'] | default: 'hover' }}',
+    'upscale':{{ shop.metafields.magiczoomplus.options['upscale'] | default: 'true' }},
+    'smoothing':{{ shop.metafields.magiczoomplus.options['smoothing'] | default: 'true' }},
+    'variableZoom':{{ shop.metafields.magiczoomplus.options['variableZoom'] | default: 'false' }},
+    'zoomCaption':'{{ shop.metafields.magiczoomplus.options['zoomCaption'] | default: 'off' }}',
+    'expand':'{{ shop.metafields.magiczoomplus.options['expand'] | default: 'window' }}',
+    'expandZoomMode':'{{ shop.metafields.magiczoomplus.options['expandZoomMode'] | default: 'zoom' }}',
+    'expandZoomOn':'{{ shop.metafields.magiczoomplus.options['expandZoomOn'] | default: 'click' }}',
+    'expandCaption':{{ shop.metafields.magiczoomplus.options['expandCaption'] | default: 'true' }},
+    'closeOnClickOutside':{{ shop.metafields.magiczoomplus.options['closeOnClickOutside'] | default: 'true' }},
+    'hint':'{{ shop.metafields.magiczoomplus.options['hint'] | default: 'once' }}',
+    'textHoverZoomHint':'{{ shop.metafields.magiczoomplus.options['textHoverZoomHint'] | default: 'Hover to zoom' }}',
+    'textClickZoomHint':'{{ shop.metafields.magiczoomplus.options['textClickZoomHint'] | default: 'Click to zoom' }}',
+    'textExpandHint':'{{ shop.metafields.magiczoomplus.options['textExpandHint'] | default: 'Click to expand' }}',
+    'textBtnClose':'{{ shop.metafields.magiczoomplus.options['textBtnClose'] | default: 'Close' }}',
+    'textBtnNext':'{{ shop.metafields.magiczoomplus.options['textBtnNext'] | default: 'Next' }}',
+    'textBtnPrev':'{{ shop.metafields.magiczoomplus.options['textBtnPrev'] | default: 'Previous' }}'
+}
+mzMobileOptions = {
+    'zoomMode':'{{ shop.metafields.magiczoomplus.options['zoomModeForMobile'] | default: 'magnifier' }}',
+    'textHoverZoomHint':'{{ shop.metafields.magiczoomplus.options['textHoverZoomHintForMobile'] | default: 'Touch to zoom' }}',
+    'textClickZoomHint':'{{ shop.metafields.magiczoomplus.options['textClickZoomHintForMobile'] | default: 'Double tap to zoom' }}',
+    'textExpandHint':'{{ shop.metafields.magiczoomplus.options['textExpandHintForMobile'] | default: 'Tap to expand' }}'
+}
+{% if MagicToolboxUseMagicScroll == 'Yes' %}
+MagicScrollOptions = {
+    'width':'{{ shop.metafields.magiczoomplus.options['width'] | default: 'auto' }}',
+    'height':'{{ shop.metafields.magiczoomplus.options['height'] | default: 'auto' }}',
+    'orientation':'{{ shop.metafields.magiczoomplus.options['orientation'] | default: 'horizontal' }}',
+    'mode':'{{ shop.metafields.magiczoomplus.options['mode'] | default: 'scroll' }}',
+    'items':'{{ shop.metafields.magiczoomplus.options['items'] | default: '6' }}',
+    'speed':{{ shop.metafields.magiczoomplus.options['speed'] | default: '600' }},
+    'autoplay':{{ shop.metafields.magiczoomplus.options['autoplay'] | default: '0' }},
+    'loop':'{{ shop.metafields.magiczoomplus.options['loop'] | default: 'off' }}',
+    'step':'{{ shop.metafields.magiczoomplus.options['step'] | default: 'auto' }}',
+    'arrows':'{{ shop.metafields.magiczoomplus.options['arrows'] | default: 'outside' }}',
+    'pagination':{{ shop.metafields.magiczoomplus.options['pagination'] | default: 'false' }},
+    'easing':'{{ shop.metafields.magiczoomplus.options['easing'] | default: 'cubic-bezier(.8, 0, .5, 1)' }}',
+    'scrollOnWheel':'{{ shop.metafields.magiczoomplus.options['scrollOnWheel'] | default: 'auto' }}',
+    'lazy-load':{{ shop.metafields.magiczoomplus.options['lazy-load'] | default: 'false' }}
+}
+{% endif %}
+</script>
+        
+        
+        
+        
+    {% assign MagicToolboxSirvID = '' %}
+    {% capture mzp %}{% include 'magiczoomplus' with MagicToolboxSirvID %}{% endcapture %}
+    {% if MagicToolboxSirvID != '' %}
+        <link rel="preconnect" href="https://scripts.sirv.com" crossorigin>
+        <link rel="preconnect" href="https://{{MagicToolboxSirvID}}.sirv.com" crossorigin>
+        <link rel="dns-prefetch" href="https://scripts.sirv.com">
+        <link rel="dns-prefetch" href="//{{MagicToolboxSirvID}}.sirv.com">
+        {{ '//scripts.sirv.com/sirvjs/v3/sirv.js?modules=spin,gallery' | script_tag }}
+    {% endif %}
+    {{ 'magiczoomplus.sirv.js' | asset_url | script_tag }}
+    {% comment %}{% endif %}{% endcomment %}
+<style type="text/css">
+  div.MagicToolboxContainer .mz-zoom-window>img {max-width:none !important;}
+</style>

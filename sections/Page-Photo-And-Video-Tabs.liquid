@@ -1,0 +1,296 @@
+
+  
+  <div class="page_store_detail_tabs_main_new" style="background: {{ section.settings.main_back_color }};">
+    <div class="page-width">
+      <div class="page_store_detail_tabs_inner_new tabs_collection_main_new">
+        <div class="tab">
+          
+            <button class="tablinks tabs_collection_new active" tab_id="tab_photos">
+               {%- if section.settings.title1 != blank -%}
+             {{ section.settings.title1 }}
+              {%- endif -%}
+            </button>
+         
+          
+            <button class="tablinks tabs_collection_new " tab_id="tab_videos">
+              {%- if section.settings.title2 != blank -%}
+             {{ section.settings.title2 }}
+              {%- endif -%}
+            </button>
+         
+        </div>
+        
+          <div class="tabcontent tab_photos_open" style="display:block;">
+            <div class="page_store_detail_tabs_maindetail_new">
+              <div class="page_store_detail_tabs_innerdetail_new">
+                
+                 <div class="swiper-container page_store_detail_tabs_slider">
+                      <div class="swiper-wrapper">
+
+                        {%- for block in section.blocks -%}
+                         {%- if block.settings.blogs_main_mp4_video != blank or block.settings.blogs_main_desktop_image != blank or block.settings.blogs_main_mobile_image != blank or block.settings.blogs_main_tags_detail_text != blank or block.settings.blogs_sub_head_text != blank or block.settings.blogs_title != blank or block.settings.blogs_main_button_link != blank -%}
+                              <a href="{{ block.settings.blogs_main_button_link }}" aria-label="Shop Now {{ block.settings.blogs_title }}" class="swiper-slide page_photo_video_tabs_image_new"> 
+                                <div class="page_photo_video_tabs_image_inner_new"> 
+                                                  
+                                      {%- if block.settings.blogs_main_mp4_video != blank -%}
+                                        {{ block.settings.blogs_main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                                      {% else %}                                                         
+                                            {%- if block.settings.blogs_main_desktop_image != blank -%}
+                                              {{
+                                                block.settings.blogs_main_desktop_image | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'desktop_image_new'
+                                              }}
+                                            {%- endif -%}
+                                            {%- if block.settings.blogs_main_mobile_image != blank -%}
+                                              {{
+                                                block.settings.blogs_main_mobile_image | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'mobile_image_new'
+                                              }}
+                                            {%- endif -%}
+                                    
+                                        {%- endif -%}
+                                    <div class="page_photo_video_tabs_content_box">
+                                        {%- if block.settings.blogs_main_tags_detail_text != blank -%}
+                                          {{ block.settings.blogs_main_tags_detail_text }}
+                                        {%- endif -%}
+                                        {%- if block.settings.blogs_title != blank or block.settings.blogs_main_button_link != blank or block.settings.blogs_sub_head_text != blank or block.settings.blogs_main_button_text != blank -%}
+                                          <h3>{{ block.settings.blogs_title }}</h3>
+                                          <h4>{{ block.settings.blogs_sub_head_text }}</h4>
+                                          <span class="button_white">{{ block.settings.blogs_main_button_text }}</span>                                                          
+                                          
+                                        {%- endif -%}
+                                    </div>
+                                    
+                                     </div>
+                              </a>
+
+                         {%- endif -%}
+                          {%- endfor -%}
+                       
+                      </div>
+                      <div class="swiper-button-prev"></div>
+                      <div class="swiper-button-next"></div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        
+        
+          <div class="tabcontent tab_videos_open" style="display:none;">
+            <div class="page_store_detail_tabs_maindetail_new">
+              <div class="page_store_detail_tabs_innerdetail_new">
+                
+                <div class="swiper-container page_store_detail_tabs_slider">
+                  <div class="swiper-wrapper">
+
+                    {%- for block in section.blocks -%}
+                         {%- if block.settings.video_main_mp4_video != blank or block.settings.video_main_desktop_image != blank or block.settings.video_main_mobile_image != blank or block.settings.video_main_tags_detail_text != blank or block.settings.video_sub_head_text != blank or block.settings.video_title != blank or block.settings.video_main_button_link != blank -%}
+                              <a href="{{ block.settings.video_main_button_link }}" aria-label="Shop Now {{ block.settings.video_title }}" class="swiper-slide page_photo_video_tabs_image_new">                           
+                                        <div class="page_photo_video_tabs_image_inner_new"> 
+                                          
+                                              {%- if block.settings.video_main_mp4_video != blank -%}
+                                                {{ block.settings.video_main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                                              {% else %}                                                         
+                                                    {%- if block.settings.video_main_desktop_image != blank -%}
+                                                      {{
+                                                        block.settings.video_main_desktop_image | 
+                                                        image_url: width: img.width | 
+                                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                        fetchpriority: 'auto', 
+                                                        class:'desktop_image_new'
+                                                      }}
+                                                    {%- endif -%}
+                                                    {%- if block.settings.video_main_mobile_image != blank -%}
+                                                      {{
+                                                        block.settings.video_main_mobile_image | 
+                                                        image_url: width: img.width | 
+                                                        image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                        fetchpriority: 'auto', 
+                                                        class:'mobile_image_new'
+                                                      }}
+                                                    {%- endif -%}
+                                            
+                                                {%- endif -%}
+                                          <div class="page_photo_video_tabs_content_box">
+                                                {%- if block.settings.video_main_tags_detail_text != blank -%}
+                                                  {{ block.settings.video_main_tags_detail_text }}
+                                                {%- endif -%}
+                                                {%- if block.settings.video_title != blank or block.settings.video_main_button_link != blank or block.settings.video_sub_head_text != blank or block.settings.video_main_button_text != blank -%}
+                                                  <h3>{{ block.settings.video_title }}</h3>
+                                                  <h4>{{ block.settings.video_sub_head_text }}</h4>
+                                                  <span class="button_white">{{ block.settings.video_main_button_text }}</span>                                                          
+                                                  
+                                                {%- endif -%}
+                                            </div>
+                                       </div>
+                                </a>
+                         {%- endif -%}
+                          {%- endfor -%}
+                      <!-- <div class="swiper-slide page_photo_video_tabs_image_new">
+                        <div class="page_photo_video_tabs_image_inner_new">
+                          {{ video_list_tabs_new | video_tag: controls: false, autoplay: true, loop: true }}
+                        </div>
+                      </div> -->
+                    
+                  </div>
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+       
+      </div>
+    </div>
+  </div>  
+
+
+ 
+
+{% schema %}
+  {
+    "name": "Page Photos & Video Tabs",
+    "class": "page_store_detail_tabs",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_back_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "title1",
+        "default": "Blogs",
+        "label": "Add First Tab Title"
+      },
+      {
+        "type": "text",
+        "id": "title2",
+        "default": "Webstories",
+        "label": "Add Second Tab Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "Blogs",
+        "name": "Blogs",
+        "settings": [
+          {
+            "type": "video",
+            "id": "blogs_main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "blogs_main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "blogs_main_mobile_image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "richtext",
+            "id": "blogs_title",
+            "label": "Add Main Heading Text",
+            "default": "<p>Heading</p>"
+          },
+          {
+            "type": "richtext",
+            "id": "blogs_sub_head_text",
+            "label": "Add Sub Heading Text"
+          },
+          {
+            "type": "richtext",
+            "id": "blogs_main_tags_detail_text",
+            "label": "Add Main Tags Detail Text",
+            "info": "EX: <p>New <br>style <br>added.</p>"
+          },
+          {
+            "type": "text",
+            "id": "blogs_main_button_text",
+            "label": "Add Main Button Text",
+            "default": "Shop Now"
+          },
+          {
+            "type": "url",
+            "id": "blogs_main_button_link",
+            "label": "Add Main Button Link",
+            "default": "/"
+          }
+        ]
+      },
+       {
+        "type": "Video",
+        "name": "Video",
+        "settings": [
+          {
+            "type": "video",
+            "id": "video_main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "video_main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "video_main_mobile_image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "richtext",
+            "id": "video_title",
+            "label": "Add Main Heading Text",
+            "default": "<p>Heading</p>"
+          },
+          {
+            "type": "richtext",
+            "id": "video_sub_head_text",
+            "label": "Add Sub Heading Text"
+          },
+          {
+            "type": "richtext",
+            "id": "video_main_tags_detail_text",
+            "label": "Add Main Tags Detail Text",
+            "info": "EX: <p>New <br>style <br>added.</p>"
+          },
+          {
+            "type": "text",
+            "id": "video_main_button_text",
+            "label": "Add Main Button Text",
+            "default": "Shop Now"
+          },
+          {
+            "type": "url",
+            "id": "video_main_button_link",
+            "label": "Add Main Button Link",
+            "default": "/"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Photos & Video Tabs",
+        "blocks": [
+        {
+          "type": "Blogs"
+        },
+          {
+          "type": "Video"
+        }
+      ]
+      }
+    ]
+  }
+{% endschema %}

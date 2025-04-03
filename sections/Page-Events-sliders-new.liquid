@@ -1,0 +1,931 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Page_Events_sliders_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="Page_Events_sliders_inner_new">
+      {%- if section.settings.main_heading_text != blank or section.settings.main_button_link != blank or section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank or section.settings.main_bottom_button_text != blank -%}
+        <div class="Page_Events_sliders_mainstatic_new">
+          <div class="Page_Events_sliders_innerstatic_new">
+            {%- if section.settings.main_heading_text != blank or section.settings.main_button_link != blank -%}
+              <div class="Page_Events_sliders_innerstatic_1_new">
+                <div class="Page_Events_sliders_innerstatic_1_detail_new">
+                  {%- if section.settings.main_button_text != blank and section.settings.main_button_link != blank -%}
+                    <div class="Page_Events_sliders_innerstatic_1_detail_button_new">
+                      <a href="{{ section.settings.main_button_link }}">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 4L2 12L10 20" stroke="white" stroke-width="1.2" stroke-linecap="round"/><path d="M2 12H24" stroke="white" stroke-width="1.2"/></svg>{{ section.settings.main_button_text }}
+                      </a>
+                    </div>  
+                  {%- endif -%}
+                  {%- if section.settings.main_heading_text != blank -%}
+                    <div class="Page_Events_sliders_innerstatic_1_detail_title_new">
+                      <h4>{{ section.settings.main_heading_text }}</h4>
+                    </div>  
+                  {%- endif -%}
+                </div>
+              </div>  
+            {%- endif -%}
+            {%- if section.settings.main_mp4_video != blank or section.settings.main_desktop_image != blank or section.settings.main_mobile_image != blank -%}
+              <div class="Page_Events_sliders_innerstatic_2_new">
+                <div class="Page_Events_sliders_innerstatic_2_videoimageboth_new">
+                  {%- if section.settings.main_mp4_video != blank -%}
+                    <div class="Page_Events_sliders_innerstatic_2_videoimage_new">
+                      {{ section.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                    </div>
+                  {% else %}  
+                    {%- if section.settings.main_desktop_image != blank and section.settings.main_mobile_image != blank -%}
+                      <div class="Page_Events_sliders_innerstatic_2_videoimage_new">
+                        {%- if section.settings.main_desktop_image != blank -%}
+                          {{
+                            section.settings.main_desktop_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'desktop_image_new'
+                          }}
+                        {%- endif -%}
+                        {%- if section.settings.main_mobile_image != blank -%}
+                          {{
+                            section.settings.main_mobile_image | 
+                            image_url: width: img.width | 
+                            image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                            fetchpriority: 'auto', 
+                            class:'mobile_image_new'
+                          }}
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+            {%- if section.settings.main_bottom_button_text != blank -%}
+              <div class="Page_Events_sliders_innerstatic_3_new">
+                <div class="Page_Events_sliders_innerstatic_3_button_new">
+                  <a href="javascript:void(0)" class="button button_transparent open_event_slider" slider_id="Events_slider_{{ section.id }}">
+                    {{ section.settings.main_bottom_button_text }}
+                  </a>
+                </div>  
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="Page_Events_sliders_mainloop_new Events_slider_{{ section.id }}_open">
+          {%- if section.settings.main_heading_text != blank or section.settings.main_button_text != blank -%}
+            <div class="Page_Events_sliders_innerstatic_1_new">
+              <div class="Page_Events_sliders_innerstatic_1_detail_new">
+                {%- if section.settings.main_button_text != blank -%}
+                  <div class="Page_Events_sliders_innerstatic_1_detail_button_new">
+                    <a href="javascript:void(0);" class="close_slider_new">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 4L2 12L10 20" stroke="white" stroke-width="1.2" stroke-linecap="round"/><path d="M2 12H24" stroke="white" stroke-width="1.2"/></svg>{{ section.settings.main_button_text }}
+                    </a>
+                  </div>  
+                {%- endif -%}
+                {%- if section.settings.main_heading_text != blank -%}
+                  <div class="Page_Events_sliders_innerstatic_1_detail_title_new">
+                    <h4>{{ section.settings.main_heading_text }}</h4>
+                  </div>  
+                {%- endif -%}
+              </div>
+            </div>  
+          {%- endif -%}
+          <div class="Page_Events_sliders_innerloop_new">
+            <div class="swiper-container Page_event_slider">
+              <div class="swiper-wrapper">
+                {%- for block in section.blocks -%}
+                  {%- case block.type -%}
+                    {%- when 'left_text_image' -%}
+                      {%- if block.settings.main_left_logo_image != blank or block.settings.main_left_heading_text_1 != blank or block.settings.main_left_heading_text_2 != blank or block.settings.main_left_information_text_1 != blank or block.settings.main_left_information_text_2 != blank or block.settings.main_left_mp4_video != blank or block.settings.main_left_desktop_image != blank or block.settings.main_left_mobile_image != blank -%}
+                        <div class="swiper-slide">
+                          <div class="Left_text_image_main_new">
+                            <div class="Left_text_image_inner_new">
+                              {%- if block.settings.main_left_logo_image != blank or block.settings.main_left_heading_text_1 != blank or block.settings.main_left_heading_text_2 != blank or block.settings.main_left_information_text_1 != blank or block.settings.main_left_information_text_2 != blank -%}
+                                <div class="Left_text_image_mainleft_new" style="background: {{ block.settings.main_left_background_color }}; color: {{ block.settings.main_left_information_color }};">
+                                  <div class="Left_text_image_innerleft_new">
+                                    {%- if block.settings.main_left_logo_image != blank or block.settings.main_left_heading_text_1 != blank -%}
+                                      <div class="Left_text_image_innerleft_1_new">
+                                        {%- if block.settings.main_left_logo_image != blank -%}
+                                          <div class="Left_text_image_innerleft_1_logos_new">
+                                            {{
+                                              block.settings.main_left_logo_image | 
+                                              image_url: width: img.width | 
+                                              image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                              fetchpriority: 'auto', 
+                                              class:'Logo_image_new'
+                                            }}
+                                          </div>
+                                        {%- endif -%}
+                                        {%- if block.settings.main_left_heading_text_1 != blank -%}
+                                          <div class="Left_text_image_innerleft_1_title_new">
+                                            <h4>{{ block.settings.main_left_heading_text_1 }}</h4>
+                                          </div>
+                                        {%- endif -%}
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.main_left_heading_text_2 != blank or block.settings.main_left_information_text_1 != blank -%}
+                                      <div class="Left_text_image_innerleft_2_new">
+                                        {%- if block.settings.main_left_heading_text_2 != blank -%}
+                                          <div class="Left_text_image_innerleft_2_title_new">
+                                            <h2>{{ block.settings.main_left_heading_text_2 }}</h2>
+                                          </div>
+                                        {%- endif -%}
+                                        {%- if block.settings.main_left_information_text_1 != blank -%}
+                                          <div class="Left_text_image_innerleft_2_infos_new">
+                                            {{ block.settings.main_left_information_text_1 }}
+                                          </div>
+                                        {%- endif -%}
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.main_left_information_text_2 != blank -%}
+                                      <div class="Left_text_image_innerleft_3_new">
+                                        {{ block.settings.main_left_information_text_2 }}
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                              {%- if block.settings.main_left_mp4_video != blank or block.settings.main_left_desktop_image != blank or block.settings.main_left_mobile_image != blank -%}
+                                <div class="Left_text_image_mainright_new">
+                                  <div class="Left_text_image_innerright_new">
+                                    <div class="Left_text_image_innerright_videoimageboth_new">
+                                      {%- if block.settings.main_left_mp4_video != blank -%}
+                                        <div class="Left_text_image_innerright_videoimage_new">
+                                          {{ block.settings.main_left_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                                        </div>
+                                      {% else %}  
+                                        {%- if block.settings.main_left_desktop_image != blank and block.settings.main_left_mobile_image != blank -%}
+                                          <div class="Left_text_image_innerright_videoimage_new">
+                                            {%- if block.settings.main_left_desktop_image != blank -%}
+                                              {{
+                                                block.settings.main_left_desktop_image | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'desktop_image_new'
+                                              }}
+                                            {%- endif -%}
+                                            {%- if block.settings.main_left_mobile_image != blank -%}
+                                              {{
+                                                block.settings.main_left_mobile_image | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'mobile_image_new'
+                                              }}
+                                            {%- endif -%}
+                                          </div>
+                                        {%- endif -%}
+                                      {%- endif -%}
+                                    </div>
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        </div>
+                      {%- endif -%}  
+    
+                    {%- when 'image_side_image' -%}
+                      {%- if block.settings.middle_mp4_video_1 != blank or block.settings.middle_desktop_image_1 != blank or block.settings.middle_mobile_image_1 != blank or block.settings.middle_button_link_1 != blank or block.settings.middle_mp4_video_2 != blank or block.settings.middle_desktop_image_2 != blank or block.settings.middle_mobile_image_2 != blank or block.settings.middle_button_link_2 != blank or block.settings.middle_mp4_video_3 != blank or block.settings.middle_desktop_image_3 != blank or block.settings.middle_mobile_image_3 != blank or block.settings.middle_button_link_3 != blank -%}
+                        <div class="swiper-slide">
+                          <div class="Image_side_image_main_new">
+                            <div class="Image_side_image_inner_new">
+                              {%- if block.settings.middle_mp4_video_1 != blank or block.settings.middle_desktop_image_1 != blank or block.settings.middle_mobile_image_1 != blank or block.settings.middle_button_link_1 != blank -%}
+                                <div class="Image_side_image_mainboxs_new">
+                                  <div class="Image_side_image_innerboxs_new">
+                                    {%- if block.settings.middle_mp4_video_1 != blank or block.settings.middle_desktop_image_1 != blank or block.settings.middle_mobile_image_1 != blank -%}
+                                      <div class="Image_side_image_innerboxs_1_new">
+                                        <div class="Image_side_image_innerboxs_1_videoimageboth_new">
+                                          {%- if block.settings.middle_mp4_video_1 != blank -%}
+                                            <div class="Image_side_image_innerboxs_1_videoimage_new">
+                                              {{ block.settings.middle_mp4_video_1 | video_tag: controls: false, autoplay: true, loop: true }}
+                                            </div>
+                                          {% else %}  
+                                            {%- if block.settings.middle_desktop_image_1 != blank and block.settings.middle_mobile_image_1 != blank -%}
+                                              <div class="Image_side_image_innerboxs_1_videoimage_new">
+                                                {%- if block.settings.middle_desktop_image_1 != blank -%}
+                                                  {{
+                                                    block.settings.middle_desktop_image_1 | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'desktop_image_new'
+                                                  }}
+                                                {%- endif -%}
+                                                {%- if block.settings.middle_mobile_image_1 != blank -%}
+                                                  {{
+                                                    block.settings.middle_mobile_image_1 | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'mobile_image_new'
+                                                  }}
+                                                {%- endif -%}
+                                              </div>
+                                            {%- endif -%}
+                                          {%- endif -%}
+                                        </div>
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.middle_button_text_1 != blank and block.settings.middle_button_link_1 != blank -%}
+                                      <div class="Image_side_image_innerboxs_2_new">
+                                        <div class="Image_side_image_innerboxs_2_buttonboth_new">
+                                          <a href="{{ block.settings.middle_button_link_1 }}" class="button button_transparent">
+                                            {{ block.settings.middle_button_text_1 }}
+                                          </a>
+                                        </div>
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+                              {%- endif -%}
+      
+                              {%- if block.settings.middle_mp4_video_2 != blank or block.settings.middle_desktop_image_2 != blank or block.settings.middle_mobile_image_2 != blank or block.settings.middle_button_link_2 != blank -%}
+                                <div class="Image_side_image_mainboxs_new">
+                                  <div class="Image_side_image_innerboxs_new">
+                                    {%- if block.settings.middle_mp4_video_2 != blank or block.settings.middle_desktop_image_2 != blank or block.settings.middle_mobile_image_2 != blank -%}
+                                      <div class="Image_side_image_innerboxs_1_new">
+                                        <div class="Image_side_image_innerboxs_1_videoimageboth_new">
+                                          {%- if block.settings.middle_mp4_video_2 != blank -%}
+                                            <div class="Image_side_image_innerboxs_1_videoimage_new">
+                                              {{ block.settings.middle_mp4_video_2 | video_tag: controls: false, autoplay: true, loop: true }}
+                                            </div>
+                                          {% else %}  
+                                            {%- if block.settings.middle_desktop_image_2 != blank and block.settings.middle_mobile_image_2 != blank -%}
+                                              <div class="Image_side_image_innerboxs_1_videoimage_new">
+                                                {%- if block.settings.middle_desktop_image_2 != blank -%}
+                                                  {{
+                                                    block.settings.middle_desktop_image_2 | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'desktop_image_new'
+                                                  }}
+                                                {%- endif -%}
+                                                {%- if block.settings.middle_mobile_image_2 != blank -%}
+                                                  {{
+                                                    block.settings.middle_mobile_image_2 | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'mobile_image_new'
+                                                  }}
+                                                {%- endif -%}
+                                              </div>
+                                            {%- endif -%}
+                                          {%- endif -%}
+                                        </div>
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.middle_button_text_2 != blank and block.settings.middle_button_link_2 != blank -%}
+                                      <div class="Image_side_image_innerboxs_2_new">
+                                        <div class="Image_side_image_innerboxs_2_buttonboth_new">
+                                          <a href="{{ block.settings.middle_button_link_2 }}" class="button button_transparent">
+                                            {{ block.settings.middle_button_text_2 }}
+                                          </a>
+                                        </div>
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+                              {%- endif -%}
+      
+                              {%- if block.settings.middle_mp4_video_3 != blank or block.settings.middle_desktop_image_3 != blank or block.settings.middle_mobile_image_3 != blank or block.settings.middle_button_link_3 != blank -%}
+                                <div class="Image_side_image_mainboxs_new">
+                                  <div class="Image_side_image_innerboxs_new">
+                                    {%- if block.settings.middle_mp4_video_3 != blank or block.settings.middle_desktop_image_3 != blank or block.settings.middle_mobile_image_3 != blank -%}
+                                      <div class="Image_side_image_innerboxs_1_new">
+                                        <div class="Image_side_image_innerboxs_1_videoimageboth_new">
+                                          {%- if block.settings.middle_mp4_video_3 != blank -%}
+                                            <div class="Image_side_image_innerboxs_1_videoimage_new">
+                                              {{ block.settings.middle_mp4_video_3 | video_tag: controls: false, autoplay: true, loop: true }}
+                                            </div>
+                                          {% else %}  
+                                            {%- if block.settings.middle_desktop_image_3 != blank and block.settings.middle_mobile_image_3 != blank -%}
+                                              <div class="Image_side_image_innerboxs_1_videoimage_new">
+                                                {%- if block.settings.middle_desktop_image_3 != blank -%}
+                                                  {{
+                                                    block.settings.middle_desktop_image_3 | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'desktop_image_new'
+                                                  }}
+                                                {%- endif -%}
+                                                {%- if block.settings.middle_mobile_image_3 != blank -%}
+                                                  {{
+                                                    block.settings.middle_mobile_image_3 | 
+                                                    image_url: width: img.width | 
+                                                    image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                    fetchpriority: 'auto', 
+                                                    class:'mobile_image_new'
+                                                  }}
+                                                {%- endif -%}
+                                              </div>
+                                            {%- endif -%}
+                                          {%- endif -%}
+                                        </div>
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.middle_button_text_3 != blank and block.settings.middle_button_link_3 != blank -%}
+                                      <div class="Image_side_image_innerboxs_2_new">
+                                        <div class="Image_side_image_innerboxs_2_buttonboth_new">
+                                          <a href="{{ block.settings.middle_button_link_3 }}" class="button button_transparent">
+                                            {{ block.settings.middle_button_text_3 }}
+                                          </a>
+                                        </div>
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        </div>
+                      {%- endif -%}
+    
+                    {%- when 'middle_text_image' -%}
+                      {%- if block.settings.main_middle_mp4_video_1 != blank or block.settings.main_middle_desktop_image_1 != blank or block.settings.main_middle_mobile_image_1 != blank or block.settings.main_middle_heading_text_1 != blank or block.settings.main_middle_logo_image != blank or block.settings.main_middle_heading_text_2 != blank or block.settings.main_middle_information_text != blank or block.settings.main_middle_mp4_video_2 != blank or block.settings.main_middle_desktop_image_2 != blank or block.settings.main_middle_mobile_image_2 != blank -%}
+                        <div class="swiper-slide">
+                          <div class="Middle_text_image_main_new">
+                            <div class="Middle_text_image_inner_new">
+                              {%- if block.settings.main_middle_mp4_video_1 != blank or block.settings.main_middle_desktop_image_1 != blank or block.settings.main_middle_mobile_image_1 != blank -%}
+                                <div class="Middle_text_image_mainvideoimage_new">
+                                  <div class="Middle_text_image_innervideoimage_new">
+                                    <div class="Middle_text_image_innervideoimage_videoimageboth_new">
+                                      {%- if block.settings.main_middle_mp4_video_1 != blank -%}
+                                        <div class="Middle_text_image_innervideoimage_videoimage_new">
+                                          {{ block.settings.main_middle_mp4_video_1 | video_tag: controls: false, autoplay: true, loop: true }}
+                                        </div>
+                                      {% else %}  
+                                        {%- if block.settings.main_middle_desktop_image_1 != blank and block.settings.main_middle_mobile_image_1 != blank -%}
+                                          <div class="Middle_text_image_innervideoimage_videoimage_new">
+                                            {%- if block.settings.main_middle_desktop_image_1 != blank -%}
+                                              {{
+                                                block.settings.main_middle_desktop_image_1 | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'desktop_image_new'
+                                              }}
+                                            {%- endif -%}
+                                            {%- if block.settings.main_middle_mobile_image_1 != blank -%}
+                                              {{
+                                                block.settings.main_middle_mobile_image_1 | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'mobile_image_new'
+                                              }}
+                                            {%- endif -%}
+                                          </div>
+                                        {%- endif -%}
+                                      {%- endif -%}
+                                    </div>
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                              {%- if block.settings.main_middle_heading_text_1 != blank or block.settings.main_middle_logo_image != blank or block.settings.main_middle_heading_text_2 != blank or block.settings.main_middle_information_text != blank -%}
+                                <div class="Middle_text_image_maindetail_new" style="background: {{ block.settings.main_middle_background_color }}; color: {{ block.settings.main_middle_information_color }};">
+                                  <div class="Middle_text_image_innerdetail_new">
+                                    {%- if block.settings.main_middle_heading_text_1 != blank -%}
+                                      <div class="Middle_text_image_innerdetail_titletexts_new">
+                                        <h4>{{ block.settings.main_middle_heading_text_1 }}</h4>
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.main_middle_logo_image != blank or block.settings.main_middle_heading_text_2 != blank -%}
+                                      <div class="Middle_text_image_innerdetail_logostitle_new">
+                                        {%- if block.settings.main_middle_logo_image != blank -%}
+                                          <div class="Middle_text_image_innerdetail_logos_new">
+                                            {{
+                                              block.settings.main_middle_logo_image | 
+                                              image_url: width: img.width | 
+                                              image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                              fetchpriority: 'auto', 
+                                              class:'Logo_image_new'
+                                            }}
+                                          </div>
+                                        {%- endif -%}
+                                        <div class="Middle_text_image_innerdetail_icons_new">
+                                          <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="26.3536" y1="0.353553" x2="1.35355" y2="25.3536" stroke="white"/><line x1="25.6464" y1="25.3536" x2="0.646445" y2="0.353556" stroke="white"/></svg>
+                                        </div>
+                                        {%- if block.settings.main_middle_heading_text_2 != blank -%}
+                                          <div class="Middle_text_image_innerdetail_title_new">
+                                            <h4>{{ block.settings.main_middle_heading_text_2 }}</h4>
+                                          </div>
+                                        {%- endif -%}
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.main_middle_information_text != blank -%}
+                                      <div class="Middle_text_image_innerdetail_infos_new">
+                                        {{ block.settings.main_middle_information_text }}
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                              {%- if block.settings.main_middle_mp4_video_2 != blank or block.settings.main_middle_desktop_image_2 != blank or block.settings.main_middle_mobile_image_2 != blank -%}
+                                <div class="Middle_text_image_mainvideoimage_new">
+                                  <div class="Middle_text_image_innervideoimage_new">
+                                    <div class="Middle_text_image_innervideoimage_videoimageboth_new">
+                                      {%- if block.settings.main_middle_mp4_video_2 != blank -%}
+                                        <div class="Middle_text_image_innervideoimage_videoimage_new">
+                                          {{ block.settings.main_middle_mp4_video_2 | video_tag: controls: false, autoplay: true, loop: true }}
+                                        </div>
+                                      {% else %}  
+                                        {%- if block.settings.main_middle_desktop_image_2 != blank and block.settings.main_middle_mobile_image_2 != blank -%}
+                                          <div class="Middle_text_image_innervideoimage_videoimage_new">
+                                            {%- if block.settings.main_middle_desktop_image_2 != blank -%}
+                                              {{
+                                                block.settings.main_middle_desktop_image_2 | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'desktop_image_new'
+                                              }}
+                                            {%- endif -%}
+                                            {%- if block.settings.main_middle_mobile_image_2 != blank -%}
+                                              {{
+                                                block.settings.main_middle_mobile_image_2 | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'mobile_image_new'
+                                              }}
+                                            {%- endif -%}
+                                          </div>
+                                        {%- endif -%}
+                                      {%- endif -%}
+                                    </div>
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        </div>
+                      {%- endif -%}
+    
+                    {%- when 'left_author_text_image' -%}
+                      {%- if block.settings.inner_logo_image != blank or block.settings.inner_information_text != blank or block.settings.inner_author_text != blank or block.settings.inner_designation_text != blank or block.settings.inner_mp4_video != blank or block.settings.inner_desktop_image != blank or block.settings.inner_mobile_image != blank -%}
+                        <div class="swiper-slide">
+                          <div class="Left_author_text_image_main_new">
+                            <div class="Left_author_text_image_inner_new">
+                              {%- if block.settings.inner_logo_image != blank or block.settings.inner_information_text != blank or block.settings.inner_author_text != blank or block.settings.inner_designation_text != blank -%}
+                                <div class="Left_author_text_image_mainleft_new" style="background: {{ block.settings.inner_background_color }}; color: {{ block.settings.inner_information_color }};">
+                                  <div class="Left_author_text_image_innerleft_new">
+                                    {%- if block.settings.inner_logo_image != blank -%}
+                                      <div class="Left_author_text_image_innerleft_logos_new">
+                                        {{
+                                          block.settings.inner_logo_image | 
+                                          image_url: width: img.width | 
+                                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                          fetchpriority: 'auto', 
+                                          class:'Logo_image_new'
+                                        }}
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.inner_information_text != blank -%}
+                                      <div class="Left_author_text_image_innerleft_infos_new">
+                                        {{ block.settings.inner_information_text }}
+                                      </div>
+                                    {%- endif -%}
+                                    {%- if block.settings.inner_author_text != blank or block.settings.inner_designation_text != blank -%}
+                                      <div class="Left_author_text_image_innerleft_authordetail_new">
+                                        {%- if block.settings.inner_author_text != blank -%}
+                                          <div class="Left_author_text_image_innerleft_author_new">
+                                            <h4>- {{ block.settings.inner_author_text }}</h4>
+                                          </div>
+                                        {%- endif -%}
+                                        {%- if block.settings.inner_designation_text != blank -%}
+                                          <div class="Left_author_text_image_innerleft_detail_new">
+                                            <h4>{{ block.settings.inner_designation_text }}</h4>
+                                          </div>
+                                        {%- endif -%}
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                              {%- if block.settings.inner_mp4_video != blank or block.settings.inner_desktop_image != blank or block.settings.inner_mobile_image != blank -%}
+                                <div class="Left_author_text_image_mainright_new">
+                                  <div class="Left_author_text_image_innerright_new">
+                                    <div class="Left_author_text_image_innerright_videoimageboth_new">
+                                      {%- if block.settings.inner_mp4_video != blank -%}
+                                        <div class="Left_author_text_image_innerright_videoimage_new">
+                                          {{ block.settings.inner_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                                        </div>
+                                      {% else %}  
+                                        {%- if block.settings.inner_desktop_image != blank and block.settings.inner_mobile_image != blank -%}
+                                          <div class="Left_author_text_image_innerright_videoimage_new">
+                                            {%- if block.settings.inner_desktop_image != blank -%}
+                                              {{
+                                                block.settings.inner_desktop_image | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'desktop_image_new'
+                                              }}
+                                            {%- endif -%}
+                                            {%- if block.settings.inner_mobile_image != blank -%}
+                                              {{
+                                                block.settings.inner_mobile_image | 
+                                                image_url: width: img.width | 
+                                                image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                                fetchpriority: 'auto', 
+                                                class:'mobile_image_new'
+                                              }}
+                                            {%- endif -%}
+                                          </div>
+                                        {%- endif -%}
+                                      {%- endif -%}
+                                    </div>
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        </div>
+                      {%- endif -%}
+    
+                  {%- endcase -%}  
+                {%- endfor -%}
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}  
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Page Events Sliders New",
+    "class": "Page_Events_sliders_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#cccccc"
+      },
+      {
+        "type": "video",
+        "id": "main_mp4_video",
+        "label": "Add Main MP4 Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_image",
+        "label": "Add Main Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_image",
+        "label": "Add Main Mobile Image"
+      },
+      {
+        "type": "text",
+        "id": "main_button_text",
+        "label": "Add Main Button Text",
+        "default": "Back"
+      },
+      {
+        "type": "url",
+        "id": "main_button_link",
+        "label": "Add Main Button Link",
+        "default": "/"
+      },
+      {
+        "type": "textarea",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "KALKI x Tara Sutaria | Exclusive Bridal Couture '2022"
+      },
+      {
+        "type": "text",
+        "id": "main_bottom_button_text",
+        "label": "Add Main Bottom Button Text",
+        "default": "Explore"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "left_text_image",
+        "name": "Left Text Image",
+        "settings": [
+          {
+            "type": "color",
+            "id": "main_left_background_color",
+            "label": "Add Main Left Background Color",
+            "default": "#172926"
+          },
+          {
+            "type": "color",
+            "id": "main_left_information_color",
+            "label": "Add Main Left Information Color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_left_logo_image",
+            "label": "Add Main Left Logo Image"
+          },
+          {
+            "type": "text",
+            "id": "main_left_heading_text_1",
+            "label": "Add Main Left Heading Text-1",
+            "default": "Presents"
+          },
+          {
+            "type": "text",
+            "id": "main_left_heading_text_2",
+            "label": "Add Main Left Heading Text-2",
+            "default": "Noor"
+          },
+          {
+            "type": "richtext",
+            "id": "main_left_information_text_1",
+            "label": "Add Main Left Information Text-1",
+            "default": "<p>A royalty-inspired glamour</p>"
+          },
+          {
+            "type": "richtext",
+            "id": "main_left_information_text_2",
+            "label": "Add Main Left Information Text-2",
+            "default": "<p>Kalki's collection was titled Noor- A royalty inspired glamour. There are more ways than one in which composition can make you fall in love. Their autumn-winter’22 collection had a lot of hand work embroidery on the garments with a contemporary appeal.</p>"
+          },
+          {
+            "type": "video",
+            "id": "main_left_mp4_video",
+            "label": "Add Main Left MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_left_desktop_image",
+            "label": "Add Main Left Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_left_mobile_image",
+            "label": "Add Main Left Mobile Image"
+          }
+        ]
+      },
+      {
+        "type": "image_side_image",
+        "name": "Image Side Image",
+        "settings": [
+          {
+            "type": "header",
+            "content": "=== First Video OR Image ==="
+          },
+          {
+            "type": "video",
+            "id": "middle_mp4_video_1",
+            "label": "Add Middle MP4 Video-1"
+          },
+          {
+            "type": "image_picker",
+            "id": "middle_desktop_image_1",
+            "label": "Add Middle Desktop Image-1"
+          },
+          {
+            "type": "image_picker",
+            "id": "middle_mobile_image_1",
+            "label": "Add Middle Mobile Image-1"
+          },
+          {
+            "type": "text",
+            "id": "middle_button_text_1",
+            "label": "Add Middle Button Text-1",
+            "default": "Shop Now"
+          },
+          {
+            "type": "url",
+            "id": "middle_button_link_1",
+            "label": "Add Middle Button Link-1",
+            "default": "/"
+          },
+          {
+            "type": "header",
+            "content": "=== Second Video OR Image ==="
+          },
+          {
+            "type": "video",
+            "id": "middle_mp4_video_2",
+            "label": "Add Middle MP4 Video-2"
+          },
+          {
+            "type": "image_picker",
+            "id": "middle_desktop_image_2",
+            "label": "Add Middle Desktop Image-2"
+          },
+          {
+            "type": "image_picker",
+            "id": "middle_mobile_image_2",
+            "label": "Add Middle Mobile Image-2"
+          },
+          {
+            "type": "text",
+            "id": "middle_button_text_2",
+            "label": "Add Middle Button Text-2",
+            "default": "Shop Now"
+          },
+          {
+            "type": "url",
+            "id": "middle_button_link_2",
+            "label": "Add Middle Button Link-2",
+            "default": "/"
+          },
+          {
+            "type": "header",
+            "content": "=== Thired Video OR Image ==="
+          },
+          {
+            "type": "video",
+            "id": "middle_mp4_video_3",
+            "label": "Add Middle MP4 Video-3"
+          },
+          {
+            "type": "image_picker",
+            "id": "middle_desktop_image_3",
+            "label": "Add Middle Desktop Image-3"
+          },
+          {
+            "type": "image_picker",
+            "id": "middle_mobile_image_3",
+            "label": "Add Middle Mobile Image-3"
+          },
+          {
+            "type": "text",
+            "id": "middle_button_text_3",
+            "label": "Add Middle Button Text-3",
+            "default": "Shop Now"
+          },
+          {
+            "type": "url",
+            "id": "middle_button_link_3",
+            "label": "Add Middle Button Link-3",
+            "default": "/"
+          }
+        ]
+      },
+      {
+        "type": "middle_text_image",
+        "name": "Middle Text Image",
+        "settings": [
+          {
+            "type": "color",
+            "id": "main_middle_background_color",
+            "label": "Add Main Middle Background Color",
+            "default": "#9E694F"
+          },
+          {
+            "type": "color",
+            "id": "main_middle_information_color",
+            "label": "Add Main Middle Information Color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "header",
+            "content": "=== First Video OR Image ==="
+          },
+          {
+            "type": "video",
+            "id": "main_middle_mp4_video_1",
+            "label": "Add Main Middle MP4 Video-1"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_middle_desktop_image_1",
+            "label": "Add Main Middle Desktop Image-1"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_middle_mobile_image_1",
+            "label": "Add Main Middle Mobile Image-1"
+          },
+          {
+            "type": "header",
+            "content": "=== Texts Information Detail ==="
+          },
+          {
+            "type": "text",
+            "id": "main_middle_heading_text_1",
+            "label": "Add Main Middle Heading Text-1",
+            "default": "Show-stopper"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_middle_logo_image",
+            "label": "Add Main Middle Logo Image"
+          },
+          {
+            "type": "text",
+            "id": "main_middle_heading_text_2",
+            "label": "Add Main Middle Heading Text-2",
+            "default": "Tara Sutaria"
+          },
+          {
+            "type": "richtext",
+            "id": "main_middle_information_text",
+            "label": "Add Main Middle Information Text",
+            "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo libero felis, ac lobortis mi rhoncus nec. Nam vehicula blandit erat, vel posuere odio lacinia vitae. Nulla pretium accumsan efficitur. Curabitur ipsum dui, auctor et metus nec, laoreet semper lorem.</p>"
+          },
+          {
+            "type": "header",
+            "content": "=== Second Video OR Image ==="
+          },
+          {
+            "type": "video",
+            "id": "main_middle_mp4_video_2",
+            "label": "Add Main Middle MP4 Video-2"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_middle_desktop_image_2",
+            "label": "Add Main Middle Desktop Image-2"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_middle_mobile_image_2",
+            "label": "Add Main Middle Mobile Image-2"
+          }
+        ]
+      },
+      {
+        "type": "left_author_text_image",
+        "name": "Left Author Text Image",
+        "settings": [
+          {
+            "type": "color",
+            "id": "inner_background_color",
+            "label": "Add Inner Background Color",
+            "default": "#172926"
+          },
+          {
+            "type": "color",
+            "id": "inner_information_color",
+            "label": "Add Inner Information Color",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "image_picker",
+            "id": "inner_logo_image",
+            "label": "Add Inner Logo Image"
+          },
+          {
+            "type": "richtext",
+            "id": "inner_information_text",
+            "label": "Add Inner Information Text",
+            "default": "<p>“Give the bride of today the most experimental Indian cuts & flare and she'll totally own it. KALKI Noor is a perfect blend of femininity and elegance.”</p>"
+          },
+          {
+            "type": "text",
+            "id": "inner_author_text",
+            "label": "Add Inner Author Text",
+            "default": "Saurabh Gupta"
+          },
+          {
+            "type": "text",
+            "id": "inner_designation_text",
+            "label": "Add Inner Designation Text",
+            "default": "Founder & Director at KALKI"
+          },
+          {
+            "type": "video",
+            "id": "inner_mp4_video",
+            "label": "Add Inner MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "inner_desktop_image",
+            "label": "Add Inner Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "inner_mobile_image",
+            "label": "Add Inner Mobile Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page Events Sliders New",
+        "blocks": [
+          {
+            "type": "left_text_image"
+          },
+          {
+            "type": "image_side_image"
+          },
+          {
+            "type": "middle_text_image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,162 @@
+{%- if section.blocks.size > 0 or section.settings.main_heading_text != blank -%}
+  <div class="Index_custom_price_budget_main_new" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Index_custom_price_budget_inner_new">
+        {%- if section.settings.main_heading_text != blank -%}
+          <div class="Common_title_new Index_custom_price_budget_title_new">
+            <h2>{{ section.settings.main_heading_text }}</h2>
+          </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="Index_custom_price_budget_mainloop_new">
+            <div class="Index_custom_price_budget_innerloop_new">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank or block.settings.main_sub_heading_text != blank or block.settings.title != blank -%}
+                  <div class="Index_custom_price_budget_innerloop_mainboxs_new">
+                    {%- if block.settings.main_redirect_link != blank -%}
+                      <a href="{{ block.settings.main_redirect_link }}" aria-label="Shop Now {{ block.settings.title }}"></a>
+                    {%- endif -%}  
+                    <div class="Index_custom_price_budget_innerloop_innerboxs_new">
+                      {%- if block.settings.main_mp4_video != blank or block.settings.main_desktop_image != blank or block.settings.main_mobile_image != blank -%}
+                        <div class="Index_custom_price_budget_innerloop_innerboxs_1_new">
+                          <div class="Index_custom_price_budget_innerloop_innerboxs_1_videoimageboth_new">
+                            {%- if block.settings.main_mp4_video != blank -%}
+                              <div class="Index_custom_price_budget_innerloop_innerboxs_1_videoimage_new">
+                                {{ block.settings.main_mp4_video | video_tag: controls: false, autoplay: true, loop: true }}
+                              </div>
+                            {% else %}  
+                              {%- if block.settings.main_desktop_image != blank and block.settings.main_mobile_image != blank -%}
+                                <div class="Index_custom_price_budget_innerloop_innerboxs_1_videoimage_new">
+                                  {%- if block.settings.main_desktop_image != blank -%}
+                                    {{
+                                      block.settings.main_desktop_image | 
+                                      image_url: width: img.width | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'desktop_image_new'
+                                    }}
+                                  {%- endif -%}
+                                  {%- if block.settings.main_mobile_image != blank -%}
+                                    {{
+                                      block.settings.main_mobile_image | 
+                                      image_url: width: img.width | 
+                                      image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                                      fetchpriority: 'auto', 
+                                      class:'mobile_image_new'
+                                    }}
+                                  {%- endif -%}
+                                </div>
+                              {%- endif -%}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                      {%- if block.settings.main_sub_heading_text != blank or block.settings.title != blank -%}
+                        <div class="Index_custom_price_budget_innerloop_innerboxs_2_new">
+                          <div class="Index_custom_price_budget_innerloop_innerboxs_2_titletextboth_new">
+                            {%- if block.settings.main_sub_heading_text != blank -%}
+                              <div class="Index_custom_price_budget_innerloop_innerboxs_2_texts_new">
+                                {{ block.settings.main_sub_heading_text }}
+                              </div>  
+                            {%- endif -%}
+                            {%- if block.settings.title != blank -%}
+                              <div class="Index_custom_price_budget_innerloop_innerboxs_2_title_new">
+                                <h2>{{ block.settings.title }}</h2>
+                              </div>  
+                            {%- endif -%}
+                          </div>
+                        </div>  
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Index Custom Price Budget",
+    "class": "Index_custom_price_budget_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "main_heading_text",
+        "label": "Add Main Heading Text",
+        "default": "Shop by Budget"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "limit": 4,
+        "settings": [
+          {
+            "type": "video",
+            "id": "main_mp4_video",
+            "label": "Add Main MP4 Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_desktop_image",
+            "label": "Add Main Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "main_mobile_image",
+            "label": "Add Main Mobile Image"
+          },
+          {
+            "type": "richtext",
+            "id": "main_sub_heading_text",
+            "label": "Add Main Sub Heading Text",
+            "default": "<p>Anarkali  Suit</p>"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "<p>Under ₹20,000</p>"
+          },
+          {
+            "type": "url",
+            "id": "main_redirect_link",
+            "label": "Add Main Redirect Link",
+            "default": "/"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Custom Price Budget",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

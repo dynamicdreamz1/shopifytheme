@@ -1,0 +1,83 @@
+{%- if collection.metafields.custom.collection_banner_video_or_image != blank -%}
+  <div class="Collection_meta_banner_main_new Collection_meta_banner_desktop_new {{ section.settings.customClass }}" style="background: {{ section.settings.main_background_color }};">
+    <div class="Collection_meta_banner_inner_new">
+      {%- if collection.metafields.custom.collection_banner_redirect_link != blank -%}
+        <a href="{{ collection.metafields.custom.collection_banner_redirect_link }}">
+      {%- endif -%}
+          <div class="Collection_meta_banner_detail_new">
+            {% assign mediatype = collection.metafields.custom.collection_banner_video_or_image | split: '/' %}
+            {%- if mediatype contains "Video" -%}
+              <div class="Collection_meta_banner_detail_videoimage_new">
+                {{ collection.metafields.custom.collection_banner_video_or_image.value | video_tag: controls: false, autoplay: true, loop: true }}
+              </div>
+            {%- else -%}
+              <div class="Collection_meta_banner_detail_videoimage_new">
+                {{
+                  collection.metafields.custom.collection_banner_video_or_image | 
+                  image_url: width: img.width | 
+                  image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 2880', 
+                  fetchpriority: 'auto'
+                }}
+              </div>
+            {%- endif -%}
+          </div>
+      {%- if collection.metafields.custom.collection_banner_redirect_link != blank -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+{%- if collection.metafields.custom.mobile_adv_banner_video_or_image != blank -%}
+  <div class="Collection_meta_banner_main_new Collection_meta_banner_mobile_new {{ section.settings.customClass }}" style="background: {{ section.settings.main_background_color }};">
+    <div class="Collection_meta_banner_inner_new">
+      {%- if collection.metafields.custom.collection_banner_redirect_link != blank -%}
+        <a href="{{ collection.metafields.custom.collection_banner_redirect_link }}">
+      {%- endif -%}
+          <div class="Collection_meta_banner_detail_new">
+            {% assign mediatype = collection.metafields.custom.mobile_adv_banner_video_or_image | split: '/' %}
+            {%- if mediatype contains "Video" -%}
+              <div class="Collection_meta_banner_detail_videoimage_new">
+                {{ collection.metafields.custom.mobile_adv_banner_video_or_image.value | video_tag: controls: false, autoplay: true, loop: true }}
+              </div>
+            {%- else -%}
+              <div class="Collection_meta_banner_detail_videoimage_new">
+                {{
+                  collection.metafields.custom.mobile_adv_banner_video_or_image | 
+                  image_url: width: img.width | 
+                  image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 2880', 
+                  fetchpriority: 'auto'
+                }}
+              </div>
+            {%- endif -%}
+          </div>
+      {%- if collection.metafields.custom.collection_banner_redirect_link != blank -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Collection Meta Banner",
+    "class": "Collection_meta_banner_new",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "customClass",
+        "label": "Add Custom Class",
+        "info": "Bridal_collection_meta_banner_new, Luxe_collection_meta_banner_new"
+      },
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Meta Banner"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,3 +1,6 @@
+ 
+
+
 {% comment %}
   Renders a product media gallery. Should be used with 'media-gallery.js'
   Also see 'product-media-modal'
@@ -42,17 +45,21 @@
   endif
 -%}
 
+
+    
 <media-gallery
   id="MediaGallery-{{ section.id }}"
   role="region"
+  class="product-media-gallery 
   {% if section.settings.enable_sticky_info %}
-    class="product__column-sticky"
+    product__column-sticky
   {% endif %}
+  "
   aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
   data-desktop-layout="{{ section.settings.gallery_layout }}"
 >
   <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
-  <slider-component id="GalleryViewer-{{ section.id }}" class="slider-mobile-gutter">
+  <slider-component id="GalleryViewer-{{ section.id }}" class="slider-mobile-gutter product-main-slider">
     <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
       {{ 'accessibility.skip_to_product_info' | t }}
     </a>
@@ -94,6 +101,12 @@
           {% continue %}
         {% endif %}
 
+
+           {%- if forloop.index == 3 and product.metafields.custom.gumlet_video_url != blank -%}
+              {%- render 'product-main-video-slide', video_url: product.metafields.custom.gumlet_video_url, section_id: section.id ,media_index: media_index, forloop_index: forloop.index -%}
+           {%- endif -%}    
+        
+        
         {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
           <li
             id="Slide-{{ section.id }}-{{ media.id }}"
@@ -132,9 +145,7 @@
         name="previous"
         aria-label="{{ 'general.slider.previous_slide' | t }}"
       >
-        <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
-        </span>
+        {% render 'icon-caret' %}
       </button>
       <div class="slider-counter caption">
         <span class="slider-counter--current">1</span>
@@ -148,9 +159,7 @@
         name="next"
         aria-label="{{ 'general.slider.next_slide' | t }}"
       >
-        <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
-        </span>
+        {% render 'icon-caret' %}
       </button>
     </div>
   </slider-component>
@@ -164,9 +173,7 @@
       data-shopify-title="{{ product.title | escape }}"
       data-shopify-xr-hidden
     >
-      <span class="svg-wrapper">
-        {{- 'icon-3d-model.svg' | inline_asset_content -}}
-      </span>
+      {% render 'icon-3d-model' %}
       {{ 'products.product.xr_button' | t }}
     </button>
   {%- endif -%}
@@ -181,7 +188,7 @@
     and section.settings.gallery_layout contains 'thumbnail'
     or section.settings.mobile_thumbnails == 'show'
   -%}
-    <slider-component
+    <slider-component-vertical
       id="GalleryThumbnails-{{ section.id }}"
       class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}"
     >
@@ -193,13 +200,12 @@
         aria-controls="GalleryThumbnails-{{ section.id }}"
         data-step="3"
       >
-        <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
-        </span>
+        {% render 'icon-caret' %}
       </button>
+      
       <ul
         id="Slider-Thumbnails-{{ section.id }}"
-        class="thumbnail-list list-unstyled slider slider--mobile{% if section.settings.gallery_layout == 'thumbnail_slider' %} slider--tablet-up{% endif %}"
+        class="vertical-slider thumbnail-list list-unstyled slider slider--mobile{% if section.settings.gallery_layout == 'thumbnail_slider' %} slider--tablet-up{% endif %}"
       >
         {%- capture sizes -%}
           (min-width: {{ settings.page_width }}px) calc(({{ settings.page_width | minus: 100 | times: media_width | round }} - 4rem) / 4),
@@ -252,6 +258,9 @@
           </li>
         {%- endif -%}
         {%- for media in product.media -%}
+         
+         
+          
           {%- unless media.id == product.selected_or_first_available_variant.featured_media.id -%}
             {%- liquid
               capture media_index
@@ -265,6 +274,12 @@
               endcapture
               assign media_index = media_index | plus: 1
             -%}
+
+             {%- if forloop.index == 3 and product.metafields.custom.gumlet_video_url != blank -%}
+              {%- render 'product-thumb-video-slide', section_id: section.id, media: product.media[0],media_index: media_index, forloop_index: forloop.index -%}
+              {%- assign media_index = media_index | plus: 1 -%}
+             {%- endif -%}     
+            
             <li
               id="Slide-Thumbnails-{{ section.id }}-{{ forloop.index }}"
               class="thumbnail-list__item slider__slide{% if section.settings.hide_variants and variant_images contains media.src %} thumbnail-list_item--variant{% endif %}"
@@ -273,15 +288,11 @@
             >
               {%- if media.media_type == 'model' -%}
                 <span class="thumbnail__badge" aria-hidden="true">
-                  <span class="svg-wrapper">
-                    {{- 'icon-3d-model.svg' | inline_asset_content -}}
-                  </span>
+                  {%- render 'icon-3d-model' -%}
                 </span>
               {%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}
                 <span class="thumbnail__badge" aria-hidden="true">
-                  <span class="svg-wrapper">
-                    {{- 'icon-play.svg' | inline_asset_content -}}
-                  </span>
+                  {%- render 'icon-play' -%}
                 </span>
               {%- endif -%}
               {%- capture thumbnail_id -%}
@@ -323,10 +334,8 @@
         aria-controls="GalleryThumbnails-{{ section.id }}"
         data-step="3"
       >
-        <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
-        </span>
+        {% render 'icon-caret' %}
       </button>
-    </slider-component>
+    </slider-component-vertical>
   {%- endif -%}
 </media-gallery>

@@ -1,0 +1,63 @@
+
+{%- style -%}
+  .tagalys-namespace .widget .products-and-navigation, #tagalys-namespace .widget .products-and-navigation, #tagalys-namespace.tagalys-namespace .widget .products-and-navigation{padding-right: 0px !important;}
+  .carousel-actions-container{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    top:50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  .carousel-btn{
+    /* left: 0 !important; */
+    position: relative !important;
+    /* top: 50% !important; */
+    /* transform: translate(-50%, -50%) !important; */
+    background: rgba(255,255,255,0.95) no-repeat center center !important;
+    width: 52px !important;
+    height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    }
+  .carousel-btn svg{
+        width: 30px !important;
+  }
+  .widget-heading{text-align: center !important;font-weight: 500 !important;}
+  
+{%- endstyle -%}
+
+
+
+<div class="page-width" style="padding: 20px">
+
+      <!-- Smart widget -->
+     {% if section.settings.playlist_id != blank %}
+        <div data-tagalys-smart-widget="{{ section.settings.playlist_id }}"></div>  
+       
+      {%- endif -%}
+    </div>
+
+
+ 
+
+
+{% schema %}
+  {
+    "name": "Tagalys Embed Section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "playlist_id",
+        "label": "Playlist Id"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Tagalys Embed Section"
+      }
+    ]
+  }
+{% endschema %}

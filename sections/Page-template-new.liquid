@@ -1,0 +1,38 @@
+{%- if page.title != blank or page.content != blank -%}
+  <div class="Page_template_main_new  {{ page.title | handleize }}" style="background: {{ section.settings.main_background_color }};">
+    <div class="page-width">
+      <div class="Page_template_inner_new">
+        <div class="Page_template_breadcrumb_new">
+          {% render 'Breadcrumb-navigation-new' %}
+        </div>
+        {%- if page.title != blank and page.title != "Customization Charges" -%}
+          <div class="Common_title_new Page_template_title_new">
+            <h1>{{ page.title }}</h1>
+          </div>
+        {%- endif -%}
+        {%- if page.content != blank -%}
+          <div class="Page_template_maincontent_new">
+            <div class="rte Page_template_innercontent_new">
+              {{ page.content }}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}   
+
+{% schema %}
+  {
+    "name": "Page Template New",
+    "class": "Page_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#FFFFFF"
+      }
+    ]
+  }
+{% endschema %}

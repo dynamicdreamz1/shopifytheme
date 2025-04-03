@@ -1,0 +1,9 @@
+<li class="colletion-verticle-banner grid__item">
+  <a href="{{ banner_url }}">
+    {{
+      banner_image | 
+      image_url: width: banner_image.width | 
+      image_tag: widths: '180, 360, 540, 767'
+    }}
+  </a>
+</li>

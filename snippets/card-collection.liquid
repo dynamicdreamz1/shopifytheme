@@ -67,7 +67,7 @@
                 (min-width: 750px) {% if columns > 1 %}calc((100vw - 10rem) / 2){% else %}calc(100vw - 10rem){% endif %},
                 calc(100vw - 3rem)
               "
-              alt="{{ card_collection.featured_image.alt | escape }}"
+              alt="{{ card_collection.title }}"
               height="{{ card_collection.featured_image.height }}"
               width="{{ card_collection.featured_image.width }}"
               loading="lazy"
@@ -98,22 +98,24 @@
                   {{ 'onboarding.collection_title' | t }}
                 {%- endif -%}
                 {%- if card_collection.description == blank -%}
-                  <span class="icon-wrap">
-                    {{- 'icon-arrow.svg' | inline_asset_content -}}
-                  </span>
+                  <span class="icon-wrap">{% render 'icon-arrow' %}</span>
                 {%- endif %}
               </a>
             </h3>
             {%- if card_collection.description != blank -%}
               <p class="card__caption">
                 {{- card_collection.description | strip_html | truncatewords: 12 -}}
-                <span class="icon-wrap">
-                  {{- 'icon-arrow.svg' | inline_asset_content -}}
-                </span>
+                <span class="icon-wrap">&nbsp;{% render 'icon-arrow' %}</span>
               </p>
             {%- endif -%}
           </div>
         </div>
+        <a
+          href="{{ card_product.url }}"
+          class="full-unstyled-link only-for-desktop"
+          target="_blank"
+        >
+        </a>
       {%- endif -%}
     </div>
     {%- if card_collection != blank and card_style == 'card' or card_collection.featured_image -%}
@@ -134,22 +136,20 @@
                 {{ 'onboarding.collection_title' | t }}
               {%- endif -%}
               {%- if card_collection.featured_image or card_collection.description == blank -%}
-                <span class="icon-wrap">
-                  {{- 'icon-arrow.svg' | inline_asset_content -}}
-                </span>
+                <span class="icon-wrap">{% render 'icon-arrow' %}</span>
               {%- endif %}
             </a>
           </h3>
           {%- if card_collection.featured_image == null and card_collection.description != blank -%}
             <p class="card__caption">
               {{- card_collection.description | strip_html | truncatewords: 12 -}}
-              <span class="icon-wrap">
-                {{- 'icon-arrow.svg' | inline_asset_content -}}
-              </span>
+              <span class="icon-wrap">&nbsp;{% render 'icon-arrow' %}</span>
             </p>
           {%- endif -%}
         </div>
       </div>
+
+
     {%- endif -%}
     {%- if card_collection == blank -%}
       <div class="card__content">
@@ -157,9 +157,7 @@
           <h3 class="card__heading card__heading--placeholder">
             <a role="link" aria-disabled="true" class="full-unstyled-link">
               {{ 'onboarding.collection_title' | t }}
-              <span class="icon-wrap">
-                {{- 'icon-arrow.svg' | inline_asset_content -}}
-              </span>
+              <span class="icon-wrap">{% render 'icon-arrow' %}</span>
             </a>
           </h3>
         </div>

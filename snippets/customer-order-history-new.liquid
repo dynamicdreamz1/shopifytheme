@@ -1,0 +1,175 @@
+<div class="customer_dashboard_new customer_order_history_new">
+  <div class="customer_account_title_new">
+    <h2>My Orders</h2>
+  </div>
+  {% paginate customer.orders by 20 %}
+    {%- if customer.orders.size > 0 -%}
+      <div class="desktop_orders_new">
+        {%- for order in customer.orders -%}
+          <div class="desktop_orders_in_new">
+            <div class="order_placed_new">
+              {%- if order.cancelled -%}
+                <span class="Order_Cancelled_new">Order Cancelled</span>{{ order.cancelled_at | time_tag: format: 'date' }}
+              {% else %}
+                <span class="Order_Placed_new">Order Placed</span>{{ order.created_at | time_tag: format: 'date' }}
+              {% endif %}
+            </div>
+            <div class="order_number_new">
+              <a href="{{ order.customer_url }}">
+                {{ order.name }}
+              </a>
+            </div>
+            <div class="order_total_new">
+              Order Total : {{ order.total_net_amount | money_with_currency | replace: '.00', '' }}
+            </div>
+
+            {%- for line_item in order.line_items -%}
+              <div class="order_list_new">
+                <div class="order_list_img_new">
+                  {%- if line_item.url != blank -%}
+                    <a href="{{ line_item.url }}"><img src="{{ line_item.product.featured_image.src | img_url: '180x' }}" alt="{{ line_item.product.title }}"></a>
+                  {%- else -%}
+                    <img src="{{ line_item.product.featured_image.src | img_url: '180x' }}" alt="{{ line_item.product.title }}">
+                  {%- endif -%}
+                </div>
+                <div class="order_list_details_new">
+                  <div class="order_list_style_new">Style: {{ line_item.sku }}</div>
+                  <div class="order_list_title_new">
+                    {%- if line_item.url != blank -%}
+                      <a href="{{ line_item.url }}">{{ line_item.title }}</a>
+                    {%- else -%}
+                      {{ line_item.title }}
+                    {%- endif -%}
+                  </div>
+                  <div class="order_list_price_new">
+                     {%- if line_item.original_price != line_item.final_price or line_item.unit_price_measurement -%}
+                      <dl>
+                        {%- if line_item.original_price != line_item.final_price -%}
+                          <dt>
+                            <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                          </dt>
+                          <dd class="regular-price">
+                            <s>{{ line_item.original_price | money }}</s>
+                          </dd>
+                          <dt>
+                            <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                          </dt>
+                          <dd>
+                            <span>{{ line_item.final_price | money }}</span>
+                          </dd>
+                        {%- else -%}
+                          <dt>
+                            <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                          </dt>
+                          <dd>
+                            {{ line_item.original_price | money }}
+                          </dd>
+                        {%- endif -%}
+                        {%- if line_item.unit_price_measurement -%}
+                          <dt>
+                            <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+                          </dt>
+                          <dd class="unit-price">
+                            <span>
+                              {%- capture unit_price_separator -%}
+                                <span aria-hidden="true">/</span
+                                ><span class="visually-hidden">{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+                              {%- endcapture -%}
+                              {%- capture unit_price_base_unit -%}
+                                {%- if line_item.unit_price_measurement.reference_value != 1 -%}
+                                  {{- line_item.unit_price_measurement.reference_value -}}
+                                {%- endif -%}
+                                {{ line_item.unit_price_measurement.reference_unit }}
+                              {%- endcapture -%}
+                              <span data-unit-price>{{ line_item.unit_price | money }}</span>
+                              {{- unit_price_separator -}}
+                              {{- unit_price_base_unit -}}
+                            </span>
+                          </dd>
+                        {%- endif -%}
+                      </dl>
+                    {%- else -%}
+                      <span>{{ line_item.final_price | money }}</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+
+
+            <div class="order_payment_new">
+              <div class="order_payment_left_new">
+                <div class="order_payment_left_in_new">
+                  Payment: {{ order.financial_status_label }}
+                </div>
+                <div class="order_payment_left_in_new">
+                  Ship: {{ order.fulfillment_status_label }}
+                </div>
+              </div>
+              <div class="order_payment_right_new">
+                 {% render 'returnprime_script' %}
+                {% if order.fulfillment_status == 'fulfilled' %}
+                  <button class="button js-return-exchange {% if order.fulfillment_status != 'fulfilled' %} disabled{% endif %}" data-order="{{ order.name }}" data-customer="{{ customer.email }}">Return / Exchange</button>
+                {% else %}
+                  <p class="js-return-exchange disabled">Return Not Available </p>
+                {% endif %}
+                <a href="{{ order.customer_url }}" class="button">View Order</a>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="desktop_order_table_new">
+        <p>{{ 'customer.orders.none' | t }}</p>
+      </div>
+    {%- endif -%}
+    
+
+    {%- if paginate.pages > 1 -%}
+      {%- if paginate.parts.size > 0 -%}
+        <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+          <ul role="list">
+            {%- if paginate.previous -%}
+              <li>
+                <a href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">
+                  <svg aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+                  </svg>
+                </a>
+              </li>
+            {%- endif -%}
+
+            {%- for part in paginate.parts -%}
+              <li>
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+                    {{- part.title -}}
+                  </a>
+                {%- else -%}
+                  {%- if part.title == paginate.current_page -%}
+                    <span aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">
+                      {{- part.title -}}
+                    </span>
+                  {%- else -%}
+                    <span>{{ part.title }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+
+            {%- if paginate.next -%}
+              <li>
+                <a href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">
+                  <svg aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor">
+                  </svg>
+                </a>
+              </li>
+            {%- endif -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+    {%- endif -%}
+  {% endpaginate %}
+</div>  

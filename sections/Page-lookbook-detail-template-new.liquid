@@ -1,0 +1,101 @@
+{%- if metaobject.grid_title.value != blank or metaobject.slider_video_or_image.value != blank -%}
+  <div class="Page_lookbook_detail_template_main_new" style="background: {{ section.settings.main_full_background_color }};">
+    <div class="Page_lookbook_detail_template_inner_new">
+      <div class="Page_lookbook_detail_template_detail_new">
+        {%- if section.settings.main_back_redirect_link != blank or metaobject.grid_title.value != blank -%}
+          <div class="page-width">
+            <div class="Page_lookbook_detail_template_detail_1_new">
+              <div class="Page_lookbook_detail_template_detail_1_returntitle_new">
+                {%- if section.settings.main_back_redirect_link != blank -%}
+                  <div class="Page_lookbook_detail_template_detail_1_return_new">
+                    <a href="{{ section.settings.main_back_redirect_link }}">
+                      <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 4.5L2 12.5L10 20.5" stroke="#0F0D1A" stroke-width="1.2" stroke-linecap="round"/><path d="M2 12.5H24" stroke="#0F0D1A" stroke-width="1.2"/></svg>
+                    </a>
+                  </div>
+                {%- endif -%}
+                {%- if metaobject.grid_title.value != blank -%}
+                  <div class="Common_title_new Page_lookbook_detail_template_detail_1_title_new">
+                    <h2>{{ metaobject.grid_title.value }} Lookbook</h2>
+                  </div>
+                {%- endif -%}
+                <div class="slider_pagination_new">
+                  Page <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if metaobject.slider_video_or_image.value != blank -%}
+          <div class="page-width">
+          <div class="Page_lookbook_detail_template_detail_2_new">
+            <div class="Page_lookbook_detail_template_detail_2_mainloop_new">
+              <div class="swiper-container Page_lookbook_slider">
+                <div class="swiper-wrapper">
+                  {%- for custom in metaobject.slider_video_or_image.value -%}
+                    {%- if custom != blank -%}
+                      <div class="swiper-slide Page_lookbook_detail_template_detail_2_mainloop_mainboxs_new">
+                        <div class="Page_lookbook_detail_template_detail_2_mainloop_innerboxs_new">
+                          {%- if custom.sources[1].url contains '.mp4' or custom.sources[1].url contains '.MP4'  -%}
+                            <div class="Page_lookbook_detail_template_detail_2_mainloop_innerboxs_video_OR_image_new">
+                              <video
+                                id="Mp4Video-{{ section.id }}-{{ forloop.index0 }}-inner"
+                                class="video-div"
+                                data-type="mp4"
+                                src="{{ custom.sources[1].url }}"
+                                loop muted playsinline autoplay>
+                              </video>
+                            </div>
+                            
+                          {%- else -%}
+                            <div class="Page_lookbook_detail_template_detail_2_mainloop_innerboxs_video_OR_image_new">
+                               {{
+                                custom | 
+                                image_url: width: img.width | 
+                                image_tag: widths: '2800', 
+                                fetchpriority: 'auto', 
+                                class:'Full_image_new'
+                              }}
+                              
+                            
+                              
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}  
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          </div>
+          </div>
+        {%- endif -%}
+                        
+      </div>
+    </div>
+  </div>
+{%- endif -%}    
+
+{% schema %}
+  {
+    "name": "Lookbook Detail Template",
+    "class": "Page_lookbook_detail_template_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_full_background_color",
+        "label": "Add Main Full Background Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "url",
+        "id": "main_back_redirect_link",
+        "label": "Add Main Back Redirect Link",
+        "default": "/"
+      }
+    ]
+  }
+{% endschema %}

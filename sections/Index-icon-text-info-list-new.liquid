@@ -1,0 +1,134 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="Index_icon_text_info_list_main_new">
+    <div class="page-width">
+      <div class="Index_icon_text_info_list_inner_new Index_icon_text_info_list_main_new_{{ section.id }}" style="{% if section.settings.main_desktop_full_image != blank %}background: url({{ section.settings.main_desktop_full_image | img_url: 'master' }}&quality=75) no-repeat center center; background-size: cover;{% else %}background: {{ section.settings.main_background_color }};{% endif %}">
+        {%- if section.settings.main_mobile_full_image != blank -%}
+          <style>
+            @media(min-width:0px) and (max-width:749px){
+              .Index_icon_text_info_list_main_new_{{ section.id }}{
+                background: url('{{ section.settings.main_mobile_full_image | img_url: 'master' }}&quality=75') no-repeat center center !important;
+                background-size: cover !important;
+              }
+            }
+          </style>
+        {%- endif -%}
+        <div class="Index_icon_text_info_list_allloop_new">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.main_icon_image != blank or block.settings.title != blank or block.settings.main_information_text != blank or block.settings.main_button_link != blank -%}
+              <div class="Index_icon_text_info_list_allloop_mainboxs_new">
+                <div class="Index_icon_text_info_list_allloop_innerboxs_new">
+                  <div>
+                    {%- if block.settings.main_icon_image != blank -%}
+                      <div class="Index_icon_text_info_list_allloop_innerboxs_icons_new">
+                        {{
+                          block.settings.main_icon_image | 
+                          image_url: width: img.width | 
+                          image_tag: widths: '180, 360, 540, 750, 900, 1080, 1296, 1512, 1728, 1944, 2048', 
+                          fetchpriority: 'auto', 
+                          class:'Icon_image_new'
+                        }}
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.title != blank -%}
+                      <div class="Index_icon_text_info_list_allloop_innerboxs_title_new">
+                        <h2>{{ block.settings.title }}</h2>
+                      </div>
+                    {%- endif -%}
+                    {%- if block.settings.main_information_text != blank -%}
+                      <div class="Index_icon_text_info_list_allloop_innerboxs_infos_new">
+                        {{ block.settings.main_information_text }}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  {%- if block.settings.main_button_text != blank and block.settings.main_button_link != blank -%}
+                    <div class="Index_icon_text_info_list_allloop_innerboxs_button_new">
+                      <a href="{{ block.settings.main_button_link }}" class="button button_white">
+                        {{ block.settings.main_button_text }}
+                      </a>
+                    </div>  
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Index Icon Text Info List",
+    "class": "Index_icon_text_info_list_new",
+    "settings": [
+      {
+        "type": "color",
+        "id": "main_background_color",
+        "label": "Add Main Background Color",
+        "default": "#EFEFEF"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_desktop_full_image",
+        "label": "Add Main Desktop Full Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_mobile_full_image",
+        "label": "Add Main Mobile Full Image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "information",
+        "name": "Information",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "main_icon_image",
+            "label": "Add Main Icon Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Add Main Heading Text",
+            "default": "Lorem Ipsum is simply dummy"
+          },
+          {
+            "type": "richtext",
+            "id": "main_information_text",
+            "label": "Add Main Information Text",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>"
+          },
+          {
+            "type": "text",
+            "id": "main_button_text",
+            "label": "Add Main Button Text",
+            "default": "Shop Now"
+          },
+          {
+            "type": "url",
+            "id": "main_button_link",
+            "label": "Add Main Button Link",
+            "default": "/"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Icon Text Info List",
+        "blocks": [
+          {
+            "type": "information"
+          },
+          {
+            "type": "information"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
